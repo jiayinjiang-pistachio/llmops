@@ -15,4 +15,19 @@ deactivate
 ```
 
 
+# 生成 requirements.txt
+```bash
+# 安装相关依赖
+pip install --no-deps pipreqs
+pip install yarg==0.1.9 docopt==0.6.2
+
+# 执行该命令生成
+pipreqs --ignore env --force 
+```
+
+# 项目安装依赖
+```bash
+pip install -r requirements.txt
+```
+
 

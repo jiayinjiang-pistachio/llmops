@@ -6,3 +6,6 @@
 @File           : __init__.py.py
 @Description    : 配置信息
 """
+from .config import Config
+
+__all__ = ['Config']

@@ -6,3 +6,7 @@
 @File           : __init__.py.py
 @Description    : 控制器，接收用户的请求信息
 """
+
+from .app_handler import AppHandler
+
+__all__ = ["AppHandler"]
