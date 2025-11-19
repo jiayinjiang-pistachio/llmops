@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-@Time           : 2025/11/16 08:06
+@Time           : 2025/11/18 20:01
 @Author         : jiayinkong@163.com
 @File           : __init__.py.py
-@Description    : 应用的整个服务，服务层
+@Description    : 
 """
-
-from .app_service import AppService

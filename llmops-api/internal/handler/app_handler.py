@@ -7,23 +7,49 @@
 @Description    : 
 """
 import os
+import uuid
+from dataclasses import dataclass
 
 from flask import request
+from injector import inject
 from openai import OpenAI
 from openai.types.chat import ChatCompletionSystemMessageParam, ChatCompletionUserMessageParam
 
+from internal.exception import FailException
 from internal.schema.app_schema import CompletionReq
+from internal.service import AppService
+from pkg.response import success_json, validate_error_json, success_message
 
 
+@inject
+@dataclass
 class AppHandler:
     """应用控制器"""
+    appService: AppService
+
+    def create_app(self):
+        """调用服务创建新的app记录"""
+        app = self.appService.create_app()
+        return success_message(f"应用创建成功，id是{app.id}")
+
+    def get_app(self, id: uuid.UUID):
+        app = self.appService.get_app(id)
+        return success_message(f"应用已经成功获取，名称是{app.name}")
+
+    def update_app(self, id: uuid.UUID):
+        app = self.appService.update_app(id)
+        return success_message(f"应用已经成功修改，修改后的名称是：{app.name}")
+
+    def delete_app(self, id: uuid.UUID):
+        app = self.appService.delete_app(id)
+        return success_message(f"应用已经成功删除，id为{app.id}")
 
     def completion(self):
         """聊天接口"""
         # 1. 提取从接口中获取的输入
         req = CompletionReq()
         if not req.validate():
-            return req.errors
+            return validate_error_json(req.errors)
 
         query = request.json.get("query")
         # 2. 构建openai客户端并发起请求
@@ -48,7 +74,7 @@ class AppHandler:
         )
 
         content = completion.choices[0].message.content
-        return content
+        return success_json({"content": content})
 
     def ping(self):
-        return {"ping": "pong123"}
+        raise FailException("数据未找到")

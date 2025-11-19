@@ -6,3 +6,6 @@
 @File           : __init__.py.py
 @Description    : 构建的应用，与app文件夹对应
 """
+from .http import Http
+
+__all__ = ["Http"]

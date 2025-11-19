@@ -7,20 +7,24 @@
 @Description    : 
 """
 import dotenv
+from flask_sqlalchemy import SQLAlchemy
 from injector import Injector
 
 from config import Config
 from internal.router import Router
 from internal.server.http import Http
+from .module import ExtensionModule
 
 # 将 env 加载到环境变量中
 dotenv.load_dotenv()
 
 conf = Config()
 
-injector = Injector()
+# 传入 [ExtensionModule] 表示使用这个模块的配置
+injector = Injector([ExtensionModule])
 
-app = Http(__name__, conf=conf, router=injector.get(Router))
+# injector.get(SQLAlchemy)：从注入器获取 SQLAlchemy 实例（实际上是 db）
+app = Http(__name__, conf=conf, db=injector.get(SQLAlchemy), router=injector.get(Router))
 
 # 如果文件被执行
 if __name__ == "__main__":
