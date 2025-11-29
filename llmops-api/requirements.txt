@@ -1,2 +1,4 @@
+python-dotenv
+flask-migrate
 Flask==3.1.2
 injector==0.22.0
