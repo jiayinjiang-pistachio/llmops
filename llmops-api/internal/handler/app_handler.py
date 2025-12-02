@@ -10,10 +10,10 @@ import os
 import uuid
 from dataclasses import dataclass
 
-from flask import request
 from injector import inject
-from openai import OpenAI
-from openai.types.chat import ChatCompletionSystemMessageParam, ChatCompletionUserMessageParam
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
 
 from internal.exception import FailException
 from internal.schema.app_schema import CompletionReq
@@ -51,29 +51,20 @@ class AppHandler:
         if not req.validate():
             return validate_error_json(req.errors)
 
-        query = request.json.get("query")
-        # 2. 构建openai客户端并发起请求
-        client = OpenAI(
+        # 2. 构建组件
+        prompt = ChatPromptTemplate.from_template("{query}")
+        llm = ChatOpenAI(
+            model="gpt-4",
             api_key=os.getenv("GPTSAPI_API_KEY"),
             base_url=os.getenv("OPENAI_API_BASE"),
         )
+        parser = StrOutputParser()
 
-        # 3. 得到请求响应，把响应传给前端
-        completion = client.chat.completions.create(
-            model="gpt-4",
-            messages=[
-                ChatCompletionSystemMessageParam(
-                    role="system",
-                    content="你是OpenAI开发的聊天机器人，请根据用户的输入回复对应的信息",
-                ),
-                ChatCompletionUserMessageParam(
-                    role="user",
-                    content=query,
-                )
-            ]
-        )
+        # 3. 构建链
+        chain = prompt | llm | parser
+        content = chain.invoke({"query": req.query.data})
 
-        content = completion.choices[0].message.content
+        # 4. 调用链得到结果
         return success_json({"content": content})
 
     def ping(self):
