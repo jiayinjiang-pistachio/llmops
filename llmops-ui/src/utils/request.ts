@@ -68,7 +68,7 @@ const baseFetch = async <T>(url: string, fetchOptions: FetchOptionType): Promise
     }),
     // 发起一个正常请求
     new Promise((resolve, reject) => {
-      globalThis.fetch(urlWithPrefix, options as RequestInit).then((res) => {
+      fetch(urlWithPrefix, options as RequestInit).then((res) => {
         resolve(res.json())
       }).catch(err => {
         reject(err)
