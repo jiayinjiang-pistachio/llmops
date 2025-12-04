@@ -9,6 +9,7 @@
 import os
 import uuid
 from dataclasses import dataclass
+from uuid import UUID
 
 from injector import inject
 from langchain_core.output_parsers import StrOutputParser
@@ -44,7 +45,7 @@ class AppHandler:
         app = self.appService.delete_app(id)
         return success_message(f"应用已经成功删除，id为{app.id}")
 
-    def completion(self):
+    def debug(self, app_id: UUID):
         """聊天接口"""
         # 1. 提取从接口中获取的输入
         req = CompletionReq()
