@@ -9,6 +9,7 @@ import router from './router'
 import '@arco-design/web-vue/dist/arco.css'
 import '@/assets/styles/tailwindcss.css'
 
+
 const app = createApp(App)
 
 app.use(createPinia())

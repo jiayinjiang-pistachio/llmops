@@ -1,6 +1,7 @@
 <template>
   <div class="">
-    blanklayout
+    <!-- blanklayout -->
+     <RouterView/>
   </div>
 </template>
 

@@ -13,7 +13,7 @@ const router = createRouter({
       children: [
         {
           path: '',
-          redirect: 'home'
+          redirect: 'home',
         },
         {
           path: 'home',
@@ -23,14 +23,9 @@ const router = createRouter({
         {
           path: 'space/apps',
           name: 'space-apps-list',
-          component: () => import('@/views/space/app/ListView.vue')
+          component: () => import('@/views/space/app/ListView.vue'),
         },
-        {
-          path: 'space/apps/:app_id',
-          name: 'space-apps-detail',
-          component: () => import('@/views/space/app/DetailView.vue')
-        }
-      ]
+      ],
     },
     {
       path: '/',
@@ -39,17 +34,22 @@ const router = createRouter({
         {
           path: 'auth/login',
           name: 'auth-login',
-          component: () => import('@/views/auth/LoginView.vue')
-        }
-      ]
-    }
+          component: () => import('@/views/auth/LoginView.vue'),
+        },
+        {
+          path: 'space/apps/:app_id',
+          name: 'space-apps-detail',
+          component: () => import('@/views/space/app/DetailView.vue'),
+        },
+      ],
+    },
   ],
 })
 
-router.beforeEach(async(to) => {
-  if(!isLogin() && to.name !== 'auth-login') {
+router.beforeEach(async (to) => {
+  if (!isLogin() && to.name !== 'auth-login') {
     return {
-      path: '/auth/login'
+      path: '/auth/login',
     }
   }
 })
