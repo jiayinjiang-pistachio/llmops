@@ -3,7 +3,8 @@
 // 3. 经常使用get、post，需要对这两个方法进行封装
 // 4. 每次获取数据都要使用response.json()才可以获取数据，需要封装
 
-import { apiPrefix } from '@/config';
+import { apiPrefix, httpCode } from '@/config'
+import { Message } from '@arco-design/web-vue'
 
 const TIME_OUT = 100000
 
@@ -20,7 +21,7 @@ const baseFetchOptions = {
 
 // fetch 参数类型
 type FetchOptionType = Omit<RequestInit, 'body'> & {
-  body?: BodyInit | Record<string, unknown> | null;
+  body?: BodyInit | Record<string, unknown> | null
   params?: Record<string, unknown>
 }
 
@@ -64,16 +65,25 @@ const baseFetch = async <T>(url: string, fetchOptions: FetchOptionType): Promise
     new Promise((_, reject) => {
       setTimeout(() => {
         reject('接口已超时')
-      }, TIME_OUT);
+      }, TIME_OUT)
     }),
     // 发起一个正常请求
     new Promise((resolve, reject) => {
-      fetch(urlWithPrefix, options as RequestInit).then((res) => {
-        resolve(res.json())
-      }).catch(err => {
-        reject(err)
-      })
-    })
+      fetch(urlWithPrefix, options as RequestInit)
+        .then(async (res) => {
+          const json = await res.json()
+          if (json.code === httpCode.success) {
+            resolve(json)
+          } else {
+            Message.error(json.message || '请求出错，请稍后重试')
+            reject(json.message || '请求出错')
+          }
+        })
+        .catch((err) => {
+          Message.error(err.message || '请求出错，请稍后重试')
+          reject(err)
+        })
+    }),
   ]) as Promise<T>
 }
 

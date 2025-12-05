@@ -25,34 +25,36 @@
         <!-- 调试对话界面 -->
         <div class="h-full min-h-0 px-6 py-7 overflow-x-hidden overflow-y-scroll scrollbar-w-none">
           <!-- 人类消息 -->
-          <div class="flex flex-row gap-2 mb-6">
+          <div class="flex flex-row gap-2 mb-6" v-for="message in messages" :key="message.content">
             <!-- 头像 -->
-            <a-avatar :size="30" class="flex-shrink-0" :style="{ backgroundColor: '#3370ff' }">幕</a-avatar>
-            <!-- 实际消息 -->
-            <div class="flex flex-col gap-2">
-              <div class="font-semibold text-gray-700">慕小课</div>
-              <div class="max-w-max bg-blue-700 text-white border border-blue-800 px-4 py-3 rounded-2xl leading-5">
-                能详细讲解下LLM是什么吗？
-              </div>
-            </div>
-          </div>
-          <!-- AI消息 -->
-          <div class="flex flex-row gap-2 mb-6">
-            <!-- 头像 -->
-            <a-avatar :size="30" class="flex-shrink-0" :style="{ backgroundColor: '#00d0b6' }">
+            <a-avatar v-if="message.role === 'user'" :size="30" class="flex-shrink-0"
+              :style="{ backgroundColor: '#3370ff' }">幕</a-avatar>
+            <a-avatar v-else :size="30" class="flex-shrink-0" :style="{ backgroundColor: '#00d0b6' }">
               <icon-apps />
             </a-avatar>
             <!-- 实际消息 -->
             <div class="flex flex-col gap-2">
-              <div class="font-semibold text-gray-700">ChatGPT聊天机器人</div>
-              <div class="max-w-max bg-gray-100 text-gray-900 border border-gray-200 px-4 py-3 rounded-2xl leading-5">
-                LLM 即 Large Language
-                Model，大语言模型，是一种基于深度学习的自然语言处理模型，具有很高的语言理解和生成能力，能够处理各式各样的自然语言任务，例如文本生成、问答、翻译、摘要等。它通过在大量的文本数据上进行训练，学习到语言的模式、结构和语义知识。
+              <div class="font-semibold text-gray-700">{{ message.role === 'user' ? '慕小课' : 'ChatGPT聊天机器人' }}</div>
+              <div v-if="message.role === 'user'"
+                class="max-w-max bg-blue-700 text-white border border-blue-800 px-4 py-3 rounded-2xl leading-5">
+                {{ message.content }}
+              </div>
+              <div v-else
+                class="max-w-max bg-gray-100 text-gray-900 border border-gray-200 px-4 py-3 rounded-2xl leading-5">
+                {{ message.content }}
               </div>
             </div>
           </div>
+          <!-- 没有任何数据时显示的内容 -->
+          <div v-if="!messages.length" class="mt-[25%] flex flex-col items-center justify-center gap-2">
+            <a-avatar :size="70" shape="square" :style="{ backgroundColor: '#00d0b6' }">
+              <icon-apps />
+            </a-avatar>
+            <div class="text-2xl font-semibold text-gray-900 mt-2">ChatGPT聊天机器人</div>
+
+          </div>
           <!-- AI加载状态 -->
-          <div class="flex flex-row gap-2 mb-6">
+          <div v-if="isLoading" class="flex flex-row gap-2 mb-6">
             <!-- 头像 -->
             <a-avatar :size="30" class="flex-shrink-0" :style="{ backgroundColor: '#00d0b6' }">
               <icon-apps />
@@ -71,20 +73,21 @@
           <!-- 顶部输入框 -->
           <div class="px-6 flex items-center gap-4">
             <!-- 清除按钮 -->
-            <a-button type="text" shape="circle" class="flex-shrink-0">
+            <a-button type="text" shape="circle" class="flex-shrink-0" @click="clearMessages">
               <template #icon>
                 <icon-empty :size="16" :style="{ color: '#374151' }" />
               </template>
             </a-button>
             <!-- 输入框组件 -->
             <div class="h-[50px] flex items-center gap-2 px-4 flex-1 border border-gray-200 rounded-full">
-              <input type="text" class="flex-1 outline-0">
+              <input v-model="query" type="text" class="flex-1 outline-0" @keyup.enter="send"
+                placeholder="请输入您的问题..." />
               <a-button type="text" shape="circle">
                 <template #icon>
                   <icon-plus-circle :size="16" :style="{ color: '#374151' }" />
                 </template>
               </a-button>
-              <a-button type="text" shape="circle">
+              <a-button type="text" shape="circle" @click="send">
                 <template #icon>
                   <icon-send :size="16" :style="{ color: '#1d4ed8' }" />
                 </template>
@@ -104,5 +107,59 @@
 <style lang="less"></style>
 
 <script setup lang="ts">
+import { debugApps } from '@/services/app';
+import { Message } from '@arco-design/web-vue';
+import { computed, ref } from 'vue';
+import { useRoute } from 'vue-router';
 
+interface MessageItem {
+  role: 'user' | 'ai';
+  content: string;
+}
+
+const query = ref('')
+const messages = ref<MessageItem[]>([])
+const isLoading = ref(false)
+const route = useRoute()
+const appId = computed(() => route.params.app_id as string)
+
+const clearMessages = () => {
+  messages.value = []
+}
+
+const send = async () => {
+  try {
+    if (!query.value.trim()) {
+      Message.error('用户提问不能为空')
+      return
+    }
+
+    if (isLoading.value) {
+      Message.warning('上一次回复还未结束，请稍等')
+      return
+    }
+    // 提取用户信息
+    const humanQuery = query.value.trim()
+    messages.value.push({
+      role: 'user',
+      content: humanQuery,
+    })
+
+    // 清空输入框
+    query.value = ''
+
+    isLoading.value = true
+
+    // 发起API请求
+    const { data } = await debugApps(appId.value, humanQuery)
+    const content = data.content
+
+    messages.value.push({
+      role: 'ai',
+      content,
+    })
+  } finally {
+    isLoading.value = false
+  }
+}
 </script>
