@@ -3,7 +3,7 @@
 """
 @Time           : 2025/12/5 15:57
 @Author         : jiayinkong@163.com
-@File           : 1-摘要缓冲混合记忆.py
+@File           : 1-摘要缓冲混合记忆示例.py
 @Description    : 
 """
 import os
