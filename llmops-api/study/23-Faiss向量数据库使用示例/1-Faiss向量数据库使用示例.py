@@ -80,3 +80,5 @@ db = FAISS.load_local(
     allow_dangerous_deserialization=True
 )
 print(db.similarity_search_with_score("我养了一只猫，叫笨笨"))
+
+# 测试
