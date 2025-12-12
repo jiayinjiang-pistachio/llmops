@@ -17,3 +17,4 @@ loader = TextLoader(
 # 加载数据
 documents = loader.load()
 print(len(documents))
+print(documents[0].metadata)
