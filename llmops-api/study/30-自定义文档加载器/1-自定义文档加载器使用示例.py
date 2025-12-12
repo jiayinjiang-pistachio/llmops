@@ -51,7 +51,7 @@ class CustomLoader(BaseLoader):
                 line_num += 1
 
 
-loader = CustomLoader("./喵喵.txt")
+loader = CustomLoader("../31-Blob与BlobParser代替文档加载器/喵喵.txt")
 documents = loader.load()
 print(documents)
 print(len(documents))
