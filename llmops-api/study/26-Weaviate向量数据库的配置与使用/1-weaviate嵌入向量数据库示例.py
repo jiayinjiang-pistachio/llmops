@@ -13,6 +13,7 @@ import weaviate
 from langchain_openai import OpenAIEmbeddings
 from langchain_weaviate import WeaviateVectorStore
 from weaviate.auth import AuthApiKey
+from weaviate.classes.query import Filter
 
 dotenv.load_dotenv()
 
@@ -67,13 +68,13 @@ db = WeaviateVectorStore(
     embedding=embedding,
 )
 
-# # 添加数据
-# ids = db.add_texts(texts, metadatas)
-# print("添加文档id列表：", ids)
+# 添加数据
+ids = db.add_texts(texts, metadatas)
+print("添加文档id列表：", ids)
 
-# # 执行相似性搜索
-# filters = Filter.by_property("page").greater_or_equal(5)
-# print(db.similarity_search_with_score("笨笨", filters=filters))
+# 执行相似性搜索
+filters = Filter.by_property("page").greater_or_equal(5)
+print(db.similarity_search_with_score("笨笨", filters=filters))
 
 retriever = db.as_retriever()
 print(retriever.invoke("笨笨"))
