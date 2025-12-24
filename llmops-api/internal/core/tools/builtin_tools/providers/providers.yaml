@@ -10,3 +10,12 @@
   icon: icon.svg
   background: "#E5E7EB"
   category: tool
+- name: duckduckgo
+  label: DuckDuckGo
+  description: 一个注重隐私的搜索引擎
+  icon: icon.svg
+  background: "#FFFFFF"
+  category: search
+
+
+

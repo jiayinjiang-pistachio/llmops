@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-@Time           : 2025/12/24 10:50
+@Time           : 2025/12/24 10:58
 @Author         : jiayinkong@163.com
 @File           : __init__.py.py
 @Description    : 
 """
-from .current_time import current_time
+from .duckduckgo_search import duckduckgo_search
 
-__all__ = ["current_time"]
+__all__ = ["duckduckgo_search"]
