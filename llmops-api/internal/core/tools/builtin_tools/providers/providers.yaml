@@ -4,4 +4,9 @@
   icon: icon.svg
   background: "#E5E7EB"
   category: search
-
+- name: time
+  label: 时间
+  description: 一个用于获取当前时间的工具
+  icon: icon.svg
+  background: "#E5E7EB"
+  category: tool
