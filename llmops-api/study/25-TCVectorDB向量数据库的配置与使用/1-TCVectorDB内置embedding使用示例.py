@@ -28,7 +28,7 @@ db = TencentVectorDB(
         timeout=int(os.getenv("TC_VECTOR_DB_TIMEOUT"))
     ),
     database_name=os.getenv("TC_VECTOR_DB_DATABASE"),
-    collection_name="dataset-buildin",
+    collection_name="dataset-builtin_tools",
 )
 
 texts = [

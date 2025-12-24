@@ -23,7 +23,7 @@ from langchain_core.runnables import RunnablePassthrough, RunnableLambda, Runnab
 from langchain_core.tracers import Run
 from langchain_openai import ChatOpenAI
 
-from internal.exception import FailException
+from internal.core.tools.builtin_tools.providers import BuiltinProviderManager
 from internal.schema.app_schema import CompletionReq
 from internal.service import AppService, VectorDatabaseService
 from pkg.response import success_json, validate_error_json, success_message
@@ -35,6 +35,7 @@ class AppHandler:
     """应用控制器"""
     app_service: AppService
     vector_database_store: VectorDatabaseService
+    provider_factory: BuiltinProviderManager
 
     def create_app(self):
         """调用服务创建新的app记录"""
@@ -118,4 +119,8 @@ class AppHandler:
         return success_json({"content": content})
 
     def ping(self):
-        raise FailException("数据未找到")
+        google_serper = self.provider_factory.get_tool("google", "google_serper")()
+        print(google_serper)
+        print(google_serper.invoke("2024年北京半程马拉松比赛前3名的成绩是多少？"))
+        return success_json()
+        # raise FailException("数据未找到")
