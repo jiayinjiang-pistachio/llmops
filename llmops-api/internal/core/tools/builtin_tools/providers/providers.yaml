@@ -16,6 +16,9 @@
   icon: icon.svg
   background: "#FFFFFF"
   category: search
-
-
-
+- name: dalle
+  label: DALLE
+  description: DALLE是一个文生图工具
+  icon: icon.png
+  background: "#E5E7EB"
+  category: image

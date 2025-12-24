@@ -1,0 +1,31 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+@Time           : 2025/12/24 11:09
+@Author         : jiayinkong@163.com
+@File           : dalle3.yaml.py
+@Description    : 
+"""
+import os
+
+from langchain_community.tools.openai_dalle_image_generation import OpenAIDALLEImageGenerationTool
+from langchain_community.utilities.dalle_image_generator import DallEAPIWrapper
+from langchain_core.pydantic_v1 import BaseModel, Field
+from langchain_core.tools import BaseTool
+
+
+class Dalle3ArgsSchema(BaseModel):
+    query: str = Field(description="输入应该是文生图像的文本提示(prompt)")
+
+
+def dalle3(**kwargs) -> BaseTool:
+    """返回dalle3绘图的LangChain工具"""
+    return OpenAIDALLEImageGenerationTool(
+        api_wrapper=DallEAPIWrapper(
+            model="dall-e-3",
+            api_key=os.getenv("GPTSAPI_API_KEY"),  # 确保这里使用你可用的 Key
+            base_url=os.getenv("OPENAI_API_BASE"),  # 确保这里传入中转或自定义地址
+            **kwargs
+        ),
+        args_schema=Dalle3ArgsSchema,
+    )
