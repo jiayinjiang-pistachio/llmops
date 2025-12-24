@@ -1,0 +1,92 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+@Time           : 2025/12/24 16:27
+@Author         : jiayinkong@163.com
+@File           : builtin_tool_service.py
+@Description    : 
+"""
+from dataclasses import dataclass
+
+from injector import inject
+from langchain_core.pydantic_v1 import BaseModel
+
+from internal.core.tools.builtin_tools.providers import BuiltinProviderManager
+from internal.exception import NotFoundException
+
+
+@inject
+@dataclass
+class BuiltinToolService:
+    """内置工具服务"""
+    builtin_provider_manager: BuiltinProviderManager
+
+    def get_builtin_tools(self) -> list:
+        """获取LLMOps项目中的所有内置提供商+工具对应的信息"""
+        # 1. 获取所有的提供商
+        providers = self.builtin_provider_manager.get_providers()
+
+        # 2. 遍历所有的提供商并提取工具信息
+        builtin_tools = []
+        for provider in providers:
+            provider_entity = provider.provider_entity
+            builtin_tool = {
+                **provider_entity.model_dump(exclude=["icon"]),
+                "tools": []
+            }
+
+            # 3. 循环遍历提取提供商的所有工具实体
+            for tool_entity in provider.get_tool_entities():
+                # 4. 从提供者中获取工具函数
+                tool = provider.get_tool(tool_entity.name)
+
+                # 5. 构建工具实体信息
+                too_dict = {
+                    **tool_entity.model_dump(),
+                    "inputs": self.get_tool_inputs(tool)
+                }
+                builtin_tool["tools"].append(too_dict)
+
+            builtin_tools.append(builtin_tool)
+
+        return builtin_tools
+
+    def get_provider_tool(self, provider_name: str, tool_name: str) -> dict:
+        """根据传递的提供者名字+工具名字获取指定的工具信息"""
+        # 1. 获取内置的提供商
+        provider = self.builtin_provider_manager.get_provider(provider_name)
+        if provider is None:
+            raise NotFoundException(f"该工具提供者{provider_name}不存在")
+
+        # 2. 获取该提供商下对应的工具
+        tool_entity = provider.get_tool_entity(tool_name)
+        if tool_entity is None:
+            raise NotFoundException(f"该工具{tool_name}不存在")
+
+        # 3. 组装提供商和工具实体信息
+        provider_entity = provider.provider_entity
+        tool = provider.get_tool(tool_name)
+
+        builtin_tool = {
+            "provider": {**provider_entity.model_dump(exclude=["icon", "created_at"])},
+            **tool_entity.model_dump(),
+            "created_at": provider_entity.created_at,
+            "inputs": self.get_tool_inputs(tool),
+        }
+
+        return builtin_tool
+
+    @classmethod
+    def get_tool_inputs(cls, tool):
+        """根据传递的工具获取inputs信息"""
+        inputs = []
+        if hasattr(tool, "args_schema") and issubclass(tool.args_schema, BaseModel):
+            for field_name, model_filed in tool.args_schema.__fields__.items():
+                inputs.append({
+                    "name": field_name,
+                    "description": model_filed.field_info.description or "",
+                    "required": model_filed.required,
+                    "type": model_filed.outer_type_.__name__,
+                })
+
+        return inputs

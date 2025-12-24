@@ -24,6 +24,7 @@ class ProviderEntity(BaseModel):
     icon: str
     background: str
     category: str
+    created_at: int = 0
 
 
 class Provider(BaseModel):
