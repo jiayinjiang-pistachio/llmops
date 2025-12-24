@@ -3,7 +3,7 @@
 """
 @Time           : 2025/12/23 18:39
 @Author         : jiayinkong@163.com
-@File           : provider_entities.py
+@File           : provider_entity.py
 @Description    : 
 """
 import os

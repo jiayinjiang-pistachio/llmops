@@ -9,11 +9,13 @@
 import mimetypes
 import os
 from dataclasses import dataclass
+from typing import Any
 
 from flask import current_app
 from injector import inject
 from langchain_core.pydantic_v1 import BaseModel
 
+from internal.core.tools.builtin_tools.categories import BuiltinCategoryManager
 from internal.core.tools.builtin_tools.providers import BuiltinProviderManager
 from internal.exception import NotFoundException
 
@@ -23,6 +25,7 @@ from internal.exception import NotFoundException
 class BuiltinToolService:
     """内置工具服务"""
     builtin_provider_manager: BuiltinProviderManager
+    builtin_category_manager: BuiltinCategoryManager
 
     def get_builtin_tools(self) -> list:
         """获取LLMOps项目中的所有内置提供商+工具对应的信息"""
@@ -126,5 +129,11 @@ class BuiltinToolService:
             byte_data = f.read()
             return byte_data, mimeType
 
-    def get_categories(self):
-        pass
+    def get_categories(self) -> list[str, Any]:
+        """获取所有的内置分类信息，涵盖了category、name、icon"""
+        category_map = self.builtin_category_manager.get_category_map()
+        return [{
+            "name": category["entity"].name,
+            "category": category["entity"].category,
+            "icon": category["icon"],
+        } for category in category_map.values()]
