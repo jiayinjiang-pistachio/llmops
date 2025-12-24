@@ -22,3 +22,10 @@
   icon: icon.png
   background: "#E5E7EB"
   category: image
+- name: gaode
+  label: 高德工具包
+  description: 内置了高德天气预报和ip查询功能
+  icon: icon.png
+  background: "#E5E7EB"
+  category: tool
+
