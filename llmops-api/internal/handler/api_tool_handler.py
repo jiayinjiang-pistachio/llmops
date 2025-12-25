@@ -7,10 +7,11 @@
 @Description    : 
 """
 from dataclasses import dataclass
+from uuid import UUID
 
 from injector import inject
 
-from internal.schema import ValidateOpenAPISchemaReq
+from internal.schema import ValidateOpenAPISchemaReq, CreateAPIToolReq, GetApiToolProviderResp, GetApiToolResp
 from internal.service import APiToolService
 from pkg.response import validate_error_json, success_json
 
@@ -31,3 +32,30 @@ class ApiToolHandler:
         self.api_tool_service.parse_openapi_schema(req.openapi_schema.data)
 
         return success_json("数据校验成功")
+
+    def create_api_tool_provider(self):
+        """创建自定义API工具"""
+        req = CreateAPIToolReq()
+
+        if not req.validate():
+            return validate_error_json(req.errors)
+
+        self.api_tool_service.create_api_tool(req)
+
+        return success_json("创建自定义API插件成功")
+
+    def get_api_tool_provider(self, provider_id: UUID):
+        """根据传递的provider_id获取工具提供者的原始信息"""
+        api_tool_provider = self.api_tool_service.get_api_tool_provider(provider_id)
+
+        resp = GetApiToolProviderResp()
+
+        return success_json(resp.dump(api_tool_provider))
+
+    def get_api_tool(self, provider_id: UUID, tool_name: str):
+        """根据传递的provider_id+tool_name获取工具详情信息"""
+        api_tool = self.api_tool_service.get_api_tool(provider_id, tool_name)
+
+        resp = GetApiToolResp()
+
+        return success_json(resp.dump(api_tool))

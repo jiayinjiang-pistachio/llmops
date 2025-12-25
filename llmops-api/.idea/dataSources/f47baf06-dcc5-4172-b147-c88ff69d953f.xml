@@ -3,9 +3,17 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.53">
     <root id="1">
       <DateStyle>mdy</DateStyle>
-      <IntrospectionStateNumber>876</IntrospectionStateNumber>
+      <Grants>1||-9223372036854775808|c|G
+1||10|c|G
+1||10|C|G
+1||10|T|G
+4||-9223372036854775808|c|G
+4||10|c|G
+4||10|C|G
+4||10|T|G</Grants>
+      <IntrospectionStateNumber>879</IntrospectionStateNumber>
       <ServerVersion>18.1</ServerVersion>
-      <StartupTime>1765940917</StartupTime>
+      <StartupTime>1766652005</StartupTime>
       <TimeZones>true ACDT
 true ACSST
 false ACST
@@ -800,7 +808,7 @@ false Zulu
 13567||10|C|G
 13567||-9223372036854775808|U|G
 13567||10|U|G</Grants>
-      <IntrospectionStateNumber>876</IntrospectionStateNumber>
+      <IntrospectionStateNumber>880</IntrospectionStateNumber>
       <ObjectId>16387</ObjectId>
       <OwnerName>postgres</OwnerName>
     </database>
@@ -816,7 +824,7 @@ false Zulu
 13567||10|C|G
 13567||-9223372036854775808|U|G
 13567||10|U|G</Grants>
-      <IntrospectionStateNumber>866</IntrospectionStateNumber>
+      <IntrospectionStateNumber>879</IntrospectionStateNumber>
       <ObjectId>5</ObjectId>
       <OwnerName>postgres</OwnerName>
     </database>
@@ -4833,10 +4841,10 @@ false Zulu
 13913||10|t|G
 13913||10|D|G
 13913||10|w|G</Grants>
-      <LastIntrospectionL1Xid>867</LastIntrospectionL1Xid>
-      <LastIntrospectionL2Xid>867</LastIntrospectionL2Xid>
+      <LastIntrospectionL1Xid>880</LastIntrospectionL1Xid>
+      <LastIntrospectionL2Xid>880</LastIntrospectionL2Xid>
       <LastIntrospectionLevel>2</LastIntrospectionLevel>
-      <LastIntrospectionLocalTimestamp>2025-12-25.07:19:49</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2025-12-25.13:08:50</LastIntrospectionLocalTimestamp>
       <ObjectId>13567</ObjectId>
       <StateNumber>552</StateNumber>
       <OwnerName>postgres</OwnerName>
@@ -4844,9 +4852,9 @@ false Zulu
     <schema id="272" parent="2" name="pg_catalog">
       <AutoIntrospectionLevel>1</AutoIntrospectionLevel>
       <Comment>system catalog schema</Comment>
-      <LastIntrospectionL1Xid>867</LastIntrospectionL1Xid>
+      <LastIntrospectionL1Xid>880</LastIntrospectionL1Xid>
       <LastIntrospectionLevel>1</LastIntrospectionLevel>
-      <LastIntrospectionLocalTimestamp>2025-12-25.07:19:48</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2025-12-25.13:08:50</LastIntrospectionLocalTimestamp>
       <ObjectId>11</ObjectId>
       <StateNumber>546</StateNumber>
       <OwnerName>postgres</OwnerName>
@@ -4855,11 +4863,11 @@ false Zulu
       <AutoIntrospectionLevel>3</AutoIntrospectionLevel>
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <LastIntrospectionL1Xid>876</LastIntrospectionL1Xid>
-      <LastIntrospectionL2Xid>876</LastIntrospectionL2Xid>
-      <LastIntrospectionL3Xid>876</LastIntrospectionL3Xid>
+      <LastIntrospectionL1Xid>880</LastIntrospectionL1Xid>
+      <LastIntrospectionL2Xid>880</LastIntrospectionL2Xid>
+      <LastIntrospectionL3Xid>880</LastIntrospectionL3Xid>
       <LastIntrospectionLevel>3</LastIntrospectionLevel>
-      <LastIntrospectionLocalTimestamp>2025-12-25.07:29:18</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2025-12-25.13:08:50</LastIntrospectionLocalTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>546</StateNumber>
       <OwnerName>pg_database_owner</OwnerName>
@@ -8324,11 +8332,11 @@ false Zulu
       <AutoIntrospectionLevel>3</AutoIntrospectionLevel>
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <LastIntrospectionL1Xid>866</LastIntrospectionL1Xid>
-      <LastIntrospectionL2Xid>866</LastIntrospectionL2Xid>
-      <LastIntrospectionL3Xid>866</LastIntrospectionL3Xid>
+      <LastIntrospectionL1Xid>879</LastIntrospectionL1Xid>
+      <LastIntrospectionL2Xid>879</LastIntrospectionL2Xid>
+      <LastIntrospectionL3Xid>879</LastIntrospectionL3Xid>
       <LastIntrospectionLevel>3</LastIntrospectionLevel>
-      <LastIntrospectionLocalTimestamp>2025-12-25.07:19:47</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2025-12-25.13:08:49</LastIntrospectionLocalTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>546</StateNumber>
       <OwnerName>pg_database_owner</OwnerName>

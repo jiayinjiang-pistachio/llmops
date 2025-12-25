@@ -5,10 +5,12 @@
       <w>buildin</w>
       <w>dalle</w>
       <w>docstore</w>
+      <w>formdata</w>
       <w>gptsapi</w>
       <w>metadatas</w>
       <w>ntotal</w>
       <w>serper</w>
+      <w>valuelist</w>
     </words>
   </dictionary>
 </component>
