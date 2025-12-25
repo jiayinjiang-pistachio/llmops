@@ -6,3 +6,7 @@
 @File           : __init__.py.py
 @Description    : 请求和响应的结构体
 """
+from .api_tool_schema import ValidateOpenAPISchemaReq
+from .app_schema import CompletionReq
+
+__all__ = ["CompletionReq", "ValidateOpenAPISchemaReq"]
