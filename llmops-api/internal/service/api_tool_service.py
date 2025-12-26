@@ -109,3 +109,26 @@ class APiToolService():
         if api_tool is None or str(api_tool.account_id) != account_id:
             raise NotFoundException("该工具不存在")
         return api_tool
+
+    def delete_api_tool_provider(self, provider_id: UUID):
+        """根据传递的provider_id删除对应的工具提供商+工具的所有信息"""
+        # todo:等待完善
+        account_id = "46db30d1-3199-4e79-a0cd-abf12fa6858f"
+
+        # 1. 先查找数据，检测下provider_id对应的数据是否存在，全县是否正确
+        api_tool_provider = self.db.session.query(ApiToolProvider).get(provider_id)
+
+        # 2. 校验数据是否为空，并且判断该数据是否属于当前账号
+        if api_tool_provider is None or str(api_tool_provider.account_id) != str(account_id):
+            raise NotFoundException("该工具提供者不存在")
+
+        # 3. 开启数据库的自动提交
+        with self.db.auto_commit():
+            # 4. 先删除提供者对应的所有工具信息
+            self.db.session.query(ApiTool).filter(
+                ApiTool.provider_id == provider_id,
+                ApiTool.account_id == account_id,
+            ).delete()
+
+            # 5. 删除提供者
+            self.db.session.delete(api_tool_provider)

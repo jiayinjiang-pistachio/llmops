@@ -59,3 +59,9 @@ class ApiToolHandler:
         resp = GetApiToolResp()
 
         return success_json(resp.dump(api_tool))
+
+    def delete_api_tool_provider(self, provider_id: UUID):
+        """根据传递的provider_id删除对应的工具提供者信息"""
+        self.api_tool_service.delete_api_tool_provider(provider_id)
+
+        return success_json("删除自定义API插件成功")
