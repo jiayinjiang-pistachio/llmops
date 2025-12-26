@@ -25,7 +25,7 @@ from langchain_openai import ChatOpenAI
 
 from internal.core.tools.builtin_tools.providers import BuiltinProviderManager
 from internal.schema.app_schema import CompletionReq
-from internal.service import AppService, VectorDatabaseService
+from internal.service import AppService, VectorDatabaseService, APiToolService
 from pkg.response import success_json, validate_error_json, success_message
 
 
@@ -36,6 +36,7 @@ class AppHandler:
     app_service: AppService
     vector_database_store: VectorDatabaseService
     provider_factory: BuiltinProviderManager
+    api_tool_service: APiToolService
 
     def create_app(self):
         """调用服务创建新的app记录"""
@@ -119,6 +120,7 @@ class AppHandler:
         return success_json({"content": content})
 
     def ping(self):
-        providers = self.provider_factory.get_provider_entities()
-        return success_json({"providers": [provider.dict() for provider in providers]})
+        return self.api_tool_service.api_tool_invoke()
+        # providers = self.provider_factory.get_provider_entities()
+        # return success_json({"providers": [provider.dict() for provider in providers]})
         # raise FailException("数据未找到")
