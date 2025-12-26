@@ -7,9 +7,10 @@
 @Description    : 请求和响应的结构体
 """
 from .api_tool_schema import ValidateOpenAPISchemaReq, CreateAPIToolReq, GetApiToolResp, GetApiToolProviderResp, \
-    GetApiToolProvidersWithPageReq, GetApiToolProvidersWithPageResp
+    GetApiToolProvidersWithPageReq, GetApiToolProvidersWithPageResp, UpdateApiToolProviderReq
 from .app_schema import CompletionReq
 from .schema import ListField
 
 __all__ = ["CompletionReq", "ValidateOpenAPISchemaReq", "ListField", "CreateAPIToolReq", "GetApiToolResp",
-           "GetApiToolProviderResp", "GetApiToolProvidersWithPageReq", "GetApiToolProvidersWithPageResp", ]
+           "GetApiToolProviderResp", "GetApiToolProvidersWithPageReq", "GetApiToolProvidersWithPageResp",
+           "UpdateApiToolProviderReq", ]

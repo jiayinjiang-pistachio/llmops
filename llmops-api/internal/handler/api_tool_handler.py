@@ -13,7 +13,7 @@ from flask import request
 from injector import inject
 
 from internal.schema import ValidateOpenAPISchemaReq, CreateAPIToolReq, GetApiToolProviderResp, GetApiToolResp, \
-    GetApiToolProvidersWithPageReq, GetApiToolProvidersWithPageResp
+    GetApiToolProvidersWithPageReq, GetApiToolProvidersWithPageResp, UpdateApiToolProviderReq
 from internal.service import APiToolService
 from pkg.paginator import PageModel
 from pkg.response import validate_error_json, success_json
@@ -82,3 +82,13 @@ class ApiToolHandler:
         return success_json(
             PageModel(list=resp.dump(api_tool_providers), paginator=paginator),
         )
+
+    def update_api_tool_provider(self, provider_id: UUID):
+        """更新自定义API工具提供者信息"""
+        req = UpdateApiToolProviderReq()
+        if not req.validate():
+            return validate_error_json(req.errors)
+
+        self.api_tool_service.update_api_tool_provider(provider_id, req)
+
+        return success_json("更新自定义API插件成功")
