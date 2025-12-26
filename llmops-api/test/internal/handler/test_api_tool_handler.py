@@ -24,3 +24,13 @@ class TestApiToolHandler:
             assert resp.json.get("code") == HttpCode.VALIDATE_ERROR
         elif openapi_schema == openapi_schema_string:
             assert resp.json.get("code") == HttpCode.SUCCESS
+
+    def test_delete_api_tool_provider(self, client, db):
+        provider_id = "c3f96ff2-860f-4203-b35e-24fe71af070e"
+        resp = client.post(f"/api-tools/{provider_id}/delete")
+        assert resp.status_code == 200
+        assert resp.json.get("code") == HttpCode.SUCCESS
+
+        from internal.model import ApiToolProvider
+        api_tool_provider = db.session.query(ApiToolProvider).get(provider_id)
+        assert api_tool_provider is None
