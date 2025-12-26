@@ -20,11 +20,36 @@ const router = createRouter({
           name: 'pages-home',
           component: () => import('@/views/pages/HomeView.vue'),
         },
+        // 应用列表页
         {
           path: 'space/apps',
           name: 'space-apps-list',
-          component: () => import('@/views/space/app/ListView.vue'),
+          component: () => import('@/views/space/apps/ListView.vue'),
         },
+        // 自定义API插件列表页
+        {
+          path: 'space/tools',
+          name: 'space-tools-list',
+          component: () => import('@/views/space/tools/ListView.vue'),
+        },
+        // 应用广场页
+        {
+          path: 'store/apps',
+          name: 'stores-apps-list',
+          component: () => import('@/views/store/apps/ListView.vue'),
+        },
+        // 内置插件列表页
+        {
+          path: 'store/tools',
+          name: 'stores-tools-list',
+          component: () => import('@/views/store/tools/ListView.vue'),
+        },
+        // 开放API页
+        {
+          path: 'open',
+          name: 'open-index',
+          component: () => import('@/views/open/IndexView.vue'),
+        }
       ],
     },
     {
@@ -39,7 +64,7 @@ const router = createRouter({
         {
           path: 'space/apps/:app_id',
           name: 'space-apps-detail',
-          component: () => import('@/views/space/app/DetailView.vue'),
+          component: () => import('@/views/space/apps/DetailView.vue'),
         },
       ],
     },
