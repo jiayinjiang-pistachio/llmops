@@ -9,10 +9,13 @@
 from dataclasses import dataclass
 from uuid import UUID
 
+from flask import request
 from injector import inject
 
-from internal.schema import ValidateOpenAPISchemaReq, CreateAPIToolReq, GetApiToolProviderResp, GetApiToolResp
+from internal.schema import ValidateOpenAPISchemaReq, CreateAPIToolReq, GetApiToolProviderResp, GetApiToolResp, \
+    GetApiToolProvidersWithPageReq, GetApiToolProvidersWithPageResp
 from internal.service import APiToolService
+from pkg.paginator import PageModel
 from pkg.response import validate_error_json, success_json
 
 
@@ -65,3 +68,17 @@ class ApiToolHandler:
         self.api_tool_service.delete_api_tool_provider(provider_id)
 
         return success_json("删除自定义API插件成功")
+
+    def get_api_tool_providers_with_page(self):
+        """获取API工具提供者列表信息，该接口支持分页"""
+        req = GetApiToolProvidersWithPageReq(request.args)
+        if not req.validate():
+            return validate_error_json(req.errors)
+
+        api_tool_providers, paginator = self.api_tool_service.get_api_tool_providers_with_page(req)
+
+        resp = GetApiToolProvidersWithPageResp(many=True)
+
+        return success_json(
+            PageModel(list=resp.dump(api_tool_providers), paginator=paginator),
+        )

@@ -6,9 +6,10 @@
 @File           : __init__.py.py
 @Description    : 请求和响应的结构体
 """
-from .api_tool_schema import ValidateOpenAPISchemaReq, CreateAPIToolReq, GetApiToolResp, GetApiToolProviderResp
+from .api_tool_schema import ValidateOpenAPISchemaReq, CreateAPIToolReq, GetApiToolResp, GetApiToolProviderResp, \
+    GetApiToolProvidersWithPageReq, GetApiToolProvidersWithPageResp
 from .app_schema import CompletionReq
 from .schema import ListField
 
 __all__ = ["CompletionReq", "ValidateOpenAPISchemaReq", "ListField", "CreateAPIToolReq", "GetApiToolResp",
-           "GetApiToolProviderResp"]
+           "GetApiToolProviderResp", "GetApiToolProvidersWithPageReq", "GetApiToolProvidersWithPageResp", ]

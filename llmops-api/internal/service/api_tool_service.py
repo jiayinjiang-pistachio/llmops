@@ -8,14 +8,18 @@
 """
 import json
 from dataclasses import dataclass
+from typing import Any
 from uuid import UUID
 
 from injector import inject
+from sqlalchemy import desc
 
 from internal.core.tools.api_tools.entities import OpenAPISchema
 from internal.exception import ValidationException, NotFoundException
 from internal.model import ApiToolProvider, ApiTool
+from internal.schema import GetApiToolProvidersWithPageReq
 from internal.schema.api_tool_schema import CreateAPIToolReq
+from pkg.paginator import Paginator
 from pkg.sqlalchemy import SQLAlchemy
 
 
@@ -132,3 +136,23 @@ class APiToolService():
 
             # 5. 删除提供者
             self.db.session.delete(api_tool_provider)
+
+    def get_api_tool_providers_with_page(self, req: GetApiToolProvidersWithPageReq) -> tuple[list[Any], Paginator]:
+        """获取自定义API工具服务提供者分页列表数据"""
+        # todo: 等待授权认证完善
+        account_id = "46db30d1-3199-4e79-a0cd-abf12fa6858f"
+
+        # 1. 构建分页查询器
+        paginator = Paginator(db=self.db, req=req)
+
+        # 2. 构建筛选器
+        filters = [ApiToolProvider.account_id == account_id]
+        if req.search_word.data:
+            filters.append(ApiToolProvider.name.ilike(f"%{req.search_word.data}%"))
+
+        # 3. 执行分页并获取数据
+        api_tool_providers = paginator.paginate(
+            self.db.session.query(ApiToolProvider).filter(*filters).order_by(desc("created_at"))
+        )
+
+        return api_tool_providers, paginator
