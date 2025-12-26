@@ -21,11 +21,12 @@ from internal.schema import GetApiToolProvidersWithPageReq, UpdateApiToolProvide
 from internal.schema.api_tool_schema import CreateAPIToolReq
 from pkg.paginator import Paginator
 from pkg.sqlalchemy import SQLAlchemy
+from .base_service import BaseService
 
 
 @inject
 @dataclass
-class APiToolService():
+class APiToolService(BaseService):
     """自定义API插件服务"""
     db: SQLAlchemy
 
@@ -57,34 +58,30 @@ class APiToolService():
         if api_tool_provider:
             raise ValidationException(f"该工具提供者名字{req.name.data}已存在")
 
-        # 3. 开启数据库的提交
-        with self.db.auto_commit():
-            # 4. 首先创建工具提供者，并获取工具提供者的id信息，然后再创建工具信息
-            api_tool_provider = ApiToolProvider(
-                account_id=account_id,
-                name=req.name.data,
-                icon=req.icon.data,
-                description=openapi_schema.description,
-                openapi_schema=req.openapi_schema.data,
-                headers=req.headers.data,
-            )
-            self.db.session.add(api_tool_provider)
-            self.db.session.flush()  # 刷新
+        # 3. 首先创建工具提供者，并获取工具提供者的id信息，然后在创建工具信息
+        api_tool_provider = self.create(
+            ApiToolProvider,
+            account_id=account_id,
+            name=req.name.data,
+            icon=req.icon.data,
+            description=openapi_schema.description,
+            openapi_schema=req.openapi_schema.data,
+            headers=req.headers.data,
+        )
 
-            # 5. 创建API工具并关联api_tool_provider
-            for path, path_item in openapi_schema.paths.items():
-                for method, method_item in path_item.items():
-                    api_tool = ApiTool(
-                        account_id=account_id,
-                        provider_id=api_tool_provider.id,
-                        name=method_item.get("operationId"),
-                        description=method_item.get("description"),
-                        url=f"{openapi_schema.server}{path}",
-                        method=method,
-                        parameters=method_item.get("parameters", []),
-                    )
-                    self.db.session.add(api_tool)
-                    self.db.session.flush()
+        # 4. 创建API工具并关联api_tool_provider
+        for path, path_item in openapi_schema.paths.items():
+            for method, method_item in path_item.items():
+                self.create(
+                    ApiTool,
+                    account_id=account_id,
+                    provider_id=api_tool_provider.id,
+                    name=method_item.get("operationId"),
+                    description=method_item.get("description"),
+                    url=f"{openapi_schema.server}{path}",
+                    method=method,
+                    parameters=method_item.get("parameters", []),
+                )
 
     def get_api_tool_provider(self, provider_id: UUID):
         """根据传递的provider_id获取API工具提供者信息"""
@@ -92,7 +89,7 @@ class APiToolService():
         account_id = "46db30d1-3199-4e79-a0cd-abf12fa6858f"
 
         # 1. 查询数据库获取对应的数据
-        api_tool_provider = self.db.session.query(ApiToolProvider).get(provider_id)
+        api_tool_provider = self.get(ApiToolProvider, provider_id)
 
         # 2. 校验数据是否为空，并且判断该数据是否属于当前账号
         if api_tool_provider is None or str(api_tool_provider.account_id) != str(account_id):
@@ -120,7 +117,7 @@ class APiToolService():
         account_id = "46db30d1-3199-4e79-a0cd-abf12fa6858f"
 
         # 1. 先查找数据，检测下provider_id对应的数据是否存在，全县是否正确
-        api_tool_provider = self.db.session.query(ApiToolProvider).get(provider_id)
+        api_tool_provider = self.get(ApiToolProvider, provider_id)
 
         # 2. 校验数据是否为空，并且判断该数据是否属于当前账号
         if api_tool_provider is None or str(api_tool_provider.account_id) != str(account_id):
@@ -163,7 +160,7 @@ class APiToolService():
         account_id = "46db30d1-3199-4e79-a0cd-abf12fa6858f"
 
         # 1. 根据传递的provider_id查找API工具提供者信息并校验
-        api_tool_provider = self.db.session.query(ApiToolProvider).get(provider_id)
+        api_tool_provider = self.get(ApiToolProvider, provider_id)
 
         if api_tool_provider is None or str(api_tool_provider.account_id) != str(account_id):
             raise ValidationException("该工具提供者不存在")
@@ -189,22 +186,25 @@ class APiToolService():
                 ApiTool.account_id == account_id,
             ).delete()
 
-            # 6. 修改工具提供者信息
-            api_tool_provider.name = req.name.data
-            api_tool_provider.icon = req.icon.data
-            api_tool_provider.headers = req.headers.data
-            api_tool_provider.openapi_schema = req.openapi_schema.data
+        # 6. 修改工具提供者信息
+        self.update(
+            api_tool_provider,
+            name=req.name.data,
+            icon=req.icon.data,
+            headers=req.headers.data,
+            openapi_schema=req.openapi_schema.data,
+        )
 
-            # 7. 新增工具信息从而完成风覆盖更新
-            for path, path_item in openapi_schema.paths.items():
-                for method, method_item in path_item.items():
-                    api_tool = ApiTool(
-                        account_id=account_id,
-                        provider_id=provider_id,
-                        name=method_item.get("operationId"),
-                        description=method_item.get("description"),
-                        url=f"{openapi_schema.server}{path}",
-                        method=method,
-                        parameters=method_item.get("parameters", []),
-                    )
-                    self.db.session.add(api_tool)
+        # 7. 新增工具信息从而完成风覆盖更新
+        for path, path_item in openapi_schema.paths.items():
+            for method, method_item in path_item.items():
+                self.create(
+                    ApiTool,
+                    account_id=account_id,
+                    provider_id=api_tool_provider.id,
+                    name=method_item.get("operationId"),
+                    description=method_item.get("description"),
+                    url=f"{openapi_schema.server}{path}",
+                    method=method,
+                    parameters=method_item.get("parameters", []),
+                )
