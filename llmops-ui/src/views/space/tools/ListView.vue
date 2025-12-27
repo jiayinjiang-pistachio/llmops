@@ -1,5 +1,9 @@
 <template>
-  <a-spin :loading="loading" class="block h-full w-full">
+  <a-spin
+    :loading="loading"
+    class="block h-full w-full overflow-scroll scrollbar-w-none"
+    @scroll.passive="handleScroll"
+  >
     <!-- 底部插件列表 -->
     <a-row :gutter="[20, 20]" class="flex-1">
       <!-- 有数据的UI状态 -->
@@ -38,6 +42,20 @@
           description="没有可用的API插件"
           class="h-[400px] flex flex-col items-center justify-center"
         />
+      </a-col>
+    </a-row>
+    <!-- 加载器 -->
+    <a-row v-if="providers.length > 0">
+      <!-- 加载数据中 -->
+      <a-col v-if="paginator.current_page < paginator.total_page" :span="24" align="center">
+        <a-space class="my-4">
+          <a-spin />
+          <div class="text-gray-400">加载中</div>
+        </a-space>
+      </a-col>
+      <!-- 加载数据完成 -->
+      <a-col v-else :span="24" align="center">
+        <div class="text-gray-400 my-4">数据已加载完成</div>
       </a-col>
     </a-row>
     <a-drawer
@@ -117,17 +135,77 @@ import { typeMap } from '@/config'
 import type { ApiToolProviderItem } from '@/models/api-tool'
 import { getApiToolProvidersWithPage } from '@/services/api-tool'
 import moment from 'moment'
-import { onMounted, reactive, ref, computed } from 'vue'
+import { onMounted, reactive, ref, computed, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
 const providers = reactive<ApiToolProviderItem[]>([])
+const paginator = reactive({
+  current_page: 1,
+  page_size: 10,
+  total_page: 0,
+  total_record: 0,
+})
 const loading = ref(false)
-onMounted(async () => {
+const route = useRoute()
+
+watch(
+  () => route.query.search,
+  async () => {
+    // 重置分页器
+    paginator.current_page = 1
+    paginator.total_page = 0
+    paginator.total_record = 0
+    // 加载数据
+    await loadMoreData(true)
+  },
+)
+const loadMoreData = async (init = false) => {
+  // 检测是否需要加载新数据
+  if (!init && (loading.value || paginator.current_page >= paginator.total_page)) {
+    return
+  }
+  // 加载更多数据并更新状态
   try {
-    const resp = await getApiToolProvidersWithPage()
-    Object.assign(providers, resp.data.list)
+    loading.value = true
+
+    // 如果不是初始化，则请求下一页
+    const targetPage = init ? 1 : paginator.current_page + 1
+
+    const resp = await getApiToolProvidersWithPage(
+      targetPage,
+      paginator.page_size,
+      (route.query.search as string) || '',
+    )
+    const data = resp.data
+
+    // 更新分页器
+    paginator.current_page = data.paginator.current_page
+    paginator.total_page = data.paginator.total_page
+    paginator.total_record = data.paginator.total_record
+
+    // 追加或是覆盖
+    if (init) {
+      providers.splice(0, providers.length, ...data.list)
+    } else {
+      providers.push(...data.list)
+    }
   } finally {
     loading.value = false
   }
+}
+
+const handleScroll = async (event: Event) => {
+  const target = event.target as HTMLElement
+  if (target.scrollHeight - target.scrollTop - target.clientHeight < 10) {
+    if (loading.value) {
+      return
+    }
+    await loadMoreData()
+  }
+}
+
+onMounted(async () => {
+  await loadMoreData(true)
 })
 
 const showIdx = ref(-1)

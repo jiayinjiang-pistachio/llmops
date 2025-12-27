@@ -175,7 +175,7 @@ import { computed, onMounted, reactive, ref, type ComputedRef } from 'vue'
 const categories = reactive<CategoryItem[]>([])
 onMounted(async () => {
   const resp = await getCategories()
-  Object.assign(categories, resp.data)
+  categories.push(...resp.data)
 })
 
 const providers = reactive<BuiltinProviderItem[]>([])
@@ -183,7 +183,7 @@ const loading = ref(false)
 onMounted(async () => {
   try {
     const resp = await getBuiltinTools()
-    Object.assign(providers, resp.data)
+    providers.push(...resp.data)
   } finally {
     loading.value = false
   }
