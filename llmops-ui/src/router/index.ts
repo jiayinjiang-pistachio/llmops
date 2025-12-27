@@ -20,17 +20,35 @@ const router = createRouter({
           name: 'pages-home',
           component: () => import('@/views/pages/HomeView.vue'),
         },
-        // 应用列表页
         {
-          path: 'space/apps',
-          name: 'space-apps-list',
-          component: () => import('@/views/space/apps/ListView.vue'),
-        },
-        // 自定义API插件列表页
-        {
-          path: 'space/tools',
-          name: 'space-tools-list',
-          component: () => import('@/views/space/tools/ListView.vue'),
+          path: 'space',
+          component: () => import('@/views/space/SpaceLayoutView.vue'),
+          children: [
+            // 应用列表页
+            {
+              path: 'apps',
+              name: 'space-apps-list',
+              component: () => import('@/views/space/apps/ListView.vue'),
+            },
+            // 自定义API插件列表页
+            {
+              path: 'tools',
+              name: 'space-tools-list',
+              component: () => import('@/views/space/tools/ListView.vue'),
+            },
+            // 工作流
+            {
+              path: 'workflows',
+              name: 'space-workflows-list',
+              component: () => import('@/views/space/workflows/ListView.vue'),
+            },
+            // 知识库
+            {
+              path: 'datasets',
+              name: 'space-datasets-list',
+              component: () => import('@/views/space/datasets/ListView.vue'),
+            }
+          ],
         },
         // 应用广场页
         {
@@ -49,7 +67,7 @@ const router = createRouter({
           path: 'open',
           name: 'open-index',
           component: () => import('@/views/open/IndexView.vue'),
-        }
+        },
       ],
     },
     {

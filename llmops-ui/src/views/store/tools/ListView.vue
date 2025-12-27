@@ -122,8 +122,8 @@
           <!-- 分隔符 -->
           <hr class="my-4" />
           <!-- 提供者工具 -->
-          <div class="flex flex-col">
-            <div class="mb-3 text-xs text-gray-500">
+          <div class="flex flex-col gap-2">
+            <div class="text-xs text-gray-500">
               包含 {{ currentShowProvider.tools?.length }} 个工具
             </div>
             <!-- 工具列表 -->
@@ -149,7 +149,7 @@
                     <!-- 上半部分 -->
                     <div class="flex items-center gap-2 text-xs">
                       <div class="text-gray-900 font-bold">{{ input.name }}</div>
-                      <div class="text-gray-500">{{ input.type }}</div>
+                      <div class="text-gray-500">{{ typeMap[input.type] }}</div>
                       <div v-if="input.required" class="text-red-700">必填</div>
                     </div>
                     <!-- 参数描述信息 -->
@@ -166,7 +166,7 @@
 </template>
 
 <script setup lang="ts">
-import { apiPrefix } from '@/config'
+import { apiPrefix, typeMap } from '@/config'
 import type { BuiltinProviderItem, CategoryItem } from '@/models/builtin-tool'
 import { getBuiltinTools, getCategories } from '@/services/builtin-tool'
 import moment from 'moment'
