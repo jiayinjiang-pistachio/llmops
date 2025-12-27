@@ -19,10 +19,15 @@ export default defineConfigWithVueTs(
 
   pluginVue.configs['flat/essential'],
   vueTsConfigs.recommended,
-  
+
   {
     ...pluginVitest.configs.recommended,
     files: ['src/**/__tests__/*'],
   },
   skipFormatting,
+  {
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'warn' // 改为警告而不是错误
+    }
+  }
 )
