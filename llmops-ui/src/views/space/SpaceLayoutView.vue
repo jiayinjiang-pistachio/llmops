@@ -1,5 +1,5 @@
 <template>
-  <div class="px-6 flex flex-col overflow-hidden h-full">
+  <div class="px-6 flex flex-col overflow-hidden h-full bg-gray-50">
     <div class="pt-6 sticky top-0 z-20 bg-gray-50">
       <!-- 顶层标题+创建按钮 -->
       <div class="flex items-center justify-between mb-6">
@@ -59,6 +59,7 @@
         </div>
         <!-- 右侧搜索 -->
         <a-input-search
+          v-model="searchWord"
           placeholder="请输出搜索词"
           class="w-[240px] bg-white rounded-lg border-gray-300"
           @search="search"
@@ -71,7 +72,7 @@
 </template>
 
 <script setup lang="ts">
-import {} from 'vue'
+import { ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
@@ -86,4 +87,12 @@ const search = (value: string) => {
     path: route.path,
   })
 }
+
+const searchWord = ref<string>((route.query.search as string) || '')
+watch(
+  () => route.query.search,
+  (newVal) => {
+    searchWord.value = (newVal as string) || ''
+  },
+)
 </script>
