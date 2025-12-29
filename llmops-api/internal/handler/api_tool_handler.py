@@ -16,7 +16,7 @@ from internal.schema import ValidateOpenAPISchemaReq, CreateAPIToolReq, GetApiTo
     GetApiToolProvidersWithPageReq, GetApiToolProvidersWithPageResp, UpdateApiToolProviderReq
 from internal.service import APiToolService
 from pkg.paginator import PageModel
-from pkg.response import validate_error_json, success_json
+from pkg.response import validate_error_json, success_json, success_message
 
 
 @inject
@@ -34,7 +34,7 @@ class ApiToolHandler:
 
         self.api_tool_service.parse_openapi_schema(req.openapi_schema.data)
 
-        return success_json("数据校验成功")
+        return success_message("openapi_schema数据校验成功")
 
     def create_api_tool_provider(self):
         """创建自定义API工具"""
@@ -45,7 +45,7 @@ class ApiToolHandler:
 
         self.api_tool_service.create_api_tool(req)
 
-        return success_json("创建自定义API插件成功")
+        return success_message("创建自定义API插件成功")
 
     def get_api_tool_provider(self, provider_id: UUID):
         """根据传递的provider_id获取工具提供者的原始信息"""
@@ -67,7 +67,7 @@ class ApiToolHandler:
         """根据传递的provider_id删除对应的工具提供者信息"""
         self.api_tool_service.delete_api_tool_provider(provider_id)
 
-        return success_json("删除自定义API插件成功")
+        return success_message("删除自定义API插件成功")
 
     def get_api_tool_providers_with_page(self):
         """获取API工具提供者列表信息，该接口支持分页"""
@@ -91,4 +91,4 @@ class ApiToolHandler:
 
         self.api_tool_service.update_api_tool_provider(provider_id, req)
 
-        return success_json("更新自定义API插件成功")
+        return success_message("更新自定义API插件成功")

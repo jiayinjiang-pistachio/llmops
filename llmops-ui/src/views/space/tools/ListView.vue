@@ -85,12 +85,17 @@
           {{ currentShowProvider.description }}
         </div>
         <!-- 编辑按钮 -->
-         <a-button class="rounded-lg mb-2" long>
+        <a-button
+          class="rounded-lg mb-2"
+          long
+          :loading="showUpdateModalMoading"
+          @click="handleUpdate"
+        >
           <template #icon>
             <icon-settings />
           </template>
           编辑工具
-         </a-button>
+        </a-button>
         <!-- 分隔符 -->
         <hr class="my-4" />
         <!-- 提供者工具 -->
@@ -135,16 +140,17 @@
     </a-drawer>
     <!-- 新建/修改模态窗 -->
     <a-modal
-      :visible="false"
+      :visible="createType === 'tool' || showUpdateModal"
       :hide-title="true"
       :footer="false"
       :width="630"
       modal-class="rounded-lg"
+      @cancel="handleCancel"
     >
       <!-- 顶部标题 -->
       <div class="flex items-center justify-between">
-        <div class="text-lg font-bold text-gray-700">新建插件</div>
-        <a-button type="text" class="!text-gray-700" size="small">
+        <div class="text-lg font-bold text-gray-700">{{ modalTitle }}</div>
+        <a-button type="text" class="!text-gray-700" size="small" @click="handleCancel">
           <template #icon>
             <icon-close />
           </template>
@@ -152,13 +158,14 @@
       </div>
       <!-- 中间表单 -->
       <div class="pt-6">
-        <a-form layout="vertical">
+        <a-form ref="formRef" :model="form" layout="vertical" @submit="handleSubmit">
           <a-form-item
             field="icon"
             hide-label
             :rules="[{ required: true, message: '插件图标不能为空' }]"
           >
             <a-upload
+              v-model="form.icon"
               :limit="1"
               list-type="picture-card"
               accept="image/png, image/jpeg"
@@ -172,6 +179,7 @@
             :rules="[{ required: true, message: '插件名称不能为空' }]"
           >
             <a-input
+              v-model="form.name"
               placeholder="请输入插件名称，确保名称含义清晰"
               show-word-limit
               :max-length="60"
@@ -184,8 +192,10 @@
             :rules="[{ required: true, message: 'OpenAPI Schema 不能为空' }]"
           >
             <a-textarea
+              v-model="form.openapi_schema"
               :auto-size="{ minRows: 4, maxRows: 6 }"
               placeholder="在此处输入您的 OpenAPI Schema"
+              @blur="handleValidateOpenapiSchema"
             />
           </a-form-item>
           <a-form-item label="可用工具">
@@ -201,11 +211,15 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="border-b last:border-0 border-gray-200 text-gray-700">
-                    <td class="p-2 pl-3">GetCurrentWeather</td>
-                    <td class="p-2 pl-3 w-[236px]">这是一个获取天气预报的工具</td>
-                    <td class="p-2 pl-3">get</td>
-                    <td class="p-2 pl-3 w-[62px]">/location</td>
+                  <tr
+                    v-for="(tool, idx) in tools"
+                    :key="idx"
+                    class="border-b last:border-0 border-gray-200 text-gray-700"
+                  >
+                    <td class="p-2 pl-3">{{ tool.name }}</td>
+                    <td class="p-2 pl-3 w-[236px]">{{ tool.description }}</td>
+                    <td class="p-2 pl-3">{{ tool.method }}</td>
+                    <td class="p-2 pl-3 w-[62px]">{{ tool.path }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -222,20 +236,29 @@
                     <th class="p-2 pl-3 font-medium w-[50px]">操作</th>
                   </tr>
                 </thead>
-                <tbody class="border-b border-gray-200">
-                  <tr class="bordre-b last:border-0 border-gray-200">
+                <tbody v-if="form.headers.length > 0" class="border-b border-gray-200">
+                  <tr
+                    v-for="(header, idx) in form.headers"
+                    :key="idx"
+                    class="bordre-b last:border-0 border-gray-200"
+                  >
                     <td class="p-2 pl-3">
-                      <a-form-item hide-label class="m-0">
-                        <a-input placeholder="请输入请求头键名" />
+                      <a-form-item :field="`headers[${idx}].key`" hide-label class="m-0">
+                        <a-input v-model="header.key" placeholder="请输入请求头键名" />
                       </a-form-item>
                     </td>
                     <td class="p-2 pl-3">
-                      <a-form-item hide-label class="m-0">
-                        <a-input placeholder="请输入请求头键值内容" />
+                      <a-form-item :field="`headers[${idx}].value`" hide-label class="m-0">
+                        <a-input v-model="header.value" placeholder="请输入请求头键值内容" />
                       </a-form-item>
                     </td>
                     <td class="p-2 pl-3">
-                      <a-button size="mini" type="text" class="!text-gray-700">
+                      <a-button
+                        size="mini"
+                        type="text"
+                        class="!text-gray-700"
+                        @click="form.headers.splice(idx, 1)"
+                      >
                         <template #icon>
                           <icon-delete />
                         </template>
@@ -244,7 +267,11 @@
                   </tr>
                 </tbody>
               </table>
-              <a-button size="mini" class="rounded ml-3 mb-3 !text-gray-700">
+              <a-button
+                size="mini"
+                class="rounded ml-3 mb-3 !text-gray-700"
+                @click="form.headers.push({ key: '', value: '' })"
+              >
                 <template #icon>
                   <icon-plus />
                 </template>
@@ -255,11 +282,22 @@
           <!-- 底部按钮 -->
           <div class="flex items-center justify-between">
             <div>
-              <a-button class="rounded-lg !text-red-700">删除</a-button>
+              <a-button
+                v-if="showUpdateModal"
+                class="rounded-lg !text-red-700"
+                @click="handleDelete"
+                >删除</a-button
+              >
             </div>
             <a-space :size="16">
-              <a-button class="rounded-lg">取消</a-button>
-              <a-button class="rounded-lg" type="primary" html-type="submit">保存</a-button>
+              <a-button class="rounded-lg" @click="handleCancel">取消</a-button>
+              <a-button
+                :loading="submitLoading"
+                class="rounded-lg"
+                type="primary"
+                html-type="submit"
+                >保存</a-button
+              >
             </a-space>
           </div>
         </a-form>
@@ -273,10 +311,64 @@
 <script setup lang="ts">
 import { typeMap } from '@/config'
 import type { ApiToolProviderItem } from '@/models/api-tool'
-import { getApiToolProvidersWithPage } from '@/services/api-tool'
+import {
+  createApiProvider,
+  deleteApiToolProvider,
+  getApiToolProvider,
+  getApiToolProvidersWithPage,
+  updateAPiToolProvider,
+  validateOpenAPISchema,
+} from '@/services/api-tool'
 import moment from 'moment'
-import { onMounted, reactive, ref, computed, watch } from 'vue'
+import { onMounted, reactive, ref, computed, watch, useTemplateRef } from 'vue'
 import { useRoute } from 'vue-router'
+import { Message, Modal, type FormInstance } from '@arco-design/web-vue'
+
+const props = defineProps<{
+  createType: string
+}>()
+const emit = defineEmits<{
+  (e: 'update-create-type', value: string): void
+}>()
+const showUpdateModal = ref(false)
+const showUpdateModalMoading = ref(false)
+const submitLoading = ref(false)
+const providerId = computed(() => providers[showIdx.value]?.id)
+const modalTitle = computed(() => (props.createType === 'tool' ? '新建插件' : '编辑插件'))
+
+const handleCancel = () => {
+  // 1. 重置整个表单的数据
+  formRef.value?.resetFields()
+
+  // 隐藏表单模态窗
+  emit('update-create-type', '')
+  showUpdateModal.value = false
+}
+
+const handleUpdate = async () => {
+  try {
+    showUpdateModalMoading.value = true
+    // 根据拿到的provider_id去获取对应的提供商信息
+    if (providerId.value == undefined) {
+      return
+    }
+
+    const resp = await getApiToolProvider(providerId.value)
+    const data = resp.data
+
+    // 更新form表单数据
+    formRef.value?.resetFields?.()
+    form.icon = data.icon
+    form.name = data.name
+    form.openapi_schema = data.openapi_schema
+    form.headers = data.headers
+  } catch (error) {
+    console.log(error)
+  } finally {
+    showUpdateModalMoading.value = false
+    showUpdateModal.value = true
+  }
+}
 
 const providers = reactive<ApiToolProviderItem[]>([])
 const paginator = reactive({
@@ -288,15 +380,19 @@ const paginator = reactive({
 const loading = ref(false)
 const route = useRoute()
 
+const initData = async () => {
+  // 重置分页器
+  paginator.current_page = 1
+  paginator.total_page = 0
+  paginator.total_record = 0
+  // 加载数据
+  await loadMoreData(true)
+}
+
 watch(
   () => route.query.search,
   async () => {
-    // 重置分页器
-    paginator.current_page = 1
-    paginator.total_page = 0
-    paginator.total_record = 0
-    // 加载数据
-    await loadMoreData(true)
+    await initData()
   },
 )
 const loadMoreData = async (init = false) => {
@@ -345,9 +441,118 @@ const handleScroll = async (event: Event) => {
 }
 
 onMounted(async () => {
-  await loadMoreData(true)
+  await initData()
 })
 
 const showIdx = ref(-1)
 const currentShowProvider = computed(() => providers[showIdx.value] ?? ({} as ApiToolProviderItem))
+
+const form = reactive({
+  icon: 'https://picsum.photos/400',
+  name: '',
+  openapi_schema: '',
+  headers: [] as Array<{ key: string; value: any }>,
+})
+const tools = computed(() => {
+  try {
+    const avaliableTools = []
+    // 解析openapi_schema
+    const oepnapi_schema = JSON.parse(form.openapi_schema)
+
+    // 检测是否存在path路径
+    if ('paths' in oepnapi_schema) {
+      // 循环所有path并提取工具
+      for (const path in oepnapi_schema.paths) {
+        // 遍历path下的get/post方法
+        const methods = oepnapi_schema.paths[path]
+        for (const method in methods) {
+          if (['get', 'post'].includes(method)) {
+            // 提供工具信息，并校验是否存在name、description字段
+            const tool = methods[method]
+            if ('operationId' in tool && 'description' in tool) {
+              avaliableTools.push({
+                name: tool.operationId as string,
+                description: tool.description as string,
+                method: method as string,
+                path: path as string,
+              })
+            }
+          }
+        }
+      }
+    }
+
+    return avaliableTools
+  } catch (error) {
+    console.log('解析openapi_schema出错', error)
+    return []
+  }
+})
+const handleValidateOpenapiSchema = async () => {
+  if (form.openapi_schema.trim() !== '') {
+    // 调用验证open_api接口
+    await validateOpenAPISchema(form.openapi_schema)
+  }
+}
+
+const formRef = useTemplateRef<FormInstance>('formRef')
+
+const handleSubmit = async ({ values, errors }: { values: any; errors: any }) => {
+  if (errors) {
+    return
+  }
+
+  try {
+    submitLoading.value = true
+    if (props.createType === 'tool') {
+      const resp = await createApiProvider(values)
+      Message.success(resp.message)
+    } else if (showUpdateModal.value) {
+      if (providerId.value == undefined) {
+        Message.error('api工具提供商id不存在')
+        return
+      }
+      const resp = await updateAPiToolProvider(providerId.value, values)
+      Message.success(resp.message)
+    }
+
+    // 执行后续操作，隐藏模态窗、隐藏抽屉
+    handleCancel()
+    showIdx.value = -1
+
+    // 重新加载数据
+    await initData()
+  } catch (error) {
+    console.log(error)
+  } finally {
+    submitLoading.value = false
+  }
+}
+
+const handleDelete = () => {
+  Modal.warning({
+    title: '删除这个工具？',
+    content: '删除操作不可逆，AI应用将无法再访问您的工具',
+    hideCancel: false,
+    onOk: async () => {
+      try {
+        if (providerId.value == undefined) {
+          Message.error('该工具的提供商id不存在')
+          return
+        }
+
+        const resp = await deleteApiToolProvider(providerId.value)
+        Message.success(resp.message)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        handleCancel()
+        showIdx.value = -1
+
+        // 重新加载数据
+        await initData()
+      }
+    },
+  })
+}
 </script>

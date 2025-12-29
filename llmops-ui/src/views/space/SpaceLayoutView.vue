@@ -14,7 +14,11 @@
         <a-button v-if="route.path.startsWith('/space/apps')" type="primary" class="rounded-lg"
           >创建AI应用</a-button
         >
-        <a-button v-if="route.path.startsWith('/space/tools')" type="primary" class="rounded-lg"
+        <a-button
+          v-if="route.path.startsWith('/space/tools')"
+          type="primary"
+          class="rounded-lg"
+          @click="createType = 'tool'"
           >创建自定义插件</a-button
         >
         <a-button v-if="route.path.startsWith('/space/workflows')" type="primary" class="rounded-lg"
@@ -67,7 +71,7 @@
       </div>
     </div>
     <!-- 中间内容 -->
-    <router-view />
+    <router-view :create-type="createType" @update-create-type="updateCreateType" />
   </div>
 </template>
 
@@ -95,4 +99,9 @@ watch(
     searchWord.value = (newVal as string) || ''
   },
 )
+
+const createType = ref('')
+const updateCreateType = (type: string) => {
+  createType.value = type
+}
 </script>
