@@ -216,11 +216,12 @@ class APiToolService(BaseService):
             api_tool_provider,
             name=req.name.data,
             icon=req.icon.data,
+            description=openapi_schema.description,
             headers=req.headers.data,
             openapi_schema=req.openapi_schema.data,
         )
 
-        # 7. 新增工具信息从而完成风覆盖更新
+        # 7. 新增工具信息从而完成覆盖更新
         for path, path_item in openapi_schema.paths.items():
             for method, method_item in path_item.items():
                 self.create(
