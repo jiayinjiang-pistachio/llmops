@@ -16,5 +16,12 @@ DEFAULT_CONFIG = {
     "SQLALCHEMY_POOL_SIZE": 30,
     # 每个连接最长时间
     "SQLALCHEMY_POOL_RECYCLE": 3600,
-    "SQLALCHEMY_ECHO": "True"
+    "SQLALCHEMY_ECHO": "True",
+
+    "REDIS_HOST": "localhost",
+    "REDIS_PORT": 6379,
+    "REDIS_USERNAME": "",
+    "REDIS_PASSWORD": "",
+    "REDIS_DB": 0,
+    "REDIS_USE_SSL": "False",
 }

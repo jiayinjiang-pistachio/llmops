@@ -11,3 +11,21 @@
 
 ```
 
+# docker 安装redis
+
+```bash
+# 拉取镜像
+docker pull redis
+
+# 运行 redis容器
+docker run --name redis-dev -d -p 6379:6379 redis
+
+# 在docker中连接 redis:
+docker exec -it redis-dev redis-cli
+
+# 启动容器
+docker start redis-dev
+
+# 停止容器
+docker stop redis-dev
+```
