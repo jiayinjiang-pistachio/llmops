@@ -24,7 +24,7 @@ class UploadFile(db.Model):
     key = Column(String(255), nullable=False, server_default=text("''::character varying"))
     size = Column(Integer, nullable=False, server_default=text('0'))
     extension = Column(String(255), nullable=False, server_default=text("''::character varying"))
-    mim_type = Column(String(255), nullable=False, server_default=text("''::character varying"))
+    mime_type = Column(String(255), nullable=False, server_default=text("''::character varying"))
     hash = Column(String(255), nullable=False, server_default=text("''::character varying"))
     updated_at = Column(
         DateTime,

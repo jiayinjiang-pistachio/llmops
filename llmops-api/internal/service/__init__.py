@@ -11,6 +11,9 @@ from .api_tool_service import APiToolService
 from .app_service import AppService
 from .base_service import BaseService
 from .builtin_tool_service import BuiltinToolService
+from .cos_service import CosService
+from .upload_file_srevice import UploadFileService
 from .vector_database_service import VectorDatabaseService
 
-__all__ = ["AppService", "VectorDatabaseService", "BuiltinToolService", "APiToolService", "BaseService"]
+__all__ = ["AppService", "VectorDatabaseService", "BuiltinToolService", "APiToolService", "BaseService", "CosService",
+           "UploadFileService"]

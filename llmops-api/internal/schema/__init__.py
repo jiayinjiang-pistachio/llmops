@@ -10,7 +10,8 @@ from .api_tool_schema import ValidateOpenAPISchemaReq, CreateAPIToolReq, GetApiT
     GetApiToolProvidersWithPageReq, GetApiToolProvidersWithPageResp, UpdateApiToolProviderReq
 from .app_schema import CompletionReq
 from .schema import ListField
+from .upload_file_schema import UploadImageReq, UploadFileResp, UploadFileReq
 
 __all__ = ["CompletionReq", "ValidateOpenAPISchemaReq", "ListField", "CreateAPIToolReq", "GetApiToolResp",
            "GetApiToolProviderResp", "GetApiToolProvidersWithPageReq", "GetApiToolProvidersWithPageResp",
-           "UpdateApiToolProviderReq", ]
+           "UpdateApiToolProviderReq", "UploadFileReq", "UploadFileResp", "UploadImageReq"]

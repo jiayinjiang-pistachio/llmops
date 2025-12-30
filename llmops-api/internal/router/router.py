@@ -12,7 +12,7 @@ from flask import Blueprint  # 修正：从 flask 直接导入 Blueprint
 from flask import Flask
 from injector import inject
 
-from internal.handler import AppHandler, BuiltinToolHandler
+from internal.handler import AppHandler, BuiltinToolHandler, UploadFileHandler
 from internal.handler.api_tool_handler import ApiToolHandler
 
 
@@ -23,6 +23,7 @@ class Router:
     app_handler: AppHandler
     builtin_tool_handler: BuiltinToolHandler
     api_tool_handler: ApiToolHandler
+    upload_file_handler: UploadFileHandler
 
     def register_router(self, app: Flask):
         """注册路由"""
@@ -57,6 +58,10 @@ class Router:
         bp.add_url_rule("/api-tools", view_func=self.api_tool_handler.get_api_tool_providers_with_page)
         bp.add_url_rule("/api-tools/<uuid:provider_id>", view_func=self.api_tool_handler.update_api_tool_provider,
                         methods=["POST"])
+
+        # 上传文件模块
+        bp.add_url_rule("/upload-files/file", methods=["POST"], view_func=self.upload_file_handler.upload_file)
+        bp.add_url_rule("/upload-files/image", methods=["POST"], view_func=self.upload_file_handler.upload_image)
 
         # 4. 在应用上去注册蓝图
         app.register_blueprint(bp)
