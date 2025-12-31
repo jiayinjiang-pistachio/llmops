@@ -69,6 +69,7 @@ class Router:
         bp.add_url_rule("/datasets", methods=["POST"], view_func=self.dataset_handler.create_dataset)
         bp.add_url_rule("/datasets/<uuid:dataset_id>", view_func=self.dataset_handler.get_dataset)
         bp.add_url_rule("/datasets/<uuid:dataset_id>", methods=["POST"], view_func=self.dataset_handler.update_dataset)
+        bp.add_url_rule("/datasets/embeddings", view_func=self.dataset_handler.embeddings_query)
 
         # 4. 在应用上去注册蓝图
         app.register_blueprint(bp)
