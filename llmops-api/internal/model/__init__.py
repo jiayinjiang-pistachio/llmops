@@ -7,7 +7,9 @@
 @Description    : 存储数据库相关的类名（数据库中表对应的类信息）
 """
 from .api_tool import ApiToolProvider, ApiTool
-from .app import App
+from .app import App, AppDatasetJoin
+from .dataset import Dataset, Document, Segment, DatasetQuery, KeywordTable, ProcessRule
 from .upload_file import UploadFile
 
-__all__ = ["App", "ApiTool", "ApiToolProvider", "UploadFile"]
+__all__ = ["App", "ApiTool", "ApiToolProvider", "UploadFile", "Dataset", "DatasetQuery", "Document", "KeywordTable",
+           "ProcessRule", "Segment", "AppDatasetJoin"]
