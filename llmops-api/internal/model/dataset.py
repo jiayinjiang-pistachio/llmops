@@ -175,7 +175,7 @@ class KeywordTable(db.Model):
 
     id = Column(UUID, nullable=False, server_default=text("uuid_generate_v4()"))
     dataset_id = Column(UUID, nullable=False)
-    keyword_table = Column(JSONB, nullable=False, sever_default=text("'{}'::jsonb"))
+    keyword_table = Column(JSONB, nullable=False, server_default=text("'{}'::jsonb"))
     updated_at = Column(
         DateTime,
         server_default=text('CURRENT_TIMESTAMP(0)'),

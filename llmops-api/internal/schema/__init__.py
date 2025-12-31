@@ -9,9 +9,12 @@
 from .api_tool_schema import ValidateOpenAPISchemaReq, CreateAPIToolReq, GetApiToolResp, GetApiToolProviderResp, \
     GetApiToolProvidersWithPageReq, GetApiToolProvidersWithPageResp, UpdateApiToolProviderReq
 from .app_schema import CompletionReq
+from .dataset_schema import CreateDatasetReq, GetDatasetsWithPageReq, GetDatasetResp, UpdateDatasetReq, \
+    GetDatasetsWithPageResp
 from .schema import ListField
 from .upload_file_schema import UploadImageReq, UploadFileResp, UploadFileReq
 
 __all__ = ["CompletionReq", "ValidateOpenAPISchemaReq", "ListField", "CreateAPIToolReq", "GetApiToolResp",
            "GetApiToolProviderResp", "GetApiToolProvidersWithPageReq", "GetApiToolProvidersWithPageResp",
-           "UpdateApiToolProviderReq", "UploadFileReq", "UploadFileResp", "UploadImageReq"]
+           "UpdateApiToolProviderReq", "UploadFileReq", "UploadFileResp", "UploadImageReq", "CreateDatasetReq",
+           "GetDatasetsWithPageReq", "UpdateDatasetReq", "GetDatasetsWithPageResp", "GetDatasetResp"]

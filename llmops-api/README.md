@@ -29,3 +29,9 @@ docker start redis-dev
 # 停止容器
 docker stop redis-dev
 ```
+
+# 解决端口占用问题
+
+```
+sudo kill -9 PIP_ID
+```
