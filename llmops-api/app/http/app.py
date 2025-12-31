@@ -33,6 +33,8 @@ app = Http(
     router=injector.get(Router)
 )
 
+celery = app.extensions["celery"]
+
 # 如果文件被执行
 if __name__ == "__main__":
     app.run(debug=True)

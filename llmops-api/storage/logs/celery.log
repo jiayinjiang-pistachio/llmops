@@ -1,0 +1,148 @@
+[2025-12-31 13:04:28,448: INFO/MainProcess] Connected to redis://8.138.175.92:6379/1
+[2025-12-31 13:04:28,527: INFO/MainProcess] mingle: searching for neighbors
+[2025-12-31 13:04:29,709: INFO/MainProcess] mingle: all alone
+[2025-12-31 13:04:30,127: INFO/MainProcess] celery@jiangjiayindeMacBook-Pro.local ready.
+[2025-12-31 13:11:35,851: INFO/MainProcess] Connected to redis://8.138.175.92:6379/1
+[2025-12-31 13:11:35,912: INFO/MainProcess] mingle: searching for neighbors
+[2025-12-31 13:11:37,107: INFO/MainProcess] mingle: all alone
+[2025-12-31 13:11:37,493: INFO/MainProcess] celery@jiangjiayindeMacBook-Pro.local ready.
+[2025-12-31 13:16:24,923: INFO/MainProcess] Task internal.task.demo_task.demo_task[fe808501-27e5-4658-bf32-a77725779cb1] received
+[2025-12-31 13:16:24,985: INFO/ForkPoolWorker-7] 睡眠5秒
+[2025-12-31 13:16:29,995: INFO/ForkPoolWorker-7] id的值:a72e9610-6d96-4c49-836d-4d8392ed74bf
+[2025-12-31 13:16:30,008: INFO/ForkPoolWorker-7] 配置信息:<Config {'DEBUG': False, 'TESTING': False, 'PROPAGATE_EXCEPTIONS': None, 'SECRET_KEY': None, 'SECRET_KEY_FALLBACKS': None, 'PERMANENT_SESSION_LIFETIME': datetime.timedelta(days=31), 'USE_X_SENDFILE': False, 'TRUSTED_HOSTS': None, 'SERVER_NAME': None, 'APPLICATION_ROOT': '/', 'SESSION_COOKIE_NAME': 'session', 'SESSION_COOKIE_DOMAIN': None, 'SESSION_COOKIE_PATH': None, 'SESSION_COOKIE_HTTPONLY': True, 'SESSION_COOKIE_SECURE': False, 'SESSION_COOKIE_PARTITIONED': False, 'SESSION_COOKIE_SAMESITE': None, 'SESSION_REFRESH_EACH_REQUEST': True, 'MAX_CONTENT_LENGTH': None, 'MAX_FORM_MEMORY_SIZE': 500000, 'MAX_FORM_PARTS': 1000, 'SEND_FILE_MAX_AGE_DEFAULT': None, 'TRAP_BAD_REQUEST_ERRORS': None, 'TRAP_HTTP_EXCEPTIONS': False, 'EXPLAIN_TEMPLATE_LOADING': False, 'PREFERRED_URL_SCHEME': 'http', 'TEMPLATES_AUTO_RELOAD': None, 'MAX_COOKIE_SIZE': 4093, 'PROVIDE_AUTOMATIC_OPTIONS': True, 'CELERY': {'broker_url': 'redis://8.138.175.92:6379/1', 'result_backend': 'redis://8.138.175.92:6379/1', 'task_ignore_result': False, 'result_expires': 3600, 'broker_connection_retry_on_startup': True}, 'REDIS_DB': '0', 'REDIS_HOST': '8.138.175.92', 'REDIS_PASSWORD': '', 'REDIS_PORT': '6379', 'REDIS_USERNAME': '', 'REDIS_USE_SSL': False, 'SQLALCHEMY_DATABASE_URI': 'postgresql://postgres:123456@localhost:5432/llmops?client_encoding=utf8', 'SQLALCHEMY_ECHO': True, 'SQLALCHEMY_ENGINE_OPTIONS': {'pool_size': 30, 'pool_recycle': 3600}, 'WTF_CSRF_ENABLED': False, 'SQLALCHEMY_BINDS': {}, 'SQLALCHEMY_RECORD_QUERIES': False, 'SQLALCHEMY_TRACK_MODIFICATIONS': False}>
+[2025-12-31 13:16:30,180: INFO/ForkPoolWorker-7] Task internal.task.demo_task.demo_task[fe808501-27e5-4658-bf32-a77725779cb1] succeeded in 5.206833607997396s: '鹅百创'
+[2025-12-31 13:20:58,668: INFO/MainProcess] Task internal.task.demo_task.demo_task[67e4fbac-f98b-48e1-b282-fc59a30e0cc5] received
+[2025-12-31 13:20:58,719: INFO/ForkPoolWorker-7] 睡眠5秒
+[2025-12-31 13:21:03,730: INFO/ForkPoolWorker-7] id的值:42a57967-091b-4e1f-9952-a4af539efd0e
+[2025-12-31 13:21:03,734: INFO/ForkPoolWorker-7] 配置信息:<Config {'DEBUG': False, 'TESTING': False, 'PROPAGATE_EXCEPTIONS': None, 'SECRET_KEY': None, 'SECRET_KEY_FALLBACKS': None, 'PERMANENT_SESSION_LIFETIME': datetime.timedelta(days=31), 'USE_X_SENDFILE': False, 'TRUSTED_HOSTS': None, 'SERVER_NAME': None, 'APPLICATION_ROOT': '/', 'SESSION_COOKIE_NAME': 'session', 'SESSION_COOKIE_DOMAIN': None, 'SESSION_COOKIE_PATH': None, 'SESSION_COOKIE_HTTPONLY': True, 'SESSION_COOKIE_SECURE': False, 'SESSION_COOKIE_PARTITIONED': False, 'SESSION_COOKIE_SAMESITE': None, 'SESSION_REFRESH_EACH_REQUEST': True, 'MAX_CONTENT_LENGTH': None, 'MAX_FORM_MEMORY_SIZE': 500000, 'MAX_FORM_PARTS': 1000, 'SEND_FILE_MAX_AGE_DEFAULT': None, 'TRAP_BAD_REQUEST_ERRORS': None, 'TRAP_HTTP_EXCEPTIONS': False, 'EXPLAIN_TEMPLATE_LOADING': False, 'PREFERRED_URL_SCHEME': 'http', 'TEMPLATES_AUTO_RELOAD': None, 'MAX_COOKIE_SIZE': 4093, 'PROVIDE_AUTOMATIC_OPTIONS': True, 'CELERY': {'broker_url': 'redis://8.138.175.92:6379/1', 'result_backend': 'redis://8.138.175.92:6379/1', 'task_ignore_result': False, 'result_expires': 3600, 'broker_connection_retry_on_startup': True}, 'REDIS_DB': '0', 'REDIS_HOST': '8.138.175.92', 'REDIS_PASSWORD': '', 'REDIS_PORT': '6379', 'REDIS_USERNAME': '', 'REDIS_USE_SSL': False, 'SQLALCHEMY_DATABASE_URI': 'postgresql://postgres:123456@localhost:5432/llmops?client_encoding=utf8', 'SQLALCHEMY_ECHO': True, 'SQLALCHEMY_ENGINE_OPTIONS': {'pool_size': 30, 'pool_recycle': 3600}, 'WTF_CSRF_ENABLED': False, 'SQLALCHEMY_BINDS': {}, 'SQLALCHEMY_RECORD_QUERIES': False, 'SQLALCHEMY_TRACK_MODIFICATIONS': False}>
+[2025-12-31 13:21:21,993: WARNING/ForkPoolWorker-7] /Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/app/trace.py:705: RuntimeWarning: Exception raised outside body: TimeoutError('Timeout reading from socket'):
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/socket.py", line 65, in _read_from_socket
+    data = self._sock.recv(socket_read_size)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: [Errno 60] Operation timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/app/trace.py", line 550, in trace_task
+    task.backend.mark_as_done(
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/backends/base.py", line 184, in mark_as_done
+    self.store_result(task_id, result, state, request=request)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/backends/base.py", line 625, in store_result
+    self._store_result(task_id, result, state, traceback,
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/backends/base.py", line 1074, in _store_result
+    current_meta = self._get_task_meta_for(task_id)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/backends/base.py", line 1096, in _get_task_meta_for
+    meta = self.get(self.get_key_for_task(task_id))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/backends/redis.py", line 420, in get
+    return self.client.get(key)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/commands/core.py", line 1923, in get
+    return self.execute_command("GET", name, keys=[name])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 657, in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 668, in _execute_command
+    return conn.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/retry.py", line 123, in call_with_retry
+    raise error
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/retry.py", line 116, in call_with_retry
+    return do()
+           ^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 669, in <lambda>
+    lambda: self._send_command_parse_response(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 640, in _send_command_parse_response
+    return self.parse_response(conn, command_name, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 691, in parse_response
+    response = connection.read_response()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/connection.py", line 1133, in read_response
+    response = self._parser.read_response(disable_decoding=disable_decoding)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/resp2.py", line 15, in read_response
+    result = self._read_response(disable_decoding=disable_decoding)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/resp2.py", line 25, in _read_response
+    raw = self._buffer.readline()
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/socket.py", line 115, in readline
+    self._read_from_socket()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/socket.py", line 78, in _read_from_socket
+    raise TimeoutError("Timeout reading from socket")
+redis.exceptions.TimeoutError: Timeout reading from socket
+
+  warn(RuntimeWarning(
+
+[2025-12-31 13:21:22,618: ERROR/ForkPoolWorker-7] Task internal.task.demo_task.demo_task[67e4fbac-f98b-48e1-b282-fc59a30e0cc5] raised unexpected: TimeoutError('Timeout reading from socket')
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/socket.py", line 65, in _read_from_socket
+    data = self._sock.recv(socket_read_size)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: [Errno 60] Operation timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/app/trace.py", line 550, in trace_task
+    task.backend.mark_as_done(
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/backends/base.py", line 184, in mark_as_done
+    self.store_result(task_id, result, state, request=request)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/backends/base.py", line 625, in store_result
+    self._store_result(task_id, result, state, traceback,
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/backends/base.py", line 1074, in _store_result
+    current_meta = self._get_task_meta_for(task_id)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/backends/base.py", line 1096, in _get_task_meta_for
+    meta = self.get(self.get_key_for_task(task_id))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/backends/redis.py", line 420, in get
+    return self.client.get(key)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/commands/core.py", line 1923, in get
+    return self.execute_command("GET", name, keys=[name])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 657, in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 668, in _execute_command
+    return conn.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/retry.py", line 123, in call_with_retry
+    raise error
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/retry.py", line 116, in call_with_retry
+    return do()
+           ^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 669, in <lambda>
+    lambda: self._send_command_parse_response(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 640, in _send_command_parse_response
+    return self.parse_response(conn, command_name, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 691, in parse_response
+    response = connection.read_response()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/connection.py", line 1133, in read_response
+    response = self._parser.read_response(disable_decoding=disable_decoding)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/resp2.py", line 15, in read_response
+    result = self._read_response(disable_decoding=disable_decoding)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/resp2.py", line 25, in _read_response
+    raw = self._buffer.readline()
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/socket.py", line 115, in readline
+    self._read_from_socket()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/socket.py", line 78, in _read_from_socket
+    raise TimeoutError("Timeout reading from socket")
+redis.exceptions.TimeoutError: Timeout reading from socket
+[2025-12-31 13:27:06,358: INFO/MainProcess] Connected to redis://8.138.175.92:6379/1
+[2025-12-31 13:27:06,426: INFO/MainProcess] mingle: searching for neighbors
+[2025-12-31 13:27:07,659: INFO/MainProcess] mingle: all alone
+[2025-12-31 13:27:08,064: INFO/MainProcess] celery@jiangjiayindeMacBook-Pro.local ready.
