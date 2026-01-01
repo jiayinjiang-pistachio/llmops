@@ -81,6 +81,13 @@ class CosService:
 
         return f"{cos_domain}/{key}"
 
+    def download_file(self, key: str, target_file_path: str):
+        """下载cos云端的文件到本地的指定路径"""
+        client = self._get_client()
+        bucket = self._get_bucket()
+
+        client.download_file(bucket, key, target_file_path)
+
     @classmethod
     def _get_client(self) -> CosS3Client:
         """获取腾讯云cos对象存储客户端"""
