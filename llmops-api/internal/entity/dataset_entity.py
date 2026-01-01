@@ -43,3 +43,21 @@ DEFAULT_PROCESS_RULE = {
         }
     }
 }
+
+
+class DocumentStatus(str, Enum):
+    """文档状态类型枚举"""
+    WAITING = "waiting"
+    PARSING = "parsing"
+    SPLITTING = "splitting"
+    INDEXING = "indexing"
+    COMPLETED = "completed"
+    ERROR = "error"
+
+
+class SegmentStatus(str, Enum):
+    """片段状态类型枚举"""
+    WAITING = "waiting"
+    INDEXING = "indexing"
+    COMPLETED = "completed"
+    ERROR = "error"
