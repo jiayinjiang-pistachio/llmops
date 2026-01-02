@@ -17,11 +17,13 @@ from sqlalchemy import desc, asc, func
 
 from internal.entity.dataset_entity import ProcessType, SegmentStatus
 from internal.model import Document, Dataset, UploadFile, ProcessRule, Segment
+from pkg.paginator import Paginator
 from pkg.sqlalchemy import SQLAlchemy
 from .base_service import BaseService
 from ..entity.upload_file_entity import ALLOWED_DOCUMENT_EXTENSION
 from ..exception import ForbiddenException, FailException, NotFoundException
 from ..lib.helper import datetime_to_timestamp
+from ..schema.document_schema import GetDocumentsWithPageReq
 from ..task.document_task import build_documents
 
 
@@ -156,3 +158,61 @@ class DocumentService(BaseService):
             })
 
         return documents_status
+
+    def get_document(self, dataset_id: UUID, document_id: UUID) -> Document:
+        """根据传递的知识库id+文档id获取文档记录信息"""
+        # todo:待完善
+        account_id = "46db30d1-3199-4e79-a0cd-abf12fa6858f"
+
+        document = self.get(Document, document_id)
+        if document is None:
+            raise NotFoundException("该文档不存在，请核实后重试")
+        if document.dataset_id != dataset_id or str(document.account_id) != account_id:
+            raise ForbiddenException("当前用户无权限获取该文档，请核实后重试")
+
+        return document
+
+    def update_document(self, dataset_id, document_id, **kwargs):
+        """根据传递的知识库id+文档id，更新文档信息"""
+        # todo:待完善
+        account_id = "46db30d1-3199-4e79-a0cd-abf12fa6858f"
+
+        document = self.get(Document, document_id)
+        if document is None:
+            raise NotFoundException("该文档不存在，请核实后重试")
+
+        if document.dataset_id != dataset_id or str(document.account_id) != account_id:
+            raise ForbiddenException("当前用户无权限修改该文档，请核实后重试")
+
+        return self.update(document, **kwargs)
+
+    def get_documents_with_page(self, dataset_id: UUID, req: GetDocumentsWithPageReq):
+        """根据传递的知识库id+请求数据获取文档分页列表数据"""
+        # todo:待完善
+        account_id = "46db30d1-3199-4e79-a0cd-abf12fa6858f"
+
+        # 1. 获取知识库并校验权限
+        dataset = self.get(Dataset, dataset_id)
+        if dataset is None or str(dataset.account_id) != account_id:
+            raise ForbiddenException("该知识库不存在，或无权限")
+
+        # 2. 构建分页查询器
+        paginator = Paginator(db=self.db, req=req)
+
+        # 3. 构建筛选器
+        filters = [
+            Document.account_id == account_id,
+            Document.dataset_id == dataset_id,
+        ]
+
+        if req.search_word.data:
+            filters.append(
+                Document.name.ilike(f"%{req.search_word.data}%")
+            )
+
+        # 4. 执行分页并获取数据
+        documents = paginator.paginate(
+            self.db.session.query(Document).filter(*filters).order_by(desc("created_at"))
+        )
+
+        return documents, paginator
