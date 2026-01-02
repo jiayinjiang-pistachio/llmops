@@ -16,6 +16,7 @@ from .dataset_service import DatasetService
 from .document_service import DocumentService
 from .embeddings_service import EmbeddingsService
 from .jieba_service import JiebaService
+from .keyword_table_service import KeywordTableService
 from .process_rule_service import ProcessRuleService
 from .upload_file_srevice import UploadFileService
 from .vector_database_service import VectorDatabaseService
@@ -27,4 +28,5 @@ __all__ = [
     "UploadFileService", "DatasetService",
     "EmbeddingsService", "JiebaService",
     "DocumentService", "ProcessRuleService",
+    "KeywordTableService"
 ]

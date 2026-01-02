@@ -21,6 +21,7 @@ from pkg.sqlalchemy import SQLAlchemy
 from .base_service import BaseService
 from ..entity.upload_file_entity import ALLOWED_DOCUMENT_EXTENSION
 from ..exception import ForbiddenException, FailException
+from ..task.document_task import build_documents
 
 
 @inject
@@ -83,12 +84,13 @@ class DocumentService(BaseService):
                 upload_file_id=upload_file.id,
                 process_rule_id=process_rule.id,
                 batch=batch,
+                name=upload_file.name,
                 position=position,
             )
             documents.append(document)
 
         # 7. 调用异步任务，完成后续操作
-        # todo
+        build_documents.delay([document.id for document in documents])
 
         # 8. 返回
         return documents, batch

@@ -33,4 +33,4 @@ class DocumentHandler:
         # 3. 生成响应数据结构并返回
         resp = CreateDocumentsResp()
 
-        return success_json(resp.dump(documents, batch))
+        return success_json(resp.dump((documents, batch)))
