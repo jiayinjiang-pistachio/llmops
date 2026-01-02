@@ -34,3 +34,9 @@ class DocumentHandler:
         resp = CreateDocumentsResp()
 
         return success_json(resp.dump((documents, batch)))
+
+    def get_document_status(self, dataset_id: UUID, batch: str):
+        """根据传递的知识库id+批处理标识获取文档的状态"""
+        documents_status = self.document_service.get_document_status(dataset_id, batch)
+
+        return success_json(documents_status)
