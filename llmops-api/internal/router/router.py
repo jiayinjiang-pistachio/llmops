@@ -83,6 +83,8 @@ class Router:
                         view_func=self.document_handler.update_document_name)
         bp.add_url_rule("/datasets/<uuid:dataset_id>/documents/<uuid:document_id>/enabled", methods=["POST"],
                         view_func=self.document_handler.update_document_enabled)
+        bp.add_url_rule("/datasets/<uuid:dataset_id>/documents/<uuid:document_id>/delete", methods=["POST"],
+                        view_func=self.document_handler.delete_document)
         bp.add_url_rule("/datasets/<uuid:dataset_id>/hit", methods=["POST"], view_func=self.dataset_handler.hit)
 
         # 4. 在应用上去注册蓝图

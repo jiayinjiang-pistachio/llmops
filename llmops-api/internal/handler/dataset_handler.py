@@ -57,7 +57,7 @@ class DatasetHandler:
                     Filter.by_property("document_enabled").equal(True),
                     Filter.by_property("segment_enabled").equal(True),
                     Filter.any_of([
-                        # Filter.by_property("dataset_id").equal(dataset_id),
+                        Filter.by_property("dataset_id").equal(dataset_id),
                         Filter.by_property("dataset_id").equal("8210bfbd-0baa-46f5-bcd4-fe2b789fb4f7"),
                     ])
                 ])
