@@ -9,11 +9,39 @@
 from flask_wtf import FlaskForm
 from marshmallow import Schema, fields, pre_dump
 from wtforms import StringField, BooleanField
-from wtforms.validators import Optional, ValidationError
+from wtforms.validators import Optional, ValidationError, DataRequired
 
 from internal.lib.helper import datetime_to_timestamp
 from internal.model import Segment
+from internal.schema import ListField
 from pkg.paginator import PaginatorReq
+
+
+class CreateSegmentReq(FlaskForm):
+    """创建文档片段请求结构"""
+    content = StringField("content", validators=[
+        DataRequired("片段内容不能为空")
+    ])
+    keywords = ListField("keywords")
+
+    def validate_keywords(self, field: ListField) -> None:
+        """校验关键词列表，涵盖长度不能为空，默认值为空列表"""
+        if field.data is None:
+            field.data = []
+        if not isinstance(field.data, list):
+            raise ValidationError("关键词列表格式必须是数组")
+
+        # 2. 校验数据的长度，最长不能超过10个关键词
+        if len(field.data) > 10:
+            raise ValidationError("关键词长度范围数量在1-10")
+
+        # 3. 循环校验关键词信息，关键词必须是字符串
+        for keyword in field.data:
+            if not isinstance(keyword, str):
+                raise ValidationError("关键词必须是字符串")
+
+        # 4. 删除重复数据并更新
+        field.data = list(dict.fromkeys(field.data))
 
 
 class GetSegmentsWithPageReq(PaginatorReq):
