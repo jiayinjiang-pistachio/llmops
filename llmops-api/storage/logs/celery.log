@@ -3411,3 +3411,446 @@ Traceback (most recent call last):
   File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/socket.py", line 78, in _read_from_socket
     raise TimeoutError("Timeout reading from socket")
 redis.exceptions.TimeoutError: Timeout reading from socket
+[2026-01-02 18:12:05,920: WARNING/MainProcess] consumer: Connection to broker lost. Trying to re-establish the connection...
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/connection.py", line 1074, in send_packed_command
+    self._sock.sendall(item)
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/worker/consumer/consumer.py", line 346, in start
+    blueprint.start(self)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/worker/consumer/consumer.py", line 788, in start
+    c.loop(*c.loop_args())
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/worker/loops.py", line 96, in asynloop
+    next(loop)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/kombu/asynchronous/hub.py", line 377, in create_loop
+    cb(*cbargs)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/kombu/transport/redis.py", line 1394, in on_readable
+    self.cycle.on_readable(fileno)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/kombu/transport/redis.py", line 579, in on_readable
+    chan.handlers[type]()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/kombu/transport/redis.py", line 931, in _receive
+    ret.append(self._receive_one(c))
+               ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/kombu/transport/redis.py", line 941, in _receive_one
+    response = c.parse_response()
+               ^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 988, in parse_response
+    self.check_health()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 1026, in check_health
+    conn.send_command("PING", self.HEALTH_CHECK_MESSAGE, check_health=False)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/connection.py", line 1096, in send_command
+    self.send_packed_command(
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/connection.py", line 1085, in send_packed_command
+    raise ConnectionError(f"Error {errno} while writing to socket. {errmsg}.")
+redis.exceptions.ConnectionError: Error 32 while writing to socket. Broken pipe.
+[2026-01-02 18:15:33,627: WARNING/MainProcess] /Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/worker/consumer/consumer.py:397: CPendingDeprecationWarning: 
+In Celery 5.1 we introduced an optional breaking change which
+on connection loss cancels all currently executed tasks with late acknowledgement enabled.
+These tasks cannot be acknowledged as the connection is gone, and the tasks are automatically redelivered
+back to the queue. You can enable this behavior using the worker_cancel_long_running_tasks_on_connection_loss
+setting. In Celery 5.1 it is set to False by default. The setting will be set to True by default in Celery 6.0.
+
+  warnings.warn(CANCEL_TASKS_BY_DEFAULT, CPendingDeprecationWarning)
+
+[2026-01-02 18:15:34,246: INFO/MainProcess] Connected to redis://8.138.175.92:6379/1
+[2026-01-02 18:15:34,332: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-02 18:15:52,776: CRITICAL/MainProcess] Unrecoverable error: KeyError(20)
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/worker/worker.py", line 203, in start
+    self.blueprint.start(self)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/bootsteps.py", line 365, in start
+    return self.obj.start()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/worker/consumer/consumer.py", line 346, in start
+    blueprint.start(self)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/worker/consumer/mingle.py", line 37, in start
+    self.sync(c)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/worker/consumer/mingle.py", line 41, in sync
+    replies = self.send_hello(c)
+              ^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/worker/consumer/mingle.py", line 54, in send_hello
+    replies = inspect.hello(c.hostname, our_revoked._data) or {}
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/app/control.py", line 389, in hello
+    return self._request('hello', from_node=from_node, revoked=revoked)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/app/control.py", line 106, in _request
+    return self._prepare(self.app.control.broadcast(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/app/control.py", line 785, in broadcast
+    return self.mailbox(conn)._broadcast(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/kombu/pidbox.py", line 356, in _broadcast
+    return self._collect(reply_ticket, limit=limit,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/kombu/pidbox.py", line 398, in _collect
+    self.connection.drain_events(timeout=timeout)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/kombu/connection.py", line 343, in drain_events
+    return self.transport.drain_events(self.connection, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/kombu/transport/virtual/base.py", line 997, in drain_events
+    get(self._deliver, timeout=timeout)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/kombu/transport/redis.py", line 601, in get
+    ret = self.handle_event(fileno, event)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/kombu/transport/redis.py", line 585, in handle_event
+    chan, type = self._fd_to_chan[fileno]
+                 ~~~~~~~~~~~~~~~~^^^^^^^^
+KeyError: 20
+[2026-01-03 11:50:25,388: INFO/MainProcess] Connected to redis://8.138.175.92:6379/1
+[2026-01-03 11:50:25,456: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-03 11:50:26,631: INFO/MainProcess] mingle: all alone
+[2026-01-03 11:50:27,005: INFO/MainProcess] celery@jiangjiayindeMacBook-Pro.local ready.
+[2026-01-03 11:56:04,271: INFO/MainProcess] Task internal.task.document_task.update_document_enabled[a6a593c6-2a7d-4c6a-8310-004231250173] received
+[2026-01-03 11:56:04,890: INFO/MainProcess] HTTP Request: GET http://8.138.175.92:8080/v1/.well-known/openid-configuration "HTTP/1.1 404 Not Found"
+[2026-01-03 11:56:04,986: INFO/MainProcess] HTTP Request: GET http://8.138.175.92:8080/v1/meta "HTTP/1.1 200 OK"
+[2026-01-03 11:56:05,274: INFO/MainProcess] HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+[2026-01-03 11:56:05,412: INFO/MainProcess] HTTP Request: GET http://8.138.175.92:8080/v1/schema/DatasetV1 "HTTP/1.1 200 OK"
+[2026-01-03 11:56:05,431: INFO/MainProcess] HTTP Request: GET http://8.138.175.92:8080/v1/schema/DatasetV1 "HTTP/1.1 200 OK"
+[2026-01-03 11:56:05,460: INFO/MainProcess] HTTP Request: GET http://8.138.175.92:8080/v1/schema/DatasetV1 "HTTP/1.1 200 OK"
+[2026-01-03 11:56:05,521: WARNING/MainProcess] /Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/base_service.py:44: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  return self.db.session.query(model).get(primary_key)
+
+[2026-01-03 11:56:05,785: INFO/MainProcess] select pg_catalog.version()
+[2026-01-03 11:56:05,786: INFO/MainProcess] [raw sql] {}
+[2026-01-03 11:56:05,791: INFO/MainProcess] select current_schema()
+[2026-01-03 11:56:05,791: INFO/MainProcess] [raw sql] {}
+[2026-01-03 11:56:05,792: INFO/MainProcess] show standard_conforming_strings
+[2026-01-03 11:56:05,792: INFO/MainProcess] [raw sql] {}
+[2026-01-03 11:56:05,794: INFO/MainProcess] BEGIN (implicit)
+[2026-01-03 11:56:05,804: INFO/MainProcess] SELECT document.id AS document_id, document.account_id AS document_account_id, document.dataset_id AS document_dataset_id, document.upload_file_id AS document_upload_file_id, document.process_rule_id AS document_process_rule_id, document.batch AS document_batch, document.name AS document_name, document.position AS document_position, document.character_count AS document_character_count, document.token_count AS document_token_count, document.processing_started_at AS document_processing_started_at, document.parsing_completed_at AS document_parsing_completed_at, document.splitting_completed_at AS document_splitting_completed_at, document.indexing_completed_at AS document_indexing_completed_at, document.completed_at AS document_completed_at, document.stopped_at AS document_stopped_at, document.error AS document_error, document.enabled AS document_enabled, document.disabled_at AS document_disabled_at, document.status AS document_status, document.updated_at AS document_updated_at, document.created_at AS document_created_at 
+FROM document 
+WHERE document.id = %(pk_1)s::UUID
+[2026-01-03 11:56:05,905: INFO/MainProcess] [generated in 0.10107s] {'pk_1': UUID('29a9f41a-a269-46fd-8ddc-1cc4825b22db')}
+[2026-01-03 11:56:05,915: INFO/MainProcess] SELECT segment.id AS segment_id, segment.node_id AS segment_node_id, segment.enabled AS segment_enabled 
+FROM segment 
+WHERE segment.document_id = %(document_id_1)s::UUID AND segment.status = %(status_1)s
+[2026-01-03 11:56:05,936: INFO/MainProcess] [generated in 0.02180s] {'document_id_1': UUID('29a9f41a-a269-46fd-8ddc-1cc4825b22db'), 'status_1': <SegmentStatus.COMPLETED: 'completed'>}
+[2026-01-03 11:56:05,968: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/aa376426-3783-44d9-82d1-d026121b1a07 "HTTP/1.1 204 No Content"
+[2026-01-03 11:56:05,981: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/cd1abc50-e176-40f1-a0e7-d99da00803e6 "HTTP/1.1 204 No Content"
+[2026-01-03 11:56:05,995: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/a18df445-1a70-470c-96e5-57b74fa93575 "HTTP/1.1 204 No Content"
+[2026-01-03 11:56:06,008: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/b68f9622-65ac-46fc-8f2c-fc74243bfea0 "HTTP/1.1 204 No Content"
+[2026-01-03 11:56:06,022: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/871c7354-86e7-43cd-853d-ea3bdf6b12d3 "HTTP/1.1 204 No Content"
+[2026-01-03 11:56:06,036: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/90970dab-8de0-42ea-8211-cc0d5d02bff3 "HTTP/1.1 204 No Content"
+[2026-01-03 11:56:06,049: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/5cf600b9-06fd-466a-a3e1-e5daa24d43db "HTTP/1.1 204 No Content"
+[2026-01-03 11:56:06,064: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/28d71b02-ce2c-47f2-bdcd-52d14b4828df "HTTP/1.1 204 No Content"
+[2026-01-03 11:56:06,078: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/2c4d8a97-a039-44b9-b1f4-aa54080ffa48 "HTTP/1.1 204 No Content"
+[2026-01-03 11:56:06,138: INFO/MainProcess] SELECT keyword_table.id AS keyword_table_id, keyword_table.dataset_id AS keyword_table_dataset_id, keyword_table.keyword_table AS keyword_table_keyword_table, keyword_table.updated_at AS keyword_table_updated_at, keyword_table.created_at AS keyword_table_created_at 
+FROM keyword_table 
+WHERE keyword_table.dataset_id = %(dataset_id_1)s::UUID
+[2026-01-03 11:56:06,138: INFO/MainProcess] [generated in 0.00034s] {'dataset_id_1': UUID('9ef3f5f0-54ee-487e-8151-13d583d5abd9')}
+[2026-01-03 11:56:06,172: INFO/MainProcess] UPDATE keyword_table SET keyword_table=%(keyword_table)s::JSONB WHERE keyword_table.id = %(keyword_table_id)s::UUID
+[2026-01-03 11:56:06,172: INFO/MainProcess] [generated in 0.00043s] {'keyword_table': '{}', 'keyword_table_id': UUID('add4b176-31a4-4633-b008-096b6ed7de7d')}
+[2026-01-03 11:56:06,175: INFO/MainProcess] COMMIT
+[2026-01-03 11:56:06,204: WARNING/MainProcess] /Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/weaviate/warnings.py:302: ResourceWarning: Con004: The connection to Weaviate was not closed properly. This can lead to memory leaks.
+            Please make sure to close the connection using `client.close()`.
+  warnings.warn(
+
+[2026-01-03 11:56:06,206: WARNING/MainProcess] /Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/extension/celery_extension.py:21: ResourceWarning: unclosed <socket.socket fd=22, family=2, type=1, proto=6, laddr=('192.168.31.102', 50830), raddr=('8.138.175.92', 8080)>
+  return self.run(*args, **kwargs)
+
+[2026-01-03 11:56:06,274: INFO/MainProcess] Task internal.task.document_task.update_document_enabled[a6a593c6-2a7d-4c6a-8310-004231250173] succeeded in 1.9768531229929067s: None
+[2026-01-03 12:01:58,366: INFO/MainProcess] Task internal.task.document_task.update_document_enabled[8348738b-0097-4090-80ee-b75d19b5b2f7] received
+[2026-01-03 12:01:58,943: INFO/MainProcess] HTTP Request: GET http://8.138.175.92:8080/v1/.well-known/openid-configuration "HTTP/1.1 404 Not Found"
+[2026-01-03 12:01:59,041: INFO/MainProcess] HTTP Request: GET http://8.138.175.92:8080/v1/meta "HTTP/1.1 200 OK"
+[2026-01-03 12:01:59,339: INFO/MainProcess] HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+[2026-01-03 12:01:59,443: INFO/MainProcess] HTTP Request: GET http://8.138.175.92:8080/v1/schema/DatasetV1 "HTTP/1.1 200 OK"
+[2026-01-03 12:01:59,459: INFO/MainProcess] HTTP Request: GET http://8.138.175.92:8080/v1/schema/DatasetV1 "HTTP/1.1 200 OK"
+[2026-01-03 12:01:59,481: INFO/MainProcess] HTTP Request: GET http://8.138.175.92:8080/v1/schema/DatasetV1 "HTTP/1.1 200 OK"
+[2026-01-03 12:01:59,516: INFO/MainProcess] BEGIN (implicit)
+[2026-01-03 12:01:59,521: INFO/MainProcess] SELECT document.id AS document_id, document.account_id AS document_account_id, document.dataset_id AS document_dataset_id, document.upload_file_id AS document_upload_file_id, document.process_rule_id AS document_process_rule_id, document.batch AS document_batch, document.name AS document_name, document.position AS document_position, document.character_count AS document_character_count, document.token_count AS document_token_count, document.processing_started_at AS document_processing_started_at, document.parsing_completed_at AS document_parsing_completed_at, document.splitting_completed_at AS document_splitting_completed_at, document.indexing_completed_at AS document_indexing_completed_at, document.completed_at AS document_completed_at, document.stopped_at AS document_stopped_at, document.error AS document_error, document.enabled AS document_enabled, document.disabled_at AS document_disabled_at, document.status AS document_status, document.updated_at AS document_updated_at, document.created_at AS document_created_at 
+FROM document 
+WHERE document.id = %(pk_1)s::UUID
+[2026-01-03 12:01:59,523: INFO/MainProcess] [cached since 353.7s ago] {'pk_1': UUID('29a9f41a-a269-46fd-8ddc-1cc4825b22db')}
+[2026-01-03 12:01:59,620: INFO/MainProcess] SELECT segment.id AS segment_id, segment.node_id AS segment_node_id, segment.enabled AS segment_enabled 
+FROM segment 
+WHERE segment.document_id = %(document_id_1)s::UUID AND segment.status = %(status_1)s
+[2026-01-03 12:01:59,620: INFO/MainProcess] [cached since 353.7s ago] {'document_id_1': UUID('29a9f41a-a269-46fd-8ddc-1cc4825b22db'), 'status_1': <SegmentStatus.COMPLETED: 'completed'>}
+[2026-01-03 12:01:59,662: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/aa376426-3783-44d9-82d1-d026121b1a07 "HTTP/1.1 204 No Content"
+[2026-01-03 12:01:59,682: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/cd1abc50-e176-40f1-a0e7-d99da00803e6 "HTTP/1.1 204 No Content"
+[2026-01-03 12:01:59,698: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/a18df445-1a70-470c-96e5-57b74fa93575 "HTTP/1.1 204 No Content"
+[2026-01-03 12:01:59,712: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/b68f9622-65ac-46fc-8f2c-fc74243bfea0 "HTTP/1.1 204 No Content"
+[2026-01-03 12:01:59,726: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/871c7354-86e7-43cd-853d-ea3bdf6b12d3 "HTTP/1.1 204 No Content"
+[2026-01-03 12:01:59,740: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/90970dab-8de0-42ea-8211-cc0d5d02bff3 "HTTP/1.1 204 No Content"
+[2026-01-03 12:01:59,754: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/5cf600b9-06fd-466a-a3e1-e5daa24d43db "HTTP/1.1 204 No Content"
+[2026-01-03 12:01:59,768: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/28d71b02-ce2c-47f2-bdcd-52d14b4828df "HTTP/1.1 204 No Content"
+[2026-01-03 12:01:59,783: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/2c4d8a97-a039-44b9-b1f4-aa54080ffa48 "HTTP/1.1 204 No Content"
+[2026-01-03 12:02:17,847: ERROR/MainProcess] 修改向量数据库文档启用状态失败，文档id：29a9f41a-a269-46fd-8ddc-1cc4825b22db，错误信息：Timeout reading from socket
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/socket.py", line 65, in _read_from_socket
+    data = self._sock.recv(socket_read_size)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: [Errno 60] Operation timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/indexing_service.py", line 327, in update_document_enabled
+    self.keyword_table_service.add_keyword_table_from_ids(document.dataset_id, enabled_segment_ids)
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/keyword_table_service.py", line 43, in add_keyword_table_from_ids
+    with self.redis_client.lock(cache_key, timeout=LOCK_EXPIRE_TIME):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/lock.py", line 168, in __enter__
+    if self.acquire():
+       ^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/lock.py", line 227, in acquire
+    if self.do_acquire(token):
+       ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/lock.py", line 243, in do_acquire
+    if self.redis.set(self.name, token, nx=True, px=timeout):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/utils.py", line 417, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/commands/core.py", line 2518, in set
+    return self.execute_command("SET", *pieces, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 657, in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 668, in _execute_command
+    return conn.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/retry.py", line 123, in call_with_retry
+    raise error
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/retry.py", line 116, in call_with_retry
+    return do()
+           ^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 669, in <lambda>
+    lambda: self._send_command_parse_response(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 640, in _send_command_parse_response
+    return self.parse_response(conn, command_name, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 691, in parse_response
+    response = connection.read_response()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/connection.py", line 1133, in read_response
+    response = self._parser.read_response(disable_decoding=disable_decoding)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/resp2.py", line 15, in read_response
+    result = self._read_response(disable_decoding=disable_decoding)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/resp2.py", line 25, in _read_response
+    raw = self._buffer.readline()
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/socket.py", line 115, in readline
+    self._read_from_socket()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/socket.py", line 78, in _read_from_socket
+    raise TimeoutError("Timeout reading from socket")
+redis.exceptions.TimeoutError: Timeout reading from socket
+[2026-01-03 12:02:17,943: INFO/MainProcess] UPDATE document SET enabled=%(enabled)s, disabled_at=%(disabled_at)s WHERE document.id = %(document_id)s::UUID
+[2026-01-03 12:02:17,944: INFO/MainProcess] [generated in 0.00767s] {'enabled': False, 'disabled_at': datetime.datetime(2026, 1, 3, 12, 2, 17, 908942), 'document_id': UUID('29a9f41a-a269-46fd-8ddc-1cc4825b22db')}
+[2026-01-03 12:02:18,011: INFO/MainProcess] COMMIT
+[2026-01-03 12:02:18,082: WARNING/MainProcess] /Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/extension/celery_extension.py:21: ResourceWarning: unclosed <socket.socket fd=27, family=2, type=1, proto=6, laddr=('192.168.31.102', 51142), raddr=('8.138.175.92', 8080)>
+  return self.run(*args, **kwargs)
+
+[2026-01-03 12:02:36,299: WARNING/MainProcess] /Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/app/trace.py:705: RuntimeWarning: Exception raised outside body: TimeoutError('Timeout reading from socket'):
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/socket.py", line 65, in _read_from_socket
+    data = self._sock.recv(socket_read_size)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: [Errno 60] Operation timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/app/trace.py", line 550, in trace_task
+    task.backend.mark_as_done(
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/backends/base.py", line 184, in mark_as_done
+    self.store_result(task_id, result, state, request=request)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/backends/base.py", line 625, in store_result
+    self._store_result(task_id, result, state, traceback,
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/backends/base.py", line 1074, in _store_result
+    current_meta = self._get_task_meta_for(task_id)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/backends/base.py", line 1096, in _get_task_meta_for
+    meta = self.get(self.get_key_for_task(task_id))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/backends/redis.py", line 420, in get
+    return self.client.get(key)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/commands/core.py", line 1923, in get
+    return self.execute_command("GET", name, keys=[name])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 657, in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 668, in _execute_command
+    return conn.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/retry.py", line 123, in call_with_retry
+    raise error
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/retry.py", line 116, in call_with_retry
+    return do()
+           ^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 669, in <lambda>
+    lambda: self._send_command_parse_response(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 640, in _send_command_parse_response
+    return self.parse_response(conn, command_name, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 691, in parse_response
+    response = connection.read_response()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/connection.py", line 1133, in read_response
+    response = self._parser.read_response(disable_decoding=disable_decoding)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/resp2.py", line 15, in read_response
+    result = self._read_response(disable_decoding=disable_decoding)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/resp2.py", line 25, in _read_response
+    raw = self._buffer.readline()
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/socket.py", line 115, in readline
+    self._read_from_socket()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/socket.py", line 78, in _read_from_socket
+    raise TimeoutError("Timeout reading from socket")
+redis.exceptions.TimeoutError: Timeout reading from socket
+
+  warn(RuntimeWarning(
+
+[2026-01-03 12:02:36,383: ERROR/MainProcess] Task internal.task.document_task.update_document_enabled[8348738b-0097-4090-80ee-b75d19b5b2f7] raised unexpected: TimeoutError('Timeout reading from socket')
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/socket.py", line 65, in _read_from_socket
+    data = self._sock.recv(socket_read_size)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: [Errno 60] Operation timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/app/trace.py", line 550, in trace_task
+    task.backend.mark_as_done(
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/backends/base.py", line 184, in mark_as_done
+    self.store_result(task_id, result, state, request=request)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/backends/base.py", line 625, in store_result
+    self._store_result(task_id, result, state, traceback,
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/backends/base.py", line 1074, in _store_result
+    current_meta = self._get_task_meta_for(task_id)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/backends/base.py", line 1096, in _get_task_meta_for
+    meta = self.get(self.get_key_for_task(task_id))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/backends/redis.py", line 420, in get
+    return self.client.get(key)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/commands/core.py", line 1923, in get
+    return self.execute_command("GET", name, keys=[name])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 657, in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 668, in _execute_command
+    return conn.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/retry.py", line 123, in call_with_retry
+    raise error
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/retry.py", line 116, in call_with_retry
+    return do()
+           ^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 669, in <lambda>
+    lambda: self._send_command_parse_response(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 640, in _send_command_parse_response
+    return self.parse_response(conn, command_name, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 691, in parse_response
+    response = connection.read_response()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/connection.py", line 1133, in read_response
+    response = self._parser.read_response(disable_decoding=disable_decoding)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/resp2.py", line 15, in read_response
+    result = self._read_response(disable_decoding=disable_decoding)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/resp2.py", line 25, in _read_response
+    raw = self._buffer.readline()
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/socket.py", line 115, in readline
+    self._read_from_socket()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/socket.py", line 78, in _read_from_socket
+    raise TimeoutError("Timeout reading from socket")
+redis.exceptions.TimeoutError: Timeout reading from socket
+[2026-01-03 12:05:22,015: INFO/MainProcess] Task internal.task.document_task.update_document_enabled[866d0318-8526-4c1b-a5f9-1707e993f77d] received
+[2026-01-03 12:05:22,622: INFO/MainProcess] HTTP Request: GET http://8.138.175.92:8080/v1/.well-known/openid-configuration "HTTP/1.1 404 Not Found"
+[2026-01-03 12:05:22,816: INFO/MainProcess] HTTP Request: GET http://8.138.175.92:8080/v1/meta "HTTP/1.1 200 OK"
+[2026-01-03 12:05:23,088: INFO/MainProcess] HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+[2026-01-03 12:05:23,200: INFO/MainProcess] HTTP Request: GET http://8.138.175.92:8080/v1/schema/DatasetV1 "HTTP/1.1 200 OK"
+[2026-01-03 12:05:23,216: INFO/MainProcess] HTTP Request: GET http://8.138.175.92:8080/v1/schema/DatasetV1 "HTTP/1.1 200 OK"
+[2026-01-03 12:05:23,236: INFO/MainProcess] HTTP Request: GET http://8.138.175.92:8080/v1/schema/DatasetV1 "HTTP/1.1 200 OK"
+[2026-01-03 12:05:23,262: INFO/MainProcess] BEGIN (implicit)
+[2026-01-03 12:05:23,268: INFO/MainProcess] SELECT document.id AS document_id, document.account_id AS document_account_id, document.dataset_id AS document_dataset_id, document.upload_file_id AS document_upload_file_id, document.process_rule_id AS document_process_rule_id, document.batch AS document_batch, document.name AS document_name, document.position AS document_position, document.character_count AS document_character_count, document.token_count AS document_token_count, document.processing_started_at AS document_processing_started_at, document.parsing_completed_at AS document_parsing_completed_at, document.splitting_completed_at AS document_splitting_completed_at, document.indexing_completed_at AS document_indexing_completed_at, document.completed_at AS document_completed_at, document.stopped_at AS document_stopped_at, document.error AS document_error, document.enabled AS document_enabled, document.disabled_at AS document_disabled_at, document.status AS document_status, document.updated_at AS document_updated_at, document.created_at AS document_created_at 
+FROM document 
+WHERE document.id = %(pk_1)s::UUID
+[2026-01-03 12:05:23,273: INFO/MainProcess] [cached since 557.5s ago] {'pk_1': UUID('29a9f41a-a269-46fd-8ddc-1cc4825b22db')}
+[2026-01-03 12:05:23,349: INFO/MainProcess] SELECT segment.id AS segment_id, segment.node_id AS segment_node_id, segment.enabled AS segment_enabled 
+FROM segment 
+WHERE segment.document_id = %(document_id_1)s::UUID AND segment.status = %(status_1)s
+[2026-01-03 12:05:23,351: INFO/MainProcess] [cached since 557.4s ago] {'document_id_1': UUID('29a9f41a-a269-46fd-8ddc-1cc4825b22db'), 'status_1': <SegmentStatus.COMPLETED: 'completed'>}
+[2026-01-03 12:05:23,368: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/aa376426-3783-44d9-82d1-d026121b1a07 "HTTP/1.1 204 No Content"
+[2026-01-03 12:05:23,384: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/cd1abc50-e176-40f1-a0e7-d99da00803e6 "HTTP/1.1 204 No Content"
+[2026-01-03 12:05:23,399: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/a18df445-1a70-470c-96e5-57b74fa93575 "HTTP/1.1 204 No Content"
+[2026-01-03 12:05:23,413: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/b68f9622-65ac-46fc-8f2c-fc74243bfea0 "HTTP/1.1 204 No Content"
+[2026-01-03 12:05:23,426: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/871c7354-86e7-43cd-853d-ea3bdf6b12d3 "HTTP/1.1 204 No Content"
+[2026-01-03 12:05:23,438: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/90970dab-8de0-42ea-8211-cc0d5d02bff3 "HTTP/1.1 204 No Content"
+[2026-01-03 12:05:23,451: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/5cf600b9-06fd-466a-a3e1-e5daa24d43db "HTTP/1.1 204 No Content"
+[2026-01-03 12:05:23,464: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/28d71b02-ce2c-47f2-bdcd-52d14b4828df "HTTP/1.1 204 No Content"
+[2026-01-03 12:05:23,478: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/2c4d8a97-a039-44b9-b1f4-aa54080ffa48 "HTTP/1.1 204 No Content"
+[2026-01-03 12:05:23,498: INFO/MainProcess] SELECT keyword_table.id AS keyword_table_id, keyword_table.dataset_id AS keyword_table_dataset_id, keyword_table.keyword_table AS keyword_table_keyword_table, keyword_table.updated_at AS keyword_table_updated_at, keyword_table.created_at AS keyword_table_created_at 
+FROM keyword_table 
+WHERE keyword_table.dataset_id = %(dataset_id_1)s::UUID
+[2026-01-03 12:05:23,498: INFO/MainProcess] [cached since 557.3s ago] {'dataset_id_1': UUID('9ef3f5f0-54ee-487e-8151-13d583d5abd9')}
+[2026-01-03 12:05:23,565: INFO/MainProcess] SELECT segment.id AS segment_id, segment.keywords AS segment_keywords 
+FROM segment 
+WHERE segment.id IN (%(id_1_1)s::UUID, %(id_1_2)s::UUID, %(id_1_3)s::UUID, %(id_1_4)s::UUID, %(id_1_5)s::UUID, %(id_1_6)s::UUID, %(id_1_7)s::UUID, %(id_1_8)s::UUID, %(id_1_9)s::UUID)
+[2026-01-03 12:05:23,567: INFO/MainProcess] [generated in 0.00696s] {'id_1_1': UUID('ceeca787-33a5-46b4-a893-d59e9882ea44'), 'id_1_2': UUID('e351018a-63cb-4cc9-9479-193edfaeab86'), 'id_1_3': UUID('7b127f4e-47c2-4cb6-9c6b-3e79ca53effd'), 'id_1_4': UUID('346eb00f-0372-475c-a4c2-b08c107f1404'), 'id_1_5': UUID('f76f88e9-c561-4713-a851-ea97ed2372f4'), 'id_1_6': UUID('f1f48c57-1af2-4a77-b738-5b359106977e'), 'id_1_7': UUID('45e73a8b-71e3-4497-8e85-39d3795cf089'), 'id_1_8': UUID('e82309c4-9269-4d2a-9a58-c09acbc69c1e'), 'id_1_9': UUID('cb493a10-4e96-47f6-a760-ad261a1ad82a')}
+[2026-01-03 12:05:23,617: INFO/MainProcess] UPDATE keyword_table SET keyword_table=%(keyword_table)s::JSONB WHERE keyword_table.id = %(keyword_table_id)s::UUID
+[2026-01-03 12:05:23,617: INFO/MainProcess] [cached since 557.4s ago] {'keyword_table': '{"id": ["346eb00f-0372-475c-a4c2-b08c107f1404", "e351018a-63cb-4cc9-9479-193edfaeab86", "cb493a10-4e96-47f6-a760-ad261a1ad82a", "ceeca787-33a5-46b4-a ... (3854 characters truncated) ... ["e82309c4-9269-4d2a-9a58-c09acbc69c1e"], "AI": ["cb493a10-4e96-47f6-a760-ad261a1ad82a"], "\\u54cd\\u5e94": ["cb493a10-4e96-47f6-a760-ad261a1ad82a"]}', 'keyword_table_id': UUID('add4b176-31a4-4633-b008-096b6ed7de7d')}
+[2026-01-03 12:05:23,656: INFO/MainProcess] COMMIT
+[2026-01-03 12:05:23,686: WARNING/MainProcess] /Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/extension/celery_extension.py:21: ResourceWarning: unclosed <socket.socket fd=27, family=2, type=1, proto=6, laddr=('192.168.31.102', 51354), raddr=('8.138.175.92', 8080)>
+  return self.run(*args, **kwargs)
+
+[2026-01-03 12:05:23,715: INFO/MainProcess] Task internal.task.document_task.update_document_enabled[866d0318-8526-4c1b-a5f9-1707e993f77d] succeeded in 1.689086460013641s: None
+[2026-01-03 12:06:03,777: INFO/MainProcess] Task internal.task.document_task.update_document_enabled[1154abd4-aaae-4d6f-a049-a3ceab53ecc6] received
+[2026-01-03 12:06:04,248: INFO/MainProcess] HTTP Request: GET http://8.138.175.92:8080/v1/.well-known/openid-configuration "HTTP/1.1 404 Not Found"
+[2026-01-03 12:06:04,327: INFO/MainProcess] HTTP Request: GET http://8.138.175.92:8080/v1/meta "HTTP/1.1 200 OK"
+[2026-01-03 12:06:04,590: INFO/MainProcess] HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+[2026-01-03 12:06:04,689: INFO/MainProcess] HTTP Request: GET http://8.138.175.92:8080/v1/schema/DatasetV1 "HTTP/1.1 200 OK"
+[2026-01-03 12:06:04,705: INFO/MainProcess] HTTP Request: GET http://8.138.175.92:8080/v1/schema/DatasetV1 "HTTP/1.1 200 OK"
+[2026-01-03 12:06:04,718: INFO/MainProcess] HTTP Request: GET http://8.138.175.92:8080/v1/schema/DatasetV1 "HTTP/1.1 200 OK"
+[2026-01-03 12:06:04,721: INFO/MainProcess] BEGIN (implicit)
+[2026-01-03 12:06:04,722: INFO/MainProcess] SELECT document.id AS document_id, document.account_id AS document_account_id, document.dataset_id AS document_dataset_id, document.upload_file_id AS document_upload_file_id, document.process_rule_id AS document_process_rule_id, document.batch AS document_batch, document.name AS document_name, document.position AS document_position, document.character_count AS document_character_count, document.token_count AS document_token_count, document.processing_started_at AS document_processing_started_at, document.parsing_completed_at AS document_parsing_completed_at, document.splitting_completed_at AS document_splitting_completed_at, document.indexing_completed_at AS document_indexing_completed_at, document.completed_at AS document_completed_at, document.stopped_at AS document_stopped_at, document.error AS document_error, document.enabled AS document_enabled, document.disabled_at AS document_disabled_at, document.status AS document_status, document.updated_at AS document_updated_at, document.created_at AS document_created_at 
+FROM document 
+WHERE document.id = %(pk_1)s::UUID
+[2026-01-03 12:06:04,722: INFO/MainProcess] [cached since 598.9s ago] {'pk_1': UUID('29a9f41a-a269-46fd-8ddc-1cc4825b22db')}
+[2026-01-03 12:06:04,725: INFO/MainProcess] SELECT segment.id AS segment_id, segment.node_id AS segment_node_id, segment.enabled AS segment_enabled 
+FROM segment 
+WHERE segment.document_id = %(document_id_1)s::UUID AND segment.status = %(status_1)s
+[2026-01-03 12:06:04,725: INFO/MainProcess] [cached since 598.8s ago] {'document_id_1': UUID('29a9f41a-a269-46fd-8ddc-1cc4825b22db'), 'status_1': <SegmentStatus.COMPLETED: 'completed'>}
+[2026-01-03 12:06:04,739: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/aa376426-3783-44d9-82d1-d026121b1a07 "HTTP/1.1 204 No Content"
+[2026-01-03 12:06:04,754: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/cd1abc50-e176-40f1-a0e7-d99da00803e6 "HTTP/1.1 204 No Content"
+[2026-01-03 12:06:04,766: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/a18df445-1a70-470c-96e5-57b74fa93575 "HTTP/1.1 204 No Content"
+[2026-01-03 12:06:04,779: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/b68f9622-65ac-46fc-8f2c-fc74243bfea0 "HTTP/1.1 204 No Content"
+[2026-01-03 12:06:04,793: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/871c7354-86e7-43cd-853d-ea3bdf6b12d3 "HTTP/1.1 204 No Content"
+[2026-01-03 12:06:04,808: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/90970dab-8de0-42ea-8211-cc0d5d02bff3 "HTTP/1.1 204 No Content"
+[2026-01-03 12:06:04,819: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/5cf600b9-06fd-466a-a3e1-e5daa24d43db "HTTP/1.1 204 No Content"
+[2026-01-03 12:06:04,832: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/28d71b02-ce2c-47f2-bdcd-52d14b4828df "HTTP/1.1 204 No Content"
+[2026-01-03 12:06:04,844: INFO/MainProcess] HTTP Request: PATCH http://8.138.175.92:8080/v1/objects/DatasetV1/2c4d8a97-a039-44b9-b1f4-aa54080ffa48 "HTTP/1.1 204 No Content"
+[2026-01-03 12:06:04,856: INFO/MainProcess] SELECT keyword_table.id AS keyword_table_id, keyword_table.dataset_id AS keyword_table_dataset_id, keyword_table.keyword_table AS keyword_table_keyword_table, keyword_table.updated_at AS keyword_table_updated_at, keyword_table.created_at AS keyword_table_created_at 
+FROM keyword_table 
+WHERE keyword_table.dataset_id = %(dataset_id_1)s::UUID
+[2026-01-03 12:06:04,856: INFO/MainProcess] [cached since 598.7s ago] {'dataset_id_1': UUID('9ef3f5f0-54ee-487e-8151-13d583d5abd9')}
+[2026-01-03 12:06:04,861: INFO/MainProcess] UPDATE keyword_table SET keyword_table=%(keyword_table)s::JSONB WHERE keyword_table.id = %(keyword_table_id)s::UUID
+[2026-01-03 12:06:04,862: INFO/MainProcess] [cached since 598.7s ago] {'keyword_table': '{}', 'keyword_table_id': UUID('add4b176-31a4-4633-b008-096b6ed7de7d')}
+[2026-01-03 12:06:04,865: INFO/MainProcess] COMMIT
+[2026-01-03 12:06:04,912: INFO/MainProcess] Task internal.task.document_task.update_document_enabled[1154abd4-aaae-4d6f-a049-a3ceab53ecc6] succeeded in 1.129184624995105s: None

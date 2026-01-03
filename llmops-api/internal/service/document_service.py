@@ -10,21 +10,24 @@ import logging
 import random
 import time
 from dataclasses import dataclass
+from datetime import datetime
 from uuid import UUID
 
 from injector import inject
+from redis import Redis
 from sqlalchemy import desc, asc, func
 
-from internal.entity.dataset_entity import ProcessType, SegmentStatus
+from internal.entity.dataset_entity import ProcessType, SegmentStatus, DocumentStatus
 from internal.model import Document, Dataset, UploadFile, ProcessRule, Segment
 from pkg.paginator import Paginator
 from pkg.sqlalchemy import SQLAlchemy
 from .base_service import BaseService
+from ..entity.cache_entity import LOCK_DOCUMENT_UPDATE_ENABLED, LOCK_EXPIRE_TIME
 from ..entity.upload_file_entity import ALLOWED_DOCUMENT_EXTENSION
 from ..exception import ForbiddenException, FailException, NotFoundException
 from ..lib.helper import datetime_to_timestamp
 from ..schema.document_schema import GetDocumentsWithPageReq
-from ..task.document_task import build_documents
+from ..task.document_task import build_documents, update_document_enabled
 
 
 @inject
@@ -32,6 +35,7 @@ from ..task.document_task import build_documents
 class DocumentService(BaseService):
     """文档服务"""
     db: SQLAlchemy
+    redis_client: Redis
 
     def create_documents(
             self,
@@ -216,3 +220,41 @@ class DocumentService(BaseService):
         )
 
         return documents, paginator
+
+    def update_document_enabled(self, dataset_id: UUID, document_id: UUID, enabled: bool):
+        # todo:等待授权认证模块完成进行切换调整
+        account_id = "46db30d1-3199-4e79-a0cd-abf12fa6858f"
+
+        # 1. 获取文档并校验权限
+        document = self.get(Document, document_id)
+        if document is None:
+            raise NotFoundException("该文档不存在，请核实后重试")
+        if document.dataset_id != dataset_id or str(document.account_id) != account_id:
+            raise ForbiddenException("当前用户无权限修改该知识库下的文档，请核实后重试")
+
+        # 2. 判断文档是否处于可以修改的状态，只有构建完成才可以修改enabled
+        if document.status != DocumentStatus.COMPLETED:
+            raise ForbiddenException("当前文档处于不可修改状态，请稍后重试")
+
+        # 3. 判断修改的启用状态是否正确，需与当前的状态相反
+        if document.enabled == enabled:
+            raise FailException(f"文档状态修改错误，当前已是{'启用' if enabled else '禁用'}状态")
+
+        # 4. 获取更新文档启用状态的缓存键并检测是否上锁
+        cache_key = LOCK_DOCUMENT_UPDATE_ENABLED.format(document_id=document_id)
+        cache_result = self.redis_client.get(cache_key)
+        if cache_result is not None:
+            raise FailException("当前文档正在修改启用状态，请稍后再次尝试")
+
+        # 5. 修改文档的启用状态并设置缓存键，缓存时间为600s
+        self.update(
+            document,
+            enabled=enabled,
+            disabled_at=None if enabled else datetime.now(),
+        )
+        self.redis_client.setex(cache_key, LOCK_EXPIRE_TIME, 1)
+
+        # 6. 启用异步任务完成后续操作
+        update_document_enabled.delay(document_id)
+
+        return document

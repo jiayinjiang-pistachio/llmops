@@ -11,7 +11,7 @@ from .api_tool_schema import ValidateOpenAPISchemaReq, CreateAPIToolReq, GetApiT
 from .app_schema import CompletionReq
 from .dataset_schema import CreateDatasetReq, GetDatasetsWithPageReq, GetDatasetResp, UpdateDatasetReq, \
     GetDatasetsWithPageResp
-from .document_schema import CreateDocumentsReq, CreateDocumentsResp
+from .document_schema import CreateDocumentsReq, CreateDocumentsResp, UpdateDocumentEnabledReq
 from .schema import ListField
 from .upload_file_schema import UploadImageReq, UploadFileResp, UploadFileReq
 
@@ -34,5 +34,6 @@ __all__ = [
     "GetDatasetsWithPageResp",
     "GetDatasetResp",
     "CreateDocumentsReq",
-    "CreateDocumentsResp"
+    "CreateDocumentsResp",
+    "UpdateDocumentEnabledReq"
 ]
