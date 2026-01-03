@@ -13,6 +13,7 @@ from .dataset_schema import CreateDatasetReq, GetDatasetsWithPageReq, GetDataset
     GetDatasetsWithPageResp
 from .document_schema import CreateDocumentsReq, CreateDocumentsResp, UpdateDocumentEnabledReq
 from .schema import ListField
+from .segment_schema import GetSegmentsWithPageReq, GetSegmentsWithPageResp, UpdateSegmentEnabledReq, GetSegmentResp
 from .upload_file_schema import UploadImageReq, UploadFileResp, UploadFileReq
 
 __all__ = [

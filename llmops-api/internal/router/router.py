@@ -12,7 +12,8 @@ from flask import Blueprint  # 修正：从 flask 直接导入 Blueprint
 from flask import Flask
 from injector import inject
 
-from internal.handler import AppHandler, BuiltinToolHandler, UploadFileHandler, DatasetHandler, DocumentHandler
+from internal.handler import AppHandler, BuiltinToolHandler, UploadFileHandler, DatasetHandler, DocumentHandler, \
+    SegmentHandler
 from internal.handler.api_tool_handler import ApiToolHandler
 
 
@@ -26,6 +27,7 @@ class Router:
     upload_file_handler: UploadFileHandler
     dataset_handler: DatasetHandler
     document_handler: DocumentHandler
+    segment_handler: SegmentHandler
 
     def register_router(self, app: Flask):
         """注册路由"""
@@ -85,6 +87,12 @@ class Router:
                         view_func=self.document_handler.update_document_enabled)
         bp.add_url_rule("/datasets/<uuid:dataset_id>/documents/<uuid:document_id>/delete", methods=["POST"],
                         view_func=self.document_handler.delete_document)
+        bp.add_url_rule("/datasets/<uuid:dataset_id>/documents/<uuid:document_id>/segments",
+                        view_func=self.segment_handler.get_segments_with_page)
+        bp.add_url_rule("/datasets/<uuid:dataset_id>/documents/<uuid:document_id>/segments/<uuid:segment_id>",
+                        view_func=self.segment_handler.get_segment)
+        bp.add_url_rule("/datasets/<uuid:dataset_id>/documents/<uuid:document_id>/segments/<uuid:segment_id>/enabled",
+                        methods=["POST"], view_func=self.segment_handler.update_segment_enabled)
         bp.add_url_rule("/datasets/<uuid:dataset_id>/hit", methods=["POST"], view_func=self.dataset_handler.hit)
 
         # 4. 在应用上去注册蓝图

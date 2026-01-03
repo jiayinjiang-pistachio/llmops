@@ -409,3 +409,511 @@ internal.exception.exception.NotFoundException
 2026-01-03 16:11:48,108.108] base.py line:2713 INFO: ROLLBACK)
 2026-01-03 16:11:48,109.109] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 16:11:48] "POST /datasets/9ef3f5f0-54ee-487e-8151-13d583d5abd9/documents/29a9f41a-a269-46fd-8ddc-1cc4825b22db/enabled HTTP/1.1" 200 -)
 2026-01-03 16:11:53,568.568] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 16:11:53] "POST /datasets/9ef3f5f0-54ee-487e-8151-13d583d5abd9/hit HTTP/1.1" 200 -)
+2026-01-03 18:01:31,918.918] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/segment_handler.py', reloading)
+2026-01-03 18:01:35,265.265] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-03 18:01:50,148.148] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-03 18:01:50,177.177] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-03 18:09:36,904.904] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/__init__.py', reloading)
+2026-01-03 18:09:39,371.371] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-03 18:09:53,100.100] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-03 18:09:53,122.122] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-03 18:10:18,300.300] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/schema/segment_schema.py', reloading)
+2026-01-03 18:10:19,345.345] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-03 18:10:32,461.461] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-03 18:10:32,493.493] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-03 18:10:37,835.835] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/schema/segment_schema.py', reloading)
+2026-01-03 18:10:38,640.640] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-03 18:10:50,192.192] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-03 18:10:50,213.213] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-03 18:12:19,188.188] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/schema/segment_schema.py', reloading)
+2026-01-03 18:12:19,942.942] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-03 18:12:32,512.512] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-03 18:12:32,538.538] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-03 18:16:31,319.319] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/schema/segment_schema.py', reloading)
+2026-01-03 18:16:32,449.449] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-03 18:16:45,560.560] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-03 18:16:45,586.586] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-03 18:18:31,448.448] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/schema/segment_schema.py', reloading)
+2026-01-03 18:18:32,668.668] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-03 18:18:45,892.892] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-03 18:18:45,913.913] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-03 18:24:56,100.100] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/segment_service.py', reloading)
+2026-01-03 18:24:57,545.545] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-03 18:25:09,859.859] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-03 18:25:09,879.879] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-03 18:33:11,782.782] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/segment_handler.py', reloading)
+2026-01-03 18:33:12,987.987] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-03 18:39:58,546.546] _internal.py line:97 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000)
+2026-01-03 18:39:58,547.547] _internal.py line:97 INFO: [33mPress CTRL+C to quit[0m)
+2026-01-03 18:39:58,549.549] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-03 18:40:12,996.996] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-03 18:40:13,023.023] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-03 18:42:24,237.237] http.py line:66 ERROR: An error occurred: 405 Method Not Allowed: The method is not allowed for the requested URL.)
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 891, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 500, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/routing/map.py", line 624, in match
+    raise MethodNotAllowed(valid_methods=list(e.have_match_for)) from None
+werkzeug.exceptions.MethodNotAllowed: 405 Method Not Allowed: The method is not allowed for the requested URL.
+2026-01-03 18:42:24,271.271] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 18:42:24] "[35m[1mPOST /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/documents/d040a494-3448-4194-bff6-a2b08cb95b65/segments HTTP/1.1[0m" 500 -)
+2026-01-03 18:43:07,440.440] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-03 18:43:07,442.442] base.py line:1846 INFO: [raw sql] {})
+2026-01-03 18:43:07,446.446] base.py line:1846 INFO: select current_schema())
+2026-01-03 18:43:07,447.447] base.py line:1846 INFO: [raw sql] {})
+2026-01-03 18:43:07,512.512] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-03 18:43:07,513.513] base.py line:1846 INFO: [raw sql] {})
+2026-01-03 18:43:07,529.529] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 18:43:07,543.543] base.py line:1846 INFO: SELECT document.id AS document_id, document.account_id AS document_account_id, document.dataset_id AS document_dataset_id, document.upload_file_id AS document_upload_file_id, document.process_rule_id AS document_process_rule_id, document.batch AS document_batch, document.name AS document_name, document.position AS document_position, document.character_count AS document_character_count, document.token_count AS document_token_count, document.processing_started_at AS document_processing_started_at, document.parsing_completed_at AS document_parsing_completed_at, document.splitting_completed_at AS document_splitting_completed_at, document.indexing_completed_at AS document_indexing_completed_at, document.completed_at AS document_completed_at, document.stopped_at AS document_stopped_at, document.error AS document_error, document.enabled AS document_enabled, document.disabled_at AS document_disabled_at, document.status AS document_status, document.updated_at AS document_updated_at, document.created_at AS document_created_at 
+FROM document 
+WHERE document.id = %(pk_1)s::UUID)
+2026-01-03 18:43:07,543.543] base.py line:1846 INFO: [generated in 0.00069s] {'pk_1': UUID('d040a494-3448-4194-bff6-a2b08cb95b65')})
+2026-01-03 18:43:07,666.666] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.document_id = %(document_id_1)s::UUID ORDER BY segment.position ASC 
+ LIMIT %(param_1)s OFFSET %(param_2)s)
+2026-01-03 18:43:07,666.666] base.py line:1846 INFO: [generated in 0.00061s] {'document_id_1': UUID('d040a494-3448-4194-bff6-a2b08cb95b65'), 'param_1': 20, 'param_2': 0})
+2026-01-03 18:43:07,726.726] base.py line:1846 INFO: SELECT count(*) AS count_1 
+FROM (SELECT segment.id AS id, segment.account_id AS account_id, segment.dataset_id AS dataset_id, segment.document_id AS document_id, segment.node_id AS node_id, segment.position AS position, segment.content AS content, segment.character_count AS character_count, segment.token_count AS token_count, segment.keywords AS keywords, segment.hash AS hash, segment.hit_count AS hit_count, segment.enabled AS enabled, segment.disabled_at AS disabled_at, segment.processing_started_at AS processing_started_at, segment.indexing_completed_at AS indexing_completed_at, segment.completed_at AS completed_at, segment.stopped_at AS stopped_at, segment.error AS error, segment.status AS status, segment.updated_at AS updated_at, segment.created_at AS created_at 
+FROM segment 
+WHERE segment.document_id = %(document_id_1)s::UUID) AS anon_1)
+2026-01-03 18:43:07,726.726] base.py line:1846 INFO: [generated in 0.00043s] {'document_id_1': UUID('d040a494-3448-4194-bff6-a2b08cb95b65')})
+2026-01-03 18:43:07,741.741] base.py line:2713 INFO: ROLLBACK)
+2026-01-03 18:43:07,742.742] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 18:43:07] "GET /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/documents/d040a494-3448-4194-bff6-a2b08cb95b65/segments HTTP/1.1" 200 -)
+2026-01-03 18:43:30,527.527] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 18:43:30,528.528] base.py line:1846 INFO: SELECT document.id AS document_id, document.account_id AS document_account_id, document.dataset_id AS document_dataset_id, document.upload_file_id AS document_upload_file_id, document.process_rule_id AS document_process_rule_id, document.batch AS document_batch, document.name AS document_name, document.position AS document_position, document.character_count AS document_character_count, document.token_count AS document_token_count, document.processing_started_at AS document_processing_started_at, document.parsing_completed_at AS document_parsing_completed_at, document.splitting_completed_at AS document_splitting_completed_at, document.indexing_completed_at AS document_indexing_completed_at, document.completed_at AS document_completed_at, document.stopped_at AS document_stopped_at, document.error AS document_error, document.enabled AS document_enabled, document.disabled_at AS document_disabled_at, document.status AS document_status, document.updated_at AS document_updated_at, document.created_at AS document_created_at 
+FROM document 
+WHERE document.id = %(pk_1)s::UUID)
+2026-01-03 18:43:30,529.529] base.py line:1846 INFO: [cached since 22.98s ago] {'pk_1': UUID('d040a494-3448-4194-bff6-a2b08cb95b65')})
+2026-01-03 18:43:30,541.541] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.document_id = %(document_id_1)s::UUID ORDER BY segment.position ASC 
+ LIMIT %(param_1)s OFFSET %(param_2)s)
+2026-01-03 18:43:30,542.542] base.py line:1846 INFO: [cached since 22.87s ago] {'document_id_1': UUID('d040a494-3448-4194-bff6-a2b08cb95b65'), 'param_1': 20, 'param_2': 0})
+2026-01-03 18:43:30,544.544] base.py line:1846 INFO: SELECT count(*) AS count_1 
+FROM (SELECT segment.id AS id, segment.account_id AS account_id, segment.dataset_id AS dataset_id, segment.document_id AS document_id, segment.node_id AS node_id, segment.position AS position, segment.content AS content, segment.character_count AS character_count, segment.token_count AS token_count, segment.keywords AS keywords, segment.hash AS hash, segment.hit_count AS hit_count, segment.enabled AS enabled, segment.disabled_at AS disabled_at, segment.processing_started_at AS processing_started_at, segment.indexing_completed_at AS indexing_completed_at, segment.completed_at AS completed_at, segment.stopped_at AS stopped_at, segment.error AS error, segment.status AS status, segment.updated_at AS updated_at, segment.created_at AS created_at 
+FROM segment 
+WHERE segment.document_id = %(document_id_1)s::UUID) AS anon_1)
+2026-01-03 18:43:30,544.544] base.py line:1846 INFO: [cached since 22.82s ago] {'document_id_1': UUID('d040a494-3448-4194-bff6-a2b08cb95b65')})
+2026-01-03 18:43:30,547.547] base.py line:2713 INFO: ROLLBACK)
+2026-01-03 18:43:30,548.548] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 18:43:30] "GET /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/documents/d040a494-3448-4194-bff6-a2b08cb95b65/segments?page_size=5 HTTP/1.1" 200 -)
+2026-01-03 18:44:16,952.952] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 18:44:16,954.954] base.py line:1846 INFO: SELECT document.id AS document_id, document.account_id AS document_account_id, document.dataset_id AS document_dataset_id, document.upload_file_id AS document_upload_file_id, document.process_rule_id AS document_process_rule_id, document.batch AS document_batch, document.name AS document_name, document.position AS document_position, document.character_count AS document_character_count, document.token_count AS document_token_count, document.processing_started_at AS document_processing_started_at, document.parsing_completed_at AS document_parsing_completed_at, document.splitting_completed_at AS document_splitting_completed_at, document.indexing_completed_at AS document_indexing_completed_at, document.completed_at AS document_completed_at, document.stopped_at AS document_stopped_at, document.error AS document_error, document.enabled AS document_enabled, document.disabled_at AS document_disabled_at, document.status AS document_status, document.updated_at AS document_updated_at, document.created_at AS document_created_at 
+FROM document 
+WHERE document.id = %(pk_1)s::UUID)
+2026-01-03 18:44:16,954.954] base.py line:1846 INFO: [cached since 69.41s ago] {'pk_1': UUID('d040a494-3448-4194-bff6-a2b08cb95b65')})
+2026-01-03 18:44:16,959.959] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.document_id = %(document_id_1)s::UUID ORDER BY segment.position ASC 
+ LIMIT %(param_1)s OFFSET %(param_2)s)
+2026-01-03 18:44:16,959.959] base.py line:1846 INFO: [cached since 69.29s ago] {'document_id_1': UUID('d040a494-3448-4194-bff6-a2b08cb95b65'), 'param_1': 20, 'param_2': 0})
+2026-01-03 18:44:16,962.962] base.py line:1846 INFO: SELECT count(*) AS count_1 
+FROM (SELECT segment.id AS id, segment.account_id AS account_id, segment.dataset_id AS dataset_id, segment.document_id AS document_id, segment.node_id AS node_id, segment.position AS position, segment.content AS content, segment.character_count AS character_count, segment.token_count AS token_count, segment.keywords AS keywords, segment.hash AS hash, segment.hit_count AS hit_count, segment.enabled AS enabled, segment.disabled_at AS disabled_at, segment.processing_started_at AS processing_started_at, segment.indexing_completed_at AS indexing_completed_at, segment.completed_at AS completed_at, segment.stopped_at AS stopped_at, segment.error AS error, segment.status AS status, segment.updated_at AS updated_at, segment.created_at AS created_at 
+FROM segment 
+WHERE segment.document_id = %(document_id_1)s::UUID) AS anon_1)
+2026-01-03 18:44:16,962.962] base.py line:1846 INFO: [cached since 69.23s ago] {'document_id_1': UUID('d040a494-3448-4194-bff6-a2b08cb95b65')})
+2026-01-03 18:44:16,965.965] base.py line:2713 INFO: ROLLBACK)
+2026-01-03 18:44:16,966.966] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 18:44:16] "GET /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/documents/d040a494-3448-4194-bff6-a2b08cb95b65/segments?page_size=5 HTTP/1.1" 200 -)
+2026-01-03 18:45:13,308.308] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/segment_handler.py', reloading)
+2026-01-03 18:45:15,168.168] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-03 18:45:28,900.900] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-03 18:45:28,946.946] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-03 18:45:29,228.228] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-03 18:45:29,228.228] base.py line:1846 INFO: [raw sql] {})
+2026-01-03 18:45:29,230.230] base.py line:1846 INFO: select current_schema())
+2026-01-03 18:45:29,230.230] base.py line:1846 INFO: [raw sql] {})
+2026-01-03 18:45:29,232.232] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-03 18:45:29,232.232] base.py line:1846 INFO: [raw sql] {})
+2026-01-03 18:45:29,233.233] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 18:45:29,238.238] base.py line:1846 INFO: SELECT document.id AS document_id, document.account_id AS document_account_id, document.dataset_id AS document_dataset_id, document.upload_file_id AS document_upload_file_id, document.process_rule_id AS document_process_rule_id, document.batch AS document_batch, document.name AS document_name, document.position AS document_position, document.character_count AS document_character_count, document.token_count AS document_token_count, document.processing_started_at AS document_processing_started_at, document.parsing_completed_at AS document_parsing_completed_at, document.splitting_completed_at AS document_splitting_completed_at, document.indexing_completed_at AS document_indexing_completed_at, document.completed_at AS document_completed_at, document.stopped_at AS document_stopped_at, document.error AS document_error, document.enabled AS document_enabled, document.disabled_at AS document_disabled_at, document.status AS document_status, document.updated_at AS document_updated_at, document.created_at AS document_created_at 
+FROM document 
+WHERE document.id = %(pk_1)s::UUID)
+2026-01-03 18:45:29,238.238] base.py line:1846 INFO: [generated in 0.00035s] {'pk_1': UUID('d040a494-3448-4194-bff6-a2b08cb95b65')})
+2026-01-03 18:45:29,257.257] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.document_id = %(document_id_1)s::UUID ORDER BY segment.position ASC 
+ LIMIT %(param_1)s OFFSET %(param_2)s)
+2026-01-03 18:45:29,257.257] base.py line:1846 INFO: [generated in 0.00032s] {'document_id_1': UUID('d040a494-3448-4194-bff6-a2b08cb95b65'), 'param_1': 5, 'param_2': 0})
+2026-01-03 18:45:29,267.267] base.py line:1846 INFO: SELECT count(*) AS count_1 
+FROM (SELECT segment.id AS id, segment.account_id AS account_id, segment.dataset_id AS dataset_id, segment.document_id AS document_id, segment.node_id AS node_id, segment.position AS position, segment.content AS content, segment.character_count AS character_count, segment.token_count AS token_count, segment.keywords AS keywords, segment.hash AS hash, segment.hit_count AS hit_count, segment.enabled AS enabled, segment.disabled_at AS disabled_at, segment.processing_started_at AS processing_started_at, segment.indexing_completed_at AS indexing_completed_at, segment.completed_at AS completed_at, segment.stopped_at AS stopped_at, segment.error AS error, segment.status AS status, segment.updated_at AS updated_at, segment.created_at AS created_at 
+FROM segment 
+WHERE segment.document_id = %(document_id_1)s::UUID) AS anon_1)
+2026-01-03 18:45:29,267.267] base.py line:1846 INFO: [generated in 0.00037s] {'document_id_1': UUID('d040a494-3448-4194-bff6-a2b08cb95b65')})
+2026-01-03 18:45:29,272.272] base.py line:2713 INFO: ROLLBACK)
+2026-01-03 18:45:29,273.273] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 18:45:29] "GET /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/documents/d040a494-3448-4194-bff6-a2b08cb95b65/segments?page_size=5 HTTP/1.1" 200 -)
+2026-01-03 18:46:08,197.197] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 18:46:08,199.199] base.py line:1846 INFO: SELECT document.id AS document_id, document.account_id AS document_account_id, document.dataset_id AS document_dataset_id, document.upload_file_id AS document_upload_file_id, document.process_rule_id AS document_process_rule_id, document.batch AS document_batch, document.name AS document_name, document.position AS document_position, document.character_count AS document_character_count, document.token_count AS document_token_count, document.processing_started_at AS document_processing_started_at, document.parsing_completed_at AS document_parsing_completed_at, document.splitting_completed_at AS document_splitting_completed_at, document.indexing_completed_at AS document_indexing_completed_at, document.completed_at AS document_completed_at, document.stopped_at AS document_stopped_at, document.error AS document_error, document.enabled AS document_enabled, document.disabled_at AS document_disabled_at, document.status AS document_status, document.updated_at AS document_updated_at, document.created_at AS document_created_at 
+FROM document 
+WHERE document.id = %(pk_1)s::UUID)
+2026-01-03 18:46:08,200.200] base.py line:1846 INFO: [cached since 38.96s ago] {'pk_1': UUID('d040a494-3448-4194-bff6-a2b08cb95b65')})
+2026-01-03 18:46:08,218.218] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.document_id = %(document_id_1)s::UUID AND segment.content ILIKE %(content_1)s ORDER BY segment.position ASC 
+ LIMIT %(param_1)s OFFSET %(param_2)s)
+2026-01-03 18:46:08,218.218] base.py line:1846 INFO: [generated in 0.00060s] {'document_id_1': UUID('d040a494-3448-4194-bff6-a2b08cb95b65'), 'content_1': '%memory%', 'param_1': 5, 'param_2': 0})
+2026-01-03 18:46:08,230.230] base.py line:1846 INFO: SELECT count(*) AS count_1 
+FROM (SELECT segment.id AS id, segment.account_id AS account_id, segment.dataset_id AS dataset_id, segment.document_id AS document_id, segment.node_id AS node_id, segment.position AS position, segment.content AS content, segment.character_count AS character_count, segment.token_count AS token_count, segment.keywords AS keywords, segment.hash AS hash, segment.hit_count AS hit_count, segment.enabled AS enabled, segment.disabled_at AS disabled_at, segment.processing_started_at AS processing_started_at, segment.indexing_completed_at AS indexing_completed_at, segment.completed_at AS completed_at, segment.stopped_at AS stopped_at, segment.error AS error, segment.status AS status, segment.updated_at AS updated_at, segment.created_at AS created_at 
+FROM segment 
+WHERE segment.document_id = %(document_id_1)s::UUID AND segment.content ILIKE %(content_1)s) AS anon_1)
+2026-01-03 18:46:08,230.230] base.py line:1846 INFO: [generated in 0.00048s] {'document_id_1': UUID('d040a494-3448-4194-bff6-a2b08cb95b65'), 'content_1': '%memory%'})
+2026-01-03 18:46:08,236.236] base.py line:2713 INFO: ROLLBACK)
+2026-01-03 18:46:08,238.238] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 18:46:08] "GET /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/documents/d040a494-3448-4194-bff6-a2b08cb95b65/segments?page_size=5&search_word=memory HTTP/1.1" 200 -)
+2026-01-03 18:46:20,326.326] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 18:46:20,326.326] base.py line:1846 INFO: SELECT document.id AS document_id, document.account_id AS document_account_id, document.dataset_id AS document_dataset_id, document.upload_file_id AS document_upload_file_id, document.process_rule_id AS document_process_rule_id, document.batch AS document_batch, document.name AS document_name, document.position AS document_position, document.character_count AS document_character_count, document.token_count AS document_token_count, document.processing_started_at AS document_processing_started_at, document.parsing_completed_at AS document_parsing_completed_at, document.splitting_completed_at AS document_splitting_completed_at, document.indexing_completed_at AS document_indexing_completed_at, document.completed_at AS document_completed_at, document.stopped_at AS document_stopped_at, document.error AS document_error, document.enabled AS document_enabled, document.disabled_at AS document_disabled_at, document.status AS document_status, document.updated_at AS document_updated_at, document.created_at AS document_created_at 
+FROM document 
+WHERE document.id = %(pk_1)s::UUID)
+2026-01-03 18:46:20,327.327] base.py line:1846 INFO: [cached since 51.09s ago] {'pk_1': UUID('d040a494-3448-4194-bff6-a2b08cb95b65')})
+2026-01-03 18:46:20,329.329] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.document_id = %(document_id_1)s::UUID AND segment.content ILIKE %(content_1)s ORDER BY segment.position ASC 
+ LIMIT %(param_1)s OFFSET %(param_2)s)
+2026-01-03 18:46:20,329.329] base.py line:1846 INFO: [cached since 12.11s ago] {'document_id_1': UUID('d040a494-3448-4194-bff6-a2b08cb95b65'), 'content_1': '%memoryhahhahh%', 'param_1': 5, 'param_2': 0})
+2026-01-03 18:46:20,331.331] base.py line:1846 INFO: SELECT count(*) AS count_1 
+FROM (SELECT segment.id AS id, segment.account_id AS account_id, segment.dataset_id AS dataset_id, segment.document_id AS document_id, segment.node_id AS node_id, segment.position AS position, segment.content AS content, segment.character_count AS character_count, segment.token_count AS token_count, segment.keywords AS keywords, segment.hash AS hash, segment.hit_count AS hit_count, segment.enabled AS enabled, segment.disabled_at AS disabled_at, segment.processing_started_at AS processing_started_at, segment.indexing_completed_at AS indexing_completed_at, segment.completed_at AS completed_at, segment.stopped_at AS stopped_at, segment.error AS error, segment.status AS status, segment.updated_at AS updated_at, segment.created_at AS created_at 
+FROM segment 
+WHERE segment.document_id = %(document_id_1)s::UUID AND segment.content ILIKE %(content_1)s) AS anon_1)
+2026-01-03 18:46:20,331.331] base.py line:1846 INFO: [cached since 12.1s ago] {'document_id_1': UUID('d040a494-3448-4194-bff6-a2b08cb95b65'), 'content_1': '%memoryhahhahh%'})
+2026-01-03 18:46:20,334.334] base.py line:2713 INFO: ROLLBACK)
+2026-01-03 18:46:20,335.335] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 18:46:20] "GET /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/documents/d040a494-3448-4194-bff6-a2b08cb95b65/segments?page_size=5&search_word=memoryhahhahh HTTP/1.1" 200 -)
+2026-01-03 18:46:29,246.246] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 18:46:29,247.247] base.py line:1846 INFO: SELECT document.id AS document_id, document.account_id AS document_account_id, document.dataset_id AS document_dataset_id, document.upload_file_id AS document_upload_file_id, document.process_rule_id AS document_process_rule_id, document.batch AS document_batch, document.name AS document_name, document.position AS document_position, document.character_count AS document_character_count, document.token_count AS document_token_count, document.processing_started_at AS document_processing_started_at, document.parsing_completed_at AS document_parsing_completed_at, document.splitting_completed_at AS document_splitting_completed_at, document.indexing_completed_at AS document_indexing_completed_at, document.completed_at AS document_completed_at, document.stopped_at AS document_stopped_at, document.error AS document_error, document.enabled AS document_enabled, document.disabled_at AS document_disabled_at, document.status AS document_status, document.updated_at AS document_updated_at, document.created_at AS document_created_at 
+FROM document 
+WHERE document.id = %(pk_1)s::UUID)
+2026-01-03 18:46:29,247.247] base.py line:1846 INFO: [cached since 60.01s ago] {'pk_1': UUID('d040a494-3448-4194-bff6-a2b08cb95b65')})
+2026-01-03 18:46:29,249.249] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.document_id = %(document_id_1)s::UUID ORDER BY segment.position ASC 
+ LIMIT %(param_1)s OFFSET %(param_2)s)
+2026-01-03 18:46:29,250.250] base.py line:1846 INFO: [cached since 59.99s ago] {'document_id_1': UUID('d040a494-3448-4194-bff6-a2b08cb95b65'), 'param_1': 5, 'param_2': 0})
+2026-01-03 18:46:29,251.251] base.py line:1846 INFO: SELECT count(*) AS count_1 
+FROM (SELECT segment.id AS id, segment.account_id AS account_id, segment.dataset_id AS dataset_id, segment.document_id AS document_id, segment.node_id AS node_id, segment.position AS position, segment.content AS content, segment.character_count AS character_count, segment.token_count AS token_count, segment.keywords AS keywords, segment.hash AS hash, segment.hit_count AS hit_count, segment.enabled AS enabled, segment.disabled_at AS disabled_at, segment.processing_started_at AS processing_started_at, segment.indexing_completed_at AS indexing_completed_at, segment.completed_at AS completed_at, segment.stopped_at AS stopped_at, segment.error AS error, segment.status AS status, segment.updated_at AS updated_at, segment.created_at AS created_at 
+FROM segment 
+WHERE segment.document_id = %(document_id_1)s::UUID) AS anon_1)
+2026-01-03 18:46:29,252.252] base.py line:1846 INFO: [cached since 59.98s ago] {'document_id_1': UUID('d040a494-3448-4194-bff6-a2b08cb95b65')})
+2026-01-03 18:46:29,255.255] base.py line:2713 INFO: ROLLBACK)
+2026-01-03 18:46:29,255.255] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 18:46:29] "GET /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/documents/d040a494-3448-4194-bff6-a2b08cb95b65/segments?page_size=5&search_word= HTTP/1.1" 200 -)
+2026-01-03 19:00:51,536.536] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/schema/segment_schema.py', reloading)
+2026-01-03 19:00:53,470.470] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-03 19:01:06,041.041] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-03 19:01:06,065.065] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-03 19:33:19,404.404] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/segment_service.py', reloading)
+2026-01-03 19:33:21,892.892] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-03 19:33:36,733.733] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-03 19:33:36,776.776] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-03 19:34:33,490.490] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-03 19:34:33,492.492] base.py line:1846 INFO: [raw sql] {})
+2026-01-03 19:34:33,501.501] base.py line:1846 INFO: select current_schema())
+2026-01-03 19:34:33,501.501] base.py line:1846 INFO: [raw sql] {})
+2026-01-03 19:34:33,503.503] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-03 19:34:33,503.503] base.py line:1846 INFO: [raw sql] {})
+2026-01-03 19:34:33,508.508] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 19:34:33,520.520] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.id = %(pk_1)s::UUID)
+2026-01-03 19:34:33,520.520] base.py line:1846 INFO: [generated in 0.00050s] {'pk_1': UUID('fa149e00-1a7c-4b2c-b353-c6b2e35286d9')})
+2026-01-03 19:34:33,600.600] http.py line:66 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/segment_handler.py", line 41, in get_segment
+    segments = self.segment_service.get_segment(dataset_id, document_id, segment_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/segment_service.py", line 67, in get_segment
+    raise NotFoundException("该文档片段不存在，或无权限查看，请核实后重试")
+internal.exception.exception.NotFoundException
+2026-01-03 19:34:33,629.629] base.py line:2713 INFO: ROLLBACK)
+2026-01-03 19:34:33,637.637] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 19:34:33] "GET /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/documents/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/segments/fa149e00-1a7c-4b2c-b353-c6b2e35286d9 HTTP/1.1" 200 -)
+2026-01-03 19:34:58,022.022] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 19:34:58,024.024] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.id = %(pk_1)s::UUID)
+2026-01-03 19:34:58,024.024] base.py line:1846 INFO: [cached since 24.5s ago] {'pk_1': UUID('80b60d95-a3a9-40c4-b595-5bee840be9f2')})
+2026-01-03 19:34:58,030.030] base.py line:2713 INFO: ROLLBACK)
+2026-01-03 19:34:58,031.031] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 19:34:58] "GET /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/documents/d040a494-3448-4194-bff6-a2b08cb95b65/segments/80b60d95-a3a9-40c4-b595-5bee840be9f2 HTTP/1.1" 200 -)
+2026-01-03 19:36:23,327.327] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/router/router.py', reloading)
+2026-01-03 19:36:24,912.912] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-03 19:36:43,470.470] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-03 19:36:43,494.494] _internal.py line:97 INFO:  * Debugger PIN: 813-120-833)
+2026-01-03 19:37:25,665.665] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/router/router.py', reloading)
+2026-01-03 19:37:27,123.123] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-03 19:37:39,420.420] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-03 19:37:39,445.445] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-03 19:48:25,538.538] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/schema/segment_schema.py', reloading)
+2026-01-03 19:48:27,281.281] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-03 19:48:39,629.629] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-03 19:48:39,673.673] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-03 20:04:34,129.129] _internal.py line:97 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000)
+2026-01-03 20:04:34,130.130] _internal.py line:97 INFO: [33mPress CTRL+C to quit[0m)
+2026-01-03 20:04:34,133.133] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-03 20:04:48,449.449] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-03 20:04:48,473.473] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-03 20:06:45,893.893] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-03 20:06:45,896.896] base.py line:1846 INFO: [raw sql] {})
+2026-01-03 20:06:45,899.899] base.py line:1846 INFO: select current_schema())
+2026-01-03 20:06:45,899.899] base.py line:1846 INFO: [raw sql] {})
+2026-01-03 20:06:45,900.900] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-03 20:06:45,900.900] base.py line:1846 INFO: [raw sql] {})
+2026-01-03 20:06:45,901.901] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 20:06:45,911.911] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.id = %(pk_1)s::UUID)
+2026-01-03 20:06:45,911.911] base.py line:1846 INFO: [generated in 0.00051s] {'pk_1': UUID('80b60d95-a3a9-40c4-b595-5bee840be9f2')})
+2026-01-03 20:06:45,927.927] base.py line:2713 INFO: ROLLBACK)
+2026-01-03 20:06:45,928.928] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 20:06:45] "GET /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/documents/d040a494-3448-4194-bff6-a2b08cb95b65/segments/80b60d95-a3a9-40c4-b595-5bee840be9f2 HTTP/1.1" 200 -)
+2026-01-03 20:07:00,504.504] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 20:07:00,505.505] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.id = %(pk_1)s::UUID)
+2026-01-03 20:07:00,505.505] base.py line:1846 INFO: [cached since 14.59s ago] {'pk_1': UUID('80b60d95-a3a9-40c4-b595-5bee840be9f2')})
+2026-01-03 20:07:00,594.594] base.py line:1846 INFO: UPDATE segment SET enabled=%(enabled)s, disabled_at=%(disabled_at)s WHERE segment.id = %(segment_id)s::UUID)
+2026-01-03 20:07:00,594.594] base.py line:1846 INFO: [generated in 0.00046s] {'enabled': False, 'disabled_at': datetime.datetime(2026, 1, 3, 20, 7, 0, 586772), 'segment_id': UUID('80b60d95-a3a9-40c4-b595-5bee840be9f2')})
+2026-01-03 20:07:00,619.619] base.py line:2716 INFO: COMMIT)
+2026-01-03 20:07:00,621.621] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 20:07:00,624.624] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.id = %(pk_1)s::UUID)
+2026-01-03 20:07:00,624.624] base.py line:1846 INFO: [generated in 0.00030s] {'pk_1': UUID('80b60d95-a3a9-40c4-b595-5bee840be9f2')})
+2026-01-03 20:07:00,630.630] base.py line:1846 INFO: SELECT document.id AS document_id, document.account_id AS document_account_id, document.dataset_id AS document_dataset_id, document.upload_file_id AS document_upload_file_id, document.process_rule_id AS document_process_rule_id, document.batch AS document_batch, document.name AS document_name, document.position AS document_position, document.character_count AS document_character_count, document.token_count AS document_token_count, document.processing_started_at AS document_processing_started_at, document.parsing_completed_at AS document_parsing_completed_at, document.splitting_completed_at AS document_splitting_completed_at, document.indexing_completed_at AS document_indexing_completed_at, document.completed_at AS document_completed_at, document.stopped_at AS document_stopped_at, document.error AS document_error, document.enabled AS document_enabled, document.disabled_at AS document_disabled_at, document.status AS document_status, document.updated_at AS document_updated_at, document.created_at AS document_created_at 
+FROM document 
+WHERE document.id = %(pk_1)s::UUID)
+2026-01-03 20:07:00,630.630] base.py line:1846 INFO: [generated in 0.00029s] {'pk_1': UUID('d040a494-3448-4194-bff6-a2b08cb95b65')})
+2026-01-03 20:07:00,651.651] base.py line:1846 INFO: SELECT keyword_table.id AS keyword_table_id, keyword_table.dataset_id AS keyword_table_dataset_id, keyword_table.keyword_table AS keyword_table_keyword_table, keyword_table.updated_at AS keyword_table_updated_at, keyword_table.created_at AS keyword_table_created_at 
+FROM keyword_table 
+WHERE keyword_table.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-03 20:07:00,651.651] base.py line:1846 INFO: [generated in 0.00037s] {'dataset_id_1': UUID('fa149e00-1a7c-4b2c-b353-c6b2e35286d9')})
+2026-01-03 20:07:00,659.659] base.py line:1846 INFO: UPDATE keyword_table SET keyword_table=%(keyword_table)s::JSONB WHERE keyword_table.id = %(keyword_table_id)s::UUID)
+2026-01-03 20:07:00,659.659] base.py line:1846 INFO: [generated in 0.00061s] {'keyword_table': '{"AI": ["70cbfa82-3971-4f07-9fb7-43061ea91488"], "IM": ["7d8ef1ae-2d5c-4a70-bae4-dcfaac8233ef"], "id": ["b8d795c2-5c69-4457-9c51-36367803894d", "70cb ... (5551 characters truncated) ... , "\\u4e2a\\u4eba\\u7b80\\u4ecb": ["37d26138-f29c-404e-95d7-28628580ba03"], "\\u5f00\\u653e\\u5e73\\u53f0": ["a9d29581-a874-402d-ad1c-a66dc87ca0a7"]}', 'keyword_table_id': UUID('fd6079e5-4f47-4191-bf47-dc1bdd9a474b')})
+2026-01-03 20:07:00,663.663] base.py line:2716 INFO: COMMIT)
+2026-01-03 20:07:00,680.680] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 20:07:00,680.680] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.id = %(pk_1)s::UUID)
+2026-01-03 20:07:00,681.681] base.py line:1846 INFO: [cached since 0.05687s ago] {'pk_1': UUID('80b60d95-a3a9-40c4-b595-5bee840be9f2')})
+2026-01-03 20:07:00,727.727] base.py line:2713 INFO: ROLLBACK)
+2026-01-03 20:07:00,728.728] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 20:07:00] "POST /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/documents/d040a494-3448-4194-bff6-a2b08cb95b65/segments/80b60d95-a3a9-40c4-b595-5bee840be9f2/enabled HTTP/1.1" 200 -)
+2026-01-03 20:07:05,815.815] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 20:07:05,815.815] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.id = %(pk_1)s::UUID)
+2026-01-03 20:07:05,815.815] base.py line:1846 INFO: [cached since 19.9s ago] {'pk_1': UUID('80b60d95-a3a9-40c4-b595-5bee840be9f2')})
+2026-01-03 20:07:05,818.818] base.py line:2713 INFO: ROLLBACK)
+2026-01-03 20:07:05,818.818] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 20:07:05] "GET /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/documents/d040a494-3448-4194-bff6-a2b08cb95b65/segments/80b60d95-a3a9-40c4-b595-5bee840be9f2 HTTP/1.1" 200 -)
+2026-01-03 20:07:45,853.853] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 20:07:45,857.857] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.id = %(pk_1)s::UUID)
+2026-01-03 20:07:45,857.857] base.py line:1846 INFO: [cached since 59.94s ago] {'pk_1': UUID('80b60d95-a3a9-40c4-b595-5bee840be9f2')})
+2026-01-03 20:07:45,888.888] base.py line:1846 INFO: UPDATE segment SET enabled=%(enabled)s, disabled_at=%(disabled_at)s WHERE segment.id = %(segment_id)s::UUID)
+2026-01-03 20:07:45,888.888] base.py line:1846 INFO: [cached since 45.29s ago] {'enabled': True, 'disabled_at': None, 'segment_id': UUID('80b60d95-a3a9-40c4-b595-5bee840be9f2')})
+2026-01-03 20:07:45,892.892] base.py line:2716 INFO: COMMIT)
+2026-01-03 20:07:45,894.894] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 20:07:45,894.894] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.id = %(pk_1)s::UUID)
+2026-01-03 20:07:45,895.895] base.py line:1846 INFO: [cached since 45.27s ago] {'pk_1': UUID('80b60d95-a3a9-40c4-b595-5bee840be9f2')})
+2026-01-03 20:07:45,898.898] base.py line:1846 INFO: SELECT document.id AS document_id, document.account_id AS document_account_id, document.dataset_id AS document_dataset_id, document.upload_file_id AS document_upload_file_id, document.process_rule_id AS document_process_rule_id, document.batch AS document_batch, document.name AS document_name, document.position AS document_position, document.character_count AS document_character_count, document.token_count AS document_token_count, document.processing_started_at AS document_processing_started_at, document.parsing_completed_at AS document_parsing_completed_at, document.splitting_completed_at AS document_splitting_completed_at, document.indexing_completed_at AS document_indexing_completed_at, document.completed_at AS document_completed_at, document.stopped_at AS document_stopped_at, document.error AS document_error, document.enabled AS document_enabled, document.disabled_at AS document_disabled_at, document.status AS document_status, document.updated_at AS document_updated_at, document.created_at AS document_created_at 
+FROM document 
+WHERE document.id = %(pk_1)s::UUID)
+2026-01-03 20:07:45,899.899] base.py line:1846 INFO: [cached since 45.27s ago] {'pk_1': UUID('d040a494-3448-4194-bff6-a2b08cb95b65')})
+2026-01-03 20:07:45,914.914] base.py line:1846 INFO: SELECT keyword_table.id AS keyword_table_id, keyword_table.dataset_id AS keyword_table_dataset_id, keyword_table.keyword_table AS keyword_table_keyword_table, keyword_table.updated_at AS keyword_table_updated_at, keyword_table.created_at AS keyword_table_created_at 
+FROM keyword_table 
+WHERE keyword_table.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-03 20:07:45,914.914] base.py line:1846 INFO: [cached since 45.26s ago] {'dataset_id_1': UUID('fa149e00-1a7c-4b2c-b353-c6b2e35286d9')})
+2026-01-03 20:07:45,925.925] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.keywords AS segment_keywords 
+FROM segment 
+WHERE segment.id IN (%(id_1_1)s::UUID))
+2026-01-03 20:07:45,925.925] base.py line:1846 INFO: [generated in 0.00091s] {'id_1_1': UUID('80b60d95-a3a9-40c4-b595-5bee840be9f2')})
+2026-01-03 20:07:45,938.938] base.py line:1846 INFO: UPDATE keyword_table SET keyword_table=%(keyword_table)s::JSONB WHERE keyword_table.id = %(keyword_table_id)s::UUID)
+2026-01-03 20:07:45,938.938] base.py line:1846 INFO: [cached since 45.28s ago] {'keyword_table': '{"AI": ["70cbfa82-3971-4f07-9fb7-43061ea91488"], "IM": ["7d8ef1ae-2d5c-4a70-bae4-dcfaac8233ef"], "id": ["b8d795c2-5c69-4457-9c51-36367803894d", "70cb ... (5951 characters truncated) ... , "\\u4e2a\\u4eba\\u7b80\\u4ecb": ["37d26138-f29c-404e-95d7-28628580ba03"], "\\u5f00\\u653e\\u5e73\\u53f0": ["a9d29581-a874-402d-ad1c-a66dc87ca0a7"]}', 'keyword_table_id': UUID('fd6079e5-4f47-4191-bf47-dc1bdd9a474b')})
+2026-01-03 20:07:45,940.940] base.py line:2716 INFO: COMMIT)
+2026-01-03 20:07:45,955.955] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 20:07:45,955.955] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.id = %(pk_1)s::UUID)
+2026-01-03 20:07:45,955.955] base.py line:1846 INFO: [cached since 45.33s ago] {'pk_1': UUID('80b60d95-a3a9-40c4-b595-5bee840be9f2')})
+2026-01-03 20:07:45,998.998] base.py line:2713 INFO: ROLLBACK)
+2026-01-03 20:07:45,998.998] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 20:07:45] "POST /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/documents/d040a494-3448-4194-bff6-a2b08cb95b65/segments/80b60d95-a3a9-40c4-b595-5bee840be9f2/enabled HTTP/1.1" 200 -)
+2026-01-03 20:07:49,349.349] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 20:07:49,350.350] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.id = %(pk_1)s::UUID)
+2026-01-03 20:07:49,350.350] base.py line:1846 INFO: [cached since 63.44s ago] {'pk_1': UUID('80b60d95-a3a9-40c4-b595-5bee840be9f2')})
+2026-01-03 20:07:49,353.353] base.py line:2713 INFO: ROLLBACK)
+2026-01-03 20:07:49,353.353] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 20:07:49] "GET /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/documents/d040a494-3448-4194-bff6-a2b08cb95b65/segments/80b60d95-a3a9-40c4-b595-5bee840be9f2 HTTP/1.1" 200 -)
+2026-01-03 20:08:37,044.044] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 20:08:37] "POST /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/hit HTTP/1.1" 200 -)
+2026-01-03 20:09:09,328.328] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 20:09:09,332.332] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.id = %(pk_1)s::UUID)
+2026-01-03 20:09:09,333.333] base.py line:1846 INFO: [cached since 143.4s ago] {'pk_1': UUID('80b60d95-a3a9-40c4-b595-5bee840be9f2')})
+2026-01-03 20:09:09,369.369] base.py line:1846 INFO: UPDATE segment SET enabled=%(enabled)s, disabled_at=%(disabled_at)s WHERE segment.id = %(segment_id)s::UUID)
+2026-01-03 20:09:09,369.369] base.py line:1846 INFO: [cached since 128.8s ago] {'enabled': False, 'disabled_at': datetime.datetime(2026, 1, 3, 20, 9, 9, 365691), 'segment_id': UUID('80b60d95-a3a9-40c4-b595-5bee840be9f2')})
+2026-01-03 20:09:09,371.371] base.py line:2716 INFO: COMMIT)
+2026-01-03 20:09:09,375.375] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 20:09:09,376.376] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.id = %(pk_1)s::UUID)
+2026-01-03 20:09:09,376.376] base.py line:1846 INFO: [cached since 128.7s ago] {'pk_1': UUID('80b60d95-a3a9-40c4-b595-5bee840be9f2')})
+2026-01-03 20:09:09,378.378] base.py line:1846 INFO: SELECT document.id AS document_id, document.account_id AS document_account_id, document.dataset_id AS document_dataset_id, document.upload_file_id AS document_upload_file_id, document.process_rule_id AS document_process_rule_id, document.batch AS document_batch, document.name AS document_name, document.position AS document_position, document.character_count AS document_character_count, document.token_count AS document_token_count, document.processing_started_at AS document_processing_started_at, document.parsing_completed_at AS document_parsing_completed_at, document.splitting_completed_at AS document_splitting_completed_at, document.indexing_completed_at AS document_indexing_completed_at, document.completed_at AS document_completed_at, document.stopped_at AS document_stopped_at, document.error AS document_error, document.enabled AS document_enabled, document.disabled_at AS document_disabled_at, document.status AS document_status, document.updated_at AS document_updated_at, document.created_at AS document_created_at 
+FROM document 
+WHERE document.id = %(pk_1)s::UUID)
+2026-01-03 20:09:09,378.378] base.py line:1846 INFO: [cached since 128.7s ago] {'pk_1': UUID('d040a494-3448-4194-bff6-a2b08cb95b65')})
+2026-01-03 20:09:09,394.394] base.py line:1846 INFO: SELECT keyword_table.id AS keyword_table_id, keyword_table.dataset_id AS keyword_table_dataset_id, keyword_table.keyword_table AS keyword_table_keyword_table, keyword_table.updated_at AS keyword_table_updated_at, keyword_table.created_at AS keyword_table_created_at 
+FROM keyword_table 
+WHERE keyword_table.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-03 20:09:09,394.394] base.py line:1846 INFO: [cached since 128.7s ago] {'dataset_id_1': UUID('fa149e00-1a7c-4b2c-b353-c6b2e35286d9')})
+2026-01-03 20:09:09,396.396] base.py line:1846 INFO: UPDATE keyword_table SET keyword_table=%(keyword_table)s::JSONB WHERE keyword_table.id = %(keyword_table_id)s::UUID)
+2026-01-03 20:09:09,396.396] base.py line:1846 INFO: [cached since 128.7s ago] {'keyword_table': '{"AI": ["70cbfa82-3971-4f07-9fb7-43061ea91488"], "IM": ["7d8ef1ae-2d5c-4a70-bae4-dcfaac8233ef"], "id": ["b8d795c2-5c69-4457-9c51-36367803894d", "70cb ... (5551 characters truncated) ... , "\\u4e2a\\u4eba\\u7b80\\u4ecb": ["37d26138-f29c-404e-95d7-28628580ba03"], "\\u5f00\\u653e\\u5e73\\u53f0": ["a9d29581-a874-402d-ad1c-a66dc87ca0a7"]}', 'keyword_table_id': UUID('fd6079e5-4f47-4191-bf47-dc1bdd9a474b')})
+2026-01-03 20:09:09,399.399] base.py line:2716 INFO: COMMIT)
+2026-01-03 20:09:09,414.414] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 20:09:09,415.415] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.id = %(pk_1)s::UUID)
+2026-01-03 20:09:09,415.415] base.py line:1846 INFO: [cached since 128.8s ago] {'pk_1': UUID('80b60d95-a3a9-40c4-b595-5bee840be9f2')})
+2026-01-03 20:09:09,457.457] base.py line:2713 INFO: ROLLBACK)
+2026-01-03 20:09:09,458.458] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 20:09:09] "POST /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/documents/d040a494-3448-4194-bff6-a2b08cb95b65/segments/80b60d95-a3a9-40c4-b595-5bee840be9f2/enabled HTTP/1.1" 200 -)
+2026-01-03 20:09:13,818.818] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 20:09:13,819.819] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.id = %(pk_1)s::UUID)
+2026-01-03 20:09:13,819.819] base.py line:1846 INFO: [cached since 147.9s ago] {'pk_1': UUID('80b60d95-a3a9-40c4-b595-5bee840be9f2')})
+2026-01-03 20:09:13,823.823] base.py line:2713 INFO: ROLLBACK)
+2026-01-03 20:09:13,824.824] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 20:09:13] "GET /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/documents/d040a494-3448-4194-bff6-a2b08cb95b65/segments/80b60d95-a3a9-40c4-b595-5bee840be9f2 HTTP/1.1" 200 -)
+2026-01-03 20:09:18,262.262] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 20:09:18] "POST /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/hit HTTP/1.1" 200 -)
+2026-01-03 20:10:58,988.988] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 20:10:58,992.992] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.id = %(pk_1)s::UUID)
+2026-01-03 20:10:58,993.993] base.py line:1846 INFO: [cached since 253.1s ago] {'pk_1': UUID('7d8ef1ae-2d5c-4a70-bae4-dcfaac8233ef')})
+2026-01-03 20:10:59,006.006] http.py line:66 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/segment_handler.py", line 55, in update_segment_enabled
+    self.segment_service.update_segment_enabled(dataset_id, document_id, segment_id, req.enabled.data)
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/segment_service.py", line 95, in update_segment_enabled
+    raise NotFoundException("该文档片段不存在，或无权限查看，请核实后重试")
+internal.exception.exception.NotFoundException
+2026-01-03 20:10:59,040.040] base.py line:2713 INFO: ROLLBACK)
+2026-01-03 20:10:59,041.041] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 20:10:59] "POST /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/documents/d040a494-3448-4194-bff6-a2b08cb95b65/segments/7d8ef1ae-2d5c-4a70-bae4-dcfaac8233ef/enabled HTTP/1.1" 200 -)
+2026-01-03 20:11:44,636.636] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 20:11:44,637.637] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.id = %(pk_1)s::UUID)
+2026-01-03 20:11:44,638.638] base.py line:1846 INFO: [cached since 298.7s ago] {'pk_1': UUID('7d8ef1ae-2d5c-4a70-bae4-dcfaac8233ef')})
+2026-01-03 20:11:44,680.680] base.py line:1846 INFO: UPDATE segment SET enabled=%(enabled)s, disabled_at=%(disabled_at)s WHERE segment.id = %(segment_id)s::UUID)
+2026-01-03 20:11:44,681.681] base.py line:1846 INFO: [cached since 284.1s ago] {'enabled': False, 'disabled_at': datetime.datetime(2026, 1, 3, 20, 11, 44, 676859), 'segment_id': UUID('7d8ef1ae-2d5c-4a70-bae4-dcfaac8233ef')})
+2026-01-03 20:11:44,686.686] base.py line:2716 INFO: COMMIT)
+2026-01-03 20:11:44,689.689] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 20:11:44,689.689] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.id = %(pk_1)s::UUID)
+2026-01-03 20:11:44,689.689] base.py line:1846 INFO: [cached since 284.1s ago] {'pk_1': UUID('7d8ef1ae-2d5c-4a70-bae4-dcfaac8233ef')})
+2026-01-03 20:11:44,696.696] base.py line:1846 INFO: SELECT document.id AS document_id, document.account_id AS document_account_id, document.dataset_id AS document_dataset_id, document.upload_file_id AS document_upload_file_id, document.process_rule_id AS document_process_rule_id, document.batch AS document_batch, document.name AS document_name, document.position AS document_position, document.character_count AS document_character_count, document.token_count AS document_token_count, document.processing_started_at AS document_processing_started_at, document.parsing_completed_at AS document_parsing_completed_at, document.splitting_completed_at AS document_splitting_completed_at, document.indexing_completed_at AS document_indexing_completed_at, document.completed_at AS document_completed_at, document.stopped_at AS document_stopped_at, document.error AS document_error, document.enabled AS document_enabled, document.disabled_at AS document_disabled_at, document.status AS document_status, document.updated_at AS document_updated_at, document.created_at AS document_created_at 
+FROM document 
+WHERE document.id = %(pk_1)s::UUID)
+2026-01-03 20:11:44,696.696] base.py line:1846 INFO: [cached since 284.1s ago] {'pk_1': UUID('e5474951-d9f8-47dc-8c4d-21c1872e72fc')})
+2026-01-03 20:11:44,711.711] base.py line:1846 INFO: SELECT keyword_table.id AS keyword_table_id, keyword_table.dataset_id AS keyword_table_dataset_id, keyword_table.keyword_table AS keyword_table_keyword_table, keyword_table.updated_at AS keyword_table_updated_at, keyword_table.created_at AS keyword_table_created_at 
+FROM keyword_table 
+WHERE keyword_table.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-03 20:11:44,712.712] base.py line:1846 INFO: [cached since 284.1s ago] {'dataset_id_1': UUID('fa149e00-1a7c-4b2c-b353-c6b2e35286d9')})
+2026-01-03 20:11:44,715.715] base.py line:1846 INFO: UPDATE keyword_table SET keyword_table=%(keyword_table)s::JSONB WHERE keyword_table.id = %(keyword_table_id)s::UUID)
+2026-01-03 20:11:44,715.715] base.py line:1846 INFO: [cached since 284s ago] {'keyword_table': '{"AI": ["70cbfa82-3971-4f07-9fb7-43061ea91488"], "id": ["b8d795c2-5c69-4457-9c51-36367803894d", "70cbfa82-3971-4f07-9fb7-43061ea91488", "c3b5ed4b-ced ... (5076 characters truncated) ... , "\\u4e2a\\u4eba\\u7b80\\u4ecb": ["37d26138-f29c-404e-95d7-28628580ba03"], "\\u5f00\\u653e\\u5e73\\u53f0": ["a9d29581-a874-402d-ad1c-a66dc87ca0a7"]}', 'keyword_table_id': UUID('fd6079e5-4f47-4191-bf47-dc1bdd9a474b')})
+2026-01-03 20:11:44,719.719] base.py line:2716 INFO: COMMIT)
+2026-01-03 20:11:44,735.735] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 20:11:44,736.736] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.id = %(pk_1)s::UUID)
+2026-01-03 20:11:44,736.736] base.py line:1846 INFO: [cached since 284.1s ago] {'pk_1': UUID('7d8ef1ae-2d5c-4a70-bae4-dcfaac8233ef')})
+2026-01-03 20:11:44,787.787] base.py line:2713 INFO: ROLLBACK)
+2026-01-03 20:11:44,788.788] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 20:11:44] "POST /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/documents/e5474951-d9f8-47dc-8c4d-21c1872e72fc/segments/7d8ef1ae-2d5c-4a70-bae4-dcfaac8233ef/enabled HTTP/1.1" 200 -)
+2026-01-03 20:11:53,154.154] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 20:11:53] "POST /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/hit HTTP/1.1" 200 -)
+2026-01-03 20:13:29,747.747] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 20:13:29,754.754] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.id = %(pk_1)s::UUID)
+2026-01-03 20:13:29,755.755] base.py line:1846 INFO: [cached since 403.8s ago] {'pk_1': UUID('7d8ef1ae-2d5c-4a70-bae4-dcfaac8233ef')})
+2026-01-03 20:13:29,799.799] base.py line:1846 INFO: UPDATE segment SET enabled=%(enabled)s, disabled_at=%(disabled_at)s WHERE segment.id = %(segment_id)s::UUID)
+2026-01-03 20:13:29,799.799] base.py line:1846 INFO: [cached since 389.2s ago] {'enabled': True, 'disabled_at': None, 'segment_id': UUID('7d8ef1ae-2d5c-4a70-bae4-dcfaac8233ef')})
+2026-01-03 20:13:29,803.803] base.py line:2716 INFO: COMMIT)
+2026-01-03 20:13:29,807.807] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 20:13:29,809.809] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.id = %(pk_1)s::UUID)
+2026-01-03 20:13:29,810.810] base.py line:1846 INFO: [cached since 389.2s ago] {'pk_1': UUID('7d8ef1ae-2d5c-4a70-bae4-dcfaac8233ef')})
+2026-01-03 20:13:29,812.812] base.py line:1846 INFO: SELECT document.id AS document_id, document.account_id AS document_account_id, document.dataset_id AS document_dataset_id, document.upload_file_id AS document_upload_file_id, document.process_rule_id AS document_process_rule_id, document.batch AS document_batch, document.name AS document_name, document.position AS document_position, document.character_count AS document_character_count, document.token_count AS document_token_count, document.processing_started_at AS document_processing_started_at, document.parsing_completed_at AS document_parsing_completed_at, document.splitting_completed_at AS document_splitting_completed_at, document.indexing_completed_at AS document_indexing_completed_at, document.completed_at AS document_completed_at, document.stopped_at AS document_stopped_at, document.error AS document_error, document.enabled AS document_enabled, document.disabled_at AS document_disabled_at, document.status AS document_status, document.updated_at AS document_updated_at, document.created_at AS document_created_at 
+FROM document 
+WHERE document.id = %(pk_1)s::UUID)
+2026-01-03 20:13:29,813.813] base.py line:1846 INFO: [cached since 389.2s ago] {'pk_1': UUID('e5474951-d9f8-47dc-8c4d-21c1872e72fc')})
+2026-01-03 20:13:29,831.831] base.py line:1846 INFO: SELECT keyword_table.id AS keyword_table_id, keyword_table.dataset_id AS keyword_table_dataset_id, keyword_table.keyword_table AS keyword_table_keyword_table, keyword_table.updated_at AS keyword_table_updated_at, keyword_table.created_at AS keyword_table_created_at 
+FROM keyword_table 
+WHERE keyword_table.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-03 20:13:29,832.832] base.py line:1846 INFO: [cached since 389.2s ago] {'dataset_id_1': UUID('fa149e00-1a7c-4b2c-b353-c6b2e35286d9')})
+2026-01-03 20:13:29,844.844] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.keywords AS segment_keywords 
+FROM segment 
+WHERE segment.id IN (%(id_1_1)s::UUID))
+2026-01-03 20:13:29,845.845] base.py line:1846 INFO: [cached since 343.9s ago] {'id_1_1': UUID('7d8ef1ae-2d5c-4a70-bae4-dcfaac8233ef')})
+2026-01-03 20:13:29,855.855] base.py line:1846 INFO: UPDATE keyword_table SET keyword_table=%(keyword_table)s::JSONB WHERE keyword_table.id = %(keyword_table_id)s::UUID)
+2026-01-03 20:13:29,855.855] base.py line:1846 INFO: [cached since 389.2s ago] {'keyword_table': '{"AI": ["70cbfa82-3971-4f07-9fb7-43061ea91488"], "id": ["b8d795c2-5c69-4457-9c51-36367803894d", "70cbfa82-3971-4f07-9fb7-43061ea91488", "c3b5ed4b-ced ... (5551 characters truncated) ... IM": ["7d8ef1ae-2d5c-4a70-bae4-dcfaac8233ef"], "largest": ["7d8ef1ae-2d5c-4a70-bae4-dcfaac8233ef"], "user": ["7d8ef1ae-2d5c-4a70-bae4-dcfaac8233ef"]}', 'keyword_table_id': UUID('fd6079e5-4f47-4191-bf47-dc1bdd9a474b')})
+2026-01-03 20:13:29,859.859] base.py line:2716 INFO: COMMIT)
+2026-01-03 20:13:29,877.877] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 20:13:29,877.877] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.id = %(pk_1)s::UUID)
+2026-01-03 20:13:29,878.878] base.py line:1846 INFO: [cached since 389.2s ago] {'pk_1': UUID('7d8ef1ae-2d5c-4a70-bae4-dcfaac8233ef')})
+2026-01-03 20:13:29,934.934] base.py line:2713 INFO: ROLLBACK)
+2026-01-03 20:13:29,935.935] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 20:13:29] "POST /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/documents/e5474951-d9f8-47dc-8c4d-21c1872e72fc/segments/7d8ef1ae-2d5c-4a70-bae4-dcfaac8233ef/enabled HTTP/1.1" 200 -)
+2026-01-03 20:13:35,229.229] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 20:13:35,230.230] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.id = %(pk_1)s::UUID)
+2026-01-03 20:13:35,230.230] base.py line:1846 INFO: [cached since 409.3s ago] {'pk_1': UUID('80b60d95-a3a9-40c4-b595-5bee840be9f2')})
+2026-01-03 20:13:35,234.234] base.py line:2713 INFO: ROLLBACK)
+2026-01-03 20:13:35,234.234] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 20:13:35] "GET /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/documents/d040a494-3448-4194-bff6-a2b08cb95b65/segments/80b60d95-a3a9-40c4-b595-5bee840be9f2 HTTP/1.1" 200 -)
+2026-01-03 20:13:40,424.424] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 20:13:40,425.425] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.id = %(pk_1)s::UUID)
+2026-01-03 20:13:40,425.425] base.py line:1846 INFO: [cached since 414.5s ago] {'pk_1': UUID('7d8ef1ae-2d5c-4a70-bae4-dcfaac8233ef')})
+2026-01-03 20:13:40,427.427] http.py line:66 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/segment_handler.py", line 41, in get_segment
+    segments = self.segment_service.get_segment(dataset_id, document_id, segment_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/segment_service.py", line 77, in get_segment
+    raise NotFoundException("该文档片段不存在，或无权限查看，请核实后重试")
+internal.exception.exception.NotFoundException
+2026-01-03 20:13:40,432.432] base.py line:2713 INFO: ROLLBACK)
+2026-01-03 20:13:40,432.432] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 20:13:40] "GET /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/documents/d040a494-3448-4194-bff6-a2b08cb95b65/segments/7d8ef1ae-2d5c-4a70-bae4-dcfaac8233ef HTTP/1.1" 200 -)
+2026-01-03 20:13:53,088.088] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-03 20:13:53,089.089] base.py line:1846 INFO: SELECT segment.id AS segment_id, segment.account_id AS segment_account_id, segment.dataset_id AS segment_dataset_id, segment.document_id AS segment_document_id, segment.node_id AS segment_node_id, segment.position AS segment_position, segment.content AS segment_content, segment.character_count AS segment_character_count, segment.token_count AS segment_token_count, segment.keywords AS segment_keywords, segment.hash AS segment_hash, segment.hit_count AS segment_hit_count, segment.enabled AS segment_enabled, segment.disabled_at AS segment_disabled_at, segment.processing_started_at AS segment_processing_started_at, segment.indexing_completed_at AS segment_indexing_completed_at, segment.completed_at AS segment_completed_at, segment.stopped_at AS segment_stopped_at, segment.error AS segment_error, segment.status AS segment_status, segment.updated_at AS segment_updated_at, segment.created_at AS segment_created_at 
+FROM segment 
+WHERE segment.id = %(pk_1)s::UUID)
+2026-01-03 20:13:53,090.090] base.py line:1846 INFO: [cached since 427.2s ago] {'pk_1': UUID('7d8ef1ae-2d5c-4a70-bae4-dcfaac8233ef')})
+2026-01-03 20:13:53,097.097] base.py line:2713 INFO: ROLLBACK)
+2026-01-03 20:13:53,098.098] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 20:13:53] "GET /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/documents/e5474951-d9f8-47dc-8c4d-21c1872e72fc/segments/7d8ef1ae-2d5c-4a70-bae4-dcfaac8233ef HTTP/1.1" 200 -)
+2026-01-03 20:14:01,008.008] _internal.py line:97 INFO: 127.0.0.1 - - [03/Jan/2026 20:14:01] "POST /datasets/fa149e00-1a7c-4b2c-b353-c6b2e35286d9/hit HTTP/1.1" 200 -)
