@@ -10,7 +10,7 @@ from .api_tool_schema import ValidateOpenAPISchemaReq, CreateAPIToolReq, GetApiT
     GetApiToolProvidersWithPageReq, GetApiToolProvidersWithPageResp, UpdateApiToolProviderReq
 from .app_schema import CompletionReq
 from .dataset_schema import CreateDatasetReq, GetDatasetsWithPageReq, GetDatasetResp, UpdateDatasetReq, \
-    GetDatasetsWithPageResp
+    GetDatasetsWithPageResp, HitReq
 from .document_schema import CreateDocumentsReq, CreateDocumentsResp, UpdateDocumentEnabledReq
 from .schema import ListField
 from .segment_schema import GetSegmentsWithPageReq, GetSegmentsWithPageResp, UpdateSegmentEnabledReq, GetSegmentResp
@@ -36,5 +36,6 @@ __all__ = [
     "GetDatasetResp",
     "CreateDocumentsReq",
     "CreateDocumentsResp",
-    "UpdateDocumentEnabledReq"
+    "UpdateDocumentEnabledReq",
+    "HitReq",
 ]
