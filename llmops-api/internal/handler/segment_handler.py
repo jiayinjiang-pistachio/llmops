@@ -13,7 +13,7 @@ from flask import request
 from injector import inject
 
 from internal.schema import GetSegmentsWithPageReq, GetSegmentsWithPageResp, GetSegmentResp, UpdateSegmentEnabledReq
-from internal.schema.segment_schema import CreateSegmentReq
+from internal.schema.segment_schema import CreateSegmentReq, UpdateSegmentReq
 from internal.service import SegmentService
 from pkg.paginator import PageModel
 from pkg.response import validate_error_json, success_json, success_message
@@ -35,6 +35,23 @@ class SegmentHandler:
         self.segment_service.create_segment(dataset_id, document_id, req)
 
         return success_message("新增文档片段成功")
+
+    def delete_segment(self, dataset_id: UUID, document_id: UUID, segment_id: UUID):
+        """根据传递的信息删除指定的文档片段信息"""
+        self.segment_service.delete_segment(dataset_id, document_id, segment_id)
+        return success_message("删除文档片段成功")
+
+    def update_segment(self, dataset_id: UUID, document_id: UUID, segment_id: UUID):
+        """根据传递的信息更新文档片段信息"""
+        # 1. 提取请求并校验
+        req = UpdateSegmentReq()
+        if not req.validate():
+            return validate_error_json(req.errors)
+
+        # 2. 调用服务更新文档片段信息
+        self.segment_service.update_segment(dataset_id, document_id, segment_id, req)
+
+        return success_message("更新文档片段成功")
 
     def get_segments_with_page(self, dataset_id: UUID, document_id: UUID):
         """根据传递的知识库id+文档id获取片段分页数据"""

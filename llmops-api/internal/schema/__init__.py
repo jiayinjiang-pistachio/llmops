@@ -13,7 +13,8 @@ from .dataset_schema import CreateDatasetReq, GetDatasetsWithPageReq, GetDataset
     GetDatasetsWithPageResp, HitReq
 from .document_schema import CreateDocumentsReq, CreateDocumentsResp, UpdateDocumentEnabledReq
 from .schema import ListField
-from .segment_schema import GetSegmentsWithPageReq, GetSegmentsWithPageResp, UpdateSegmentEnabledReq, GetSegmentResp
+from .segment_schema import GetSegmentsWithPageReq, GetSegmentsWithPageResp, UpdateSegmentEnabledReq, GetSegmentResp, \
+    UpdateSegmentReq
 from .upload_file_schema import UploadImageReq, UploadFileResp, UploadFileReq
 
 __all__ = [
@@ -38,4 +39,5 @@ __all__ = [
     "CreateDocumentsResp",
     "UpdateDocumentEnabledReq",
     "HitReq",
+    "UpdateSegmentReq"
 ]

@@ -21,7 +21,7 @@ from internal.entity.cache_entity import LOCK_SEGMENT_UPDATE_ENABLED, LOCK_EXPIR
 from internal.entity.dataset_entity import SegmentStatus, DocumentStatus
 from internal.exception import NotFoundException, ForbiddenException, FailException, ValidationException
 from internal.model import Document, Segment
-from internal.schema import GetSegmentsWithPageReq
+from internal.schema import GetSegmentsWithPageReq, UpdateSegmentReq
 from pkg.paginator import Paginator
 from pkg.sqlalchemy import SQLAlchemy
 from .base_service import BaseService
@@ -249,3 +249,121 @@ class SegmentService(BaseService):
                     stopped_at=datetime.now(),
                 )
             raise FailException("新增文档片段失败，请稍后重试")
+
+    def update_segment(self, dataset_id: UUID, document_id: UUID, segment_id: UUID, req: UpdateSegmentReq) -> Segment:
+        """根据传递的信息更新指定的文档片段信息"""
+        # todo:待完善
+        account_id = "46db30d1-3199-4e79-a0cd-abf12fa6858f"
+
+        # 1. 获取片段信息并校验权限
+        segment = self.get(Segment, segment_id)
+        if (
+                segment is None
+                or str(segment.account_id) != account_id
+                or segment.document_id != document_id
+                or segment.dataset_id != dataset_id
+        ):
+            raise NotFoundException("该文档片段不存在，或无权限修改，请核实后重试")
+
+        # 2. 判断文档片段是否处于可修改状态
+        if segment.status != SegmentStatus.COMPLETED:
+            raise FailException("当前文档片段不可修改，请稍后重试")
+
+        # 3. 检测是否传递了keywords，如果没有传递，则调用jieba服务生成关键词
+        if req.keywords.data is None or len(req.keywords.data) == 0:
+            req.keywords.data = self.jieba_service.extract_keywords(req.content.data, 10)
+
+        # 4. 计算新内容hash值，用于判断是否需要更新向量数据库及文档详情
+        new_hash = generate_text_hash(req.content.data)
+        required_update = segment.hash != new_hash
+
+        try:
+            # 5. 更新segment记录
+            self.update(
+                segment,
+                keywords=req.keywords.data,
+                content=req.content.data,
+                hash=new_hash,
+                character_count=len(req.content.data),
+                token_count=self.embeddings_service.calculate_token_count(req.content.data),
+            )
+
+            # 7. 更新片段归属关键词信息
+            # 先删除，后新增
+            self.keyword_table_service.delete_keyword_table_from_ids(dataset_id, [segment.id])
+            self.keyword_table_service.add_keyword_table_from_ids(dataset_id, [segment.id])
+
+            # 8. 检测是否需要更新文档信息以及向量数据库
+            if required_update:
+                # 7. 更新文档信息，涵盖字符总数、token总次数
+                document = segment.document
+                document_character_count, document_token_count = self.db.session.query(
+                    func.coalesce(func.sum(Segment.character_count), 0),
+                    func.coalesce(func.sum(Segment.token_count), 0),
+                ).first()
+
+                self.update(
+                    document,
+                    character_count=document_character_count,
+                    token_count=document_token_count,
+                )
+
+                # 9. 更新向量数据库对应记录
+                self.vector_database_service.collection.data.update(
+                    uuid=str(segment.node_id),
+                    properties={
+                        "text": req.content.data,
+                    },
+                    vector=self.embeddings_service.embeddings.embed_query(req.content.data),
+                )
+        except Exception as e:
+            logging.exception(f"更新文档片段记录失败，segment_id: {segment.id}，错误信息: {str(e)}")
+            raise FailException("更新文档片段记录失败，请稍后重试")
+
+        return segment
+
+    def delete_segment(self, dataset_id: UUID, document_id: UUID, segment_id: UUID) -> Segment:
+        """根据传递的信息删除指定的文档片段信息，该服务是同步方法"""
+        # todo:待完善
+        account_id = "46db30d1-3199-4e79-a0cd-abf12fa6858f"
+
+        # 1. 获取片段信息并校验
+        segment = self.get(Segment, segment_id)
+        if (
+                segment is None
+                or str(segment.account_id) != account_id
+                or segment.document_id != document_id
+                or segment.dataset_id != dataset_id
+        ):
+            raise NotFoundException("该文档片段不存在，或无权限删除，请核实后重试")
+
+        # 2. 判断文档是否处于可删除状态，只有COMPLETED/ERROR才可以删除
+        if segment.status not in [SegmentStatus.COMPLETED, SegmentStatus.ERROR]:
+            raise FailException("当前文档片段处于不可删除状态，请稍后重试")
+
+        # 3. 删除文档片段并获取该片段的文档信息
+        document = segment.document
+        self.delete(segment)
+
+        # 4. 同步删除关键词表中的该片段的关键词
+        self.keyword_table_service.delete_keyword_table_from_ids(dataset_id, [segment.id])
+
+        # 5. 同步删除向量数据库存储的记录
+        try:
+            self.vector_database_service.collection.data.delete_by_id(str(segment.node_id))
+        except Exception as e:
+            logging.exception(f"删除文档片段记录失败，segment_id: {segment_id}，错误信息: {str(e)}")
+
+        # 6. 更新文档信息，涵盖字符总数、token总次数
+        document_character_count, document_token_count = self.db.session.query(
+            func.coalesce(func.sum(Segment.character_count), 0),
+            func.coalesce(func.sum(Segment.token_count), 0),
+        ).first()
+
+        self.update(
+            document,
+            character_count=document_character_count,
+            token_count=document_token_count,
+        )
+
+        return segment
