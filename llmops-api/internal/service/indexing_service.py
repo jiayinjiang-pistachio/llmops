@@ -24,7 +24,7 @@ from weaviate.classes.query import Filter
 from internal.core.file_extractor import FileExtractor
 from internal.entity.dataset_entity import DocumentStatus, SegmentStatus
 from internal.lib.helper import generate_text_hash
-from internal.model import Document, Segment
+from internal.model import Document, Segment, KeywordTable, DatasetQuery
 from pkg.sqlalchemy import SQLAlchemy
 from .base_service import BaseService
 from .embeddings_service import EmbeddingsService
@@ -173,6 +173,37 @@ class IndexingService(BaseService):
         # 4. 删除片段id对应的关键词记录
         self.keyword_table_service.delete_keyword_table_from_ids(dataset_id, segment_ids)
 
+    def delete_dataset(self, dataset_id: UUID) -> None:
+        """根据传递的知识库id执行相应的删除操作"""
+        try:
+            with self.db.auto_commit():
+                # 1. 删除关联的文档记录
+                self.db.session.query(Document).filter(
+                    Document.dataset_id == dataset_id
+                ).delete()
+
+                # 2. 删除关联的片段记录
+                self.db.session.query(Segment).filter(
+                    Segment.dataset_id == dataset_id
+                ).delete()
+
+                # 3. 删除关联的关键词表
+                self.db.session.query(KeywordTable).filter(
+                    KeywordTable.dataset_id == dataset_id
+                ).delete()
+
+                # 4. 删除知识库查询
+                self.db.session.query(DatasetQuery).filter(
+                    DatasetQuery.dataset_id == dataset_id
+                ).delete()
+
+            # 5. 调用向量数据库删除知识库的关联记录
+            self.vector_database_service.collection.data.delete_many(
+                where=Filter.by_property("dataset_id").equal(str(dataset_id))
+            )
+        except Exception as e:
+            logging.exception(f"异步删除知识库关联的内容出错，dataset_id: {dataset_id}，错误信息：{str(e)}")
+
     def _parsing(self, document: Document) -> list[LCDocument]:
         """解析传递的文档为LangChain文档列表"""
         # 1. 获取upload_file并加载LangChain文档
@@ -317,6 +348,33 @@ class IndexingService(BaseService):
             with flask_app.app_context():
                 try:
                     # 调用向量数据库存储对应的数据
+                    # ids 唯一标识向量存储中的文档
+                    # 为什么需要手动传 ids？
+                    # 原因1：更新已有数据，# 使用相同的 node_id 可以覆盖原有数据
+                    # 原因2：避免重复插入，# 如果没有ids，每次插入都会生成新向量，导致重复；
+                    #       固定ID，重复插入会覆盖而不是新增
+                    # 原因3：业务关联
+                    #       数据库中的 segment 与向量数据库中的向量一一对应
+                    #       数据库记录：
+                    #       Segment(id=100, node_id="weaviate-uuid-1", ...)
+                    #       向量数据库：
+                    #       向量ID: "weaviate-uuid-1"
+                    #       这样可以通过 node_id 直接定位到向量
+                    # 向量数据库中的一条记录：
+                    # {
+                    #     "id": "node_id-123",           # ✅ 向量ID（ids参数）
+                    #     "vector": [0.1, 0.2, ...],     # ✅ 向量化后的内容
+                    #     "properties": {                # ✅ metadata 的内容
+                    #         "text": "原始文本内容",      # page_content
+                    #         "account_id": "user-123",
+                    #         "dataset_id": "dataset-456",
+                    #         "document_id": "doc-789",
+                    #         "segment_id": "seg-101",
+                    #         "node_id": "node_id-123",   # 与id一致
+                    #         "document_enabled": True,
+                    #         "segment_enabled": True,
+                    #     }
+                    # }
                     self.vector_database_service.vector_store.add_documents(chunks, ids=ids)
 
                     # 在这个上下文进行自动提交

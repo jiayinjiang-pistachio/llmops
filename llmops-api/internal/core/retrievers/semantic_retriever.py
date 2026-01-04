@@ -32,6 +32,7 @@ class SemanticRetriever(BaseRetriever):
         search_result = self.vector_store.similarity_search_with_relevance_scores(
             query=query,
             k=k,
+            # 搜索时使用 metadata 过滤
             filters=Filter.all_of([
                 Filter.by_property("dataset_id").contains_any([str(dataset_id) for dataset_id in self.dataset_ids]),
                 Filter.by_property("document_enabled").equal(True),
