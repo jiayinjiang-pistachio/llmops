@@ -25,6 +25,7 @@ type FetchOptionType = Omit<RequestInit, 'body'> & {
   params?: Record<string, unknown>
 }
 
+// 封装基础的fetch请求
 const baseFetch = async <T>(url: string, fetchOptions: FetchOptionType): Promise<T> => {
   // 将所有的配置信息合并起来
   const options: typeof baseFetchOptions & FetchOptionType = Object.assign(
@@ -85,6 +86,87 @@ const baseFetch = async <T>(url: string, fetchOptions: FetchOptionType): Promise
         })
     }),
   ]) as Promise<T>
+}
+
+// 封装基于post的sse（流式事件响应）请求
+export const ssePost = async (
+  url: string,
+  fetchOptions: FetchOptionType,
+  onData: (data: { [key: string]: any }) => void,
+) => {
+  // 组装基础的fetch请求配置
+  const options = Object.assign({}, baseFetchOptions, { method: 'POST' }, fetchOptions)
+
+  // 组装请求URL
+  const urlWithPrefix = `${apiPrefix}${url.startsWith('/') ? url : `/${url}`}`
+
+  const { body } = fetchOptions
+  // debugger
+  if (body) {
+    options.body = JSON.stringify(body)
+    const response = await fetch(urlWithPrefix, options as RequestInit)
+    return handleStream(response, onData)
+  }
+}
+
+function handleStream(response: Response, onData: (data: { [key: string]: any }) => void) {
+  // 1. 检测网络请求是否正常
+  if (!response.ok) {
+    throw new Error('网络请求失败')
+  }
+
+  // 构建reader及decoder
+  const reader = response.body?.getReader()
+  const decoder = new TextDecoder('utf-8')
+
+  let buffer = ''
+
+  // 3. 构建read函数用于去读取数据
+  const read = () => {
+    let hasError = false
+    reader?.read().then((result: any) => {
+      if (result.done) return
+
+      buffer += decoder.decode(result.value, { stream: true })
+      const lines = buffer.split('\n')
+
+      let event = ''
+      let data = ''
+
+      try {
+        lines.forEach((line) => {
+          line = line.trim()
+          if (line.startsWith('event:')) {
+            event = line.slice(6).trim()
+          } else if (line.startsWith('data:')) {
+            data = line.slice(5).trim()
+          }
+
+          if (line === '') {
+            if (event !== '' && data !== '') {
+              onData({
+                event: event,
+                data: JSON.parse(data),
+              })
+              event = ''
+              data = ''
+            }
+          }
+        })
+        buffer = lines.pop() || ''
+      } catch (e) {
+        hasError = true
+        console.log(e)
+      }
+
+      if (!hasError) {
+        read()
+      }
+    })
+  }
+
+  // 4. 调用read函数去执行对应的数据
+  read()
 }
 
 export const request = <T>(url: string, options = {}) => {

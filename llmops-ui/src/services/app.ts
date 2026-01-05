@@ -1,10 +1,17 @@
-import type { DebugAppsResponse } from '@/models/app'
-import { post } from '@/utils/request'
+import { ssePost } from '@/utils/request'
 
-export const debugApps = async (app_id: string, query: string) => {
-  return post<DebugAppsResponse>(`/app/${app_id}/debug`, {
-    body: {
-      query,
+export const debugApps = async (
+  app_id: string,
+  query: string,
+  onData: (eventResponse: { [key: string]: any }) => void,
+) => {
+  return ssePost(
+    `/app/${app_id}/debug`,
+    {
+      body: {
+        query,
+      },
     },
-  })
+    onData,
+  )
 }

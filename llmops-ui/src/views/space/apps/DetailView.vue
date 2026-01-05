@@ -19,7 +19,9 @@
       </div>
       <!-- 右侧的调试与预览 -->
       <div class="flex flex-col w-1/3 bg-white h-full">
-        <header class="flex flex-shrink-0 items-center h-16 px-4 text-xl bg-white border-b border-gray-200 shadow-sm">
+        <header
+          class="flex flex-shrink-0 items-center h-16 px-4 text-xl bg-white border-b border-gray-200 shadow-sm"
+        >
           调试与预览
         </header>
         <!-- 调试对话界面 -->
@@ -27,45 +29,50 @@
           <!-- 人类消息 -->
           <div class="flex flex-row gap-2 mb-6" v-for="message in messages" :key="message.content">
             <!-- 头像 -->
-            <a-avatar v-if="message.role === 'user'" :size="30" class="flex-shrink-0"
-              :style="{ backgroundColor: '#3370ff' }">幕</a-avatar>
-            <a-avatar v-else :size="30" class="flex-shrink-0" :style="{ backgroundColor: '#00d0b6' }">
+            <a-avatar
+              v-if="message.role === 'user'"
+              :size="30"
+              class="flex-shrink-0"
+              :style="{ backgroundColor: '#3370ff' }"
+              >幕</a-avatar
+            >
+            <a-avatar
+              v-else
+              :size="30"
+              class="flex-shrink-0"
+              :style="{ backgroundColor: '#00d0b6' }"
+            >
               <icon-apps />
             </a-avatar>
             <!-- 实际消息 -->
             <div class="flex flex-col gap-2">
-              <div class="font-semibold text-gray-700">{{ message.role === 'user' ? '慕小课' : 'ChatGPT聊天机器人' }}</div>
-              <div v-if="message.role === 'user'"
-                class="max-w-max bg-blue-700 text-white border border-blue-800 px-4 py-3 rounded-2xl leading-5">
+              <div class="font-semibold text-gray-700">
+                {{ message.role === 'user' ? '慕小课' : 'ChatGPT聊天机器人' }}
+              </div>
+              <div
+                v-if="message.role === 'user'"
+                class="max-w-max bg-blue-700 text-white border border-blue-800 px-4 py-3 rounded-2xl leading-5"
+              >
                 {{ message.content }}
               </div>
-              <div v-else
-                class="max-w-max bg-gray-100 text-gray-900 border border-gray-200 px-4 py-3 rounded-2xl leading-5">
+              <div
+                v-else
+                class="max-w-max bg-gray-100 text-gray-900 border border-gray-200 px-4 py-3 rounded-2xl leading-5"
+              >
                 {{ message.content }}
+                <div v-if="isLoading" class="cursor"></div>
               </div>
             </div>
           </div>
           <!-- 没有任何数据时显示的内容 -->
-          <div v-if="!messages.length" class="mt-[25%] flex flex-col items-center justify-center gap-2">
+          <div
+            v-if="!messages.length"
+            class="mt-[25%] flex flex-col items-center justify-center gap-2"
+          >
             <a-avatar :size="70" shape="square" :style="{ backgroundColor: '#00d0b6' }">
               <icon-apps />
             </a-avatar>
             <div class="text-2xl font-semibold text-gray-900 mt-2">ChatGPT聊天机器人</div>
-
-          </div>
-          <!-- AI加载状态 -->
-          <div v-if="isLoading" class="flex flex-row gap-2 mb-6">
-            <!-- 头像 -->
-            <a-avatar :size="30" class="flex-shrink-0" :style="{ backgroundColor: '#00d0b6' }">
-              <icon-apps />
-            </a-avatar>
-            <!-- 实际消息 -->
-            <div class="flex flex-col gap-2">
-              <div class="font-semibold text-gray-700">ChatGPT聊天机器人</div>
-              <div class="max-w-max bg-gray-100 text-gray-900 border border-gray-200 px-4 py-3 rounded-2xl leading-5">
-                <icon-loading />
-              </div>
-            </div>
           </div>
         </div>
         <!-- 调试对话输入框 -->
@@ -79,9 +86,16 @@
               </template>
             </a-button>
             <!-- 输入框组件 -->
-            <div class="h-[50px] flex items-center gap-2 px-4 flex-1 border border-gray-200 rounded-full">
-              <input v-model="query" type="text" class="flex-1 outline-0" @keyup.enter="send"
-                placeholder="请输入您的问题..." />
+            <div
+              class="h-[50px] flex items-center gap-2 px-4 flex-1 border border-gray-200 rounded-full"
+            >
+              <input
+                v-model="query"
+                type="text"
+                class="flex-1 outline-0"
+                @keyup.enter="send"
+                placeholder="请输入您的问题..."
+              />
               <a-button type="text" shape="circle">
                 <template #icon>
                   <icon-plus-circle :size="16" :style="{ color: '#374151' }" />
@@ -107,14 +121,14 @@
 <style lang="less"></style>
 
 <script setup lang="ts">
-import { debugApps } from '@/services/app';
-import { Message } from '@arco-design/web-vue';
-import { computed, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { debugApps } from '@/services/app'
+import { Message } from '@arco-design/web-vue'
+import { computed, ref } from 'vue'
+import { useRoute } from 'vue-router'
 
 interface MessageItem {
-  role: 'user' | 'ai';
-  content: string;
+  role: 'user' | 'ai'
+  content: string
 }
 
 const query = ref('')
@@ -150,16 +164,53 @@ const send = async () => {
 
     isLoading.value = true
 
-    // 发起API请求
-    const { data } = await debugApps(appId.value, humanQuery)
-    const content = data.content
-
     messages.value.push({
       role: 'ai',
-      content,
+      content: '',
+    })
+
+    // 发起API请求
+    await debugApps(appId.value, humanQuery, (eventResponse) => {
+      // 提取流式事件响应数据以及事件名称
+      const event = eventResponse?.event
+      const data = eventResponse?.data
+
+      // 获取最后一条消息
+      const lastIdx = messages.value.length - 1
+      const message = messages.value[lastIdx]
+
+      // todo
+      if (event === 'agent_message') {
+        const chunk = data?.data
+        if (messages.value[lastIdx]) {
+          messages.value[lastIdx].content = message?.content + chunk
+        }
+      }
     })
   } finally {
     isLoading.value = false
   }
 }
 </script>
+
+<style scoped>
+.cursor {
+  display: inline-block;
+  width: 1px;
+  height: 14px;
+  background-color: #444444;
+  animation: blink 1s step-end infinite;
+  vertical-align: middle;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1; /* 显示 */
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+</style>
