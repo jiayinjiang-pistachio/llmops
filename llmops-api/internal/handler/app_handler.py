@@ -31,8 +31,8 @@ from langgraph.graph import MessagesState, StateGraph
 
 from internal.core.tools.builtin_tools.providers import BuiltinProviderManager
 from internal.schema.app_schema import CompletionReq
-from internal.service import AppService, VectorDatabaseService, APiToolService
-from internal.task.demo_task import demo_task
+from internal.service import AppService, VectorDatabaseService, APiToolService, ConversationService
+# from internal.task.demo_task import demo_task
 from pkg.response import success_json, validate_error_json, success_message, compact_generate_response
 
 
@@ -44,7 +44,8 @@ class AppHandler:
     vector_database_store: VectorDatabaseService
     provider_factory: BuiltinProviderManager
     api_tool_service: APiToolService
-    builtin_proivder_manager: BuiltinProviderManager
+    builtin_provider_manager: BuiltinProviderManager
+    conversation_service: ConversationService
 
     def create_app(self):
         """调用服务创建新的app记录"""
@@ -96,9 +97,9 @@ class AppHandler:
             """创建图程序应用并执行"""
             # 构建工具
             tools = [
-                self.builtin_proivder_manager.get_tool("google", "google_serper")(),  # 调用，即获取到的是工具实例
-                self.builtin_proivder_manager.get_tool("gaode", "gaode_weather")(),
-                self.builtin_proivder_manager.get_tool("dalle", "dalle3")(),
+                self.builtin_provider_manager.get_tool("google", "google_serper")(),  # 调用，即获取到的是工具实例
+                self.builtin_provider_manager.get_tool("gaode", "gaode_weather")(),
+                self.builtin_provider_manager.get_tool("dalle", "dalle3")(),
             ]
 
             # 创建大语言模型LLM节点
@@ -311,8 +312,19 @@ class AppHandler:
         return success_json({"content": content})
 
     def ping(self):
-        demo_task.delay(uuid.uuid4())
-        return self.api_tool_service.api_tool_invoke()
+        human_message = "什么是LLM，以及LLM与agent有什么关系？"
+        conversation_name = self.conversation_service.generate_conversation_name(human_message)
+
+        return success_json({"conversation_name": conversation_name})
+
+        # human_message = "你好，我叫鹅百创，你是？"
+        # ai_message = """我是一个AI聊天工具，请问有什么可以帮助到您？"""
+        # old_summary = "人类询问AI关于LLMOps的定义。AI解释道，LLMOps是大语言模型运维，专注于确保大语言模型的高效、稳定、安全地开发、部署和持续改进。LLMOps与传统的机器学习运维（MLOps）有显著区别，因为大语言模型的生命周期管理更复杂，核心在于提示而非代码，并面临独特的挑战。LLMOps包括开发与实验、评估与验证、部署与上线、监控与日志以及治理与安全等关键环节。现代LLMOps技术栈涉及多种工具，以支持从实验到生产的全生命周期管理。掌握LLMOps成为AI工程师和产品团队的核心竞争力。"
+        # summary = self.conversation_service.summary(human_message, ai_message, old_summary)
+        # return success_json({"summary": summary})
+
+        # demo_task.delay(uuid.uuid4())
+        # return self.api_tool_service.api_tool_invoke()
         # providers = self.provider_factory.get_provider_entities()
         # return success_json({"providers": [provider.dict() for provider in providers]})
         # raise FailException("数据未找到")
