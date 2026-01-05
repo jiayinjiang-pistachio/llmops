@@ -312,7 +312,7 @@ class SegmentService(BaseService):
                 self.vector_database_service.collection.data.update(
                     uuid=str(segment.node_id),
                     properties={
-                        "text": req.content.data,
+                        "text": req.content.data,  # text 字段对应向量数据初始化时设置的text_key="text"属性
                     },
                     vector=self.embeddings_service.embeddings.embed_query(req.content.data),
                 )

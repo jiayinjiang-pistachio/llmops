@@ -41,7 +41,7 @@ class FullTextRetriever(BaseRetriever):
             ).all()
         ]
 
-        # 3. 遍历所有知识库关键词表，找到匹配query关键词的id列表
+        # 3. 遍历所有知识库关键词表，找到匹配query关键词的片段id列表
         all_ids = []
         keywords_set = set(keywords)
         for keyword_table in keyword_tables:
