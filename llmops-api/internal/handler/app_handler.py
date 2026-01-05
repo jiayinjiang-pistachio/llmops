@@ -312,10 +312,15 @@ class AppHandler:
         return success_json({"content": content})
 
     def ping(self):
-        human_message = "什么是LLM，以及LLM与agent有什么关系？"
-        conversation_name = self.conversation_service.generate_conversation_name(human_message)
+        human_message = "Python是一门强大的语言。"
+        questions = self.conversation_service.generate_suggested_questions(human_message)
 
-        return success_json({"conversation_name": conversation_name})
+        return success_json({"questions": questions})
+
+        # human_message = "什么是LLM，以及LLM与agent有什么关系？"
+        # conversation_name = self.conversation_service.generate_conversation_name(human_message)
+        #
+        # return success_json({"conversation_name": conversation_name})
 
         # human_message = "你好，我叫鹅百创，你是？"
         # ai_message = """我是一个AI聊天工具，请问有什么可以帮助到您？"""
