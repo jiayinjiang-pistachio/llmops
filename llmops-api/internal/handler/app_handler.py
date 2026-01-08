@@ -28,8 +28,13 @@ from langchain_core.tracers import Run
 from langchain_openai import ChatOpenAI
 from langgraph.constants import END
 from langgraph.graph import MessagesState, StateGraph
+from redis import Redis
 
+from internal.core.agent.agents import FunctionCallAgent
+from internal.core.agent.agents.agent_queue_manager import AgentQueueManager
+from internal.core.agent.entities.agent_entity import AgentConfig
 from internal.core.tools.builtin_tools.providers import BuiltinProviderManager
+from internal.entity.conversation_entity import InvokeFrom
 from internal.schema.app_schema import CompletionReq
 from internal.service import AppService, VectorDatabaseService, APiToolService, ConversationService
 # from internal.task.demo_task import demo_task
@@ -46,6 +51,7 @@ class AppHandler:
     api_tool_service: APiToolService
     builtin_provider_manager: BuiltinProviderManager
     conversation_service: ConversationService
+    redis_client: Redis
 
     def create_app(self):
         """调用服务创建新的app记录"""
@@ -83,6 +89,59 @@ class AppHandler:
             configurable_memory.save_context(run_obj.inputs, run_obj.outputs)
 
     def debug(self, app_id: UUID):
+        """应用会话调试聊天接口，该接口为流式事件输出"""
+        print(f"Debug app: {app_id}")
+
+        req = CompletionReq()
+        if not req.validate():
+            return validate_error_json(req.errors)
+
+        # 构建工具
+        tools = [
+            self.builtin_provider_manager.get_tool("google", "google_serper")(),  # 调用，即获取到的是工具实例
+            self.builtin_provider_manager.get_tool("gaode", "gaode_weather")(),
+            self.builtin_provider_manager.get_tool("dalle", "dalle3")(),
+        ]
+
+        agent = FunctionCallAgent(
+            agent_config=AgentConfig(
+                llm=ChatOpenAI(
+                    model="gpt-4o-mini",
+                    api_key=os.getenv("GPTSAPI_API_KEY"),
+                    base_url=os.getenv("OPENAI_API_BASE")
+                ),
+                enable_long_term_memory=True,
+                tools=tools,
+            ),
+            agent_queue_manager=AgentQueueManager(
+                user_id=uuid.uuid4(),
+                task_id=uuid.uuid4(),
+                invoke_from=InvokeFrom.DEBUGGER,
+                redis_client=self.redis_client,
+            )
+        )
+
+        def stream_event_response() -> Generator:
+            """流式事件响应输出"""
+            for agent_queue_event in agent.run(req.query.data, [], "用户介绍自己叫幕小课"):
+                data = {
+                    "id": str(agent_queue_event.id),
+                    "task_id": str(agent_queue_event.task_id),
+                    "event": agent_queue_event.event,
+                    "thought": agent_queue_event.thought,
+                    "observation": agent_queue_event.observation,
+                    "tool": agent_queue_event.tool,
+                    "tool_input": agent_queue_event.tool_input,
+                    "answer": agent_queue_event.answer,
+                    "latency": agent_queue_event.latency,
+                }
+                # 获取纯字符串形式的 event 值用于 SSE 的 event 字段
+                event_str = agent_queue_event.event.value
+                yield f"event: {event_str}\ndata: {json.dumps(data)}\n\n"
+
+        return compact_generate_response(stream_event_response())
+
+    def __debug(self, app_id: UUID):
         """应用会话调试聊天接口，该接口为流式事件输出"""
         req = CompletionReq()
         if not req.validate():

@@ -7,20 +7,25 @@
 @Description    : 
 """
 import json
+import time
+import uuid
 from threading import Thread
-from typing import Literal
+from typing import Literal, Generator
 
-from langchain_core.messages import AnyMessage, HumanMessage, SystemMessage, RemoveMessage, ToolMessage
+from langchain_core.messages import AnyMessage, HumanMessage, SystemMessage, RemoveMessage, ToolMessage, \
+    messages_to_dict
 from langgraph.constants import END
 from langgraph.graph.state import CompiledStateGraph, StateGraph
 
 from internal.core.agent.agents.base_agent import BaseAgent
 from internal.core.agent.entities.agent_entity import AgentState, AGENT_SYSTEM_PROMPT_TEMPLATE
+from internal.core.agent.entities.queue_entity import AgentQueueEvent, QueueEvent
 from internal.exception import FailException
 
 
 class FunctionCallAgent(BaseAgent):
-    def run(self, query: str, history: list[AnyMessage] = None, long_term_memory: str = ""):
+    def run(self, query: str, history: list[AnyMessage] = None, long_term_memory: str = "") -> Generator[
+        AgentQueueEvent, None, None]:
         """运行智能体应用，并使用yield关键字返回对应的数据"""
         # 1.预处理传递的数据
         if history is None:
@@ -39,6 +44,9 @@ class FunctionCallAgent(BaseAgent):
                   },)
         )
         thread.start()
+
+        # 调用队列管理器，监听数据并返回生成式数据
+        yield from self.agent_queue_manager.listen()
 
     def _build_graph(self) -> CompiledStateGraph:
         """构建LangGraph图结构编译程序"""
@@ -68,6 +76,14 @@ class FunctionCallAgent(BaseAgent):
         long_term_memory = ""
         if self.agent_config.enable_long_term_memory:
             long_term_memory = state["long_term_memory"]
+
+            # 添加长期记忆事件到队列
+            self.agent_queue_manager.publish(AgentQueueEvent(
+                id=uuid.uuid4(),
+                task_id=self.agent_queue_manager.task_id,
+                event=QueueEvent.LONG_TERM_MEMORY_RECALL,
+                observation=long_term_memory,
+            ))
 
         # 构建预设消息列表，并将 preset_prompt+long_term_memory填充到系统消息中
         preset_messages = [
@@ -99,6 +115,8 @@ class FunctionCallAgent(BaseAgent):
     def _llm_node(self, state: AgentState) -> AgentState:
         """大语言模型节点"""
         # 1. 从智能体配置提取大语言模型
+        id = uuid.uuid4()
+        start_at = time.perf_counter()
         llm = self.agent_config.llm
 
         # 2. 检测大语言模型实例是否有bing_tools方法（判断是否为函数），如果没有则不绑定，如果有还需要检测tools是否为空，不为空则绑定
@@ -109,6 +127,7 @@ class FunctionCallAgent(BaseAgent):
 
         # 3. 流式调用LLM输出对应内容
         gathered = None
+        generation_type = ""
 
         for chunk in llm.stream(state["messages"]):
             # 聚合处理：LangChain 的 AIMessageChunk 支持通过 + 号自动合并 tool_calls
@@ -116,6 +135,39 @@ class FunctionCallAgent(BaseAgent):
                 gathered = chunk
             else:
                 gathered += chunk
+
+            # 检测生成类型是工具参数还是文本生成
+            if not generation_type:
+                if chunk.tool_call_chunks:
+                    generation_type = "thought"
+                elif chunk.content:
+                    generation_type = "message"
+
+            # 如果生成的是消息则提交智能体消息事件
+            if generation_type == "message":
+                self.agent_queue_manager.publish(AgentQueueEvent(
+                    id=id,
+                    task_id=self.agent_queue_manager.task_id,
+                    event=QueueEvent.AGENT_MESSAGE,
+                    thought=chunk.content,
+                    messages=messages_to_dict(state["messages"]),
+                    answer=chunk.content,
+                    latency=time.perf_counter() - start_at,
+
+                ))
+
+        # 6. 如果类型为推理则添加智能体推理事件
+        if generation_type == "thought":
+            self.agent_queue_manager.publish(AgentQueueEvent(
+                id=id,
+                task_id=self.agent_queue_manager.task_id,
+                event=QueueEvent.AGENT_THOUGHT,
+                messages=messages_to_dict(state["messages"]),
+                latency=time.perf_counter() - start_at,
+            ))
+        elif generation_type == "message":
+            # 如果LLM直接生成answer，则表示已经拿到最终答案，则停止监听
+            self.agent_queue_manager.stop_listen()
 
         return {"messages": [gathered]}
 
@@ -133,12 +185,35 @@ class FunctionCallAgent(BaseAgent):
         # 3. 循环执行工具组装工具消息
         messages = []
         for tool_call in tool_calls:
+            # 4. 创建智能体动作事件id，并记录开始时间
+            id = uuid.uuid4()
+            start_at = time.perf_counter()
+
+            # 5. 获取工具并调用工具
             tool = tools_to_dict[tool_call["name"]]
             tool_result = tool.invoke(tool_call["args"])
+
+            # 6. 将工具消息添加到列表
             messages.append(ToolMessage(
                 tool_call_id=tool_call["id"],
                 content=json.dumps(tool_result),
                 name=tool_call["name"],
+            ))
+
+            # 7. 判断执行工具名字，提交不同事件，涵盖智能体动作及知识库检索
+            event = (
+                QueueEvent.AGENT_ACTION
+                if tool_call["name"] != "dataset_retrieval"
+                else QueueEvent.DATASET_RETRIEVAL
+            )
+            self.agent_queue_manager.publish(AgentQueueEvent(
+                id=id,
+                task_id=self.agent_queue_manager.task_id,
+                event=event,
+                observation=json.dumps(tool_result),
+                tool=tool_call["name"],
+                tool_input=tool_call["args"],
+                latency=time.perf_counter() - start_at,
             ))
 
         return {"messages": messages}

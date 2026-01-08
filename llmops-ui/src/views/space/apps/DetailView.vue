@@ -180,10 +180,10 @@ const send = async () => {
       const message = messages.value[lastIdx]
 
       // todo
+      console.log("data.answer: ", data.answer)
       if (event === 'agent_message') {
-        const chunk = data?.data
         if (messages.value[lastIdx]) {
-          messages.value[lastIdx].content = message?.content + chunk
+          messages.value[lastIdx].content = message?.content + data.answer
         }
       }
     })
