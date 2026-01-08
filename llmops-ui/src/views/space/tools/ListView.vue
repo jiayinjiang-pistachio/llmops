@@ -54,7 +54,7 @@
         </a-space>
       </a-col>
       <!-- 加载数据完成 -->
-      <a-col v-else :span="24" align="center">
+      <a-col v-else-if="paginator.total_page > 1" :span="24" align="center">
         <div class="text-gray-400 my-4">数据已加载完成</div>
       </a-col>
     </a-row>
