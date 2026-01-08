@@ -461,3 +461,6 @@ KeyError: "Input to ChatPromptTemplate is missing variables {'new_lines'}.  Expe
 2026-01-06 15:40:56,009.009] _internal.py line:97 INFO:  * Restarting with stat)
 2026-01-06 15:41:07,371.371] _internal.py line:97 INFO:  * Restarting with stat)
 2026-01-06 15:44:49,487.487] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-06 17:42:22,316.316] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-06 17:43:16,344.344] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-06 18:35:19,847.847] _internal.py line:97 INFO:  * Restarting with stat)

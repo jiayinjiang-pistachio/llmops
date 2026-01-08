@@ -2,6 +2,8 @@
 
 `pip freeze > requirements.txt`
 
+`pip install -r requirements.txt`
+
 # 固定版本
 
 ```bash
@@ -34,4 +36,31 @@ docker stop redis-dev
 
 ```
 sudo kill -9 PIP_ID
+```
+
+# conda 创建虚拟环境
+
+```bash
+# 查看现有环境
+conda info --envs 
+
+# 移除环境
+env remove -n llmops_v6_py3.10
+
+# 创建
+ conda create -n llmops_v6_py3.10 python=3.10
+```
+
+# 端口占用
+
+```
+# 在终端执行：
+# 1. 查找占用端口 5000 的进程
+sudo lsof -i :5000
+
+# 2. 找到 PID（进程ID），然后杀死
+kill -9 <PID>
+
+# 或者一步完成
+sudo kill -9 $(sudo lsof -t -i:5000)
 ```
