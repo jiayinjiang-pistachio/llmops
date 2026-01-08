@@ -312,10 +312,27 @@ class AppHandler:
         return success_json({"content": content})
 
     def ping(self):
-        human_message = "Python是一门强大的语言。"
-        questions = self.conversation_service.generate_suggested_questions(human_message)
+        from internal.core.agent.agents import FunctionCallAgent
+        from internal.core.agent.entities.agent_entity import AgentConfig
+        from langchain_openai import ChatOpenAI
+        agent = FunctionCallAgent(
+            agent_config=AgentConfig(
+                llm=ChatOpenAI(
+                    model="gpt-4o-mini",
+                    api_key=os.getenv("GPTSAPI_API_KEY"),
+                    base_url=os.getenv("OPENAI_API_BASE")
+                ),
+                preset_prompt="你是一个拥有20年经验的诗人，请根据用户提供的主题来写一首诗"
+            )
+        )
+        state = agent.run("程序员", [], "")
+        content = state["messages"][-1].content
+        return success_json({"content": content})
 
-        return success_json({"questions": questions})
+        # human_message = "Python是一门强大的语言。"
+        # questions = self.conversation_service.generate_suggested_questions(human_message)
+        #
+        # return success_json({"questions": questions})
 
         # human_message = "什么是LLM，以及LLM与agent有什么关系？"
         # conversation_name = self.conversation_service.generate_conversation_name(human_message)
