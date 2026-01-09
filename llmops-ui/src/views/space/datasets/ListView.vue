@@ -103,16 +103,19 @@
       <div class="pt-6">
         <a-form ref="formRef" :model="form" layout="vertical" @submit="handleSubmit">
           <a-form-item
-            field="icon"
+            field="fileList"
             hide-label
             :rules="[{ required: true, message: '知识库图标不能为空' }]"
           >
             <a-upload
-              v-model="form.icon"
+              v-model:file-list="form.fileList"
               :limit="1"
               list-type="picture-card"
               accept="image/png, image/jpeg"
               class="!w-auto mx-auto"
+              image-preview
+              :custom-request="(option: any) => onCustomUploadImage(option)"
+              :on-before-remove="onBeforeRemoveImage"
             />
           </a-form-item>
           <a-form-item
@@ -164,6 +167,7 @@ import {
   useGeDatasetsWithPage,
 } from '@/hooks/use-dataset'
 import { getDataset } from '@/services/datasets'
+import { uploadImage } from '@/services/upload-file'
 import type { ValidatedError } from '@arco-design/web-vue/es/form/interface'
 import moment from 'moment'
 import { computed } from 'vue'
@@ -219,6 +223,7 @@ const goUpdate = (dataset_id: string) => {
 
       // 更新表单数据
       formRef.value?.resetFields()
+      form.fileList = [{uid: '1', name: '知识库图标', url: data.icon}]
       form.name = data.name
       form.icon = data.icon
       form.description = data.description
@@ -252,5 +257,18 @@ const handleSubmit = async ({ errors }: { errors: Record<string, ValidatedError>
   // 关闭模态窗并刷新数据
   handleCancel()
   await initData()
+}
+
+// 上传图片
+const onCustomUploadImage = async (option: any) => {
+  const { fileItem, onSuccess } = option
+  const resp = await uploadImage(fileItem.file)
+  form.icon = resp.data.image_url
+  onSuccess(resp)
+}
+
+const onBeforeRemoveImage = () => {
+  form.icon = ''
+  return true
 }
 </script>

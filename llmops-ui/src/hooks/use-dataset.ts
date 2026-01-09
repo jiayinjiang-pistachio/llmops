@@ -136,7 +136,8 @@ export function useDeleteDataset() {
 export function useCreateOrUpdateDataset() {
   const loading = ref(false)
   const defaultForm = {
-    icon: 'https://picsum.photos/400',
+    fileList: [] as any[],
+    icon: '',
     name: '',
     description: '',
   }

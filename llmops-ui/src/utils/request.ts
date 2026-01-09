@@ -180,3 +180,54 @@ export const get = <T>(url: string, options = {}) => {
 export const post = <T>(url: string, options = {}) => {
   return baseFetch<T>(url, Object.assign({}, options, { method: 'POST' }))
 }
+
+export const upload = <T>(url: string, options: any = {}): Promise<T> => {
+  // 组装请求url
+  const urlWithPrefix = `${apiPrefix}${url.startsWith('/') ? url : `/${url}`}`
+
+  // 组装xhr请求配置信息
+  const defaultOptions = {
+    method: 'POST',
+    url: urlWithPrefix,
+    headers: {},
+    data: {}
+  }
+
+  options = {
+    ...defaultOptions,
+    ...options,
+    headers: {...defaultOptions.headers, ...options.headers}
+  }
+
+  // 构建promise并使用xhr完成文件上传
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest()
+
+    xhr.open(options.method, options.url)
+    for (const key in options.headers) {
+      xhr.setRequestHeader(key, options.headers[key])
+    }
+
+    // 设置xhr响应格式并携带授权凭证（例如cookie）
+    xhr.withCredentials = true
+    xhr.responseType = 'json'
+
+    // 坚挺xhr状态变化并导出数据
+    xhr.onreadystatechange = () => {
+      // 判断xhr的状态是不是4，如果为4则代表已经传输完成（涵盖成功与失败）
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          resolve(xhr.response)
+        } else {
+          reject(xhr)
+        }
+      }
+    }
+
+    // 添加xhr进度监听
+    xhr.upload.onprogress = options.onprogress
+
+    // 发送请求
+    xhr.send(options.data)
+  })
+}

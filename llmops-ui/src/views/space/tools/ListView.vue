@@ -160,16 +160,19 @@
       <div class="pt-6">
         <a-form ref="formRef" :model="form" layout="vertical" @submit="handleSubmit">
           <a-form-item
-            field="icon"
+            field="fileList"
             hide-label
             :rules="[{ required: true, message: '插件图标不能为空' }]"
           >
             <a-upload
-              v-model="form.icon"
+              v-model:file-list="form.fileList"
               :limit="1"
               list-type="picture-card"
               accept="image/png, image/jpeg"
               class="!w-auto mx-auto"
+              image-preview
+              :custom-request="(option: any) => onCustomUploadImage(option)"
+              :on-before-remove="onBeforeRemoveImage"
             />
           </a-form-item>
           <a-form-item
@@ -324,6 +327,7 @@ import { onMounted, reactive, ref, computed, watch, useTemplateRef } from 'vue'
 import { useRoute } from 'vue-router'
 import { Message, Modal, type FormInstance } from '@arco-design/web-vue'
 import type { ValidatedError } from '@arco-design/web-vue/es/form/interface'
+import { uploadImage } from '@/services/upload-file'
 
 const props = defineProps<{
   createType: string
@@ -359,6 +363,7 @@ const handleUpdate = async () => {
 
     // 更新form表单数据
     formRef.value?.resetFields?.()
+    form.fileList = [{uid: '1', name: '知识库图标', url: data.icon}]
     form.icon = data.icon
     form.name = data.name
     form.openapi_schema = data.openapi_schema
@@ -449,7 +454,8 @@ const showIdx = ref(-1)
 const currentShowProvider = computed(() => providers[showIdx.value] ?? ({} as ApiToolProviderItem))
 
 const form = reactive({
-  icon: 'https://picsum.photos/400',
+  fileList: [] as any[],
+  icon: '',
   name: '',
   openapi_schema: '',
   headers: [] as Array<{ key: string; value: any }>,
@@ -561,5 +567,18 @@ const handleDelete = () => {
       }
     },
   })
+}
+
+// 上传图片
+const onCustomUploadImage = async (option: any) => {
+  const { fileItem, onSuccess } = option
+  const resp = await uploadImage(fileItem.file)
+  form.icon = resp.data.image_url
+  onSuccess(resp)
+}
+
+const onBeforeRemoveImage = () => {
+  form.icon = ''
+  return true
 }
 </script>
