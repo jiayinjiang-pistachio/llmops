@@ -310,7 +310,7 @@
 
 <script setup lang="ts">
 import { typeMap } from '@/config'
-import type { ApiToolProviderItem } from '@/models/api-tool'
+import type { ApiToolProviderItem, CreateApiToolProviderRequest, UpdateApiToolProviderRequest } from '@/models/api-tool'
 import {
   createApiProvider,
   deleteApiToolProvider,
@@ -323,6 +323,7 @@ import moment from 'moment'
 import { onMounted, reactive, ref, computed, watch, useTemplateRef } from 'vue'
 import { useRoute } from 'vue-router'
 import { Message, Modal, type FormInstance } from '@arco-design/web-vue'
+import type { ValidatedError } from '@arco-design/web-vue/es/form/interface'
 
 const props = defineProps<{
   createType: string
@@ -497,7 +498,13 @@ const handleValidateOpenapiSchema = async () => {
 
 const formRef = useTemplateRef<FormInstance>('formRef')
 
-const handleSubmit = async ({ values, errors }: { values: any; errors: any }) => {
+const handleSubmit = async ({
+  values,
+  errors,
+}: {
+  values: Record<string, any>
+  errors: Record<string, ValidatedError> | undefined
+}) => {
   if (errors) {
     return
   }
@@ -505,14 +512,14 @@ const handleSubmit = async ({ values, errors }: { values: any; errors: any }) =>
   try {
     submitLoading.value = true
     if (props.createType === 'tool') {
-      const resp = await createApiProvider(values)
+      const resp = await createApiProvider(values as CreateApiToolProviderRequest)
       Message.success(resp.message)
     } else if (showUpdateModal.value) {
       if (providerId.value == undefined) {
         Message.error('api工具提供商id不存在')
         return
       }
-      const resp = await updateAPiToolProvider(providerId.value, values)
+      const resp = await updateAPiToolProvider(providerId.value, values as UpdateApiToolProviderRequest)
       Message.success(resp.message)
     }
 

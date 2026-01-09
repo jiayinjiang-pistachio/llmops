@@ -24,17 +24,17 @@
                 </div>
               </div>
               <!-- 操作按钮 -->
-               <a-dropdown position="br">
+              <a-dropdown position="br">
                 <a-button type="text" size="small" class="rounded-lg !text-gray-700">
                   <template #icon>
                     <icon-more />
                   </template>
                 </a-button>
                 <template #content>
-                  <a-doption>设置</a-doption>
-                  <a-doption class="!text-red-500">删除</a-doption>
+                  <a-doption @click="goUpdate(dataset.id)">设置</a-doption>
+                  <a-doption class="!text-red-500" @click="goDelete(dataset.id)">删除</a-doption>
                 </template>
-               </a-dropdown>
+              </a-dropdown>
             </div>
           </div>
           <!-- 知识库的描述信息 -->
@@ -74,24 +74,116 @@
         <div class="text-gray-400 my-4">数据已加载完成</div>
       </a-col>
     </a-row>
+    <!-- 新建/修改模态窗 -->
+    <a-modal
+      :visible="createType === 'dataset' || showUpdateModal"
+      :hide-title="true"
+      :footer="false"
+      :width="520"
+      modal-class="rounded-lg"
+      @cancel="handleCancel"
+    >
+      <!-- 顶部标题 -->
+      <div class="flex items-center justify-between">
+        <div class="text-lg font-bold text-gray-700">{{ modalTitle }}</div>
+        <a-button type="text" class="!text-gray-700" size="small" @click="handleCancel">
+          <template #icon>
+            <icon-close />
+          </template>
+        </a-button>
+      </div>
+      <!-- 中间表单 -->
+      <div class="pt-6">
+        <a-form ref="formRef" :model="form" layout="vertical" @submit="handleSubmit">
+          <a-form-item
+            field="icon"
+            hide-label
+            :rules="[{ required: true, message: '知识库图标不能为空' }]"
+          >
+            <a-upload
+              v-model="form.icon"
+              :limit="1"
+              list-type="picture-card"
+              accept="image/png, image/jpeg"
+              class="!w-auto mx-auto"
+            />
+          </a-form-item>
+          <a-form-item
+            field="name"
+            label="知识库名称"
+            asterisk-position="end"
+            :rules="[{ required: true, message: '知识库名称不能为空' }]"
+          >
+            <a-input
+              v-model="form.name"
+              placeholder="请输入知识库名称"
+              show-word-limit
+              :max-length="60"
+            />
+          </a-form-item>
+          <a-form-item
+            field="description"
+            label="知识库描述"
+            asterisk-position="end"
+          >
+            <a-textarea
+              v-model="form.description"
+              :auto-size="{ minRows: 4, maxRows: 6 }"
+              placeholder="请输入知识库描述"
+            />
+          </a-form-item>
+          <!-- 底部按钮 -->
+          <div class="flex items-center justify-between">
+            <div></div>
+            <a-space :size="16">
+              <a-button class="rounded-lg" @click="handleCancel">取消</a-button>
+              <a-button
+                :loading="submitLoading"
+                class="rounded-lg"
+                type="primary"
+                html-type="submit"
+                >保存</a-button
+              >
+            </a-space>
+          </div>
+        </a-form>
+      </div>
+    </a-modal>
   </a-spin>
 </template>
 
 <style lang="less"></style>
 
 <script setup lang="ts">
-import type { DatasetItem } from '@/models/dataset'
-import { getDatasetsWithPage } from '@/services/datasets'
+import {
+  useCreateOrUpdateDataset,
+  useDeleteDataset,
+  useGeDatasetsWithPage,
+} from '@/hooks/use-dataset'
+import { getDataset } from '@/services/datasets'
+import type { ValidatedError } from '@arco-design/web-vue/es/form/interface'
 import moment from 'moment'
-import { onMounted, reactive, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed } from 'vue'
 
-const paginator = reactive({
-  current_page: 1,
-  page_size: 20,
-  total_page: 0,
-  total_record: 0,
-})
+const props = defineProps<{
+  createType: string
+}>()
+const emit = defineEmits<{
+  (e: 'update-create-type', value: string): void
+}>()
+
+const modalTitle = computed(() => (props.createType === 'dataset' ? '新建知识库' : '更新知识库'))
+
+const { loading, datasets, loadMoreData, initData, paginator } = useGeDatasetsWithPage()
+const { handleDelete } = useDeleteDataset()
+const {
+  loading: submitLoading,
+  form,
+  formRef,
+  showUpdateModal,
+  updateShowUpdateModal,
+  saveDataset,
+} = useCreateOrUpdateDataset()
 
 const handleScroll = async (event: Event) => {
   const target = event.target as HTMLElement
@@ -103,65 +195,59 @@ const handleScroll = async (event: Event) => {
   }
 }
 
-onMounted(async () => {
-  await initData()
-})
-
-async function initData() {
-  // 初始化分页数据
-  paginator.current_page = 1
-  paginator.page_size = 20
-  paginator.total_page = 0
-  paginator.total_record = 0
-
-  // 调用数据加载完成初始化
-  loadMoreData(true)
+// 删除知识库
+const goDelete = (dataset_id: string) => {
+  handleDelete(dataset_id, async () => {
+    // handleCancel()
+    // 重新加载数据
+    await initData()
+  })
 }
 
-const datasets = reactive<DatasetItem[]>([])
-const loading = ref(false)
-const route = useRoute()
+let updateDatasetID = ''
+// 编辑知识库
+const goUpdate = (dataset_id: string) => {
+  updateShowUpdateModal(true, async () => {
+    // 获取知识库详情
+    try {
+      const resp = await getDataset(dataset_id)
+      const data = resp.data
+      updateDatasetID = data.id
 
-watch(
-  () => route.query.search,
-  async () => {
-    await initData()
-  },
-)
+      // 更新表单数据
+      formRef.value?.resetFields()
+      form.name = data.name
+      form.icon = data.icon
+      form.description = data.description
+    } catch (error) {
+      console.log(error)
+    }
+  })
+}
 
-// 加载更多数据
-const loadMoreData = async (init = false) => {
-  // 检测是否需要加载新数据
-  if (!init && (loading.value || paginator.current_page >= paginator.total_page)) {
+// 取消显示模态窗
+const handleCancel = () => {
+  updateShowUpdateModal(false, () => {
+    updateDatasetID = ''
+
+    formRef.value?.resetFields()
+
+    // 隐藏表单模态窗
+    emit('update-create-type', '')
+  })
+}
+
+// 提交模态窗
+const handleSubmit = async ({ errors }: { errors: Record<string, ValidatedError> | undefined }) => {
+  if (errors) {
     return
   }
-  // 加载更多数据并更新状态
-  try {
-    loading.value = true
 
-    // 如果不是初始化，则请求下一页
-    const targetPage = init ? 1 : paginator.current_page + 1
+  // 调用保存知识库服务
+  await saveDataset(updateDatasetID)
 
-    const resp = await getDatasetsWithPage(
-      targetPage,
-      paginator.page_size,
-      (route.query.search as string) || '',
-    )
-    const data = resp.data
-
-    // 更新分页器
-    paginator.current_page = data.paginator.current_page
-    paginator.total_page = data.paginator.total_page
-    paginator.total_record = data.paginator.total_record
-
-    // 追加或是覆盖
-    if (init) {
-      datasets.splice(0, datasets.length, ...data.list)
-    } else {
-      datasets.push(...data.list)
-    }
-  } finally {
-    loading.value = false
-  }
+  // 关闭模态窗并刷新数据
+  handleCancel()
+  await initData()
 }
 </script>
