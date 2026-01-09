@@ -16,7 +16,14 @@
             <!-- 右侧知识库信息 -->
             <div class="flex flex-1 justify-between">
               <div class="flex flex-col">
-                <div class="text-base text-gray-900 font-bold">{{ dataset.name }}</div>
+                <router-link
+                  :to="{
+                    name: 'space-datasets-documents-list',
+                    params: { dataset_id: dataset.id },
+                  }"
+                  class="text-base text-gray-900 font-bold"
+                  >{{ dataset.name }}</router-link
+                >
                 <div class="text-xs text-gray-500 line-clamp-1">
                   {{ dataset.document_count }} 文档 ·
                   {{ Math.round(dataset.character_count / 1000) }} 千字符 ·
@@ -121,11 +128,7 @@
               :max-length="60"
             />
           </a-form-item>
-          <a-form-item
-            field="description"
-            label="知识库描述"
-            asterisk-position="end"
-          >
+          <a-form-item field="description" label="知识库描述" asterisk-position="end">
             <a-textarea
               v-model="form.description"
               :auto-size="{ minRows: 4, maxRows: 6 }"

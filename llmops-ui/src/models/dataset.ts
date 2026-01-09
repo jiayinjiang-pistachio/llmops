@@ -44,3 +44,46 @@ export interface DatasetDetail {
 }
 
 export type GetDatasetResp = BaseResponse<DatasetDetail>
+
+// 获取指定的知识库文档列表分页请求
+export interface GetDocumentsWithPageRequest {
+  current_page: number
+  page_size: number
+  search_word: string
+}
+
+// 获取指定知识库文档分页列表响应结构
+export interface DocumentItem {
+  id: string
+  name: string
+  character_count: number
+  hit_count: number
+  position: number
+  enabled: boolean
+  disabled_at: number
+  status: string
+  error: string
+  updated_at: number
+  created_at: number
+}
+export type GetDocumentsWithPageResponse = BasePaginationResponse<DocumentItem>
+
+// 获取指定文档详情响应结构
+export interface DocumentDetail {
+  id: string
+  dataset_id: string
+  name: string
+  segment_count: number
+  character_count: number
+  hit_count: number
+  position: number
+  enabled: boolean
+  disabled_at: number
+  status: string
+  error: string
+  updated_at: number
+  created_at: number
+}
+export type GetDocumentResponse = BaseResponse<DocumentDetail>
+
+

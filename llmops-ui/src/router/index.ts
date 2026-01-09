@@ -47,8 +47,14 @@ const router = createRouter({
               path: 'datasets',
               name: 'space-datasets-list',
               component: () => import('@/views/space/datasets/ListView.vue'),
-            }
+            },
           ],
+        },
+        // 知识库文档列表
+        {
+          path: 'space/datasets/:dataset_id/documents',
+          name: 'space-datasets-documents-list',
+          component: () => import('@/views/space/datasets/documents/ListView.vue'),
         },
         // 应用广场页
         {

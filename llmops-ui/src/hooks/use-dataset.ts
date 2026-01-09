@@ -1,11 +1,15 @@
 import type { Paginator } from '@/models/base'
-import type { DatasetItem } from '@/models/dataset'
+import type { DatasetDetail, DatasetItem, DocumentItem } from '@/models/dataset'
 import type { FormInstance } from '@arco-design/web-vue'
 import {
   createDataset,
   deleteDataset,
+  deleteDocument,
+  getDataset,
   getDatasetsWithPage,
+  getDocumentsWithPage,
   updateDataset,
+  updateDocumentEnabled,
 } from '@/services/datasets'
 import { Message, Modal } from '@arco-design/web-vue'
 import { onMounted, reactive, ref, useTemplateRef, watch } from 'vue'
@@ -172,5 +176,151 @@ export function useCreateOrUpdateDataset() {
     showUpdateModal,
     updateShowUpdateModal,
     saveDataset,
+  }
+}
+
+export const useGetDataset = (dataset_id: string) => {
+  const loading = ref(false)
+  const dataset: DatasetDetail = reactive({} as DatasetDetail)
+
+  const loadDataset = async (dataset_id: string) => {
+    try {
+      loading.value = true
+      const resp = await getDataset(dataset_id)
+      const data = resp.data
+      Object.assign(dataset, { ...data })
+    } catch (error) {
+      console.log(error)
+    } finally {
+      loading.value = false
+    }
+  }
+
+  onMounted(() => {
+    loadDataset(dataset_id)
+  })
+
+  return {
+    loading,
+    dataset,
+    loadDataset,
+  }
+}
+
+export const useGetDocumentsWithPage = (dataset_id: string) => {
+  const route = useRoute()
+  const loading = ref(false)
+  const documents: DocumentItem[] = reactive([])
+  const defaultPaginator = {
+    current_page: 1,
+    page_size: 20,
+    total_page: 0,
+    total_record: 0,
+  }
+  const paginator = reactive({ ...defaultPaginator })
+
+  const loadDocuments = async (init = false) => {
+    if (!init && paginator.current_page > paginator.total_page) {
+      return
+    }
+
+    try {
+      loading.value = true
+      const resp = await getDocumentsWithPage(dataset_id, {
+        current_page: Number(route.query?.current_page) || 1,
+        page_size: Number(route.query?.page_size) || 20,
+        search_word: (route.query?.search_word as string) || '',
+      })
+
+      const data = resp.data
+
+      updatePaginator(data.paginator)
+
+      documents.splice(0, documents.length, ...data.list)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      loading.value = false
+    }
+  }
+
+  const initPaginator = () => {
+    Object.assign(paginator, { ...defaultPaginator })
+  }
+
+  const updatePaginator = (data: Paginator) => {
+    paginator.current_page = data.current_page
+    paginator.page_size = data.page_size
+    paginator.total_page = data.total_page
+    paginator.total_record = data.total_record
+  }
+
+  onMounted(async () => {
+    await loadDocuments(true)
+  })
+
+  watch(
+    () => route.query,
+    async (newQuery, oldQuery) => {
+      if (newQuery.search_word !== oldQuery.search_word) {
+        initPaginator()
+        await loadDocuments(true)
+      } else if (newQuery.current_page !== oldQuery.current_page) {
+        await loadDocuments()
+      }
+    },
+  )
+
+  return {
+    loading,
+    documents,
+    paginator,
+    loadDocuments,
+  }
+}
+
+export const useDeleteDocument = () => {
+  const handleDelete = (dataset_id: string, document_id: string, callback?: () => void) => {
+    Modal.warning({
+      title: '要删除该文档吗？',
+      content: `删除文档后，知识库/向量数据库将无法检索到该文档，如需暂时关闭该文档的检索，可以选择禁用功能`,
+      hideCancel: false,
+      onOk: async () => {
+        try {
+          const resp = await deleteDocument(dataset_id, document_id)
+          Message.success(resp.message)
+        } catch (error) {
+          console.log(error)
+        } finally {
+          callback?.()
+        }
+      },
+    })
+  }
+
+  return {
+    handleDelete,
+  }
+}
+
+export const useUpdatedDocumentEnabled = () => {
+  const handleUpdate = async (
+    dataset_id: string,
+    document_id: string,
+    enabled: boolean,
+    callback?: () => void,
+  ) => {
+    try {
+      const resp = await updateDocumentEnabled(dataset_id, document_id, enabled)
+      const { message } = resp
+      Message.success(message)
+      callback?.()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  return {
+    handleUpdate,
   }
 }
