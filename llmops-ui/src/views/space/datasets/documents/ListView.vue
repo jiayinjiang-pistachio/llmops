@@ -181,11 +181,17 @@
           </a-table-column>
         </template>
       </a-table>
+      <!-- 更新文档名字模态窗 -->
       <update-document-name-modal
         :document_id="updateDocumentID"
         :dataset_id="String(route.params?.dataset_id ?? '')"
         v-model:visible="documentNameModalVisible"
         :on-after-update="() => loadDocuments()"
+      />
+      <!-- 召回测试模态窗 -->
+      <hit-testing-modal
+        v-model:visible="hitModalVisible"
+        :dataset_id="String(route.params?.dataset_id ?? '')"
       />
     </div>
   </div>
@@ -193,6 +199,7 @@
 
 <script setup lang="ts">
 import UpdateDocumentNameModal from './components/UpdateDocumentName.vue'
+import HitTestingModal from './components/HitTestingModal.vue'
 import {
   useDeleteDocument,
   useGetDataset,
@@ -207,6 +214,7 @@ import { useRoute, useRouter } from 'vue-router'
 const route = useRoute()
 const router = useRouter()
 
+const hitModalVisible = ref(true)
 const { dataset, loadDataset } = useGetDataset(route.params?.dataset_id as string)
 const { paginator, loading, documents, loadDocuments } = useGetDocumentsWithPage(
   route.params?.dataset_id as string,
