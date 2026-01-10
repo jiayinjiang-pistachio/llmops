@@ -49,7 +49,7 @@
       />
       <!-- 右侧按钮 -->
       <a-space :size="12">
-        <a-button class="rounded-lg">召回测试</a-button>
+        <a-button class="rounded-lg" @click="hitModalVisible = true">召回测试</a-button>
         <a-button class="rounded-lg" type="primary">添加文件</a-button>
       </a-space>
     </div>
@@ -192,6 +192,7 @@
       <hit-testing-modal
         v-model:visible="hitModalVisible"
         :dataset_id="String(route.params?.dataset_id ?? '')"
+        @refresh="() => loadDataset(String(route.params?.dataset_id) ?? '')"
       />
     </div>
   </div>
@@ -214,7 +215,7 @@ import { useRoute, useRouter } from 'vue-router'
 const route = useRoute()
 const router = useRouter()
 
-const hitModalVisible = ref(true)
+const hitModalVisible = ref(false)
 const { dataset, loadDataset } = useGetDataset(route.params?.dataset_id as string)
 const { paginator, loading, documents, loadDocuments } = useGetDocumentsWithPage(
   route.params?.dataset_id as string,

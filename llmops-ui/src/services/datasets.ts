@@ -1,11 +1,14 @@
 import type { BaseResponse } from '@/models/base'
 import type {
   CreateDatasetReq,
+  GetDaatsetQueriesResp,
   GetDatasetResp,
   GetDatasetsWithPageResp,
   GetDocumentResponse,
   GetDocumentsWithPageRequest,
   GetDocumentsWithPageResponse,
+  HitReq,
+  HitResp,
   UpdateDatasetReq,
 } from '@/models/dataset'
 import { get, post } from '@/utils/request'
@@ -76,7 +79,6 @@ export const updateDocumentEnabled = (
   })
 }
 
-
 // 删除指定文档信息
 export const deleteDocument = (dataset_id: string, document_id: string) => {
   return post<BaseResponse<string>>(`/datasets/${dataset_id}/documents/${document_id}/delete`)
@@ -90,3 +92,18 @@ export const updateDocumentName = (dataset_id: string, document_id: string, name
     }
   })
 }
+
+// 知识库召回测试
+export const hit = (dataset_id: string, req: HitReq) => {
+  return post<HitResp>(`/datasets/${dataset_id}/hit`, {
+    body: req,
+  })
+}
+
+// 最近查询记录
+export const getDatasetQueries = (dataset_id: string) => {
+  return get<GetDaatsetQueriesResp>(`/datasets/${dataset_id}/queries`)
+}
+
+// 上传文档到知识库
+

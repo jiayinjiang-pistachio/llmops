@@ -86,4 +86,46 @@ export interface DocumentDetail {
 }
 export type GetDocumentResponse = BaseResponse<DocumentDetail>
 
+// 知识库召回测试请求
+export interface HitReq {
+  retrieval_strategy: string
+  k: number
+  query: string
+  score: number
+}
 
+// 知识库召回测试响应
+export interface HitItem {
+  id: string
+  document: {
+    id: string
+    name: string
+    extension: string
+    mime_type: string
+  }
+  content: string
+  dataset_id: string
+  score: number
+  position: number
+  keywords: string[]
+  character_count: number
+  token_count: number
+  hit_count: number
+  enabled: boolean
+  disabled_at: number
+  status: string
+  error: string
+  updated_at: number
+  created_at: number
+}
+export type HitResp = BaseResponse<HitItem[]>
+
+// 知识库最新查询列表
+export interface DatasetQueryItem {
+  id: string
+  query: string
+  source: string
+  dataset_id: string
+  created_at: number
+}
+export type GetDaatsetQueriesResp = BaseResponse<DatasetQueryItem[]>
