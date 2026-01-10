@@ -2445,3 +2445,317 @@ WHERE document.dataset_id = %(dataset_id_1)s::UUID)
 2026-01-10 11:15:00,325.325] base.py line:1846 INFO: [cached since 3.542e+04s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('8210bfbd-0baa-46f5-bcd4-fe2b789fb4f6')})
 2026-01-10 11:15:00,326.326] base.py line:2713 INFO: ROLLBACK)
 2026-01-10 11:15:00,327.327] _internal.py line:97 INFO: 127.0.0.1 - - [10/Jan/2026 11:15:00] "GET /datasets/8210bfbd-0baa-46f5-bcd4-fe2b789fb4f6 HTTP/1.1" 200 -)
+2026-01-10 11:39:12,626.626] _internal.py line:97 INFO: 127.0.0.1 - - [10/Jan/2026 11:39:12] "OPTIONS /api-tools?current_page=1&page_size=10&search_word= HTTP/1.1" 200 -)
+2026-01-10 11:39:12,762.762] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-10 11:39:12,784.784] base.py line:1846 INFO: SELECT api_tool_provider.id AS api_tool_provider_id, api_tool_provider.account_id AS api_tool_provider_account_id, api_tool_provider.name AS api_tool_provider_name, api_tool_provider.icon AS api_tool_provider_icon, api_tool_provider.description AS api_tool_provider_description, api_tool_provider.openapi_schema AS api_tool_provider_openapi_schema, api_tool_provider.headers AS api_tool_provider_headers, api_tool_provider.updated_at AS api_tool_provider_updated_at, api_tool_provider.created_at AS api_tool_provider_created_at 
+FROM api_tool_provider 
+WHERE api_tool_provider.account_id = %(account_id_1)s::UUID ORDER BY api_tool_provider.created_at DESC 
+ LIMIT %(param_1)s OFFSET %(param_2)s)
+2026-01-10 11:39:12,786.786] base.py line:1846 INFO: [cached since 3.765e+04s ago] {'account_id_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f', 'param_1': 10, 'param_2': 0})
+2026-01-10 11:39:12,894.894] base.py line:1846 INFO: SELECT count(*) AS count_1 
+FROM (SELECT api_tool_provider.id AS id, api_tool_provider.account_id AS account_id, api_tool_provider.name AS name, api_tool_provider.icon AS icon, api_tool_provider.description AS description, api_tool_provider.openapi_schema AS openapi_schema, api_tool_provider.headers AS headers, api_tool_provider.updated_at AS updated_at, api_tool_provider.created_at AS created_at 
+FROM api_tool_provider 
+WHERE api_tool_provider.account_id = %(account_id_1)s::UUID) AS anon_1)
+2026-01-10 11:39:12,894.894] base.py line:1846 INFO: [cached since 3.765e+04s ago] {'account_id_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-10 11:39:12,937.937] base.py line:1846 INFO: SELECT api_tool.id AS api_tool_id, api_tool.account_id AS api_tool_account_id, api_tool.provider_id AS api_tool_provider_id, api_tool.name AS api_tool_name, api_tool.description AS api_tool_description, api_tool.url AS api_tool_url, api_tool.method AS api_tool_method, api_tool.parameters AS api_tool_parameters, api_tool.updated_at AS api_tool_updated_at, api_tool.created_at AS api_tool_created_at 
+FROM api_tool 
+WHERE api_tool.provider_id = %(provider_id_1)s::UUID)
+2026-01-10 11:39:12,937.937] base.py line:1846 INFO: [cached since 3.765e+04s ago] {'provider_id_1': UUID('b114708d-6690-4a59-b94e-6aaff08ac583')})
+2026-01-10 11:39:12,961.961] base.py line:2713 INFO: ROLLBACK)
+2026-01-10 11:39:12,969.969] _internal.py line:97 INFO: 127.0.0.1 - - [10/Jan/2026 11:39:12] "GET /api-tools?current_page=1&page_size=10&search_word= HTTP/1.1" 200 -)
+2026-01-10 11:39:14,895.895] _internal.py line:97 INFO: 127.0.0.1 - - [10/Jan/2026 11:39:14] "OPTIONS /datasets?current_page=1&page_size=20&search_word= HTTP/1.1" 200 -)
+2026-01-10 11:39:14,929.929] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-10 11:39:14,934.934] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.account_id = %(account_id_1)s::UUID ORDER BY dataset.created_at DESC 
+ LIMIT %(param_1)s OFFSET %(param_2)s)
+2026-01-10 11:39:14,935.935] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'account_id_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f', 'param_1': 20, 'param_2': 0})
+2026-01-10 11:39:14,971.971] base.py line:1846 INFO: SELECT count(*) AS count_1 
+FROM (SELECT dataset.id AS id, dataset.account_id AS account_id, dataset.name AS name, dataset.icon AS icon, dataset.description AS description, dataset.updated_at AS updated_at, dataset.created_at AS created_at 
+FROM dataset 
+WHERE dataset.account_id = %(account_id_1)s::UUID) AS anon_1)
+2026-01-10 11:39:14,971.971] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'account_id_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-10 11:39:14,976.976] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:14,977.977] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('debde249-90e9-4f9c-882b-7ea07bcc9586')})
+2026-01-10 11:39:14,980.980] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:14,980.980] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('debde249-90e9-4f9c-882b-7ea07bcc9586')})
+2026-01-10 11:39:14,984.984] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:14,984.984] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('debde249-90e9-4f9c-882b-7ea07bcc9586')})
+2026-01-10 11:39:14,986.986] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:14,986.986] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('4e25b342-1a2b-40f9-86a7-da3052f2a75a')})
+2026-01-10 11:39:14,990.990] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:14,990.990] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('4e25b342-1a2b-40f9-86a7-da3052f2a75a')})
+2026-01-10 11:39:14,992.992] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:14,992.992] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('4e25b342-1a2b-40f9-86a7-da3052f2a75a')})
+2026-01-10 11:39:14,994.994] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:14,994.994] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('d2e89d0e-81b2-4fad-a59e-dad1a20e21ec')})
+2026-01-10 11:39:14,995.995] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:14,995.995] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('d2e89d0e-81b2-4fad-a59e-dad1a20e21ec')})
+2026-01-10 11:39:14,996.996] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:14,996.996] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('d2e89d0e-81b2-4fad-a59e-dad1a20e21ec')})
+2026-01-10 11:39:14,998.998] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:14,998.998] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('076442a7-af3f-4a49-a3a8-2df67f53c5f0')})
+2026-01-10 11:39:15,000.000] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,000.000] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('076442a7-af3f-4a49-a3a8-2df67f53c5f0')})
+2026-01-10 11:39:15,003.003] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,003.003] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('076442a7-af3f-4a49-a3a8-2df67f53c5f0')})
+2026-01-10 11:39:15,005.005] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,005.005] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('c2a6b383-de9f-4fb2-a4b9-467c9a4b57b9')})
+2026-01-10 11:39:15,006.006] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,007.007] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('c2a6b383-de9f-4fb2-a4b9-467c9a4b57b9')})
+2026-01-10 11:39:15,008.008] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,009.009] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('c2a6b383-de9f-4fb2-a4b9-467c9a4b57b9')})
+2026-01-10 11:39:15,011.011] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,011.011] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('96c19110-4f0f-4754-b4d9-08d491b22b73')})
+2026-01-10 11:39:15,013.013] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,015.015] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('96c19110-4f0f-4754-b4d9-08d491b22b73')})
+2026-01-10 11:39:15,017.017] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,018.018] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('96c19110-4f0f-4754-b4d9-08d491b22b73')})
+2026-01-10 11:39:15,019.019] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,019.019] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('cd0e15f9-a905-4d66-b97e-7f2a8f016e68')})
+2026-01-10 11:39:15,022.022] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,022.022] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('cd0e15f9-a905-4d66-b97e-7f2a8f016e68')})
+2026-01-10 11:39:15,024.024] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,024.024] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('cd0e15f9-a905-4d66-b97e-7f2a8f016e68')})
+2026-01-10 11:39:15,025.025] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,025.025] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('9f0f9d4e-7ac0-4f13-9197-6a6081745742')})
+2026-01-10 11:39:15,026.026] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,026.026] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('9f0f9d4e-7ac0-4f13-9197-6a6081745742')})
+2026-01-10 11:39:15,027.027] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,028.028] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('9f0f9d4e-7ac0-4f13-9197-6a6081745742')})
+2026-01-10 11:39:15,029.029] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,029.029] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('442f9bdf-9974-4795-a9e5-25f16cdaa86c')})
+2026-01-10 11:39:15,032.032] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,033.033] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('442f9bdf-9974-4795-a9e5-25f16cdaa86c')})
+2026-01-10 11:39:15,035.035] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,036.036] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('442f9bdf-9974-4795-a9e5-25f16cdaa86c')})
+2026-01-10 11:39:15,037.037] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,037.037] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('d89dffe1-a283-44ce-aa62-cca6896fec0e')})
+2026-01-10 11:39:15,038.038] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,038.038] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('d89dffe1-a283-44ce-aa62-cca6896fec0e')})
+2026-01-10 11:39:15,040.040] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,040.040] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('d89dffe1-a283-44ce-aa62-cca6896fec0e')})
+2026-01-10 11:39:15,041.041] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,041.041] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('893c8ff4-202a-4fec-9473-82efc0cebb84')})
+2026-01-10 11:39:15,042.042] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,042.042] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('893c8ff4-202a-4fec-9473-82efc0cebb84')})
+2026-01-10 11:39:15,043.043] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,044.044] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('893c8ff4-202a-4fec-9473-82efc0cebb84')})
+2026-01-10 11:39:15,044.044] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,045.045] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('cf67b8fc-fa97-4937-9b94-34ad2dc6231a')})
+2026-01-10 11:39:15,046.046] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,046.046] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('cf67b8fc-fa97-4937-9b94-34ad2dc6231a')})
+2026-01-10 11:39:15,047.047] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,048.048] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('cf67b8fc-fa97-4937-9b94-34ad2dc6231a')})
+2026-01-10 11:39:15,050.050] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,050.050] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('d4f47371-0b82-4f73-9003-6cd5a3dabe35')})
+2026-01-10 11:39:15,051.051] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,051.051] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('d4f47371-0b82-4f73-9003-6cd5a3dabe35')})
+2026-01-10 11:39:15,053.053] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,053.053] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('d4f47371-0b82-4f73-9003-6cd5a3dabe35')})
+2026-01-10 11:39:15,054.054] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,054.054] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('7826b06c-4d09-4ca9-ab49-d44d2a113cc7')})
+2026-01-10 11:39:15,055.055] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,056.056] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('7826b06c-4d09-4ca9-ab49-d44d2a113cc7')})
+2026-01-10 11:39:15,057.057] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,057.057] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('7826b06c-4d09-4ca9-ab49-d44d2a113cc7')})
+2026-01-10 11:39:15,058.058] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,058.058] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('846d7d5f-b659-4d74-9537-41983f850637')})
+2026-01-10 11:39:15,059.059] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,059.059] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('846d7d5f-b659-4d74-9537-41983f850637')})
+2026-01-10 11:39:15,060.060] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,060.060] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('846d7d5f-b659-4d74-9537-41983f850637')})
+2026-01-10 11:39:15,061.061] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,061.061] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('b08a75ef-ee27-4ce8-98db-9c4a163b570e')})
+2026-01-10 11:39:15,062.062] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,063.063] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('b08a75ef-ee27-4ce8-98db-9c4a163b570e')})
+2026-01-10 11:39:15,065.065] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,066.066] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('b08a75ef-ee27-4ce8-98db-9c4a163b570e')})
+2026-01-10 11:39:15,067.067] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,067.067] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('480764fd-7d5d-43f5-b43a-fb14a4fc4648')})
+2026-01-10 11:39:15,068.068] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,068.068] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('480764fd-7d5d-43f5-b43a-fb14a4fc4648')})
+2026-01-10 11:39:15,071.071] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,072.072] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('480764fd-7d5d-43f5-b43a-fb14a4fc4648')})
+2026-01-10 11:39:15,073.073] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,073.073] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('bd21a3ac-970a-40d8-965f-86926de1b366')})
+2026-01-10 11:39:15,075.075] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,075.075] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('bd21a3ac-970a-40d8-965f-86926de1b366')})
+2026-01-10 11:39:15,076.076] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,076.076] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('bd21a3ac-970a-40d8-965f-86926de1b366')})
+2026-01-10 11:39:15,077.077] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,077.077] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('c8e85146-29a4-4564-96ce-9a4df915e96f')})
+2026-01-10 11:39:15,078.078] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,078.078] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('c8e85146-29a4-4564-96ce-9a4df915e96f')})
+2026-01-10 11:39:15,079.079] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,079.079] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('c8e85146-29a4-4564-96ce-9a4df915e96f')})
+2026-01-10 11:39:15,082.082] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,083.083] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('ad5c9311-96db-43d4-8d75-e6331e7992ad')})
+2026-01-10 11:39:15,085.085] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,085.085] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'dataset_id_1': UUID('ad5c9311-96db-43d4-8d75-e6331e7992ad')})
+2026-01-10 11:39:15,086.086] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-10 11:39:15,087.087] base.py line:1846 INFO: [cached since 3.688e+04s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('ad5c9311-96db-43d4-8d75-e6331e7992ad')})
+2026-01-10 11:39:15,092.092] base.py line:2713 INFO: ROLLBACK)
+2026-01-10 11:39:15,093.093] _internal.py line:97 INFO: 127.0.0.1 - - [10/Jan/2026 11:39:15] "GET /datasets?current_page=1&page_size=20&search_word= HTTP/1.1" 200 -)
+2026-01-10 11:39:19,667.667] _internal.py line:97 INFO: 127.0.0.1 - - [10/Jan/2026 11:39:19] "OPTIONS /builtin-tools/categories HTTP/1.1" 200 -)
+2026-01-10 11:39:19,669.669] _internal.py line:97 INFO: 127.0.0.1 - - [10/Jan/2026 11:39:19] "OPTIONS /builtin-tools HTTP/1.1" 200 -)
+2026-01-10 11:39:19,691.691] http.py line:66 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/builtin_tool_handler.py", line 38, in get_provider_icon
+    icon, mimeType = self.builtin_tool_service.get_provider_icon(provider_name)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/builtin_tool_service.py", line 105, in get_provider_icon
+    raise NotFoundException(f"该工具提供者{provider_name}不存在")
+internal.exception.exception.NotFoundException
+2026-01-10 11:39:19,713.713] _internal.py line:97 INFO: 127.0.0.1 - - [10/Jan/2026 11:39:19] "GET /builtin-tools/categories HTTP/1.1" 200 -)
+2026-01-10 11:39:19,762.762] _internal.py line:97 INFO: 127.0.0.1 - - [10/Jan/2026 11:39:19] "GET /builtin-tools HTTP/1.1" 200 -)
+2026-01-10 11:39:19,763.763] _internal.py line:97 INFO: 127.0.0.1 - - [10/Jan/2026 11:39:19] "GET /builtin-tools/undefined/icon HTTP/1.1" 200 -)
+2026-01-10 11:39:19,820.820] _internal.py line:97 INFO: 127.0.0.1 - - [10/Jan/2026 11:39:19] "GET /builtin-tools/google/icon HTTP/1.1" 200 -)
+2026-01-10 11:39:19,822.822] _internal.py line:97 INFO: 127.0.0.1 - - [10/Jan/2026 11:39:19] "GET /builtin-tools/time/icon HTTP/1.1" 200 -)
+2026-01-10 11:39:19,825.825] _internal.py line:97 INFO: 127.0.0.1 - - [10/Jan/2026 11:39:19] "GET /builtin-tools/duckduckgo/icon HTTP/1.1" 200 -)
+2026-01-10 11:39:19,839.839] _internal.py line:97 INFO: 127.0.0.1 - - [10/Jan/2026 11:39:19] "GET /builtin-tools/gaode/icon HTTP/1.1" 200 -)
+2026-01-10 11:39:19,846.846] _internal.py line:97 INFO: 127.0.0.1 - - [10/Jan/2026 11:39:19] "GET /builtin-tools/dalle/icon HTTP/1.1" 200 -)
+2026-01-10 11:39:19,850.850] _internal.py line:97 INFO: 127.0.0.1 - - [10/Jan/2026 11:39:19] "GET /builtin-tools/wikipedia/icon HTTP/1.1" 200 -)
+2026-01-10 11:39:22,550.550] _internal.py line:97 INFO: 127.0.0.1 - - [10/Jan/2026 11:39:22] "GET /builtin-tools HTTP/1.1" 200 -)
+2026-01-10 11:39:22,550.550] _internal.py line:97 INFO: 127.0.0.1 - - [10/Jan/2026 11:39:22] "GET /builtin-tools/categories HTTP/1.1" 200 -)
+2026-01-10 11:39:22,556.556] http.py line:66 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/builtin_tool_handler.py", line 38, in get_provider_icon
+    icon, mimeType = self.builtin_tool_service.get_provider_icon(provider_name)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/builtin_tool_service.py", line 105, in get_provider_icon
+    raise NotFoundException(f"该工具提供者{provider_name}不存在")
+internal.exception.exception.NotFoundException
+2026-01-10 11:39:22,557.557] _internal.py line:97 INFO: 127.0.0.1 - - [10/Jan/2026 11:39:22] "GET /builtin-tools/undefined/icon HTTP/1.1" 200 -)

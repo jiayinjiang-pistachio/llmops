@@ -280,6 +280,8 @@ const hideHitTestingModal = () => {
 const retrievalSettingModalVisible = ref(false)
 
 const retrievalSettingForm = reactive({ ...defaultRetrievalSetting })
+
+// 隐藏检索设置弹窗
 const hideRetrievalSettingModal = () => {
   // 复原检索策略
   Object.assign(retrievalSettingForm, { ...hitTestingForm })
