@@ -64,3 +64,8 @@ kill -9 <PID>
 # 或者一步完成
 sudo kill -9 $(sudo lsof -t -i:5000)
 ```
+
+# 启动项目
+
+启动 flask 服务
+启动 celery （异步任务执行）

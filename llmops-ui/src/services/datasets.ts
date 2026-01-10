@@ -1,10 +1,13 @@
 import type { BaseResponse } from '@/models/base'
 import type {
   CreateDatasetReq,
+  CreateDocumentsReq,
+  CreateDocumentsResp,
   GetDaatsetQueriesResp,
   GetDatasetResp,
   GetDatasetsWithPageResp,
   GetDocumentResponse,
+  GetDocumentsStatusResp,
   GetDocumentsWithPageRequest,
   GetDocumentsWithPageResponse,
   HitReq,
@@ -57,7 +60,7 @@ export const getDocumentsWithPage = (
   },
 ) => {
   return get<GetDocumentsWithPageResponse>(`/datasets/${dataset_id}/documents`, {
-    params: req
+    params: req,
   })
 }
 
@@ -74,8 +77,8 @@ export const updateDocumentEnabled = (
 ) => {
   return post<BaseResponse<string>>(`/datasets/${dataset_id}/documents/${document_id}/enabled`, {
     body: {
-      enabled
-    }
+      enabled,
+    },
   })
 }
 
@@ -88,8 +91,8 @@ export const deleteDocument = (dataset_id: string, document_id: string) => {
 export const updateDocumentName = (dataset_id: string, document_id: string, name: string) => {
   return post<BaseResponse<string>>(`/datasets/${dataset_id}/documents/${document_id}/name`, {
     body: {
-      name
-    }
+      name,
+    },
   })
 }
 
@@ -106,4 +109,13 @@ export const getDatasetQueries = (dataset_id: string) => {
 }
 
 // 上传文档到知识库
+export const createDocuments = (dataset_id: string, req: CreateDocumentsReq) => {
+  return post<CreateDocumentsResp>(`/datasets/${dataset_id}/documents`, {
+    body: req,
+  })
+}
 
+// 根据批处理获取文档的处理状态
+export const getDocumentsStatus = (dataset_id: string, batch: string) => {
+  return get<GetDocumentsStatusResp>(`/datasets/${dataset_id}/documents/batch/${batch}`)
+}

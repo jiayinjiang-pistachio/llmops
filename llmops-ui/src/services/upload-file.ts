@@ -1,4 +1,4 @@
-import type { UploadImageResp } from '@/models/upload-file'
+import type { UploadFileResp, UploadImageResp } from '@/models/upload-file'
 import { upload } from '@/utils/request'
 
 export const uploadImage = (image: File) => {
@@ -9,5 +9,17 @@ export const uploadImage = (image: File) => {
   // 调用upload服务实现图片上传
   return upload<UploadImageResp>(`/upload-files/image`, {
     data: formData,
+  })
+}
+
+// 上传文件
+export const uploadFile = (file: File) => {
+  // 构建表单并添加图片数据
+  const formData = new FormData()
+  formData.append('file', file)
+
+  // 调用upload服务实现文件上传
+  return upload<UploadFileResp>(`/upload-files/file`, {
+    data: formData
   })
 }

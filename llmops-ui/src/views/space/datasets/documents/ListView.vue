@@ -50,7 +50,16 @@
       <!-- 右侧按钮 -->
       <a-space :size="12">
         <a-button class="rounded-lg" @click="hitModalVisible = true">召回测试</a-button>
-        <a-button class="rounded-lg" type="primary">添加文件</a-button>
+        <router-link
+          :to="{
+            name: 'space-datasets-documents-create',
+            params: {
+              dataset_id: route.params?.dataset_id as string,
+            },
+          }"
+        >
+          <a-button class="rounded-lg" type="primary">添加文件</a-button>
+        </router-link>
       </a-space>
     </div>
     <!-- 底部表格 -->

@@ -129,3 +129,54 @@ export interface DatasetQueryItem {
   created_at: number
 }
 export type GetDaatsetQueriesResp = BaseResponse<DatasetQueryItem[]>
+
+// 上传文档列表到知识库请求
+export interface CreateDocumentsReq {
+  upload_file_ids: string[]
+  process_type: 'custom' | 'automatic'
+  rule: {
+    pre_process_rules: {
+      id: 'remove_extra_space' | 'remove_url_and_email'
+      enabled: boolean
+    }[]
+    segment: {
+      seperators: string[]
+      chunk_size: number
+      chunk_overlap: number
+    }
+  }
+}
+
+// 上传文档列表到知识库响应
+export interface CreateDocument {
+  batch: string
+  documents: {
+    id: string
+    name: string
+    status: string
+    created_at: string
+  }
+}
+export type CreateDocumentsResp = BaseResponse<CreateDocument>
+
+// 批处理标识获取处理进度响应
+export interface DocumentStatusItem {
+  id: string
+  name: string
+  size: number
+  extension: string
+  mime_type: string
+  position: number
+  segment_count: number
+  completed_segment_count: number
+  error: string
+  status: string
+  processing_started_at: number
+  parsing_completed_at: number
+  splitting_completed_at: number
+  indexing_completed_at: number
+  completed_at: number
+  stopped_at:number
+  created_at: number
+}
+export type GetDocumentsStatusResp = BaseResponse<DocumentStatusItem[]>
