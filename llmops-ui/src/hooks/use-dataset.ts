@@ -1,15 +1,25 @@
 import type { Paginator } from '@/models/base'
-import type { DatasetDetail, DatasetItem, DocumentItem } from '@/models/dataset'
+import type {
+  DatasetDetail,
+  DatasetItem,
+  DocumentDetail,
+  DocumentItem,
+  SegmentItem,
+} from '@/models/dataset'
 import type { FormInstance } from '@arco-design/web-vue'
 import {
   createDataset,
   deleteDataset,
   deleteDocument,
+  deleteSegment,
   getDataset,
   getDatasetsWithPage,
+  getDocument,
   getDocumentsWithPage,
+  getSegmentsWithPage,
   updateDataset,
   updateDocumentEnabled,
+  updateSegmentEnabled,
 } from '@/services/datasets'
 import { Message, Modal } from '@arco-design/web-vue'
 import { onMounted, reactive, ref, useTemplateRef, watch } from 'vue'
@@ -319,6 +329,149 @@ export const useUpdatedDocumentEnabled = () => {
     } catch (error) {
       console.log(error)
     }
+  }
+
+  return {
+    handleUpdate,
+  }
+}
+
+export const useGetDocument = (dataset_id: string, document_id: string) => {
+  const loading = ref(false)
+  const document = reactive({} as DocumentDetail)
+
+  const loadDocument = async (dataset_id: string, document_id: string) => {
+    try {
+      loading.value = true
+      const resp = await getDocument(dataset_id, document_id)
+      const data = resp.data
+
+      Object.assign(document, { ...data })
+    } finally {
+      loading.value = false
+    }
+  }
+
+  onMounted(async () => {
+    await loadDocument(dataset_id, document_id)
+  })
+
+  return {
+    loading,
+    document,
+    loadDocument,
+  }
+}
+
+export const useGetSegmentsWithPage = (dataset_id: string, document_id: string) => {
+  const route = useRoute()
+  const loading = ref(false)
+  const segments = reactive<SegmentItem[]>([])
+  const defaultPaginator: Paginator = {
+    current_page: 1,
+    page_size: 20,
+    total_page: 0,
+    total_record: 0,
+  }
+  const paginator: Paginator = reactive({ ...defaultPaginator })
+
+  const loadSegments = async (init = false) => {
+    if (init) {
+      Object.assign(paginator, { ...defaultPaginator })
+    } else if (paginator.current_page >= paginator.total_page) {
+      return
+    }
+
+    try {
+      loading.value = true
+
+      // 如果不是初始化，则请求下一页
+      const targetPage = init ? 1 : paginator.current_page + 1
+
+      const resp = await getSegmentsWithPage(dataset_id, document_id, {
+        current_page: targetPage,
+        page_size: paginator.page_size,
+        search_word: String(route.query?.search_word || ''),
+      })
+      const data = resp.data
+
+      // 更新分页器
+      updatePaginator(data.paginator)
+
+      // 追加或覆盖数据
+      if (init) {
+        segments.splice(0, segments.length, ...data.list)
+      } else {
+        segments.push(...data.list)
+      }
+    } finally {
+      loading.value = false
+    }
+  }
+
+  const updatePaginator = (data: Paginator) => {
+    paginator.current_page = data.current_page
+    paginator.page_size = data.page_size
+    paginator.total_page = data.total_page
+    paginator.total_record = data.total_record
+  }
+
+  onMounted(async () => {
+    await loadSegments(true)
+  })
+
+  watch(
+    () => route.query?.search_word,
+    async () => {
+      await loadSegments(true)
+    },
+  )
+
+  return {
+    loading,
+    segments,
+    paginator,
+    loadSegments,
+  }
+}
+
+export const useDeleteSegment = () => {
+  const handleDelete = async (
+    dataset_id: string,
+    document_id: string,
+    segment_id: string,
+    callback?: () => void,
+  ) => {
+    Modal.warning({
+      title: '要删除该文档片段吗？',
+      content: `删除文档片段后，知识库/向量数据库将无法检索到该文档片段，如需暂时关闭该片段的检索，可以选择禁用功能`,
+      hideCancel: false,
+      onOk: async () => {
+        try {
+          const resp = await deleteSegment(dataset_id, document_id, segment_id)
+          Message.success(resp.message)
+          callback?.()
+        } finally {
+        }
+      },
+    })
+  }
+  return {
+    handleDelete,
+  }
+}
+
+export const useUpdateSegmentEnabled = () => {
+  const handleUpdate = async (
+    dataset_id: string,
+    document_id: string,
+    segment_id: string,
+    enabled: boolean,
+    callback?: () => void,
+  ) => {
+    const resp = await updateSegmentEnabled(dataset_id, document_id, segment_id, enabled)
+    Message.success(resp.message)
+    callback?.()
   }
 
   return {

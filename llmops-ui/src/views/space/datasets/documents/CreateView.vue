@@ -147,7 +147,11 @@
             <div v-if="document.status === 'completed'" class="text-gray-500">处理完成</div>
             <div v-else-if="document.status === 'error'" class="text-red-700">处理出错</div>
             <div v-else class="text-gray-500">
-              {{ ((document.completed_segment_count / document.segment_count) * 100).toFixed(2) }}%
+              {{
+                document.segment_count === 0
+                  ? 0.00
+                  : ((document.completed_segment_count / document.segment_count) * 100).toFixed(2)
+              }}%
             </div>
           </div>
         </div>

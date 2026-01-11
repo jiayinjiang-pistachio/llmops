@@ -180,3 +180,64 @@ export interface DocumentStatusItem {
   created_at: number
 }
 export type GetDocumentsStatusResp = BaseResponse<DocumentStatusItem[]>
+
+// 获取指定文档的片段列表请求结构
+export interface GetSegmentsWithPageReq {
+  current_page: number
+  page_size: number
+  search_word: string
+}
+
+// 获取指定文档的片段列表响应
+export interface SegmentItem {
+  id: string
+  dataset_id: string
+  documentt_id: string
+  position: number
+  content: string
+  keywords: string[]
+  character_count: number
+  token_count: number
+  hit_count: number
+  enabled: boolean
+  disabled_at: number
+  status: string
+  error: string
+  updated_at: number
+  created_at: number
+}
+
+export type GetSegmentsWithPageResp = BasePaginationResponse<SegmentItem>
+
+// 新增文档片段请求
+export interface CreateSegmentReq {
+  content: string
+  keywords: string[]
+}
+
+// 修改文档片段请求
+export interface UpdateSegmentReq {
+  content: string
+  keywords: string[]
+}
+
+// 查询文档片段响应
+export interface SegmentDetail {
+  id: string
+  document_id: string
+  dataset_id: string
+  position: number
+  content: string
+  keywords: string[]
+  character_count: number
+  token_count: number
+  hit_count: number
+  hash: string
+  enabled: boolean
+  status: string
+  error: string
+  updated_at: number
+  created_at: number
+}
+
+export type GetSegmentResp = BaseResponse<SegmentDetail>

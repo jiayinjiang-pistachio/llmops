@@ -225,7 +225,7 @@ class SegmentService(BaseService):
             document_character_count, document_token_count = self.db.session.query(
                 func.coalesce(func.sum(Segment.character_count), 0),
                 func.coalesce(func.sum(Segment.token_count), 0),
-            ).first()
+            ).filter(Segment.document_id == document_id).first()
 
             # 10 .更新文档的对应信息
             self.update(
@@ -300,7 +300,7 @@ class SegmentService(BaseService):
                 document_character_count, document_token_count = self.db.session.query(
                     func.coalesce(func.sum(Segment.character_count), 0),
                     func.coalesce(func.sum(Segment.token_count), 0),
-                ).first()
+                ).filter(Segment.document_id == document_id).first()
 
                 self.update(
                     document,
@@ -358,7 +358,7 @@ class SegmentService(BaseService):
         document_character_count, document_token_count = self.db.session.query(
             func.coalesce(func.sum(Segment.character_count), 0),
             func.coalesce(func.sum(Segment.token_count), 0),
-        ).first()
+        ).filter(Segment.document_id == document_id).first()
 
         self.update(
             document,
