@@ -6,3 +6,8 @@
 @File           : __init__.py.py
 @Description    : 中间件，判断和校验用户登录
 """
+from .middleware import Middleware
+
+__all__ = [
+    "Middleware"
+]

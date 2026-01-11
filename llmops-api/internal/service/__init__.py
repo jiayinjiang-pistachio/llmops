@@ -7,6 +7,7 @@
 @Description    : 应用的整个服务，服务层
 """
 
+from .account_service import AccountService
 from .api_tool_service import APiToolService
 from .app_service import AppService
 from .base_service import BaseService
@@ -17,6 +18,7 @@ from .dataset_service import DatasetService
 from .document_service import DocumentService
 from .embeddings_service import EmbeddingsService
 from .jieba_service import JiebaService
+from .jwt_service import JwtService
 from .keyword_table_service import KeywordTableService
 from .process_rule_service import ProcessRuleService
 from .segment_service import SegmentService
@@ -31,5 +33,6 @@ __all__ = [
     "EmbeddingsService", "JiebaService",
     "DocumentService", "ProcessRuleService",
     "KeywordTableService", "SegmentService",
-    "ConversationService"
+    "ConversationService", "JwtService",
+    "AccountService"
 ]
