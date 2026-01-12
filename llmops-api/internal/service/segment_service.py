@@ -20,7 +20,7 @@ from sqlalchemy import asc, func
 from internal.entity.cache_entity import LOCK_SEGMENT_UPDATE_ENABLED, LOCK_EXPIRE_TIME
 from internal.entity.dataset_entity import SegmentStatus, DocumentStatus
 from internal.exception import NotFoundException, ForbiddenException, FailException, ValidationException
-from internal.model import Document, Segment
+from internal.model import Document, Segment, Account
 from internal.schema import GetSegmentsWithPageReq, UpdateSegmentReq
 from pkg.paginator import Paginator
 from pkg.sqlalchemy import SQLAlchemy
@@ -43,14 +43,18 @@ class SegmentService(BaseService):
     embeddings_service: EmbeddingsService
     jieba_service: JiebaService
 
-    def get_segments_with_page(self, dataset_id: UUID, document_id: UUID, req: GetSegmentsWithPageReq) -> tuple[
+    def get_segments_with_page(
+            self,
+            dataset_id: UUID,
+            document_id: UUID,
+            req: GetSegmentsWithPageReq,
+            account: Account
+    ) -> tuple[
         list[Segment], Paginator]:
         """根据传递的知识库id+文档id获取文档片段分页列表数据"""
-        # todo:待完善
-        account_id = "46db30d1-3199-4e79-a0cd-abf12fa6858f"
 
         document: Document = self.get(Document, document_id)
-        if document is None or document.dataset_id != dataset_id or str(document.account_id) != account_id:
+        if document is None or document.dataset_id != dataset_id or str(document.account_id) != account.id:
             raise NotFoundException("该知识库文档不存在，或无权限查看，请核实后重试")
 
         # 构建分页器
@@ -68,28 +72,29 @@ class SegmentService(BaseService):
 
         return segments, paginator
 
-    def get_segment(self, dataset_id: UUID, document_id: UUID, segment_id: UUID) -> Segment:
+    def get_segment(self, dataset_id: UUID, document_id: UUID, segment_id: UUID, account: Account) -> Segment:
         """根据传递的知识库id+文档id+片段id获取片段详情信息"""
-        # todo:待完善
-        account_id = "46db30d1-3199-4e79-a0cd-abf12fa6858f"
-
         segment: Segment = self.get(Segment, segment_id)
 
         if (
                 segment is None
                 or segment.document_id != document_id
                 or segment.dataset_id != dataset_id
-                or str(segment.account_id) != account_id
+                or segment.account_id != account.id
         ):
             raise NotFoundException("该文档片段不存在，或无权限查看，请核实后重试")
 
         return segment
 
-    def update_segment_enabled(self, dataset_id: UUID, document_id: UUID, segment_id: UUID, enabled: bool):
+    def update_segment_enabled(
+            self,
+            dataset_id: UUID,
+            document_id: UUID,
+            segment_id: UUID,
+            enabled: bool,
+            account: Account
+    ):
         """根据传递的知识库id+文档id+片段id更新片段状态"""
-        # todo:待完善
-        account_id = "46db30d1-3199-4e79-a0cd-abf12fa6858f"
-
         # 获取片段信息并校验
         segment: Segment = self.get(Segment, segment_id)
 
@@ -97,7 +102,7 @@ class SegmentService(BaseService):
                 segment is None
                 or segment.document_id != document_id
                 or segment.dataset_id != dataset_id
-                or str(segment.account_id) != account_id
+                or segment.account_id != account.id
         ):
             raise NotFoundException("该文档片段不存在，或无权限查看，请核实后重试")
 
@@ -148,11 +153,8 @@ class SegmentService(BaseService):
                 )
                 raise FailException("更新文档片段启用状态失败，请稍后重试")
 
-    def create_segment(self, dataset_id, document_id, req):
+    def create_segment(self, dataset_id, document_id, req, account: Account):
         """根据传递的信息新增文档片段信息"""
-        # todo:待完善
-        account_id = "46db30d1-3199-4e79-a0cd-abf12fa6858f"
-
         # 1. 校验上传的内容的token长度总数，不能超过1000
         token_count = self.embeddings_service.calculate_token_count(req.content.data)
         if token_count > 1000:
@@ -162,7 +164,7 @@ class SegmentService(BaseService):
         document = self.get(Document, document_id)
         if (
                 document is None
-                or str(document.account_id) != account_id
+                or document.account_id != account.id
                 or document.dataset_id != dataset_id
         ):
             raise NotFoundException("该知识库文档不存在，或无权限新增，请核实后重试")
@@ -187,7 +189,7 @@ class SegmentService(BaseService):
             position += 1
             segment = self.create(
                 Segment,
-                account_id=account_id,
+                account_id=account.id,
                 dataset_id=dataset_id,
                 document_id=document_id,
                 node_id=uuid.uuid4(),
@@ -250,16 +252,20 @@ class SegmentService(BaseService):
                 )
             raise FailException("新增文档片段失败，请稍后重试")
 
-    def update_segment(self, dataset_id: UUID, document_id: UUID, segment_id: UUID, req: UpdateSegmentReq) -> Segment:
+    def update_segment(
+            self,
+            dataset_id: UUID,
+            document_id: UUID,
+            segment_id: UUID,
+            req: UpdateSegmentReq,
+            account: Account
+    ) -> Segment:
         """根据传递的信息更新指定的文档片段信息"""
-        # todo:待完善
-        account_id = "46db30d1-3199-4e79-a0cd-abf12fa6858f"
-
         # 1. 获取片段信息并校验权限
         segment = self.get(Segment, segment_id)
         if (
                 segment is None
-                or str(segment.account_id) != account_id
+                or segment.account_id != account.id
                 or segment.document_id != document_id
                 or segment.dataset_id != dataset_id
         ):
@@ -322,16 +328,13 @@ class SegmentService(BaseService):
 
         return segment
 
-    def delete_segment(self, dataset_id: UUID, document_id: UUID, segment_id: UUID) -> Segment:
+    def delete_segment(self, dataset_id: UUID, document_id: UUID, segment_id: UUID, account: Account) -> Segment:
         """根据传递的信息删除指定的文档片段信息，该服务是同步方法"""
-        # todo:待完善
-        account_id = "46db30d1-3199-4e79-a0cd-abf12fa6858f"
-
         # 1. 获取片段信息并校验
         segment = self.get(Segment, segment_id)
         if (
                 segment is None
-                or str(segment.account_id) != account_id
+                or segment.account_id != account.id
                 or segment.document_id != document_id
                 or segment.dataset_id != dataset_id
         ):

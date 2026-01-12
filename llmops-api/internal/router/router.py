@@ -13,7 +13,7 @@ from flask import Flask
 from injector import inject
 
 from internal.handler import AppHandler, BuiltinToolHandler, UploadFileHandler, DatasetHandler, DocumentHandler, \
-    SegmentHandler, OAuthHandler, AccountHandler
+    SegmentHandler, OAuthHandler, AccountHandler, AuthHandler
 from internal.handler.api_tool_handler import ApiToolHandler
 
 
@@ -30,6 +30,7 @@ class Router:
     segment_handler: SegmentHandler
     oauth_handler: OAuthHandler
     account_handler: AccountHandler
+    auth_handler: AuthHandler
 
     def register_router(self, app: Flask):
         """注册路由"""
@@ -110,6 +111,8 @@ class Router:
         bp.add_url_rule("/oauth/<string:provider_name>", view_func=self.oauth_handler.provider)
         bp.add_url_rule("/oauth/authorize/<string:provider_name>", methods=["POST"],
                         view_func=self.oauth_handler.authorize)
+        bp.add_url_rule("/auth/password-login", methods=["POST"], view_func=self.auth_handler.password_login)
+        bp.add_url_rule("/auth/logout", methods=["POST"], view_func=self.auth_handler.logout)
 
         # 账号设置模块
         bp.add_url_rule("/account", view_func=self.account_handler.get_current_user)

@@ -16,7 +16,7 @@ from sqlalchemy import update
 
 from internal.entity.dataset_entity import RetrievalStrategy, RetrievalSource
 from internal.exception import NotFoundException
-from internal.model import Dataset, DatasetQuery, Segment
+from internal.model import Dataset, DatasetQuery, Segment, Account
 from pkg.sqlalchemy import SQLAlchemy
 from .base_service import BaseService
 from .jieba_service import JiebaService
@@ -39,14 +39,13 @@ class RetrievalService(BaseService):
             k: int = 4,
             score: float = 0,
             retrieval_source: str = RetrievalSource.HIT_TESTING,
+            account: Account = None
     ) -> list[LCDocument]:
-        # todo:待完善授权
-        account_id = "46db30d1-3199-4e79-a0cd-abf12fa6858f"
 
         # 1. 提取知识库列表并校验权限同时更新知识库id
         datasets = self.db.session.query(Dataset).filter(
             Dataset.id.in_(dataset_ids),
-            Dataset.account_id == account_id,
+            Dataset.account_id == account.id,
         ).all()
         if datasets is None or len(datasets) == 0:
             raise NotFoundException("当前无知识库可执行检索")
@@ -93,7 +92,7 @@ class RetrievalService(BaseService):
                 source=retrieval_source,
                 # todo:等待APP配置模块完成后进行调整
                 source_app_id=None,
-                created_by=account_id,
+                created_by=account.id,
             )
         segment_ids = [lc_document.metadata["segment_id"] for lc_document in lc_documents]
         if not segment_ids:
