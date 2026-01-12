@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import BlankLayout from '@/views/layouts/BlankLayout.vue'
 import DefaultLaout from '@/views/layouts/DefaultLaout.vue'
-import { isLogin } from '@/utils/auth'
+import auth from '@/utils/auth'
 // import HomeView from '@/views/HomeView.vue'
 
 const router = createRouter({
@@ -107,7 +107,7 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to) => {
-  if (!isLogin() && to.name !== 'auth-login') {
+  if (!auth.isLogin() && to.name !== 'auth-login') {
     return {
       path: '/auth/login',
     }
