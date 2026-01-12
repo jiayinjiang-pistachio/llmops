@@ -38,7 +38,7 @@ class Middleware:
                 raise UnAuthorizationException("该接口需要授权才能访问，验证格式失败")
             # 4. 分割信息必须符合格式：Bearer access_token
             access_schema, access_token = auth_header.split(None, 1)
-            if access_token.lower() != "bearer":
+            if access_schema.lower() != "bearer":
                 raise UnAuthorizationException("该接口需要授权才能访问，验证格式失败")
 
             # 5. 解析token信息得到用户信息并返回

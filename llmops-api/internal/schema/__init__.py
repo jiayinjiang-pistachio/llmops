@@ -6,6 +6,7 @@
 @File           : __init__.py.py
 @Description    : 请求和响应的结构体
 """
+from .account_schema import GetCurrentUserResp, UpdatePasswordReq, UpdateNameReq, UpdateAvatarReq
 from .api_tool_schema import ValidateOpenAPISchemaReq, CreateAPIToolReq, GetApiToolResp, GetApiToolProviderResp, \
     GetApiToolProvidersWithPageReq, GetApiToolProvidersWithPageResp, UpdateApiToolProviderReq
 from .app_schema import CompletionReq
@@ -39,5 +40,10 @@ __all__ = [
     "CreateDocumentsResp",
     "UpdateDocumentEnabledReq",
     "HitReq",
-    "UpdateSegmentReq"
+    "UpdateSegmentReq",
+    "GetCurrentUserResp",
+    "UpdatePasswordReq",
+    "UpdateNameReq",
+    "UpdateAvatarReq",
+
 ]

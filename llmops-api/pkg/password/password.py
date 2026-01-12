@@ -32,4 +32,7 @@ def hash_password(password: str, salt: Any) -> bytes:
 
 def compare_password(password: str, password_hashed_base64, salt_base64: Any) -> bool:
     """根据传递的密码+盐值校验比对是否一致"""
+    # base64.b64decode(password_hashed_base64) 从base64二进制转成原始二进制
+    # base64.b64decode(salt_base64) 从base64二进制转成原始二进制
+    # hash_password 调用，得到的是原始二进制
     return hash_password(password, base64.b64decode(salt_base64)) == base64.b64decode(password_hashed_base64)
