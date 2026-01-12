@@ -1,7 +1,7 @@
 import type { BaseResponse } from '@/models/base';
 
 export interface AuthProviderRedirect {
-  redirect_ur: string
+  redirect_url: string
 }
 
 export type ProviderResp = BaseResponse<AuthProviderRedirect>

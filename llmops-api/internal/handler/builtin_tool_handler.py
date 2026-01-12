@@ -36,7 +36,6 @@ class BuiltinToolHandler:
         builtin_tool = self.builtin_tool_service.get_provider_tool(provider_name, tool_name)
         return success_json(builtin_tool)
 
-    @login_required
     def get_provider_icon(self, provider_name: str):
         """根据传递的提供商名字+工具名字获取icon图标流信息"""
         icon, mimeType = self.builtin_tool_service.get_provider_icon(provider_name)

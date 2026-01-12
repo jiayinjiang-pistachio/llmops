@@ -15,7 +15,6 @@ from uuid import UUID
 
 from flask import request
 from injector import inject
-from pinecone.core.openapi.shared.exceptions import UnauthorizedException
 
 from internal.model import Account, AccountOAuth
 from pkg.password.password import hash_password, compare_password
@@ -79,7 +78,11 @@ class AccountService(BaseService):
         # 1. 根据传递的邮箱查询账号是否存在
         account = self.get_account_by_email(email)
         if not account:
-            raise UnauthorizedException("账号不存在或密码错误，请核实后重试")
+            # raise UnauthorizedException("账号不存在或密码错误，请核实后重试")
+            return {
+                "expire_at": 0,
+                "access_token": "",
+            }
 
         # 2. 校验账号密码是否正确
         if not account.is_password_set or not compare_password(
@@ -87,7 +90,11 @@ class AccountService(BaseService):
                 account.password,
                 account.password_salt,
         ):
-            raise UnauthorizedException("账号不存在或密码错误，请核实后重试")
+            # raise UnauthorizedException("账号不存在或密码错误，请核实后重试")
+            return {
+                "expire_at": 0,
+                "access_token": "",
+            }
 
         # 生成授权凭证信息
         expire_at = int((datetime.now() + timedelta(days=30)).timestamp())

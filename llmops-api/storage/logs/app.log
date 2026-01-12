@@ -1711,3 +1711,1785 @@ WHERE upload_file.id = %(pk_1)s::UUID)
 2026-01-12 16:40:13,745.745] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/test/conftest.py', reloading)
 2026-01-12 16:40:32,405.405] _internal.py line:97 WARNING:  * Debugger is active!)
 2026-01-12 16:40:32,447.447] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-12 20:06:27,728.728] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:06:27] "OPTIONS /auth/password-login HTTP/1.1" 200 -)
+2026-01-12 20:06:29,165.165] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-12 20:06:29,167.167] base.py line:1846 INFO: [raw sql] {})
+2026-01-12 20:06:29,200.200] base.py line:1846 INFO: select current_schema())
+2026-01-12 20:06:29,200.200] base.py line:1846 INFO: [raw sql] {})
+2026-01-12 20:06:29,216.216] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-12 20:06:29,217.217] base.py line:1846 INFO: [raw sql] {})
+2026-01-12 20:06:29,224.224] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:06:29,276.276] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.email = %(email_1)s)
+2026-01-12 20:06:29,278.278] base.py line:1846 INFO: [generated in 0.00490s] {'email_1': 'ry1n.komg@gmail.com'})
+2026-01-12 20:06:29,378.378] http.py line:75 ERROR: An error occurred: (账号不存在或密码错误，请核实后重试)
+Reason: None
+)
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/auth_handler.py", line 32, in password_login
+    credentials = self.account_service.password_login(req.email.data, req.password.data)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/account_service.py", line 82, in password_login
+    raise UnauthorizedException("账号不存在或密码错误，请核实后重试")
+pinecone.core.openapi.shared.exceptions.UnauthorizedException: (账号不存在或密码错误，请核实后重试)
+Reason: None
+
+2026-01-12 20:06:29,428.428] base.py line:2713 INFO: ROLLBACK)
+2026-01-12 20:06:29,481.481] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:06:29] "[35m[1mPOST /auth/password-login HTTP/1.1[0m" 500 -)
+2026-01-12 20:09:23,900.900] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:09:23] "OPTIONS /auth/password-login HTTP/1.1" 200 -)
+2026-01-12 20:09:23,983.983] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:09:24,011.011] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.email = %(email_1)s)
+2026-01-12 20:09:24,014.014] base.py line:1846 INFO: [cached since 174.7s ago] {'email_1': 'ry1n.kong@gmail.com'})
+2026-01-12 20:09:24,217.217] base.py line:1846 INFO: UPDATE account SET last_login_at=%(last_login_at)s WHERE account.id = %(account_id)s::UUID)
+2026-01-12 20:09:24,219.219] base.py line:1846 INFO: [generated in 0.00169s] {'last_login_at': datetime.datetime(2026, 1, 12, 20, 9, 24, 138128), 'account_id': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-12 20:09:24,261.261] base.py line:2716 INFO: COMMIT)
+2026-01-12 20:09:24,319.319] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:09:24] "POST /auth/password-login HTTP/1.1" 200 -)
+2026-01-12 20:09:37,498.498] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:09:37] "OPTIONS /api-tools?current_page=1&page_size=10&search_word= HTTP/1.1" 200 -)
+2026-01-12 20:09:37,519.519] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:09:37,537.537] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:09:37] "GET /api-tools?current_page=1&page_size=10&search_word= HTTP/1.1" 200 -)
+2026-01-12 20:09:39,497.497] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:09:39] "OPTIONS /datasets?current_page=1&page_size=20&search_word= HTTP/1.1" 200 -)
+2026-01-12 20:09:39,524.524] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:09:39,532.532] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:09:39] "GET /datasets?current_page=1&page_size=20&search_word= HTTP/1.1" 200 -)
+2026-01-12 20:09:41,775.775] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:09:41] "OPTIONS /builtin-tools/categories HTTP/1.1" 200 -)
+2026-01-12 20:09:41,782.782] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:09:41] "OPTIONS /builtin-tools HTTP/1.1" 200 -)
+2026-01-12 20:09:41,790.790] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:09:41,795.795] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:09:41,818.818] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:09:41] "GET /builtin-tools/undefined/icon HTTP/1.1" 200 -)
+2026-01-12 20:09:41,819.819] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:09:41,821.821] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:09:41] "GET /builtin-tools/categories HTTP/1.1" 200 -)
+2026-01-12 20:09:41,825.825] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:09:41] "GET /builtin-tools HTTP/1.1" 200 -)
+2026-01-12 20:10:09,440.440] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:10:09] "OPTIONS /oauth/github HTTP/1.1" 200 -)
+2026-01-12 20:10:09,456.456] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:10:09] "GET /oauth/github HTTP/1.1" 200 -)
+2026-01-12 20:14:59,955.955] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:14:59] "OPTIONS /oauth/github HTTP/1.1" 200 -)
+2026-01-12 20:14:59,972.972] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:14:59] "GET /oauth/github HTTP/1.1" 200 -)
+2026-01-12 20:15:03,786.786] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:15:03] "OPTIONS /oauth/authorize/github HTTP/1.1" 200 -)
+2026-01-12 20:15:06,641.641] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:15:06,776.776] base.py line:1846 INFO: SELECT account_oauth.id AS account_oauth_id, account_oauth.account_id AS account_oauth_account_id, account_oauth.provider AS account_oauth_provider, account_oauth.openid AS account_oauth_openid, account_oauth.encrypted_token AS account_oauth_encrypted_token, account_oauth.updated_at AS account_oauth_updated_at, account_oauth.created_at AS account_oauth_created_at 
+FROM account_oauth 
+WHERE account_oauth.provider = %(provider_1)s AND account_oauth.openid = %(openid_1)s)
+2026-01-12 20:15:06,777.777] base.py line:1846 INFO: [generated in 0.00281s] {'provider_1': 'github', 'openid_1': '73403506'})
+2026-01-12 20:15:07,140.140] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-12 20:15:07,140.140] base.py line:1846 INFO: [generated in 0.00044s] {'pk_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-12 20:15:07,173.173] base.py line:1846 INFO: UPDATE account SET last_login_at=%(last_login_at)s WHERE account.id = %(account_id)s::UUID)
+2026-01-12 20:15:07,173.173] base.py line:1846 INFO: [cached since 342.9s ago] {'last_login_at': datetime.datetime(2026, 1, 12, 20, 15, 7, 169184), 'account_id': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-12 20:15:07,176.176] base.py line:2716 INFO: COMMIT)
+2026-01-12 20:15:07,187.187] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:15:07,188.188] base.py line:1846 INFO: SELECT account_oauth.id AS account_oauth_id, account_oauth.account_id AS account_oauth_account_id, account_oauth.provider AS account_oauth_provider, account_oauth.openid AS account_oauth_openid, account_oauth.encrypted_token AS account_oauth_encrypted_token, account_oauth.updated_at AS account_oauth_updated_at, account_oauth.created_at AS account_oauth_created_at 
+FROM account_oauth 
+WHERE account_oauth.id = %(pk_1)s::UUID)
+2026-01-12 20:15:07,189.189] base.py line:1846 INFO: [generated in 0.00043s] {'pk_1': UUID('0d949df5-fc65-4a72-aec3-3b7ab2e5f0f7')})
+2026-01-12 20:15:07,196.196] base.py line:1846 INFO: UPDATE account_oauth SET encrypted_token=%(encrypted_token)s WHERE account_oauth.id = %(account_oauth_id)s::UUID)
+2026-01-12 20:15:07,196.196] base.py line:1846 INFO: [generated in 0.00028s] {'encrypted_token': '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', 'account_oauth_id': UUID('0d949df5-fc65-4a72-aec3-3b7ab2e5f0f7')})
+2026-01-12 20:15:07,203.203] base.py line:2716 INFO: COMMIT)
+2026-01-12 20:15:07,217.217] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:15:07,219.219] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-12 20:15:07,219.219] base.py line:1846 INFO: [generated in 0.00050s] {'pk_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-12 20:15:07,237.237] base.py line:2713 INFO: ROLLBACK)
+2026-01-12 20:15:07,248.248] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:15:07] "POST /oauth/authorize/github HTTP/1.1" 200 -)
+2026-01-12 20:27:55,866.866] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/account_service.py', reloading)
+2026-01-12 20:28:29,582.582] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-12 20:28:29,641.641] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-12 20:28:33,403.403] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:28:33] "OPTIONS /auth/password-login HTTP/1.1" 200 -)
+2026-01-12 20:28:34,420.420] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-12 20:28:34,420.420] base.py line:1846 INFO: [raw sql] {})
+2026-01-12 20:28:34,433.433] base.py line:1846 INFO: select current_schema())
+2026-01-12 20:28:34,433.433] base.py line:1846 INFO: [raw sql] {})
+2026-01-12 20:28:34,443.443] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-12 20:28:34,443.443] base.py line:1846 INFO: [raw sql] {})
+2026-01-12 20:28:34,444.444] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:28:34,451.451] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.email = %(email_1)s)
+2026-01-12 20:28:34,452.452] base.py line:1846 INFO: [generated in 0.00063s] {'email_1': 'r1yn.komg@gmail.com'})
+2026-01-12 20:28:34,472.472] http.py line:75 ERROR: An error occurred: (账号不存在或密码错误，请核实后重试)
+Reason: None
+)
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/auth_handler.py", line 32, in password_login
+    result = self.account_service.password_login(req.email.data, req.password.data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/account_service.py", line 82, in password_login
+    raise UnauthorizedException("账号不存在或密码错误，请核实后重试")
+pinecone.core.openapi.shared.exceptions.UnauthorizedException: (账号不存在或密码错误，请核实后重试)
+Reason: None
+
+2026-01-12 20:28:34,478.478] base.py line:2713 INFO: ROLLBACK)
+2026-01-12 20:28:34,488.488] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:28:34] "[35m[1mPOST /auth/password-login HTTP/1.1[0m" 500 -)
+2026-01-12 20:31:44,354.354] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/auth_handler.py', reloading)
+2026-01-12 20:32:02,539.539] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-12 20:32:02,570.570] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-12 20:32:02,742.742] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:32:02] "OPTIONS /auth/password-login HTTP/1.1" 200 -)
+2026-01-12 20:32:03,092.092] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-12 20:32:03,092.092] base.py line:1846 INFO: [raw sql] {})
+2026-01-12 20:32:03,094.094] base.py line:1846 INFO: select current_schema())
+2026-01-12 20:32:03,094.094] base.py line:1846 INFO: [raw sql] {})
+2026-01-12 20:32:03,096.096] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-12 20:32:03,096.096] base.py line:1846 INFO: [raw sql] {})
+2026-01-12 20:32:03,097.097] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:32:03,105.105] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.email = %(email_1)s)
+2026-01-12 20:32:03,105.105] base.py line:1846 INFO: [generated in 0.00047s] {'email_1': 'r1yn.komg@gmail.com'})
+2026-01-12 20:32:03,134.134] base.py line:2713 INFO: ROLLBACK)
+2026-01-12 20:32:03,135.135] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:32:03] "POST /auth/password-login HTTP/1.1" 200 -)
+2026-01-12 20:33:53,323.323] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:33:53] "OPTIONS /auth/password-login HTTP/1.1" 200 -)
+2026-01-12 20:33:53,383.383] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:33:53,388.388] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.email = %(email_1)s)
+2026-01-12 20:33:53,389.389] base.py line:1846 INFO: [cached since 110.3s ago] {'email_1': 'r1yn.komg@gmail.com'})
+2026-01-12 20:33:53,422.422] base.py line:2713 INFO: ROLLBACK)
+2026-01-12 20:33:53,423.423] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:33:53] "POST /auth/password-login HTTP/1.1" 200 -)
+2026-01-12 20:36:11,950.950] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/auth_handler.py', reloading)
+2026-01-12 20:36:30,932.932] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-12 20:36:30,977.977] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-12 20:36:31,559.559] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:36:31] "OPTIONS /auth/password-login HTTP/1.1" 200 -)
+2026-01-12 20:36:31,962.962] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-12 20:36:31,962.962] base.py line:1846 INFO: [raw sql] {})
+2026-01-12 20:36:31,964.964] base.py line:1846 INFO: select current_schema())
+2026-01-12 20:36:31,964.964] base.py line:1846 INFO: [raw sql] {})
+2026-01-12 20:36:31,966.966] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-12 20:36:31,966.966] base.py line:1846 INFO: [raw sql] {})
+2026-01-12 20:36:31,967.967] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:36:31,971.971] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.email = %(email_1)s)
+2026-01-12 20:36:31,972.972] base.py line:1846 INFO: [generated in 0.00032s] {'email_1': 'r1yn.komg@gmail.com'})
+2026-01-12 20:36:31,977.977] base.py line:2713 INFO: ROLLBACK)
+2026-01-12 20:36:31,979.979] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:36:31] "POST /auth/password-login HTTP/1.1" 200 -)
+2026-01-12 20:36:41,883.883] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:36:41] "OPTIONS /auth/password-login HTTP/1.1" 200 -)
+2026-01-12 20:36:41,889.889] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:36:41] "POST /auth/password-login HTTP/1.1" 200 -)
+2026-01-12 20:36:50,888.888] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:36:50] "OPTIONS /auth/password-login HTTP/1.1" 200 -)
+2026-01-12 20:36:50,894.894] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:36:50,895.895] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.email = %(email_1)s)
+2026-01-12 20:36:50,895.895] base.py line:1846 INFO: [cached since 18.92s ago] {'email_1': 'r1yn.komg@gmail.com'})
+2026-01-12 20:36:50,898.898] base.py line:2713 INFO: ROLLBACK)
+2026-01-12 20:36:50,899.899] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:36:50] "POST /auth/password-login HTTP/1.1" 200 -)
+2026-01-12 20:37:00,944.944] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:00] "OPTIONS /oauth/github HTTP/1.1" 200 -)
+2026-01-12 20:37:00,952.952] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:00] "GET /oauth/github HTTP/1.1" 200 -)
+2026-01-12 20:37:03,930.930] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:03] "OPTIONS /oauth/authorize/github HTTP/1.1" 200 -)
+2026-01-12 20:37:05,969.969] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:37:05,975.975] base.py line:1846 INFO: SELECT account_oauth.id AS account_oauth_id, account_oauth.account_id AS account_oauth_account_id, account_oauth.provider AS account_oauth_provider, account_oauth.openid AS account_oauth_openid, account_oauth.encrypted_token AS account_oauth_encrypted_token, account_oauth.updated_at AS account_oauth_updated_at, account_oauth.created_at AS account_oauth_created_at 
+FROM account_oauth 
+WHERE account_oauth.provider = %(provider_1)s AND account_oauth.openid = %(openid_1)s)
+2026-01-12 20:37:05,975.975] base.py line:1846 INFO: [generated in 0.00051s] {'provider_1': 'github', 'openid_1': '73403506'})
+2026-01-12 20:37:06,002.002] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-12 20:37:06,002.002] base.py line:1846 INFO: [generated in 0.00033s] {'pk_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-12 20:37:06,010.010] base.py line:1846 INFO: UPDATE account SET last_login_at=%(last_login_at)s WHERE account.id = %(account_id)s::UUID)
+2026-01-12 20:37:06,010.010] base.py line:1846 INFO: [generated in 0.00032s] {'last_login_at': datetime.datetime(2026, 1, 12, 20, 37, 6, 6236), 'account_id': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-12 20:37:06,050.050] base.py line:2716 INFO: COMMIT)
+2026-01-12 20:37:06,053.053] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:37:06,054.054] base.py line:1846 INFO: SELECT account_oauth.id AS account_oauth_id, account_oauth.account_id AS account_oauth_account_id, account_oauth.provider AS account_oauth_provider, account_oauth.openid AS account_oauth_openid, account_oauth.encrypted_token AS account_oauth_encrypted_token, account_oauth.updated_at AS account_oauth_updated_at, account_oauth.created_at AS account_oauth_created_at 
+FROM account_oauth 
+WHERE account_oauth.id = %(pk_1)s::UUID)
+2026-01-12 20:37:06,054.054] base.py line:1846 INFO: [generated in 0.00028s] {'pk_1': UUID('0d949df5-fc65-4a72-aec3-3b7ab2e5f0f7')})
+2026-01-12 20:37:06,056.056] base.py line:1846 INFO: UPDATE account_oauth SET encrypted_token=%(encrypted_token)s WHERE account_oauth.id = %(account_oauth_id)s::UUID)
+2026-01-12 20:37:06,057.057] base.py line:1846 INFO: [generated in 0.00034s] {'encrypted_token': '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', 'account_oauth_id': UUID('0d949df5-fc65-4a72-aec3-3b7ab2e5f0f7')})
+2026-01-12 20:37:06,062.062] base.py line:2716 INFO: COMMIT)
+2026-01-12 20:37:06,063.063] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:37:06,064.064] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-12 20:37:06,064.064] base.py line:1846 INFO: [generated in 0.00029s] {'pk_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-12 20:37:06,069.069] base.py line:2713 INFO: ROLLBACK)
+2026-01-12 20:37:06,069.069] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:06] "POST /oauth/authorize/github HTTP/1.1" 200 -)
+2026-01-12 20:37:10,539.539] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:10] "OPTIONS /api-tools?current_page=1&page_size=10&search_word= HTTP/1.1" 200 -)
+2026-01-12 20:37:10,545.545] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:37:10,546.546] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-12 20:37:10,546.546] base.py line:1846 INFO: [cached since 4.545s ago] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-12 20:37:10,558.558] base.py line:1846 INFO: SELECT api_tool_provider.id AS api_tool_provider_id, api_tool_provider.account_id AS api_tool_provider_account_id, api_tool_provider.name AS api_tool_provider_name, api_tool_provider.icon AS api_tool_provider_icon, api_tool_provider.description AS api_tool_provider_description, api_tool_provider.openapi_schema AS api_tool_provider_openapi_schema, api_tool_provider.headers AS api_tool_provider_headers, api_tool_provider.updated_at AS api_tool_provider_updated_at, api_tool_provider.created_at AS api_tool_provider_created_at 
+FROM api_tool_provider 
+WHERE api_tool_provider.account_id = %(account_id_1)s::UUID ORDER BY api_tool_provider.created_at DESC 
+ LIMIT %(param_1)s OFFSET %(param_2)s)
+2026-01-12 20:37:10,558.558] base.py line:1846 INFO: [generated in 0.00041s] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f'), 'param_1': 10, 'param_2': 0})
+2026-01-12 20:37:10,639.639] base.py line:1846 INFO: SELECT count(*) AS count_1 
+FROM (SELECT api_tool_provider.id AS id, api_tool_provider.account_id AS account_id, api_tool_provider.name AS name, api_tool_provider.icon AS icon, api_tool_provider.description AS description, api_tool_provider.openapi_schema AS openapi_schema, api_tool_provider.headers AS headers, api_tool_provider.updated_at AS updated_at, api_tool_provider.created_at AS created_at 
+FROM api_tool_provider 
+WHERE api_tool_provider.account_id = %(account_id_1)s::UUID) AS anon_1)
+2026-01-12 20:37:10,639.639] base.py line:1846 INFO: [generated in 0.00050s] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-12 20:37:10,655.655] base.py line:1846 INFO: SELECT api_tool.id AS api_tool_id, api_tool.account_id AS api_tool_account_id, api_tool.provider_id AS api_tool_provider_id, api_tool.name AS api_tool_name, api_tool.description AS api_tool_description, api_tool.url AS api_tool_url, api_tool.method AS api_tool_method, api_tool.parameters AS api_tool_parameters, api_tool.updated_at AS api_tool_updated_at, api_tool.created_at AS api_tool_created_at 
+FROM api_tool 
+WHERE api_tool.provider_id = %(provider_id_1)s::UUID)
+2026-01-12 20:37:10,655.655] base.py line:1846 INFO: [generated in 0.00040s] {'provider_id_1': UUID('a96b86d0-d3e9-44d3-81dd-f4193734c52c')})
+2026-01-12 20:37:10,663.663] base.py line:1846 INFO: SELECT api_tool.id AS api_tool_id, api_tool.account_id AS api_tool_account_id, api_tool.provider_id AS api_tool_provider_id, api_tool.name AS api_tool_name, api_tool.description AS api_tool_description, api_tool.url AS api_tool_url, api_tool.method AS api_tool_method, api_tool.parameters AS api_tool_parameters, api_tool.updated_at AS api_tool_updated_at, api_tool.created_at AS api_tool_created_at 
+FROM api_tool 
+WHERE api_tool.provider_id = %(provider_id_1)s::UUID)
+2026-01-12 20:37:10,663.663] base.py line:1846 INFO: [cached since 0.008339s ago] {'provider_id_1': UUID('b114708d-6690-4a59-b94e-6aaff08ac583')})
+2026-01-12 20:37:10,668.668] base.py line:2713 INFO: ROLLBACK)
+2026-01-12 20:37:10,669.669] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:10] "GET /api-tools?current_page=1&page_size=10&search_word= HTTP/1.1" 200 -)
+2026-01-12 20:37:12,344.344] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:12] "OPTIONS /datasets?current_page=1&page_size=20&search_word= HTTP/1.1" 200 -)
+2026-01-12 20:37:12,351.351] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:37:12,351.351] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-12 20:37:12,352.352] base.py line:1846 INFO: [cached since 6.351s ago] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-12 20:37:12,362.362] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.account_id = %(account_id_1)s::UUID ORDER BY dataset.created_at DESC 
+ LIMIT %(param_1)s OFFSET %(param_2)s)
+2026-01-12 20:37:12,362.362] base.py line:1846 INFO: [generated in 0.00031s] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f'), 'param_1': 20, 'param_2': 0})
+2026-01-12 20:37:12,371.371] base.py line:1846 INFO: SELECT count(*) AS count_1 
+FROM (SELECT dataset.id AS id, dataset.account_id AS account_id, dataset.name AS name, dataset.icon AS icon, dataset.description AS description, dataset.updated_at AS updated_at, dataset.created_at AS created_at 
+FROM dataset 
+WHERE dataset.account_id = %(account_id_1)s::UUID) AS anon_1)
+2026-01-12 20:37:12,371.371] base.py line:1846 INFO: [generated in 0.00034s] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-12 20:37:12,379.379] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,379.379] base.py line:1846 INFO: [generated in 0.00028s] {'dataset_id_1': UUID('2b0d5198-73f3-410e-ae10-dc8589733dd4')})
+2026-01-12 20:37:12,389.389] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,389.389] base.py line:1846 INFO: [generated in 0.00027s] {'dataset_id_1': UUID('2b0d5198-73f3-410e-ae10-dc8589733dd4')})
+2026-01-12 20:37:12,399.399] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,400.400] base.py line:1846 INFO: [generated in 0.00037s] {'coalesce_2': 0, 'dataset_id_1': UUID('2b0d5198-73f3-410e-ae10-dc8589733dd4')})
+2026-01-12 20:37:12,402.402] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,402.402] base.py line:1846 INFO: [cached since 0.02314s ago] {'dataset_id_1': UUID('4e25b342-1a2b-40f9-86a7-da3052f2a75a')})
+2026-01-12 20:37:12,403.403] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,403.403] base.py line:1846 INFO: [cached since 0.01446s ago] {'dataset_id_1': UUID('4e25b342-1a2b-40f9-86a7-da3052f2a75a')})
+2026-01-12 20:37:12,406.406] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,406.406] base.py line:1846 INFO: [cached since 0.006938s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('4e25b342-1a2b-40f9-86a7-da3052f2a75a')})
+2026-01-12 20:37:12,407.407] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,408.408] base.py line:1846 INFO: [cached since 0.02896s ago] {'dataset_id_1': UUID('d2e89d0e-81b2-4fad-a59e-dad1a20e21ec')})
+2026-01-12 20:37:12,410.410] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,410.410] base.py line:1846 INFO: [cached since 0.02176s ago] {'dataset_id_1': UUID('d2e89d0e-81b2-4fad-a59e-dad1a20e21ec')})
+2026-01-12 20:37:12,412.412] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,412.412] base.py line:1846 INFO: [cached since 0.0127s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('d2e89d0e-81b2-4fad-a59e-dad1a20e21ec')})
+2026-01-12 20:37:12,413.413] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,413.413] base.py line:1846 INFO: [cached since 0.03471s ago] {'dataset_id_1': UUID('076442a7-af3f-4a49-a3a8-2df67f53c5f0')})
+2026-01-12 20:37:12,418.418] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,418.418] base.py line:1846 INFO: [cached since 0.02904s ago] {'dataset_id_1': UUID('076442a7-af3f-4a49-a3a8-2df67f53c5f0')})
+2026-01-12 20:37:12,419.419] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,419.419] base.py line:1846 INFO: [cached since 0.01974s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('076442a7-af3f-4a49-a3a8-2df67f53c5f0')})
+2026-01-12 20:37:12,420.420] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,420.420] base.py line:1846 INFO: [cached since 0.04122s ago] {'dataset_id_1': UUID('c2a6b383-de9f-4fb2-a4b9-467c9a4b57b9')})
+2026-01-12 20:37:12,421.421] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,421.421] base.py line:1846 INFO: [cached since 0.03239s ago] {'dataset_id_1': UUID('c2a6b383-de9f-4fb2-a4b9-467c9a4b57b9')})
+2026-01-12 20:37:12,422.422] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,422.422] base.py line:1846 INFO: [cached since 0.0232s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('c2a6b383-de9f-4fb2-a4b9-467c9a4b57b9')})
+2026-01-12 20:37:12,423.423] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,424.424] base.py line:1846 INFO: [cached since 0.04487s ago] {'dataset_id_1': UUID('96c19110-4f0f-4754-b4d9-08d491b22b73')})
+2026-01-12 20:37:12,425.425] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,425.425] base.py line:1846 INFO: [cached since 0.03617s ago] {'dataset_id_1': UUID('96c19110-4f0f-4754-b4d9-08d491b22b73')})
+2026-01-12 20:37:12,426.426] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,426.426] base.py line:1846 INFO: [cached since 0.02676s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('96c19110-4f0f-4754-b4d9-08d491b22b73')})
+2026-01-12 20:37:12,427.427] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,427.427] base.py line:1846 INFO: [cached since 0.04816s ago] {'dataset_id_1': UUID('cd0e15f9-a905-4d66-b97e-7f2a8f016e68')})
+2026-01-12 20:37:12,428.428] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,428.428] base.py line:1846 INFO: [cached since 0.03916s ago] {'dataset_id_1': UUID('cd0e15f9-a905-4d66-b97e-7f2a8f016e68')})
+2026-01-12 20:37:12,429.429] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,429.429] base.py line:1846 INFO: [cached since 0.02977s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('cd0e15f9-a905-4d66-b97e-7f2a8f016e68')})
+2026-01-12 20:37:12,430.430] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,430.430] base.py line:1846 INFO: [cached since 0.05155s ago] {'dataset_id_1': UUID('9f0f9d4e-7ac0-4f13-9197-6a6081745742')})
+2026-01-12 20:37:12,432.432] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,432.432] base.py line:1846 INFO: [cached since 0.04366s ago] {'dataset_id_1': UUID('9f0f9d4e-7ac0-4f13-9197-6a6081745742')})
+2026-01-12 20:37:12,434.434] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,434.434] base.py line:1846 INFO: [cached since 0.03453s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('9f0f9d4e-7ac0-4f13-9197-6a6081745742')})
+2026-01-12 20:37:12,435.435] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,435.435] base.py line:1846 INFO: [cached since 0.05604s ago] {'dataset_id_1': UUID('442f9bdf-9974-4795-a9e5-25f16cdaa86c')})
+2026-01-12 20:37:12,436.436] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,436.436] base.py line:1846 INFO: [cached since 0.04709s ago] {'dataset_id_1': UUID('442f9bdf-9974-4795-a9e5-25f16cdaa86c')})
+2026-01-12 20:37:12,437.437] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,437.437] base.py line:1846 INFO: [cached since 0.03765s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('442f9bdf-9974-4795-a9e5-25f16cdaa86c')})
+2026-01-12 20:37:12,438.438] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,438.438] base.py line:1846 INFO: [cached since 0.05916s ago] {'dataset_id_1': UUID('d89dffe1-a283-44ce-aa62-cca6896fec0e')})
+2026-01-12 20:37:12,439.439] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,439.439] base.py line:1846 INFO: [cached since 0.05029s ago] {'dataset_id_1': UUID('d89dffe1-a283-44ce-aa62-cca6896fec0e')})
+2026-01-12 20:37:12,440.440] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,440.440] base.py line:1846 INFO: [cached since 0.04096s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('d89dffe1-a283-44ce-aa62-cca6896fec0e')})
+2026-01-12 20:37:12,441.441] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,441.441] base.py line:1846 INFO: [cached since 0.06259s ago] {'dataset_id_1': UUID('893c8ff4-202a-4fec-9473-82efc0cebb84')})
+2026-01-12 20:37:12,442.442] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,442.442] base.py line:1846 INFO: [cached since 0.05367s ago] {'dataset_id_1': UUID('893c8ff4-202a-4fec-9473-82efc0cebb84')})
+2026-01-12 20:37:12,443.443] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,443.443] base.py line:1846 INFO: [cached since 0.04417s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('893c8ff4-202a-4fec-9473-82efc0cebb84')})
+2026-01-12 20:37:12,444.444] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,444.444] base.py line:1846 INFO: [cached since 0.06556s ago] {'dataset_id_1': UUID('cf67b8fc-fa97-4937-9b94-34ad2dc6231a')})
+2026-01-12 20:37:12,445.445] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,445.445] base.py line:1846 INFO: [cached since 0.0566s ago] {'dataset_id_1': UUID('cf67b8fc-fa97-4937-9b94-34ad2dc6231a')})
+2026-01-12 20:37:12,448.448] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,448.448] base.py line:1846 INFO: [cached since 0.04911s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('cf67b8fc-fa97-4937-9b94-34ad2dc6231a')})
+2026-01-12 20:37:12,449.449] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,450.450] base.py line:1846 INFO: [cached since 0.07088s ago] {'dataset_id_1': UUID('d4f47371-0b82-4f73-9003-6cd5a3dabe35')})
+2026-01-12 20:37:12,451.451] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,451.451] base.py line:1846 INFO: [cached since 0.06203s ago] {'dataset_id_1': UUID('d4f47371-0b82-4f73-9003-6cd5a3dabe35')})
+2026-01-12 20:37:12,452.452] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,452.452] base.py line:1846 INFO: [cached since 0.05257s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('d4f47371-0b82-4f73-9003-6cd5a3dabe35')})
+2026-01-12 20:37:12,453.453] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,453.453] base.py line:1846 INFO: [cached since 0.07399s ago] {'dataset_id_1': UUID('7826b06c-4d09-4ca9-ab49-d44d2a113cc7')})
+2026-01-12 20:37:12,454.454] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,454.454] base.py line:1846 INFO: [cached since 0.06499s ago] {'dataset_id_1': UUID('7826b06c-4d09-4ca9-ab49-d44d2a113cc7')})
+2026-01-12 20:37:12,455.455] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,455.455] base.py line:1846 INFO: [cached since 0.0557s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('7826b06c-4d09-4ca9-ab49-d44d2a113cc7')})
+2026-01-12 20:37:12,456.456] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,456.456] base.py line:1846 INFO: [cached since 0.07737s ago] {'dataset_id_1': UUID('846d7d5f-b659-4d74-9537-41983f850637')})
+2026-01-12 20:37:12,457.457] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,457.457] base.py line:1846 INFO: [cached since 0.06865s ago] {'dataset_id_1': UUID('846d7d5f-b659-4d74-9537-41983f850637')})
+2026-01-12 20:37:12,458.458] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,458.458] base.py line:1846 INFO: [cached since 0.05931s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('846d7d5f-b659-4d74-9537-41983f850637')})
+2026-01-12 20:37:12,459.459] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,459.459] base.py line:1846 INFO: [cached since 0.08074s ago] {'dataset_id_1': UUID('b08a75ef-ee27-4ce8-98db-9c4a163b570e')})
+2026-01-12 20:37:12,460.460] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,460.460] base.py line:1846 INFO: [cached since 0.07172s ago] {'dataset_id_1': UUID('b08a75ef-ee27-4ce8-98db-9c4a163b570e')})
+2026-01-12 20:37:12,461.461] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,461.461] base.py line:1846 INFO: [cached since 0.06221s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('b08a75ef-ee27-4ce8-98db-9c4a163b570e')})
+2026-01-12 20:37:12,462.462] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,462.462] base.py line:1846 INFO: [cached since 0.0836s ago] {'dataset_id_1': UUID('480764fd-7d5d-43f5-b43a-fb14a4fc4648')})
+2026-01-12 20:37:12,463.463] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,463.463] base.py line:1846 INFO: [cached since 0.07457s ago] {'dataset_id_1': UUID('480764fd-7d5d-43f5-b43a-fb14a4fc4648')})
+2026-01-12 20:37:12,465.465] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,465.465] base.py line:1846 INFO: [cached since 0.06579s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('480764fd-7d5d-43f5-b43a-fb14a4fc4648')})
+2026-01-12 20:37:12,466.466] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,466.466] base.py line:1846 INFO: [cached since 0.0875s ago] {'dataset_id_1': UUID('bd21a3ac-970a-40d8-965f-86926de1b366')})
+2026-01-12 20:37:12,467.467] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,468.468] base.py line:1846 INFO: [cached since 0.07889s ago] {'dataset_id_1': UUID('bd21a3ac-970a-40d8-965f-86926de1b366')})
+2026-01-12 20:37:12,468.468] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,469.469] base.py line:1846 INFO: [cached since 0.06947s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('bd21a3ac-970a-40d8-965f-86926de1b366')})
+2026-01-12 20:37:12,469.469] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,470.470] base.py line:1846 INFO: [cached since 0.09091s ago] {'dataset_id_1': UUID('c8e85146-29a4-4564-96ce-9a4df915e96f')})
+2026-01-12 20:37:12,470.470] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,471.471] base.py line:1846 INFO: [cached since 0.0819s ago] {'dataset_id_1': UUID('c8e85146-29a4-4564-96ce-9a4df915e96f')})
+2026-01-12 20:37:12,472.472] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,472.472] base.py line:1846 INFO: [cached since 0.07262s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('c8e85146-29a4-4564-96ce-9a4df915e96f')})
+2026-01-12 20:37:12,473.473] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,473.473] base.py line:1846 INFO: [cached since 0.09429s ago] {'dataset_id_1': UUID('ad5c9311-96db-43d4-8d75-e6331e7992ad')})
+2026-01-12 20:37:12,474.474] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,474.474] base.py line:1846 INFO: [cached since 0.08562s ago] {'dataset_id_1': UUID('ad5c9311-96db-43d4-8d75-e6331e7992ad')})
+2026-01-12 20:37:12,475.475] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:12,475.475] base.py line:1846 INFO: [cached since 0.07628s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('ad5c9311-96db-43d4-8d75-e6331e7992ad')})
+2026-01-12 20:37:12,478.478] base.py line:2713 INFO: ROLLBACK)
+2026-01-12 20:37:12,478.478] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:12] "GET /datasets?current_page=1&page_size=20&search_word= HTTP/1.1" 200 -)
+2026-01-12 20:37:14,139.139] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:14] "OPTIONS /datasets?current_page=2&page_size=20&search_word= HTTP/1.1" 200 -)
+2026-01-12 20:37:14,146.146] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:37:14,147.147] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-12 20:37:14,147.147] base.py line:1846 INFO: [cached since 8.147s ago] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-12 20:37:14,151.151] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.account_id = %(account_id_1)s::UUID ORDER BY dataset.created_at DESC 
+ LIMIT %(param_1)s OFFSET %(param_2)s)
+2026-01-12 20:37:14,151.151] base.py line:1846 INFO: [cached since 1.79s ago] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f'), 'param_1': 20, 'param_2': 20})
+2026-01-12 20:37:14,153.153] base.py line:1846 INFO: SELECT count(*) AS count_1 
+FROM (SELECT dataset.id AS id, dataset.account_id AS account_id, dataset.name AS name, dataset.icon AS icon, dataset.description AS description, dataset.updated_at AS updated_at, dataset.created_at AS created_at 
+FROM dataset 
+WHERE dataset.account_id = %(account_id_1)s::UUID) AS anon_1)
+2026-01-12 20:37:14,154.154] base.py line:1846 INFO: [cached since 1.783s ago] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-12 20:37:14,158.158] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:14,158.158] base.py line:1846 INFO: [cached since 1.78s ago] {'dataset_id_1': UUID('8210bfbd-0baa-46f5-bcd4-fe2b789fb4f6')})
+2026-01-12 20:37:14,160.160] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:14,160.160] base.py line:1846 INFO: [cached since 1.772s ago] {'dataset_id_1': UUID('8210bfbd-0baa-46f5-bcd4-fe2b789fb4f6')})
+2026-01-12 20:37:14,162.162] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:37:14,162.162] base.py line:1846 INFO: [cached since 1.763s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('8210bfbd-0baa-46f5-bcd4-fe2b789fb4f6')})
+2026-01-12 20:37:14,164.164] base.py line:2713 INFO: ROLLBACK)
+2026-01-12 20:37:14,164.164] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:14] "GET /datasets?current_page=2&page_size=20&search_word= HTTP/1.1" 200 -)
+2026-01-12 20:37:17,244.244] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:17] "OPTIONS /builtin-tools/categories HTTP/1.1" 200 -)
+2026-01-12 20:37:17,248.248] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:17] "OPTIONS /builtin-tools HTTP/1.1" 200 -)
+2026-01-12 20:37:17,262.262] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:37:17,269.269] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:37:17,291.291] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:17] "GET /builtin-tools/undefined/icon HTTP/1.1" 200 -)
+2026-01-12 20:37:17,291.291] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-12 20:37:17,292.292] base.py line:1846 INFO: [cached since 11.29s ago] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-12 20:37:17,297.297] base.py line:2713 INFO: ROLLBACK)
+2026-01-12 20:37:17,298.298] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:17] "GET /builtin-tools/categories HTTP/1.1" 200 -)
+2026-01-12 20:37:17,371.371] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:37:17,372.372] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-12 20:37:17,372.372] base.py line:1846 INFO: [cached since 11.37s ago] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-12 20:37:17,392.392] base.py line:2713 INFO: ROLLBACK)
+2026-01-12 20:37:17,393.393] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:17] "GET /builtin-tools HTTP/1.1" 200 -)
+2026-01-12 20:37:17,418.418] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:37:17,421.421] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:37:17,423.423] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:37:17,424.424] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:17] "GET /builtin-tools/google/icon HTTP/1.1" 200 -)
+2026-01-12 20:37:17,426.426] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:37:17,428.428] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:37:17,429.429] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:37:17,430.430] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:17] "GET /builtin-tools/time/icon HTTP/1.1" 200 -)
+2026-01-12 20:37:17,431.431] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:17] "GET /builtin-tools/duckduckgo/icon HTTP/1.1" 200 -)
+2026-01-12 20:37:17,433.433] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:17] "GET /builtin-tools/dalle/icon HTTP/1.1" 200 -)
+2026-01-12 20:37:17,435.435] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:17] "GET /builtin-tools/gaode/icon HTTP/1.1" 200 -)
+2026-01-12 20:37:17,437.437] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:17] "GET /builtin-tools/wikipedia/icon HTTP/1.1" 200 -)
+2026-01-12 20:37:31,383.383] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:31] "OPTIONS /builtin-tools/categories HTTP/1.1" 200 -)
+2026-01-12 20:37:31,386.386] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:31] "OPTIONS /builtin-tools HTTP/1.1" 200 -)
+2026-01-12 20:37:31,396.396] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:37:31,397.397] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-12 20:37:31,398.398] base.py line:1846 INFO: [cached since 25.4s ago] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-12 20:37:31,403.403] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:37:31,407.407] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:37:31,412.412] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:31] "GET /builtin-tools/undefined/icon HTTP/1.1" 200 -)
+2026-01-12 20:37:31,414.414] base.py line:2713 INFO: ROLLBACK)
+2026-01-12 20:37:31,415.415] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-12 20:37:31,419.419] base.py line:1846 INFO: [cached since 25.42s ago] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-12 20:37:31,421.421] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:31] "GET /builtin-tools/categories HTTP/1.1" 200 -)
+2026-01-12 20:37:31,431.431] base.py line:2713 INFO: ROLLBACK)
+2026-01-12 20:37:31,433.433] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:31] "GET /builtin-tools HTTP/1.1" 200 -)
+2026-01-12 20:37:31,616.616] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:37:31,618.618] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:37:31,621.621] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:37:31,628.628] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:31] "GET /builtin-tools/duckduckgo/icon HTTP/1.1" 200 -)
+2026-01-12 20:37:31,622.622] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:37:31,624.624] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:37:31,625.625] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:37:31,626.626] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:31] "GET /builtin-tools/time/icon HTTP/1.1" 200 -)
+2026-01-12 20:37:31,622.622] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:31] "GET /builtin-tools/google/icon HTTP/1.1" 200 -)
+2026-01-12 20:37:31,635.635] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:31] "GET /builtin-tools/gaode/icon HTTP/1.1" 200 -)
+2026-01-12 20:37:31,636.636] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:31] "GET /builtin-tools/wikipedia/icon HTTP/1.1" 200 -)
+2026-01-12 20:37:31,638.638] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:37:31] "GET /builtin-tools/dalle/icon HTTP/1.1" 200 -)
+2026-01-12 20:38:05,855.855] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:38:05] "OPTIONS /api-tools?current_page=1&page_size=10&search_word= HTTP/1.1" 200 -)
+2026-01-12 20:38:05,974.974] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:38:05,974.974] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-12 20:38:05,974.974] base.py line:1846 INFO: [cached since 59.97s ago] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-12 20:38:06,049.049] base.py line:1846 INFO: SELECT api_tool_provider.id AS api_tool_provider_id, api_tool_provider.account_id AS api_tool_provider_account_id, api_tool_provider.name AS api_tool_provider_name, api_tool_provider.icon AS api_tool_provider_icon, api_tool_provider.description AS api_tool_provider_description, api_tool_provider.openapi_schema AS api_tool_provider_openapi_schema, api_tool_provider.headers AS api_tool_provider_headers, api_tool_provider.updated_at AS api_tool_provider_updated_at, api_tool_provider.created_at AS api_tool_provider_created_at 
+FROM api_tool_provider 
+WHERE api_tool_provider.account_id = %(account_id_1)s::UUID ORDER BY api_tool_provider.created_at DESC 
+ LIMIT %(param_1)s OFFSET %(param_2)s)
+2026-01-12 20:38:06,050.050] base.py line:1846 INFO: [cached since 55.49s ago] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f'), 'param_1': 10, 'param_2': 0})
+2026-01-12 20:38:06,053.053] base.py line:1846 INFO: SELECT count(*) AS count_1 
+FROM (SELECT api_tool_provider.id AS id, api_tool_provider.account_id AS account_id, api_tool_provider.name AS name, api_tool_provider.icon AS icon, api_tool_provider.description AS description, api_tool_provider.openapi_schema AS openapi_schema, api_tool_provider.headers AS headers, api_tool_provider.updated_at AS updated_at, api_tool_provider.created_at AS created_at 
+FROM api_tool_provider 
+WHERE api_tool_provider.account_id = %(account_id_1)s::UUID) AS anon_1)
+2026-01-12 20:38:06,053.053] base.py line:1846 INFO: [cached since 55.42s ago] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-12 20:38:06,056.056] base.py line:1846 INFO: SELECT api_tool.id AS api_tool_id, api_tool.account_id AS api_tool_account_id, api_tool.provider_id AS api_tool_provider_id, api_tool.name AS api_tool_name, api_tool.description AS api_tool_description, api_tool.url AS api_tool_url, api_tool.method AS api_tool_method, api_tool.parameters AS api_tool_parameters, api_tool.updated_at AS api_tool_updated_at, api_tool.created_at AS api_tool_created_at 
+FROM api_tool 
+WHERE api_tool.provider_id = %(provider_id_1)s::UUID)
+2026-01-12 20:38:06,057.057] base.py line:1846 INFO: [cached since 55.4s ago] {'provider_id_1': UUID('a96b86d0-d3e9-44d3-81dd-f4193734c52c')})
+2026-01-12 20:38:06,059.059] base.py line:1846 INFO: SELECT api_tool.id AS api_tool_id, api_tool.account_id AS api_tool_account_id, api_tool.provider_id AS api_tool_provider_id, api_tool.name AS api_tool_name, api_tool.description AS api_tool_description, api_tool.url AS api_tool_url, api_tool.method AS api_tool_method, api_tool.parameters AS api_tool_parameters, api_tool.updated_at AS api_tool_updated_at, api_tool.created_at AS api_tool_created_at 
+FROM api_tool 
+WHERE api_tool.provider_id = %(provider_id_1)s::UUID)
+2026-01-12 20:38:06,060.060] base.py line:1846 INFO: [cached since 55.41s ago] {'provider_id_1': UUID('b114708d-6690-4a59-b94e-6aaff08ac583')})
+2026-01-12 20:38:06,070.070] base.py line:2713 INFO: ROLLBACK)
+2026-01-12 20:38:06,071.071] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:38:06] "GET /api-tools?current_page=1&page_size=10&search_word= HTTP/1.1" 200 -)
+2026-01-12 20:38:07,825.825] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:38:07] "OPTIONS /builtin-tools/categories HTTP/1.1" 200 -)
+2026-01-12 20:38:07,834.834] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:38:07] "OPTIONS /builtin-tools HTTP/1.1" 200 -)
+2026-01-12 20:38:07,850.850] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:38:07,854.854] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:38:07,855.855] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:38:07] "GET /builtin-tools/undefined/icon HTTP/1.1" 200 -)
+2026-01-12 20:38:07,857.857] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-12 20:38:07,858.858] base.py line:1846 INFO: [cached since 61.86s ago] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-12 20:38:07,861.861] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:38:07,864.864] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-12 20:38:07,864.864] base.py line:1846 INFO: [cached since 61.86s ago] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-12 20:38:07,868.868] base.py line:2713 INFO: ROLLBACK)
+2026-01-12 20:38:07,869.869] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:38:07] "GET /builtin-tools/categories HTTP/1.1" 200 -)
+2026-01-12 20:38:07,960.960] base.py line:2713 INFO: ROLLBACK)
+2026-01-12 20:38:07,960.960] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:38:07] "GET /builtin-tools HTTP/1.1" 200 -)
+2026-01-12 20:38:07,989.989] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:38:07,992.992] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:38:07,996.996] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:38:07,997.997] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:38:07] "GET /builtin-tools/google/icon HTTP/1.1" 200 -)
+2026-01-12 20:38:07,999.999] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:38:08,001.001] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:38:08,002.002] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:38:08] "GET /builtin-tools/time/icon HTTP/1.1" 200 -)
+2026-01-12 20:38:08,004.004] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 378, in _load_user
+    user = self._load_user_from_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/login_manager.py", line 441, in _load_user_from_request
+    user = self._request_callback(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/middleware/middleware.py", line 34, in request_loader
+    raise UnAuthorizationException("该接口需要授权才能访问，请登录后重试")
+internal.exception.exception.UnAuthorizationException
+2026-01-12 20:38:08,005.005] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:38:08] "GET /builtin-tools/duckduckgo/icon HTTP/1.1" 200 -)
+2026-01-12 20:38:08,013.013] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:38:08] "GET /builtin-tools/gaode/icon HTTP/1.1" 200 -)
+2026-01-12 20:38:08,016.016] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:38:08] "GET /builtin-tools/wikipedia/icon HTTP/1.1" 200 -)
+2026-01-12 20:38:08,020.020] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:38:08] "GET /builtin-tools/dalle/icon HTTP/1.1" 200 -)
+2026-01-12 20:40:57,537.537] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/builtin_tool_handler.py', reloading)
+2026-01-12 20:41:18,404.404] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-12 20:41:18,436.436] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-12 20:41:18,562.562] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:18] "OPTIONS /builtin-tools/categories HTTP/1.1" 200 -)
+2026-01-12 20:41:18,568.568] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:18] "OPTIONS /builtin-tools HTTP/1.1" 200 -)
+2026-01-12 20:41:18,571.571] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/builtin_tool_handler.py", line 41, in get_provider_icon
+    icon, mimeType = self.builtin_tool_service.get_provider_icon(provider_name)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/builtin_tool_service.py", line 105, in get_provider_icon
+    raise NotFoundException(f"该工具提供者{provider_name}不存在")
+internal.exception.exception.NotFoundException
+2026-01-12 20:41:18,627.627] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:18] "GET /builtin-tools/undefined/icon HTTP/1.1" 200 -)
+2026-01-12 20:41:18,910.910] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-12 20:41:18,911.911] base.py line:1846 INFO: [raw sql] {})
+2026-01-12 20:41:18,913.913] base.py line:1846 INFO: select current_schema())
+2026-01-12 20:41:18,913.913] base.py line:1846 INFO: [raw sql] {})
+2026-01-12 20:41:18,914.914] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-12 20:41:18,914.914] base.py line:1846 INFO: [raw sql] {})
+2026-01-12 20:41:18,916.916] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:41:18,916.916] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:41:18,921.921] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-12 20:41:18,922.922] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-12 20:41:18,922.922] base.py line:1846 INFO: [generated in 0.00095s] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-12 20:41:18,922.922] base.py line:1846 INFO: [cached since 0.001235s ago] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-12 20:41:18,951.951] base.py line:2713 INFO: ROLLBACK)
+2026-01-12 20:41:18,955.955] base.py line:2713 INFO: ROLLBACK)
+2026-01-12 20:41:18,955.955] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:18] "GET /builtin-tools/categories HTTP/1.1" 200 -)
+2026-01-12 20:41:18,956.956] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:18] "GET /builtin-tools HTTP/1.1" 200 -)
+2026-01-12 20:41:19,099.099] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:19] "GET /builtin-tools/dalle/icon HTTP/1.1" 200 -)
+2026-01-12 20:41:19,102.102] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:19] "GET /builtin-tools/gaode/icon HTTP/1.1" 200 -)
+2026-01-12 20:41:19,105.105] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:19] "GET /builtin-tools/time/icon HTTP/1.1" 200 -)
+2026-01-12 20:41:19,111.111] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:19] "GET /builtin-tools/google/icon HTTP/1.1" 200 -)
+2026-01-12 20:41:19,121.121] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:19] "GET /builtin-tools/duckduckgo/icon HTTP/1.1" 200 -)
+2026-01-12 20:41:19,144.144] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:19] "GET /builtin-tools/wikipedia/icon HTTP/1.1" 200 -)
+2026-01-12 20:41:27,849.849] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:27] "OPTIONS /api-tools?current_page=1&page_size=10&search_word= HTTP/1.1" 200 -)
+2026-01-12 20:41:27,862.862] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:41:27,862.862] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-12 20:41:27,863.863] base.py line:1846 INFO: [cached since 8.941s ago] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-12 20:41:27,876.876] base.py line:1846 INFO: SELECT api_tool_provider.id AS api_tool_provider_id, api_tool_provider.account_id AS api_tool_provider_account_id, api_tool_provider.name AS api_tool_provider_name, api_tool_provider.icon AS api_tool_provider_icon, api_tool_provider.description AS api_tool_provider_description, api_tool_provider.openapi_schema AS api_tool_provider_openapi_schema, api_tool_provider.headers AS api_tool_provider_headers, api_tool_provider.updated_at AS api_tool_provider_updated_at, api_tool_provider.created_at AS api_tool_provider_created_at 
+FROM api_tool_provider 
+WHERE api_tool_provider.account_id = %(account_id_1)s::UUID ORDER BY api_tool_provider.created_at DESC 
+ LIMIT %(param_1)s OFFSET %(param_2)s)
+2026-01-12 20:41:27,877.877] base.py line:1846 INFO: [generated in 0.00050s] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f'), 'param_1': 10, 'param_2': 0})
+2026-01-12 20:41:27,889.889] base.py line:1846 INFO: SELECT count(*) AS count_1 
+FROM (SELECT api_tool_provider.id AS id, api_tool_provider.account_id AS account_id, api_tool_provider.name AS name, api_tool_provider.icon AS icon, api_tool_provider.description AS description, api_tool_provider.openapi_schema AS openapi_schema, api_tool_provider.headers AS headers, api_tool_provider.updated_at AS updated_at, api_tool_provider.created_at AS created_at 
+FROM api_tool_provider 
+WHERE api_tool_provider.account_id = %(account_id_1)s::UUID) AS anon_1)
+2026-01-12 20:41:27,890.890] base.py line:1846 INFO: [generated in 0.00058s] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-12 20:41:27,897.897] base.py line:1846 INFO: SELECT api_tool.id AS api_tool_id, api_tool.account_id AS api_tool_account_id, api_tool.provider_id AS api_tool_provider_id, api_tool.name AS api_tool_name, api_tool.description AS api_tool_description, api_tool.url AS api_tool_url, api_tool.method AS api_tool_method, api_tool.parameters AS api_tool_parameters, api_tool.updated_at AS api_tool_updated_at, api_tool.created_at AS api_tool_created_at 
+FROM api_tool 
+WHERE api_tool.provider_id = %(provider_id_1)s::UUID)
+2026-01-12 20:41:27,897.897] base.py line:1846 INFO: [generated in 0.00051s] {'provider_id_1': UUID('a96b86d0-d3e9-44d3-81dd-f4193734c52c')})
+2026-01-12 20:41:27,901.901] base.py line:1846 INFO: SELECT api_tool.id AS api_tool_id, api_tool.account_id AS api_tool_account_id, api_tool.provider_id AS api_tool_provider_id, api_tool.name AS api_tool_name, api_tool.description AS api_tool_description, api_tool.url AS api_tool_url, api_tool.method AS api_tool_method, api_tool.parameters AS api_tool_parameters, api_tool.updated_at AS api_tool_updated_at, api_tool.created_at AS api_tool_created_at 
+FROM api_tool 
+WHERE api_tool.provider_id = %(provider_id_1)s::UUID)
+2026-01-12 20:41:27,901.901] base.py line:1846 INFO: [cached since 0.004366s ago] {'provider_id_1': UUID('b114708d-6690-4a59-b94e-6aaff08ac583')})
+2026-01-12 20:41:27,904.904] base.py line:2713 INFO: ROLLBACK)
+2026-01-12 20:41:27,905.905] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:27] "GET /api-tools?current_page=1&page_size=10&search_word= HTTP/1.1" 200 -)
+2026-01-12 20:41:29,834.834] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:29] "OPTIONS /datasets?current_page=1&page_size=20&search_word= HTTP/1.1" 200 -)
+2026-01-12 20:41:29,840.840] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:41:29,841.841] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-12 20:41:29,841.841] base.py line:1846 INFO: [cached since 10.92s ago] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-12 20:41:29,847.847] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.account_id = %(account_id_1)s::UUID ORDER BY dataset.created_at DESC 
+ LIMIT %(param_1)s OFFSET %(param_2)s)
+2026-01-12 20:41:29,848.848] base.py line:1846 INFO: [generated in 0.00039s] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f'), 'param_1': 20, 'param_2': 0})
+2026-01-12 20:41:29,860.860] base.py line:1846 INFO: SELECT count(*) AS count_1 
+FROM (SELECT dataset.id AS id, dataset.account_id AS account_id, dataset.name AS name, dataset.icon AS icon, dataset.description AS description, dataset.updated_at AS updated_at, dataset.created_at AS created_at 
+FROM dataset 
+WHERE dataset.account_id = %(account_id_1)s::UUID) AS anon_1)
+2026-01-12 20:41:29,861.861] base.py line:1846 INFO: [generated in 0.00050s] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-12 20:41:29,865.865] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,866.866] base.py line:1846 INFO: [generated in 0.00041s] {'dataset_id_1': UUID('2b0d5198-73f3-410e-ae10-dc8589733dd4')})
+2026-01-12 20:41:29,870.870] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,870.870] base.py line:1846 INFO: [generated in 0.00031s] {'dataset_id_1': UUID('2b0d5198-73f3-410e-ae10-dc8589733dd4')})
+2026-01-12 20:41:29,875.875] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,876.876] base.py line:1846 INFO: [generated in 0.00033s] {'coalesce_2': 0, 'dataset_id_1': UUID('2b0d5198-73f3-410e-ae10-dc8589733dd4')})
+2026-01-12 20:41:29,878.878] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,878.878] base.py line:1846 INFO: [cached since 0.01259s ago] {'dataset_id_1': UUID('4e25b342-1a2b-40f9-86a7-da3052f2a75a')})
+2026-01-12 20:41:29,879.879] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,880.880] base.py line:1846 INFO: [cached since 0.009904s ago] {'dataset_id_1': UUID('4e25b342-1a2b-40f9-86a7-da3052f2a75a')})
+2026-01-12 20:41:29,881.881] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,882.882] base.py line:1846 INFO: [cached since 0.006313s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('4e25b342-1a2b-40f9-86a7-da3052f2a75a')})
+2026-01-12 20:41:29,883.883] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,884.884] base.py line:1846 INFO: [cached since 0.01818s ago] {'dataset_id_1': UUID('d2e89d0e-81b2-4fad-a59e-dad1a20e21ec')})
+2026-01-12 20:41:29,886.886] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,886.886] base.py line:1846 INFO: [cached since 0.01635s ago] {'dataset_id_1': UUID('d2e89d0e-81b2-4fad-a59e-dad1a20e21ec')})
+2026-01-12 20:41:29,888.888] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,889.889] base.py line:1846 INFO: [cached since 0.01354s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('d2e89d0e-81b2-4fad-a59e-dad1a20e21ec')})
+2026-01-12 20:41:29,891.891] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,892.892] base.py line:1846 INFO: [cached since 0.02596s ago] {'dataset_id_1': UUID('076442a7-af3f-4a49-a3a8-2df67f53c5f0')})
+2026-01-12 20:41:29,893.893] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,893.893] base.py line:1846 INFO: [cached since 0.0235s ago] {'dataset_id_1': UUID('076442a7-af3f-4a49-a3a8-2df67f53c5f0')})
+2026-01-12 20:41:29,895.895] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,895.895] base.py line:1846 INFO: [cached since 0.01975s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('076442a7-af3f-4a49-a3a8-2df67f53c5f0')})
+2026-01-12 20:41:29,896.896] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,897.897] base.py line:1846 INFO: [cached since 0.03125s ago] {'dataset_id_1': UUID('c2a6b383-de9f-4fb2-a4b9-467c9a4b57b9')})
+2026-01-12 20:41:29,898.898] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,898.898] base.py line:1846 INFO: [cached since 0.02846s ago] {'dataset_id_1': UUID('c2a6b383-de9f-4fb2-a4b9-467c9a4b57b9')})
+2026-01-12 20:41:29,900.900] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,900.900] base.py line:1846 INFO: [cached since 0.02526s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('c2a6b383-de9f-4fb2-a4b9-467c9a4b57b9')})
+2026-01-12 20:41:29,902.902] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,902.902] base.py line:1846 INFO: [cached since 0.03699s ago] {'dataset_id_1': UUID('96c19110-4f0f-4754-b4d9-08d491b22b73')})
+2026-01-12 20:41:29,904.904] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,904.904] base.py line:1846 INFO: [cached since 0.0339s ago] {'dataset_id_1': UUID('96c19110-4f0f-4754-b4d9-08d491b22b73')})
+2026-01-12 20:41:29,905.905] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,905.905] base.py line:1846 INFO: [cached since 0.02992s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('96c19110-4f0f-4754-b4d9-08d491b22b73')})
+2026-01-12 20:41:29,907.907] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,907.907] base.py line:1846 INFO: [cached since 0.04152s ago] {'dataset_id_1': UUID('cd0e15f9-a905-4d66-b97e-7f2a8f016e68')})
+2026-01-12 20:41:29,909.909] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,909.909] base.py line:1846 INFO: [cached since 0.03898s ago] {'dataset_id_1': UUID('cd0e15f9-a905-4d66-b97e-7f2a8f016e68')})
+2026-01-12 20:41:29,910.910] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,911.911] base.py line:1846 INFO: [cached since 0.03539s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('cd0e15f9-a905-4d66-b97e-7f2a8f016e68')})
+2026-01-12 20:41:29,912.912] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,912.912] base.py line:1846 INFO: [cached since 0.04677s ago] {'dataset_id_1': UUID('9f0f9d4e-7ac0-4f13-9197-6a6081745742')})
+2026-01-12 20:41:29,914.914] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,914.914] base.py line:1846 INFO: [cached since 0.04395s ago] {'dataset_id_1': UUID('9f0f9d4e-7ac0-4f13-9197-6a6081745742')})
+2026-01-12 20:41:29,915.915] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,915.915] base.py line:1846 INFO: [cached since 0.04006s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('9f0f9d4e-7ac0-4f13-9197-6a6081745742')})
+2026-01-12 20:41:29,916.916] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,916.916] base.py line:1846 INFO: [cached since 0.05117s ago] {'dataset_id_1': UUID('442f9bdf-9974-4795-a9e5-25f16cdaa86c')})
+2026-01-12 20:41:29,917.917] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,917.917] base.py line:1846 INFO: [cached since 0.0476s ago] {'dataset_id_1': UUID('442f9bdf-9974-4795-a9e5-25f16cdaa86c')})
+2026-01-12 20:41:29,918.918] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,919.919] base.py line:1846 INFO: [cached since 0.04336s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('442f9bdf-9974-4795-a9e5-25f16cdaa86c')})
+2026-01-12 20:41:29,919.919] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,920.920] base.py line:1846 INFO: [cached since 0.0544s ago] {'dataset_id_1': UUID('d89dffe1-a283-44ce-aa62-cca6896fec0e')})
+2026-01-12 20:41:29,921.921] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,921.921] base.py line:1846 INFO: [cached since 0.05084s ago] {'dataset_id_1': UUID('d89dffe1-a283-44ce-aa62-cca6896fec0e')})
+2026-01-12 20:41:29,922.922] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,922.922] base.py line:1846 INFO: [cached since 0.04664s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('d89dffe1-a283-44ce-aa62-cca6896fec0e')})
+2026-01-12 20:41:29,923.923] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,923.923] base.py line:1846 INFO: [cached since 0.05763s ago] {'dataset_id_1': UUID('893c8ff4-202a-4fec-9473-82efc0cebb84')})
+2026-01-12 20:41:29,924.924] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,924.924] base.py line:1846 INFO: [cached since 0.05408s ago] {'dataset_id_1': UUID('893c8ff4-202a-4fec-9473-82efc0cebb84')})
+2026-01-12 20:41:29,925.925] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,925.925] base.py line:1846 INFO: [cached since 0.04993s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('893c8ff4-202a-4fec-9473-82efc0cebb84')})
+2026-01-12 20:41:29,926.926] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,926.926] base.py line:1846 INFO: [cached since 0.06092s ago] {'dataset_id_1': UUID('cf67b8fc-fa97-4937-9b94-34ad2dc6231a')})
+2026-01-12 20:41:29,927.927] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,927.927] base.py line:1846 INFO: [cached since 0.05732s ago] {'dataset_id_1': UUID('cf67b8fc-fa97-4937-9b94-34ad2dc6231a')})
+2026-01-12 20:41:29,928.928] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,928.928] base.py line:1846 INFO: [cached since 0.05324s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('cf67b8fc-fa97-4937-9b94-34ad2dc6231a')})
+2026-01-12 20:41:29,929.929] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,930.930] base.py line:1846 INFO: [cached since 0.06431s ago] {'dataset_id_1': UUID('d4f47371-0b82-4f73-9003-6cd5a3dabe35')})
+2026-01-12 20:41:29,931.931] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,932.932] base.py line:1846 INFO: [cached since 0.06164s ago] {'dataset_id_1': UUID('d4f47371-0b82-4f73-9003-6cd5a3dabe35')})
+2026-01-12 20:41:29,938.938] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,938.938] base.py line:1846 INFO: [cached since 0.06256s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('d4f47371-0b82-4f73-9003-6cd5a3dabe35')})
+2026-01-12 20:41:29,940.940] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,940.940] base.py line:1846 INFO: [cached since 0.07474s ago] {'dataset_id_1': UUID('7826b06c-4d09-4ca9-ab49-d44d2a113cc7')})
+2026-01-12 20:41:29,942.942] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,942.942] base.py line:1846 INFO: [cached since 0.07208s ago] {'dataset_id_1': UUID('7826b06c-4d09-4ca9-ab49-d44d2a113cc7')})
+2026-01-12 20:41:29,944.944] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,944.944] base.py line:1846 INFO: [cached since 0.06859s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('7826b06c-4d09-4ca9-ab49-d44d2a113cc7')})
+2026-01-12 20:41:29,945.945] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,946.946] base.py line:1846 INFO: [cached since 0.08036s ago] {'dataset_id_1': UUID('846d7d5f-b659-4d74-9537-41983f850637')})
+2026-01-12 20:41:29,962.962] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,963.963] base.py line:1846 INFO: [cached since 0.0927s ago] {'dataset_id_1': UUID('846d7d5f-b659-4d74-9537-41983f850637')})
+2026-01-12 20:41:29,966.966] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,966.966] base.py line:1846 INFO: [cached since 0.09089s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('846d7d5f-b659-4d74-9537-41983f850637')})
+2026-01-12 20:41:29,968.968] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,968.968] base.py line:1846 INFO: [cached since 0.1029s ago] {'dataset_id_1': UUID('b08a75ef-ee27-4ce8-98db-9c4a163b570e')})
+2026-01-12 20:41:29,970.970] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,970.970] base.py line:1846 INFO: [cached since 0.1002s ago] {'dataset_id_1': UUID('b08a75ef-ee27-4ce8-98db-9c4a163b570e')})
+2026-01-12 20:41:29,972.972] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,972.972] base.py line:1846 INFO: [cached since 0.09701s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('b08a75ef-ee27-4ce8-98db-9c4a163b570e')})
+2026-01-12 20:41:29,974.974] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,975.975] base.py line:1846 INFO: [cached since 0.1095s ago] {'dataset_id_1': UUID('480764fd-7d5d-43f5-b43a-fb14a4fc4648')})
+2026-01-12 20:41:29,976.976] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,977.977] base.py line:1846 INFO: [cached since 0.1067s ago] {'dataset_id_1': UUID('480764fd-7d5d-43f5-b43a-fb14a4fc4648')})
+2026-01-12 20:41:29,978.978] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,978.978] base.py line:1846 INFO: [cached since 0.1032s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('480764fd-7d5d-43f5-b43a-fb14a4fc4648')})
+2026-01-12 20:41:29,981.981] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,981.981] base.py line:1846 INFO: [cached since 0.1156s ago] {'dataset_id_1': UUID('bd21a3ac-970a-40d8-965f-86926de1b366')})
+2026-01-12 20:41:29,982.982] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,983.983] base.py line:1846 INFO: [cached since 0.1127s ago] {'dataset_id_1': UUID('bd21a3ac-970a-40d8-965f-86926de1b366')})
+2026-01-12 20:41:29,984.984] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,985.985] base.py line:1846 INFO: [cached since 0.1093s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('bd21a3ac-970a-40d8-965f-86926de1b366')})
+2026-01-12 20:41:29,986.986] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,986.986] base.py line:1846 INFO: [cached since 0.1204s ago] {'dataset_id_1': UUID('c8e85146-29a4-4564-96ce-9a4df915e96f')})
+2026-01-12 20:41:29,987.987] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,987.987] base.py line:1846 INFO: [cached since 0.1168s ago] {'dataset_id_1': UUID('c8e85146-29a4-4564-96ce-9a4df915e96f')})
+2026-01-12 20:41:29,988.988] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,988.988] base.py line:1846 INFO: [cached since 0.1129s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('c8e85146-29a4-4564-96ce-9a4df915e96f')})
+2026-01-12 20:41:29,989.989] base.py line:1846 INFO: SELECT count(document.id) AS count_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,989.989] base.py line:1846 INFO: [cached since 0.1241s ago] {'dataset_id_1': UUID('ad5c9311-96db-43d4-8d75-e6331e7992ad')})
+2026-01-12 20:41:29,990.990] base.py line:1846 INFO: SELECT count(app_dataset_join.id) AS count_1 
+FROM app_dataset_join 
+WHERE app_dataset_join.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,991.991] base.py line:1846 INFO: [cached since 0.1207s ago] {'dataset_id_1': UUID('ad5c9311-96db-43d4-8d75-e6331e7992ad')})
+2026-01-12 20:41:29,992.992] base.py line:1846 INFO: SELECT coalesce(sum(document.character_count), %(coalesce_2)s) AS coalesce_1 
+FROM document 
+WHERE document.dataset_id = %(dataset_id_1)s::UUID)
+2026-01-12 20:41:29,992.992] base.py line:1846 INFO: [cached since 0.1166s ago] {'coalesce_2': 0, 'dataset_id_1': UUID('ad5c9311-96db-43d4-8d75-e6331e7992ad')})
+2026-01-12 20:41:29,994.994] base.py line:2713 INFO: ROLLBACK)
+2026-01-12 20:41:29,995.995] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:29] "GET /datasets?current_page=1&page_size=20&search_word= HTTP/1.1" 200 -)
+2026-01-12 20:41:31,557.557] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:31] "OPTIONS /builtin-tools/categories HTTP/1.1" 200 -)
+2026-01-12 20:41:31,571.571] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:31] "OPTIONS /builtin-tools HTTP/1.1" 200 -)
+2026-01-12 20:41:31,575.575] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/builtin_tool_handler.py", line 41, in get_provider_icon
+    icon, mimeType = self.builtin_tool_service.get_provider_icon(provider_name)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/builtin_tool_service.py", line 105, in get_provider_icon
+    raise NotFoundException(f"该工具提供者{provider_name}不存在")
+internal.exception.exception.NotFoundException
+2026-01-12 20:41:31,590.590] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:41:31,592.592] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:31] "GET /builtin-tools/undefined/icon HTTP/1.1" 200 -)
+2026-01-12 20:41:31,597.597] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-12 20:41:31,599.599] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-12 20:41:31,610.610] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-12 20:41:31,610.610] base.py line:1846 INFO: [cached since 12.69s ago] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-12 20:41:31,611.611] base.py line:1846 INFO: [cached since 12.69s ago] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-12 20:41:31,616.616] base.py line:2713 INFO: ROLLBACK)
+2026-01-12 20:41:31,619.619] base.py line:2713 INFO: ROLLBACK)
+2026-01-12 20:41:31,621.621] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:31] "GET /builtin-tools HTTP/1.1" 200 -)
+2026-01-12 20:41:31,622.622] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:31] "GET /builtin-tools/categories HTTP/1.1" 200 -)
+2026-01-12 20:41:31,703.703] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:31] "GET /builtin-tools/google/icon HTTP/1.1" 200 -)
+2026-01-12 20:41:31,704.704] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:31] "GET /builtin-tools/duckduckgo/icon HTTP/1.1" 200 -)
+2026-01-12 20:41:31,715.715] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:31] "GET /builtin-tools/gaode/icon HTTP/1.1" 200 -)
+2026-01-12 20:41:31,717.717] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:31] "GET /builtin-tools/wikipedia/icon HTTP/1.1" 200 -)
+2026-01-12 20:41:31,720.720] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:31] "GET /builtin-tools/time/icon HTTP/1.1" 200 -)
+2026-01-12 20:41:31,734.734] _internal.py line:97 INFO: 127.0.0.1 - - [12/Jan/2026 20:41:31] "GET /builtin-tools/dalle/icon HTTP/1.1" 200 -)

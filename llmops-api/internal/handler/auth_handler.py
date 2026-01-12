@@ -13,7 +13,7 @@ from injector import inject
 
 from internal.schema.auth_schema import PasswordLoginReq, PasswordLoginResp
 from internal.service import AccountService
-from pkg.response import success_message, validate_error_json, success_json
+from pkg.response import success_message, validate_error_json, success_json, not_found_message
 
 
 @inject
@@ -30,6 +30,8 @@ class AuthHandler:
             return validate_error_json(req.errors)
 
         credentials = self.account_service.password_login(req.email.data, req.password.data)
+        if not credentials["access_token"] or not credentials["expire_at"]:
+            return not_found_message("账号不存在或密码错误，请核实后重试")
 
         resp = PasswordLoginResp()
 
