@@ -8,7 +8,7 @@
 """
 from .account import Account, AccountOAuth
 from .api_tool import ApiToolProvider, ApiTool
-from .app import App, AppDatasetJoin
+from .app import App, AppDatasetJoin, AppConfig, AppConfigVersion
 from .conversation import Conversation, Message, MessageAgentThought
 from .dataset import Dataset, Document, Segment, DatasetQuery, KeywordTable, ProcessRule
 from .upload_file import UploadFile
@@ -30,4 +30,6 @@ __all__ = [
     "MessageAgentThought",
     "Account",
     "AccountOAuth",
+    "AppConfig",
+    "AppConfigVersion",
 ]

@@ -7,7 +7,8 @@
 @Description    : 
 """
 
-from sqlalchemy import (Column, UUID, String, Text, DateTime, PrimaryKeyConstraint, Index, text)
+from sqlalchemy import (Column, UUID, String, Text, DateTime, PrimaryKeyConstraint, text, Integer)
+from sqlalchemy.dialects.postgresql import JSONB
 
 from internal.extension.database_extension import db
 
@@ -17,11 +18,13 @@ class App(db.Model):
     __tablename__ = "app"
     __table_args__ = (
         PrimaryKeyConstraint("id", name="pk_app_id"),
-        Index("idx_app_account_id", "account_id")
     )
 
     id = Column(UUID, nullable=False, server_default=text("uuid_generate_v4()"))
     account_id = Column(UUID, nullable=False, server_default=text("''::character varying"))
+    app_config_id = Column(UUID, nullable=True)
+    draft_app_config_id = Column(UUID, nullable=True)
+    debug_conversation_id = Column(UUID, nullable=True)
     name = Column(String(255), nullable=False, server_default=text("''::character varying"))
     icon = Column(String(255), nullable=False, server_default=text("''::character varying"))
     description = Column(Text, nullable=False, server_default=text("''::text"))
@@ -33,6 +36,19 @@ class App(db.Model):
         server_onupdate=text("current_timestamp(0)")
     )
     create_at = Column(DateTime, nullable=False, server_default=text("current_timestamp(0)"))
+
+    # @property
+    # def draft_app_config(self) -> "AppConfigVersion":
+    #     """只读属性，返回当前应用的草稿配置"""
+    #     # 1. 获取当前应用的草稿配置
+    #     app_config_version = db.session.query(AppConfigVersion).filter(
+    #         AppConfigVersion.app_id == self.id,
+    #         AppConfigVersion.config_type == AppConfigType.DRAFT,
+    #     ).one_or_none()
+    #
+    #     # 2. 检测配置是否存在，如果不存在则创建一个默认值
+    #     if not app_config_version:
+    #         app_config_version = AppConfigVersion
 
 
 class AppDatasetJoin(db.Model):
@@ -52,3 +68,66 @@ class AppDatasetJoin(db.Model):
         server_onupdate=text("CURRENT_TIMESTAMP(0)")
     )
     create_at = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP(0)"))
+
+
+class AppConfig(db.Model):
+    """应用配置模型"""
+    __tablename__ = "app_config"
+    __table_args__ = (
+        PrimaryKeyConstraint("id", name="pk_app_config_id"),
+    )
+
+    id = Column(UUID, nullable=False, server_default=text("uuid_generate_v4()"))
+    app_id = Column(UUID, nullable=False)
+    model_config = Column(JSONB, nullable=False, server_default=text("'{}'::jsonb"))
+    dialog_round = Column(Integer, nullable=False, server_default=text("0"))
+    preset_prompt = Column(Text, nullable=False, server_default=text("''::text"))
+    tools = Column(JSONB, nullable=False, server_default=text("'[]'::jsonb"))
+    workflows = Column(JSONB, nullable=False, server_default=text("'[]'::jsonb"))
+    retrieval_config = Column(JSONB, nullable=False, server_default=text("'[]'::jsonb"))
+    long_term_memory = Column(JSONB, nullable=False, server_default=text("'{}'::jsonb"))
+    opening_statement = Column(Text, nullable=False, server_default=text("''::text"))
+    opening_questions = Column(JSONB, nullable=False, server_default=text("'[]'::jsonb"))
+    speech_to_text = Column(JSONB, nullable=False, server_default=text("'{}'::jsonb"))
+    text_to_speech = Column(JSONB, nullable=False, server_default=text("'{}'::jsonb"))
+    review_config = Column(JSONB, nullable=False, server_default=text("'{}'::jsonb"))
+    updated_at = Column(
+        DateTime,
+        nullable=False,
+        server_default=text("CURRENT_TIMESTAMP(0)"),
+        server_onupdate=text("CURRENT_TIMESTAMP(0)"),
+    )
+    created_at = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP(0)"))
+
+
+class AppConfigVersion(db.Model):
+    """应用配置版本历史表，用于存储草稿配置+历史发布配置"""
+    __tablename__ = "app_config_version"
+    __table_args__ = (
+        PrimaryKeyConstraint("id", name="pk_app_config_version_id"),
+    )
+
+    id = Column(UUID, nullable=False, server_default=text("uuid_generate_v4()"))
+    app_id = Column(UUID, nullable=False)
+    model_config = Column(JSONB, nullable=False, server_default=text("'{}'::jsonb"))
+    dialog_round = Column(Integer, nullable=False, server_default=text("0"))
+    preset_prompt = Column(Text, nullable=False, server_default=text("''::text"))
+    tools = Column(JSONB, nullable=False, server_default=text("'[]'::jsonb"))
+    workflows = Column(JSONB, nullable=False, server_default=text("'[]'::jsonb"))
+    datasets = Column(JSONB, nullable=False, server_default=text("'[]'::jsonb"))
+    retrieval_config = Column(JSONB, nullable=False, server_default=text("'[]'::jsonb"))
+    long_term_memory = Column(JSONB, nullable=False, server_default=text("'{}'::jsonb"))
+    opening_statement = Column(Text, nullable=False, server_default=text("''::text"))
+    opening_questions = Column(JSONB, nullable=False, server_default=text("'[]'::jsonb"))
+    speech_to_text = Column(JSONB, nullable=False, server_default=text("'{}'::jsonb"))
+    text_to_speech = Column(JSONB, nullable=False, server_default=text("'{}'::jsonb"))
+    review_config = Column(JSONB, nullable=False, server_default=text("'{}'::jsonb"))
+    version = Column(Integer, nullable=False, server_default=text("0"))
+    config_type = Column(String(255), nullable=False, server_default=text("''::character varying"))
+    updated_at = Column(
+        DateTime,
+        nullable=False,
+        server_default=text("CURRENT_TIMESTAMP(0)"),
+        server_onupdate=text("CURRENT_TIMESTAMP(0)"),
+    )
+    created_at = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP(0)"))
