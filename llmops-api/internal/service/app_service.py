@@ -6,40 +6,78 @@
 @File           : app_service.py
 @Description    : 
 """
-import uuid
 from dataclasses import dataclass
+from uuid import UUID
 
 from injector import inject
 
-from internal.model import App
+from internal.entity.app_entity import AppStatus, AppConfigType, DEFAULT_APP_CONFIG
+from internal.model import App, Account, AppConfigVersion
+from internal.schema import CreateAppReq
 from pkg.sqlalchemy import SQLAlchemy
+from .base_service import BaseService
+from ..exception import NotFoundException, ForbiddenException
 
 
 @inject
 @dataclass
-class AppService:
+class AppService(BaseService):
     """应用服务逻辑"""
     db: SQLAlchemy
 
-    def create_app(self) -> App:
+    def create_app(self, req: CreateAppReq, account: Account) -> App:
+        """创建Agent应用服务"""
+        # 1. 开启数据库自动提交上下文
         with self.db.auto_commit():
-            # 1. 创建模型实体类
-            app = App(name="测试机器人", account_id=uuid.uuid4(), icon="", description="这是一个简单的聊天机器人")
-            # 2. 将实体类添加到session会话中
+            # 2. 创建应用记录，并刷新记录，从而可以拿到应用id
+            app = App(
+                account_id=account.id,
+                name=req.name.data,
+                icon=req.icon.data,
+                description=req.description.data or "",
+                status=AppStatus.DRAFT,
+            )
             self.db.session.add(app)
+            self.db.session.flush()  # 只有刷新了下方新增草稿记录时才能拿到app_id
+
+            # 3. 添加草稿记录
+            app_config_version = AppConfigVersion(
+                app_id=app.id,
+                version=0,
+                config_type=AppConfigType.DRAFT,
+                **DEFAULT_APP_CONFIG,
+            )
+            self.db.session.add(app_config_version)
+            self.db.session.flush()
+
+            # 4. 为应用添加草稿配置id
+            app.draft_app_config_id = app_config_version.id
+
+        # 5. 返回创建的应用记录
         return app
 
-    def get_app(self, id: uuid.UUID) -> App:
-        app = self.db.session.query(App).get(id)
+    def get_app(self, app_id: UUID, account: Account) -> App:
+        """根据传递的id获取应用的基础信息"""
+        # 1. 查询数据库获取应用基础信息
+        app = self.get(App, app_id)
+
+        # 2. 判断应用是否存在
+        if not app:
+            raise NotFoundException("该应用不存在，请核实后重试")
+
+        # 3. 判断当前账号是否有权限访问该应用
+        if app.account_id != account.id:
+            raise ForbiddenException("当前账号无权限访问该应用，请核实后重试")
+
         return app
 
-    def update_app(self, id: uuid.UUID) -> App:
+    def update_app(self, id: UUID) -> App:
         with self.db.auto_commit():
             app = self.get_app(id)
             app.name = "慕课网机器人"
         return app
 
-    def delete_app(self, id: uuid.UUID) -> App:
+    def delete_app(self, id: UUID) -> App:
         with self.db.auto_commit():
             app = self.get_app(id)
             self.db.session.delete(app)

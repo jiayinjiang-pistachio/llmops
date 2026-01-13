@@ -9,7 +9,7 @@
 from .account_schema import GetCurrentUserResp, UpdatePasswordReq, UpdateNameReq, UpdateAvatarReq
 from .api_tool_schema import ValidateOpenAPISchemaReq, CreateAPIToolReq, GetApiToolResp, GetApiToolProviderResp, \
     GetApiToolProvidersWithPageReq, GetApiToolProvidersWithPageResp, UpdateApiToolProviderReq
-from .app_schema import CompletionReq
+from .app_schema import CreateAppReq, GetAppResp
 from .dataset_schema import CreateDatasetReq, GetDatasetsWithPageReq, GetDatasetResp, UpdateDatasetReq, \
     GetDatasetsWithPageResp, HitReq
 from .document_schema import CreateDocumentsReq, CreateDocumentsResp, UpdateDocumentEnabledReq
@@ -19,7 +19,8 @@ from .segment_schema import GetSegmentsWithPageReq, GetSegmentsWithPageResp, Upd
 from .upload_file_schema import UploadImageReq, UploadFileResp, UploadFileReq
 
 __all__ = [
-    "CompletionReq",
+    "CreateAppReq",
+    "GetAppResp",
     "ValidateOpenAPISchemaReq",
     "ListField",
     "CreateAPIToolReq",

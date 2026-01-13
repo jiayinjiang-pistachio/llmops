@@ -6,10 +6,12 @@
 @File           : app.py
 @Description    : 
 """
+import uuid
 
 from sqlalchemy import (Column, UUID, String, Text, DateTime, PrimaryKeyConstraint, text, Integer)
 from sqlalchemy.dialects.postgresql import JSONB
 
+from internal.entity.app_entity import AppConfigType, DEFAULT_APP_CONFIG
 from internal.extension.database_extension import db
 
 
@@ -17,10 +19,11 @@ class App(db.Model):
     """AI应用基础模型类"""
     __tablename__ = "app"
     __table_args__ = (
-        PrimaryKeyConstraint("id", name="pk_app_id"),
+        PrimaryKeyConstraint("id", name="pk_app_id"),  # 负责数据库端的约束命名
     )
 
-    id = Column(UUID, nullable=False, server_default=text("uuid_generate_v4()"))
+    # 在 Column 里写 primary_key=True，负责让 ORM 逻辑绝对不出错
+    id = Column(UUID, nullable=False, primary_key=True, default=uuid.uuid4, server_default=text("uuid_generate_v4()"))
     account_id = Column(UUID, nullable=False, server_default=text("''::character varying"))
     app_config_id = Column(UUID, nullable=True)
     draft_app_config_id = Column(UUID, nullable=True)
@@ -29,26 +32,35 @@ class App(db.Model):
     icon = Column(String(255), nullable=False, server_default=text("''::character varying"))
     description = Column(Text, nullable=False, server_default=text("''::text"))
     status = Column(String(255), nullable=False, server_default=text("''::character varying"))
-    update_at = Column(
+    updated_at = Column(
         DateTime,
         nullable=False,
         server_default=text("current_timestamp(0)"),
         server_onupdate=text("current_timestamp(0)")
     )
-    create_at = Column(DateTime, nullable=False, server_default=text("current_timestamp(0)"))
+    created_at = Column(DateTime, nullable=False, server_default=text("current_timestamp(0)"))
 
-    # @property
-    # def draft_app_config(self) -> "AppConfigVersion":
-    #     """只读属性，返回当前应用的草稿配置"""
-    #     # 1. 获取当前应用的草稿配置
-    #     app_config_version = db.session.query(AppConfigVersion).filter(
-    #         AppConfigVersion.app_id == self.id,
-    #         AppConfigVersion.config_type == AppConfigType.DRAFT,
-    #     ).one_or_none()
-    #
-    #     # 2. 检测配置是否存在，如果不存在则创建一个默认值
-    #     if not app_config_version:
-    #         app_config_version = AppConfigVersion
+    @property
+    def draft_app_config(self) -> "AppConfigVersion":
+        """只读属性，返回当前应用的草稿配置"""
+        # 1. 获取当前应用的草稿配置
+        app_config_version = db.session.query(AppConfigVersion).filter(
+            AppConfigVersion.app_id == self.id,
+            AppConfigVersion.config_type == AppConfigType.DRAFT,
+        ).one_or_none()
+
+        # 2. 检测配置是否存在，如果不存在则创建一个默认值
+        if not app_config_version:
+            app_config_version = AppConfigVersion(
+                app_id=self.id,
+                version=0,
+                config_type=AppConfigType.DRAFT,
+                **DEFAULT_APP_CONFIG
+            )
+            db.session.add(app_config_version)
+            db.session.flush()
+
+        return app_config_version
 
 
 class AppDatasetJoin(db.Model):
@@ -67,7 +79,7 @@ class AppDatasetJoin(db.Model):
         server_default=text("CURRENT_TIMESTAMP(0)"),
         server_onupdate=text("CURRENT_TIMESTAMP(0)")
     )
-    create_at = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP(0)"))
+    created_at = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP(0)"))
 
 
 class AppConfig(db.Model):
