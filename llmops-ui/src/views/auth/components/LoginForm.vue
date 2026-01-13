@@ -102,7 +102,6 @@ const handleSubmit = async ({ errors }: { errors: Record<string, ValidatedError>
     })
   } catch (error: any) {
     errorMessage.value = error.message
-    loginForm.password = ''
   } finally {
     passwordLoading.value = false
   }

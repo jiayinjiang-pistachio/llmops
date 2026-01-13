@@ -117,6 +117,12 @@ router.beforeEach(async (to) => {
       path: '/auth/login',
     }
   }
+
+  if (auth.isLogin() && ['auth-login', 'auth-authorize'].includes(to.name as string)) {
+    return {
+      path: '/home'
+    }
+  }
 })
 
 export default router

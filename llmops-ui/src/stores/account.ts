@@ -1,3 +1,4 @@
+import type { CurrentUser } from '@/models/account'
 import storage from '@/utils/storage'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
@@ -5,7 +6,7 @@ import { ref } from 'vue'
 // 定义账号初始化数据
 const initAccount = {
   id: '',
-  name:'',
+  name: '',
   avatar: '',
   email: '',
   last_login_ip: '',
@@ -13,8 +14,8 @@ const initAccount = {
   created_at: 0,
 }
 
-export const useAccountState = defineStore('account', () => {
-  const account = ref(storage.get('account', initAccount))
+export const useAccountStore = defineStore('account', () => {
+  const account = ref<CurrentUser>(storage.get('account', initAccount))
 
   const update = (params: any) => {
     account.value = params
