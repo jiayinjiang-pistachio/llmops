@@ -650,7 +650,7 @@ class AppService(BaseService):
         return app
 
     def get_publish_histories_with_page(self, app_id: UUID, req: GetPublishHistoriesWithPageReq, account: Account) -> \
-    tuple[list[AppConfigVersion], Paginator]:
+            tuple[list[AppConfigVersion], Paginator]:
         """根据传递的应用id+请求数据，获取指定应用的发布历史配置列表信息"""
         # 1. 获取应用信息并校验权限
         self.get_app(app_id, account)
@@ -667,3 +667,35 @@ class AppService(BaseService):
         )
 
         return app_config_versions, paginator
+
+    def fallback_history_to_draft(self, app_id: UUID, app_config_version_id: UUID,
+                                  account: Account) -> AppConfigVersion:
+        """根据传递的应用id+历史配置版本idd、账号信息，回退特定配置到草稿"""
+        # 1. 校验应用权限并获取信息
+        app = self.get_app(app_id, account)
+
+        # 2. 查询指定的历史版本配置id
+        app_config_version = self.get(AppConfigVersion, app_config_version_id)
+
+        if not app_config_version:
+            raise NotFoundException("该历史版本配置不存在，请核实后重试")
+
+        # 3. 校验历史版本配置信息（剔除已删除的工具、知识库、工作流）
+        draft_app_config_copy = app_config_version.__dict__.copy()
+        remove_fields = ["id", "app_id", "version", "config_type", "updated_at", "created_at", "_sa_instance_state"]
+        for field in remove_fields:
+            draft_app_config_copy.pop(field)
+
+        # 4. 校验历史版本配置信息
+        draft_app_config_copy = self._validate_draft_app_config(draft_app_config_copy, account)
+
+        # 5. 更新草改配置信息
+        draft_app_config_record = app.draft_app_config
+        self.update(
+            draft_app_config_record,
+            # todo: 更新时间补丁信息
+            updated_at=datetime.now(),
+            **draft_app_config_copy,
+        )
+
+        return draft_app_config_record
