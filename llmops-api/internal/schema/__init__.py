@@ -9,7 +9,7 @@
 from .account_schema import GetCurrentUserResp, UpdatePasswordReq, UpdateNameReq, UpdateAvatarReq
 from .api_tool_schema import ValidateOpenAPISchemaReq, CreateAPIToolReq, GetApiToolResp, GetApiToolProviderResp, \
     GetApiToolProvidersWithPageReq, GetApiToolProvidersWithPageResp, UpdateApiToolProviderReq
-from .app_schema import CreateAppReq, GetAppResp
+from .app_schema import CreateAppReq, GetAppResp, GetPublishHistoriesWithPageReq, GetPublishHistoriesWithPageResp
 from .dataset_schema import CreateDatasetReq, GetDatasetsWithPageReq, GetDatasetResp, UpdateDatasetReq, \
     GetDatasetsWithPageResp, HitReq
 from .document_schema import CreateDocumentsReq, CreateDocumentsResp, UpdateDocumentEnabledReq
@@ -21,6 +21,8 @@ from .upload_file_schema import UploadImageReq, UploadFileResp, UploadFileReq
 __all__ = [
     "CreateAppReq",
     "GetAppResp",
+    "GetPublishHistoriesWithPageReq",
+    "GetPublishHistoriesWithPageResp",
     "ValidateOpenAPISchemaReq",
     "ListField",
     "CreateAPIToolReq",
@@ -46,5 +48,4 @@ __all__ = [
     "UpdatePasswordReq",
     "UpdateNameReq",
     "UpdateAvatarReq",
-
 ]

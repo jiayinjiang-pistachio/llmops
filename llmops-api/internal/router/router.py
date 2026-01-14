@@ -46,8 +46,10 @@ class Router:
         bp.add_url_rule("/apps/<uuid:app_id>/draft-app-config", methods=["POST"],
                         view_func=self.app_handler.update_draft_app_config)
         bp.add_url_rule("/apps/<uuid:app_id>/publish", methods=["POST"], view_func=self.app_handler.publish)
-        # bp.add_url_rule("/app/<uuid:id>", methods=["POST"], view_func=self.app_handler.update_app)
-        # bp.add_url_rule("/app/<uuid:id>/delete", methods=["DELETE"], view_func=self.app_handler.delete_app)
+        bp.add_url_rule("/apps/<uuid:app_id>/cancel-publish", methods=["POST"],
+                        view_func=self.app_handler.cancel_publish)
+        bp.add_url_rule("/apps/<uuid:app_id>/publish-histories",
+                        view_func=self.app_handler.get_publish_histories_with_page)
 
         # 3. 内置插件广场模块
         bp.add_url_rule("/builtin-tools", view_func=self.builtin_tool_handler.get_builtin_tools)

@@ -52,8 +52,6 @@ class Paginator:
         self.total_record = p.total
         self.total_page = math.ceil(p.total / self.page_size)
 
-        print("p.items: ", p.items)
-
         # 3. 返回分页后的数据
         return p.items
 
