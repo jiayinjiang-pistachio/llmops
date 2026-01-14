@@ -6959,3 +6959,7 @@ WHERE app_config_version.app_id = %(app_id_1)s::UUID AND app_config_version.conf
 2026-01-14 12:52:14,500.500] _internal.py line:97 INFO:  * Restarting with stat)
 2026-01-14 12:57:41,821.821] _internal.py line:97 INFO:  * Restarting with stat)
 2026-01-14 12:58:23,083.083] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-14 15:27:15,523.523] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-14 16:01:48,833.833] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-14 16:09:03,323.323] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-14 16:54:51,533.533] _internal.py line:97 INFO:  * Restarting with stat)

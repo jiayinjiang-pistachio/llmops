@@ -9,13 +9,14 @@
 from dataclasses import dataclass
 from uuid import UUID
 
+from flask import request
 from flask_login import current_user, login_required
 from injector import inject
 
 from internal.schema import CreateAppReq, GetAppResp
 from internal.service import AppService
 # from internal.task.demo_task import demo_task
-from pkg.response import validate_error_json, success_json
+from pkg.response import validate_error_json, success_json, success_message
 
 
 @inject
@@ -49,6 +50,16 @@ class AppHandler:
         draft_config = self.app_service.get_draft_app_config(app_id, current_user)
 
         return success_json(draft_config)
+
+    @login_required
+    def update_draft_app_config(self, app_id: UUID):
+        """根据传递的应用id获取应用的最新草稿配置"""
+        draft_app_config = request.get_json(force=True, silent=True) or {}
+
+        # 2. 调用服务更新应用的草稿配置
+        self.app_service.update_draft_app_config(app_id, draft_app_config, current_user)
+
+        return success_message("更新应用草稿配置成功")
 
     def ping(self):
         pass
