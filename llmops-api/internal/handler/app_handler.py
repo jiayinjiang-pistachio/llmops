@@ -61,5 +61,11 @@ class AppHandler:
 
         return success_message("更新应用草稿配置成功")
 
+    @login_required
+    def publish(self, app_id: UUID):
+        """根据传递的应用id发布/更新特定的草稿配置信息"""
+        self.app_service.publish_graft_app_config(app_id, current_user)
+        return success_message("发布/更新应用配置成功")
+
     def ping(self):
         pass

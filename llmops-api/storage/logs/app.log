@@ -555,3 +555,593 @@ WHERE dataset.id IN (%(id_1_1)s::UUID))
 2026-01-14 17:18:50,469.469] base.py line:1846 INFO: [cached since 77s ago] {'id_1_1': '7826b06c-4d09-4ca9-ab49-d44d2a113cc7'})
 2026-01-14 17:18:50,477.477] base.py line:2713 INFO: ROLLBACK)
 2026-01-14 17:18:50,478.478] _internal.py line:97 INFO: 127.0.0.1 - - [14/Jan/2026 17:18:50] "GET /apps/339045e1-e8dd-408d-b83b-6f3fb0179e66/draft-app-config HTTP/1.1" 200 -)
+2026-01-14 17:52:39,714.714] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/app_service.py', reloading)
+2026-01-14 17:52:58,720.720] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-14 17:52:58,744.744] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-14 17:56:28,464.464] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/app_service.py', reloading)
+2026-01-14 17:56:48,403.403] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-14 17:56:48,434.434] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-14 17:56:49,429.429] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-14 17:56:49,430.430] base.py line:1846 INFO: [raw sql] {})
+2026-01-14 17:56:49,433.433] base.py line:1846 INFO: select current_schema())
+2026-01-14 17:56:49,434.434] base.py line:1846 INFO: [raw sql] {})
+2026-01-14 17:56:49,443.443] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-14 17:56:49,444.444] base.py line:1846 INFO: [raw sql] {})
+2026-01-14 17:56:49,446.446] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-14 17:56:49,458.458] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-14 17:56:49,459.459] base.py line:1846 INFO: [generated in 0.00062s] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-14 17:56:49,474.474] base.py line:1846 INFO: SELECT app.id AS app_id, app.account_id AS app_account_id, app.app_config_id AS app_app_config_id, app.draft_app_config_id AS app_draft_app_config_id, app.debug_conversation_id AS app_debug_conversation_id, app.name AS app_name, app.icon AS app_icon, app.description AS app_description, app.status AS app_status, app.updated_at AS app_updated_at, app.created_at AS app_created_at 
+FROM app 
+WHERE app.id = %(pk_1)s::UUID)
+2026-01-14 17:56:49,475.475] base.py line:1846 INFO: [generated in 0.00043s] {'pk_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 17:56:49,486.486] base.py line:1846 INFO: SELECT app_config_version.id AS app_config_version_id, app_config_version.app_id AS app_config_version_app_id, app_config_version.model_config AS app_config_version_model_config, app_config_version.dialog_round AS app_config_version_dialog_round, app_config_version.preset_prompt AS app_config_version_preset_prompt, app_config_version.tools AS app_config_version_tools, app_config_version.workflows AS app_config_version_workflows, app_config_version.datasets AS app_config_version_datasets, app_config_version.retrieval_config AS app_config_version_retrieval_config, app_config_version.long_term_memory AS app_config_version_long_term_memory, app_config_version.opening_statement AS app_config_version_opening_statement, app_config_version.opening_questions AS app_config_version_opening_questions, app_config_version.speech_to_text AS app_config_version_speech_to_text, app_config_version.text_to_speech AS app_config_version_text_to_speech, app_config_version.review_config AS app_config_version_review_config, app_config_version.version AS app_config_version_version, app_config_version.config_type AS app_config_version_config_type, app_config_version.updated_at AS app_config_version_updated_at, app_config_version.created_at AS app_config_version_created_at 
+FROM app_config_version 
+WHERE app_config_version.app_id = %(app_id_1)s::UUID AND app_config_version.config_type = %(config_type_1)s)
+2026-01-14 17:56:49,486.486] base.py line:1846 INFO: [generated in 0.00039s] {'app_id_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66'), 'config_type_1': <AppConfigType.DRAFT: 'draft'>})
+2026-01-14 17:56:49,527.527] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (%(id_1_1)s::UUID))
+2026-01-14 17:56:49,527.527] base.py line:1846 INFO: [generated in 0.00048s] {'id_1_1': '7826b06c-4d09-4ca9-ab49-d44d2a113cc7'})
+2026-01-14 17:56:49,537.537] base.py line:2713 INFO: ROLLBACK)
+2026-01-14 17:56:49,538.538] _internal.py line:97 INFO: 127.0.0.1 - - [14/Jan/2026 17:56:49] "GET /apps/339045e1-e8dd-408d-b83b-6f3fb0179e66/draft-app-config HTTP/1.1" 200 -)
+2026-01-14 17:57:28,176.176] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/app_service.py', reloading)
+2026-01-14 17:57:45,444.444] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-14 17:57:45,469.469] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-14 18:01:05,874.874] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/app_service.py', reloading)
+2026-01-14 18:01:22,667.667] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-14 18:01:22,693.693] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-14 18:13:48,916.916] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/app_service.py', reloading)
+2026-01-14 18:14:09,573.573] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-14 18:14:09,599.599] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-14 18:15:17,986.986] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-14 18:15:17,990.990] base.py line:1846 INFO: [raw sql] {})
+2026-01-14 18:15:17,997.997] base.py line:1846 INFO: select current_schema())
+2026-01-14 18:15:17,998.998] base.py line:1846 INFO: [raw sql] {})
+2026-01-14 18:15:18,011.011] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-14 18:15:18,012.012] base.py line:1846 INFO: [raw sql] {})
+2026-01-14 18:15:18,015.015] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-14 18:15:18,039.039] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-14 18:15:18,039.039] base.py line:1846 INFO: [generated in 0.00263s] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-14 18:15:18,076.076] base.py line:1846 INFO: SELECT app.id AS app_id, app.account_id AS app_account_id, app.app_config_id AS app_app_config_id, app.draft_app_config_id AS app_draft_app_config_id, app.debug_conversation_id AS app_debug_conversation_id, app.name AS app_name, app.icon AS app_icon, app.description AS app_description, app.status AS app_status, app.updated_at AS app_updated_at, app.created_at AS app_created_at 
+FROM app 
+WHERE app.id = %(pk_1)s::UUID)
+2026-01-14 18:15:18,076.076] base.py line:1846 INFO: [generated in 0.00048s] {'pk_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:15:18,098.098] base.py line:1846 INFO: SELECT app_config_version.id AS app_config_version_id, app_config_version.app_id AS app_config_version_app_id, app_config_version.model_config AS app_config_version_model_config, app_config_version.dialog_round AS app_config_version_dialog_round, app_config_version.preset_prompt AS app_config_version_preset_prompt, app_config_version.tools AS app_config_version_tools, app_config_version.workflows AS app_config_version_workflows, app_config_version.datasets AS app_config_version_datasets, app_config_version.retrieval_config AS app_config_version_retrieval_config, app_config_version.long_term_memory AS app_config_version_long_term_memory, app_config_version.opening_statement AS app_config_version_opening_statement, app_config_version.opening_questions AS app_config_version_opening_questions, app_config_version.speech_to_text AS app_config_version_speech_to_text, app_config_version.text_to_speech AS app_config_version_text_to_speech, app_config_version.review_config AS app_config_version_review_config, app_config_version.version AS app_config_version_version, app_config_version.config_type AS app_config_version_config_type, app_config_version.updated_at AS app_config_version_updated_at, app_config_version.created_at AS app_config_version_created_at 
+FROM app_config_version 
+WHERE app_config_version.app_id = %(app_id_1)s::UUID AND app_config_version.config_type = %(config_type_1)s)
+2026-01-14 18:15:18,098.098] base.py line:1846 INFO: [generated in 0.00037s] {'app_id_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66'), 'config_type_1': <AppConfigType.DRAFT: 'draft'>})
+2026-01-14 18:15:18,105.105] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (%(id_1_1)s::UUID))
+2026-01-14 18:15:18,106.106] base.py line:1846 INFO: [generated in 0.00052s] {'id_1_1': '7826b06c-4d09-4ca9-ab49-d44d2a113cc7'})
+2026-01-14 18:15:18,108.108] http.py line:75 ERROR: An error occurred: 'workflow')
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/app_handler.py", line 67, in publish
+    self.app_service.publish_graft_app_config(app_id, current_user)
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/app_service.py", line 582, in publish_graft_app_config
+    workflow=draft_app_config["workflow"],
+             ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'workflow'
+2026-01-14 18:15:18,124.124] base.py line:2713 INFO: ROLLBACK)
+2026-01-14 18:15:18,141.141] _internal.py line:97 INFO: 127.0.0.1 - - [14/Jan/2026 18:15:18] "[35m[1mPOST /apps/339045e1-e8dd-408d-b83b-6f3fb0179e66/publish HTTP/1.1[0m" 500 -)
+2026-01-14 18:15:56,558.558] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/app_service.py', reloading)
+2026-01-14 18:16:12,808.808] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-14 18:16:12,857.857] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-14 18:16:13,159.159] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-14 18:16:13,159.159] base.py line:1846 INFO: [raw sql] {})
+2026-01-14 18:16:13,160.160] base.py line:1846 INFO: select current_schema())
+2026-01-14 18:16:13,161.161] base.py line:1846 INFO: [raw sql] {})
+2026-01-14 18:16:13,166.166] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-14 18:16:13,167.167] base.py line:1846 INFO: [raw sql] {})
+2026-01-14 18:16:13,168.168] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-14 18:16:13,175.175] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-14 18:16:13,175.175] base.py line:1846 INFO: [generated in 0.00258s] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-14 18:16:13,184.184] base.py line:1846 INFO: SELECT app.id AS app_id, app.account_id AS app_account_id, app.app_config_id AS app_app_config_id, app.draft_app_config_id AS app_draft_app_config_id, app.debug_conversation_id AS app_debug_conversation_id, app.name AS app_name, app.icon AS app_icon, app.description AS app_description, app.status AS app_status, app.updated_at AS app_updated_at, app.created_at AS app_created_at 
+FROM app 
+WHERE app.id = %(pk_1)s::UUID)
+2026-01-14 18:16:13,185.185] base.py line:1846 INFO: [generated in 0.00030s] {'pk_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:16:13,191.191] base.py line:1846 INFO: SELECT app_config_version.id AS app_config_version_id, app_config_version.app_id AS app_config_version_app_id, app_config_version.model_config AS app_config_version_model_config, app_config_version.dialog_round AS app_config_version_dialog_round, app_config_version.preset_prompt AS app_config_version_preset_prompt, app_config_version.tools AS app_config_version_tools, app_config_version.workflows AS app_config_version_workflows, app_config_version.datasets AS app_config_version_datasets, app_config_version.retrieval_config AS app_config_version_retrieval_config, app_config_version.long_term_memory AS app_config_version_long_term_memory, app_config_version.opening_statement AS app_config_version_opening_statement, app_config_version.opening_questions AS app_config_version_opening_questions, app_config_version.speech_to_text AS app_config_version_speech_to_text, app_config_version.text_to_speech AS app_config_version_text_to_speech, app_config_version.review_config AS app_config_version_review_config, app_config_version.version AS app_config_version_version, app_config_version.config_type AS app_config_version_config_type, app_config_version.updated_at AS app_config_version_updated_at, app_config_version.created_at AS app_config_version_created_at 
+FROM app_config_version 
+WHERE app_config_version.app_id = %(app_id_1)s::UUID AND app_config_version.config_type = %(config_type_1)s)
+2026-01-14 18:16:13,191.191] base.py line:1846 INFO: [generated in 0.00034s] {'app_id_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66'), 'config_type_1': <AppConfigType.DRAFT: 'draft'>})
+2026-01-14 18:16:13,195.195] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (%(id_1_1)s::UUID))
+2026-01-14 18:16:13,196.196] base.py line:1846 INFO: [generated in 0.00039s] {'id_1_1': '7826b06c-4d09-4ca9-ab49-d44d2a113cc7'})
+2026-01-14 18:16:13,204.204] base.py line:1846 INFO: INSERT INTO app_config (app_id, model_config, dialog_round, preset_prompt, tools, workflows, retrieval_config, long_term_memory, opening_statement, opening_questions, speech_to_text, text_to_speech, review_config) VALUES (%(app_id)s::UUID, %(model_config)s::JSONB, %(dialog_round)s, %(preset_prompt)s, %(tools)s::JSONB, %(workflows)s::JSONB, %(retrieval_config)s::JSONB, %(long_term_memory)s::JSONB, %(opening_statement)s, %(opening_questions)s::JSONB, %(speech_to_text)s::JSONB, %(text_to_speech)s::JSONB, %(review_config)s::JSONB) RETURNING app_config.id, app_config.updated_at, app_config.created_at)
+2026-01-14 18:16:13,204.204] base.py line:1846 INFO: [generated in 0.00052s] {'app_id': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66'), 'model_config': '{"model": "gpt-4o-mini", "provider": "openai", "parameters": {"top_p": 0.85, "max_token": 8192, "temperature": 0.5, "presence_penalty": 0.2, "frequency_penalty": 0.2}}', 'dialog_round': 3, 'preset_prompt': '', 'tools': '[{"type": "builtin_tool", "provider_id": "gaode", "tool_id": "gaode_weather", "params": {}}]', 'workflows': '[]', 'retrieval_config': '{"k": 10, "score": 0.5, "retrieval_strategy": "hybrid"}', 'long_term_memory': '{"enable": false}', 'opening_statement': '', 'opening_questions': '["\\u8fd9\\u662f\\u4e00\\u4e2a\\u5efa\\u8bae\\u95ee\\u9898"]', 'speech_to_text': '{"enable": false}', 'text_to_speech': '{"voice": "echo", "enable": false, "auto_play": false}', 'review_config': '{"enable": false, "keywords": ["\\u6d4b\\u8bd5"], "inputs_config": {"enable": false, "preset_response": "\\u4f60\\u7684\\u8f93\\u5165\\u4e0d\\u5408\\u6cd5"}, "outputs_config": {"enable": true}}'})
+2026-01-14 18:16:13,284.284] base.py line:2716 INFO: COMMIT)
+2026-01-14 18:16:13,294.294] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-14 18:16:13,296.296] base.py line:1846 INFO: SELECT app_config.id AS app_config_id, app_config.app_id AS app_config_app_id, app_config.model_config AS app_config_model_config, app_config.dialog_round AS app_config_dialog_round, app_config.preset_prompt AS app_config_preset_prompt, app_config.tools AS app_config_tools, app_config.workflows AS app_config_workflows, app_config.retrieval_config AS app_config_retrieval_config, app_config.long_term_memory AS app_config_long_term_memory, app_config.opening_statement AS app_config_opening_statement, app_config.opening_questions AS app_config_opening_questions, app_config.speech_to_text AS app_config_speech_to_text, app_config.text_to_speech AS app_config_text_to_speech, app_config.review_config AS app_config_review_config, app_config.updated_at AS app_config_updated_at, app_config.created_at AS app_config_created_at 
+FROM app_config 
+WHERE app_config.id = %(pk_1)s::UUID)
+2026-01-14 18:16:13,297.297] base.py line:1846 INFO: [generated in 0.00029s] {'pk_1': UUID('6137cf61-ddac-47c7-a47c-67b43ed60635')})
+2026-01-14 18:16:13,310.310] base.py line:1846 INFO: SELECT app.id AS app_id, app.account_id AS app_account_id, app.app_config_id AS app_app_config_id, app.draft_app_config_id AS app_draft_app_config_id, app.debug_conversation_id AS app_debug_conversation_id, app.name AS app_name, app.icon AS app_icon, app.description AS app_description, app.status AS app_status, app.updated_at AS app_updated_at, app.created_at AS app_created_at 
+FROM app 
+WHERE app.id = %(pk_1)s::UUID)
+2026-01-14 18:16:13,310.310] base.py line:1846 INFO: [generated in 0.00029s] {'pk_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:16:13,312.312] base.py line:1846 INFO: UPDATE app SET app_config_id=%(app_config_id)s::UUID, status=%(status)s WHERE app.id = %(app_id)s::UUID)
+2026-01-14 18:16:13,313.313] base.py line:1846 INFO: [generated in 0.00033s] {'app_config_id': UUID('6137cf61-ddac-47c7-a47c-67b43ed60635'), 'status': <AppStatus.PUBLISHED: 'published'>, 'app_id': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:16:13,321.321] base.py line:2716 INFO: COMMIT)
+2026-01-14 18:16:13,322.322] http.py line:75 ERROR: An error occurred: 'App' object has no attribute 'app_id')
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/app_handler.py", line 67, in publish
+    self.app_service.publish_graft_app_config(app_id, current_user)
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/app_service.py", line 602, in publish_graft_app_config
+    AppDatasetJoin.app_id == app.app_id,
+                             ^^^^^^^^^^
+AttributeError: 'App' object has no attribute 'app_id'
+2026-01-14 18:16:13,336.336] _internal.py line:97 INFO: 127.0.0.1 - - [14/Jan/2026 18:16:13] "[35m[1mPOST /apps/339045e1-e8dd-408d-b83b-6f3fb0179e66/publish HTTP/1.1[0m" 500 -)
+2026-01-14 18:16:41,568.568] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/app_service.py', reloading)
+2026-01-14 18:16:57,032.032] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-14 18:16:57,078.078] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-14 18:16:57,422.422] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-14 18:16:57,423.423] base.py line:1846 INFO: [raw sql] {})
+2026-01-14 18:16:57,424.424] base.py line:1846 INFO: select current_schema())
+2026-01-14 18:16:57,424.424] base.py line:1846 INFO: [raw sql] {})
+2026-01-14 18:16:57,425.425] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-14 18:16:57,425.425] base.py line:1846 INFO: [raw sql] {})
+2026-01-14 18:16:57,426.426] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-14 18:16:57,431.431] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-14 18:16:57,431.431] base.py line:1846 INFO: [generated in 0.00036s] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-14 18:16:57,437.437] base.py line:1846 INFO: SELECT app.id AS app_id, app.account_id AS app_account_id, app.app_config_id AS app_app_config_id, app.draft_app_config_id AS app_draft_app_config_id, app.debug_conversation_id AS app_debug_conversation_id, app.name AS app_name, app.icon AS app_icon, app.description AS app_description, app.status AS app_status, app.updated_at AS app_updated_at, app.created_at AS app_created_at 
+FROM app 
+WHERE app.id = %(pk_1)s::UUID)
+2026-01-14 18:16:57,437.437] base.py line:1846 INFO: [generated in 0.00031s] {'pk_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:16:57,446.446] base.py line:1846 INFO: SELECT app_config_version.id AS app_config_version_id, app_config_version.app_id AS app_config_version_app_id, app_config_version.model_config AS app_config_version_model_config, app_config_version.dialog_round AS app_config_version_dialog_round, app_config_version.preset_prompt AS app_config_version_preset_prompt, app_config_version.tools AS app_config_version_tools, app_config_version.workflows AS app_config_version_workflows, app_config_version.datasets AS app_config_version_datasets, app_config_version.retrieval_config AS app_config_version_retrieval_config, app_config_version.long_term_memory AS app_config_version_long_term_memory, app_config_version.opening_statement AS app_config_version_opening_statement, app_config_version.opening_questions AS app_config_version_opening_questions, app_config_version.speech_to_text AS app_config_version_speech_to_text, app_config_version.text_to_speech AS app_config_version_text_to_speech, app_config_version.review_config AS app_config_version_review_config, app_config_version.version AS app_config_version_version, app_config_version.config_type AS app_config_version_config_type, app_config_version.updated_at AS app_config_version_updated_at, app_config_version.created_at AS app_config_version_created_at 
+FROM app_config_version 
+WHERE app_config_version.app_id = %(app_id_1)s::UUID AND app_config_version.config_type = %(config_type_1)s)
+2026-01-14 18:16:57,446.446] base.py line:1846 INFO: [generated in 0.00038s] {'app_id_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66'), 'config_type_1': <AppConfigType.DRAFT: 'draft'>})
+2026-01-14 18:16:57,463.463] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (%(id_1_1)s::UUID))
+2026-01-14 18:16:57,464.464] base.py line:1846 INFO: [generated in 0.00044s] {'id_1_1': '7826b06c-4d09-4ca9-ab49-d44d2a113cc7'})
+2026-01-14 18:16:57,474.474] base.py line:1846 INFO: INSERT INTO app_config (app_id, model_config, dialog_round, preset_prompt, tools, workflows, retrieval_config, long_term_memory, opening_statement, opening_questions, speech_to_text, text_to_speech, review_config) VALUES (%(app_id)s::UUID, %(model_config)s::JSONB, %(dialog_round)s, %(preset_prompt)s, %(tools)s::JSONB, %(workflows)s::JSONB, %(retrieval_config)s::JSONB, %(long_term_memory)s::JSONB, %(opening_statement)s, %(opening_questions)s::JSONB, %(speech_to_text)s::JSONB, %(text_to_speech)s::JSONB, %(review_config)s::JSONB) RETURNING app_config.id, app_config.updated_at, app_config.created_at)
+2026-01-14 18:16:57,474.474] base.py line:1846 INFO: [generated in 0.00055s] {'app_id': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66'), 'model_config': '{"model": "gpt-4o-mini", "provider": "openai", "parameters": {"top_p": 0.85, "max_token": 8192, "temperature": 0.5, "presence_penalty": 0.2, "frequency_penalty": 0.2}}', 'dialog_round': 3, 'preset_prompt': '', 'tools': '[{"type": "builtin_tool", "provider_id": "gaode", "tool_id": "gaode_weather", "params": {}}]', 'workflows': '[]', 'retrieval_config': '{"k": 10, "score": 0.5, "retrieval_strategy": "hybrid"}', 'long_term_memory': '{"enable": false}', 'opening_statement': '', 'opening_questions': '["\\u8fd9\\u662f\\u4e00\\u4e2a\\u5efa\\u8bae\\u95ee\\u9898"]', 'speech_to_text': '{"enable": false}', 'text_to_speech': '{"voice": "echo", "enable": false, "auto_play": false}', 'review_config': '{"enable": false, "keywords": ["\\u6d4b\\u8bd5"], "inputs_config": {"enable": false, "preset_response": "\\u4f60\\u7684\\u8f93\\u5165\\u4e0d\\u5408\\u6cd5"}, "outputs_config": {"enable": true}}'})
+2026-01-14 18:16:57,495.495] base.py line:2716 INFO: COMMIT)
+2026-01-14 18:16:57,497.497] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-14 18:16:57,499.499] base.py line:1846 INFO: SELECT app_config.id AS app_config_id, app_config.app_id AS app_config_app_id, app_config.model_config AS app_config_model_config, app_config.dialog_round AS app_config_dialog_round, app_config.preset_prompt AS app_config_preset_prompt, app_config.tools AS app_config_tools, app_config.workflows AS app_config_workflows, app_config.retrieval_config AS app_config_retrieval_config, app_config.long_term_memory AS app_config_long_term_memory, app_config.opening_statement AS app_config_opening_statement, app_config.opening_questions AS app_config_opening_questions, app_config.speech_to_text AS app_config_speech_to_text, app_config.text_to_speech AS app_config_text_to_speech, app_config.review_config AS app_config_review_config, app_config.updated_at AS app_config_updated_at, app_config.created_at AS app_config_created_at 
+FROM app_config 
+WHERE app_config.id = %(pk_1)s::UUID)
+2026-01-14 18:16:57,499.499] base.py line:1846 INFO: [generated in 0.00025s] {'pk_1': UUID('e2f4efe7-c728-45cc-88db-734826f4ef85')})
+2026-01-14 18:16:57,502.502] base.py line:1846 INFO: SELECT app.id AS app_id, app.account_id AS app_account_id, app.app_config_id AS app_app_config_id, app.draft_app_config_id AS app_draft_app_config_id, app.debug_conversation_id AS app_debug_conversation_id, app.name AS app_name, app.icon AS app_icon, app.description AS app_description, app.status AS app_status, app.updated_at AS app_updated_at, app.created_at AS app_created_at 
+FROM app 
+WHERE app.id = %(pk_1)s::UUID)
+2026-01-14 18:16:57,502.502] base.py line:1846 INFO: [generated in 0.00030s] {'pk_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:16:57,505.505] base.py line:1846 INFO: UPDATE app SET app_config_id=%(app_config_id)s::UUID WHERE app.id = %(app_id)s::UUID)
+2026-01-14 18:16:57,505.505] base.py line:1846 INFO: [generated in 0.00047s] {'app_config_id': UUID('e2f4efe7-c728-45cc-88db-734826f4ef85'), 'app_id': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:16:57,508.508] base.py line:2716 INFO: COMMIT)
+2026-01-14 18:16:57,515.515] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-14 18:16:57,516.516] base.py line:1846 INFO: DELETE FROM app_dataset_join WHERE app_dataset_join.app_id = %(app_id_1)s::UUID)
+2026-01-14 18:16:57,516.516] base.py line:1846 INFO: [generated in 0.00023s] {'app_id_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:16:57,518.518] base.py line:2716 INFO: COMMIT)
+2026-01-14 18:16:57,519.519] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-14 18:16:57,521.521] base.py line:1846 INFO: INSERT INTO app_dataset_join (app_id, dataset_id) VALUES (%(app_id)s::UUID, %(dataset_id)s::UUID) RETURNING app_dataset_join.id, app_dataset_join.updated_at, app_dataset_join.created_at)
+2026-01-14 18:16:57,521.521] base.py line:1846 INFO: [generated in 0.00024s] {'app_id': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66'), 'dataset_id': '7826b06c-4d09-4ca9-ab49-d44d2a113cc7'})
+2026-01-14 18:16:57,525.525] base.py line:2716 INFO: COMMIT)
+2026-01-14 18:16:57,526.526] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-14 18:16:57,527.527] base.py line:1846 INFO: SELECT app.id AS app_id, app.account_id AS app_account_id, app.app_config_id AS app_app_config_id, app.draft_app_config_id AS app_draft_app_config_id, app.debug_conversation_id AS app_debug_conversation_id, app.name AS app_name, app.icon AS app_icon, app.description AS app_description, app.status AS app_status, app.updated_at AS app_updated_at, app.created_at AS app_created_at 
+FROM app 
+WHERE app.id = %(pk_1)s::UUID)
+2026-01-14 18:16:57,527.527] base.py line:1846 INFO: [cached since 0.02542s ago] {'pk_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:16:57,529.529] base.py line:1846 INFO: SELECT app_config_version.id AS app_config_version_id, app_config_version.app_id AS app_config_version_app_id, app_config_version.model_config AS app_config_version_model_config, app_config_version.dialog_round AS app_config_version_dialog_round, app_config_version.preset_prompt AS app_config_version_preset_prompt, app_config_version.tools AS app_config_version_tools, app_config_version.workflows AS app_config_version_workflows, app_config_version.datasets AS app_config_version_datasets, app_config_version.retrieval_config AS app_config_version_retrieval_config, app_config_version.long_term_memory AS app_config_version_long_term_memory, app_config_version.opening_statement AS app_config_version_opening_statement, app_config_version.opening_questions AS app_config_version_opening_questions, app_config_version.speech_to_text AS app_config_version_speech_to_text, app_config_version.text_to_speech AS app_config_version_text_to_speech, app_config_version.review_config AS app_config_version_review_config, app_config_version.version AS app_config_version_version, app_config_version.config_type AS app_config_version_config_type, app_config_version.updated_at AS app_config_version_updated_at, app_config_version.created_at AS app_config_version_created_at 
+FROM app_config_version 
+WHERE app_config_version.app_id = %(app_id_1)s::UUID AND app_config_version.config_type = %(config_type_1)s)
+2026-01-14 18:16:57,529.529] base.py line:1846 INFO: [cached since 0.08348s ago] {'app_id_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66'), 'config_type_1': <AppConfigType.DRAFT: 'draft'>})
+2026-01-14 18:16:57,534.534] base.py line:1846 INFO: SELECT coalesce(max(app_config_version.version), %(coalesce_2)s) AS coalesce_1 
+FROM app_config_version 
+WHERE app_config_version.app_id = %(app_id_1)s::UUID AND app_config_version.config_type = %(config_type_1)s)
+2026-01-14 18:16:57,534.534] base.py line:1846 INFO: [generated in 0.00029s] {'coalesce_2': 0, 'app_id_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66'), 'config_type_1': <AppConfigType.PUBLISHED: 'published'>})
+2026-01-14 18:16:57,570.570] base.py line:2713 INFO: ROLLBACK)
+2026-01-14 18:16:57,570.570] http.py line:75 ERROR: An error occurred: '_sa_instance_state' is an invalid keyword argument for AppConfigVersion)
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/app_handler.py", line 67, in publish
+    self.app_service.publish_graft_app_config(app_id, current_user)
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/app_service.py", line 622, in publish_graft_app_config
+    self.create(
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/base_service.py", line 22, in create
+    model_instance = model(**kwargs)
+                     ^^^^^^^^^^^^^^^
+  File "<string>", line 4, in __init__
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/sqlalchemy/orm/state.py", line 596, in _initialize_instance
+    with util.safe_reraise():
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/sqlalchemy/util/langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/sqlalchemy/orm/state.py", line 594, in _initialize_instance
+    manager.original_init(*mixed[1:], **kwargs)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/sqlalchemy/orm/decl_base.py", line 2179, in _declarative_constructor
+    raise TypeError(
+TypeError: '_sa_instance_state' is an invalid keyword argument for AppConfigVersion
+2026-01-14 18:16:57,596.596] _internal.py line:97 INFO: 127.0.0.1 - - [14/Jan/2026 18:16:57] "[35m[1mPOST /apps/339045e1-e8dd-408d-b83b-6f3fb0179e66/publish HTTP/1.1[0m" 500 -)
+2026-01-14 18:17:21,888.888] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/app_service.py', reloading)
+2026-01-14 18:17:37,323.323] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-14 18:17:37,351.351] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-14 18:17:37,664.664] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-14 18:17:37,664.664] base.py line:1846 INFO: [raw sql] {})
+2026-01-14 18:17:37,666.666] base.py line:1846 INFO: select current_schema())
+2026-01-14 18:17:37,666.666] base.py line:1846 INFO: [raw sql] {})
+2026-01-14 18:17:37,667.667] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-14 18:17:37,667.667] base.py line:1846 INFO: [raw sql] {})
+2026-01-14 18:17:37,668.668] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-14 18:17:37,671.671] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-14 18:17:37,672.672] base.py line:1846 INFO: [generated in 0.00047s] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-14 18:17:37,678.678] base.py line:1846 INFO: SELECT app.id AS app_id, app.account_id AS app_account_id, app.app_config_id AS app_app_config_id, app.draft_app_config_id AS app_draft_app_config_id, app.debug_conversation_id AS app_debug_conversation_id, app.name AS app_name, app.icon AS app_icon, app.description AS app_description, app.status AS app_status, app.updated_at AS app_updated_at, app.created_at AS app_created_at 
+FROM app 
+WHERE app.id = %(pk_1)s::UUID)
+2026-01-14 18:17:37,678.678] base.py line:1846 INFO: [generated in 0.00034s] {'pk_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:17:37,684.684] base.py line:1846 INFO: SELECT app_config_version.id AS app_config_version_id, app_config_version.app_id AS app_config_version_app_id, app_config_version.model_config AS app_config_version_model_config, app_config_version.dialog_round AS app_config_version_dialog_round, app_config_version.preset_prompt AS app_config_version_preset_prompt, app_config_version.tools AS app_config_version_tools, app_config_version.workflows AS app_config_version_workflows, app_config_version.datasets AS app_config_version_datasets, app_config_version.retrieval_config AS app_config_version_retrieval_config, app_config_version.long_term_memory AS app_config_version_long_term_memory, app_config_version.opening_statement AS app_config_version_opening_statement, app_config_version.opening_questions AS app_config_version_opening_questions, app_config_version.speech_to_text AS app_config_version_speech_to_text, app_config_version.text_to_speech AS app_config_version_text_to_speech, app_config_version.review_config AS app_config_version_review_config, app_config_version.version AS app_config_version_version, app_config_version.config_type AS app_config_version_config_type, app_config_version.updated_at AS app_config_version_updated_at, app_config_version.created_at AS app_config_version_created_at 
+FROM app_config_version 
+WHERE app_config_version.app_id = %(app_id_1)s::UUID AND app_config_version.config_type = %(config_type_1)s)
+2026-01-14 18:17:37,684.684] base.py line:1846 INFO: [generated in 0.00032s] {'app_id_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66'), 'config_type_1': <AppConfigType.DRAFT: 'draft'>})
+2026-01-14 18:17:37,688.688] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (%(id_1_1)s::UUID))
+2026-01-14 18:17:37,688.688] base.py line:1846 INFO: [generated in 0.00048s] {'id_1_1': '7826b06c-4d09-4ca9-ab49-d44d2a113cc7'})
+2026-01-14 18:17:37,696.696] base.py line:1846 INFO: INSERT INTO app_config (app_id, model_config, dialog_round, preset_prompt, tools, workflows, retrieval_config, long_term_memory, opening_statement, opening_questions, speech_to_text, text_to_speech, review_config) VALUES (%(app_id)s::UUID, %(model_config)s::JSONB, %(dialog_round)s, %(preset_prompt)s, %(tools)s::JSONB, %(workflows)s::JSONB, %(retrieval_config)s::JSONB, %(long_term_memory)s::JSONB, %(opening_statement)s, %(opening_questions)s::JSONB, %(speech_to_text)s::JSONB, %(text_to_speech)s::JSONB, %(review_config)s::JSONB) RETURNING app_config.id, app_config.updated_at, app_config.created_at)
+2026-01-14 18:17:37,696.696] base.py line:1846 INFO: [generated in 0.00051s] {'app_id': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66'), 'model_config': '{"model": "gpt-4o-mini", "provider": "openai", "parameters": {"top_p": 0.85, "max_token": 8192, "temperature": 0.5, "presence_penalty": 0.2, "frequency_penalty": 0.2}}', 'dialog_round': 3, 'preset_prompt': '', 'tools': '[{"type": "builtin_tool", "provider_id": "gaode", "tool_id": "gaode_weather", "params": {}}]', 'workflows': '[]', 'retrieval_config': '{"k": 10, "score": 0.5, "retrieval_strategy": "hybrid"}', 'long_term_memory': '{"enable": false}', 'opening_statement': '', 'opening_questions': '["\\u8fd9\\u662f\\u4e00\\u4e2a\\u5efa\\u8bae\\u95ee\\u9898"]', 'speech_to_text': '{"enable": false}', 'text_to_speech': '{"voice": "echo", "enable": false, "auto_play": false}', 'review_config': '{"enable": false, "keywords": ["\\u6d4b\\u8bd5"], "inputs_config": {"enable": false, "preset_response": "\\u4f60\\u7684\\u8f93\\u5165\\u4e0d\\u5408\\u6cd5"}, "outputs_config": {"enable": true}}'})
+2026-01-14 18:17:37,711.711] base.py line:2716 INFO: COMMIT)
+2026-01-14 18:17:37,718.718] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-14 18:17:37,720.720] base.py line:1846 INFO: SELECT app_config.id AS app_config_id, app_config.app_id AS app_config_app_id, app_config.model_config AS app_config_model_config, app_config.dialog_round AS app_config_dialog_round, app_config.preset_prompt AS app_config_preset_prompt, app_config.tools AS app_config_tools, app_config.workflows AS app_config_workflows, app_config.retrieval_config AS app_config_retrieval_config, app_config.long_term_memory AS app_config_long_term_memory, app_config.opening_statement AS app_config_opening_statement, app_config.opening_questions AS app_config_opening_questions, app_config.speech_to_text AS app_config_speech_to_text, app_config.text_to_speech AS app_config_text_to_speech, app_config.review_config AS app_config_review_config, app_config.updated_at AS app_config_updated_at, app_config.created_at AS app_config_created_at 
+FROM app_config 
+WHERE app_config.id = %(pk_1)s::UUID)
+2026-01-14 18:17:37,720.720] base.py line:1846 INFO: [generated in 0.00024s] {'pk_1': UUID('95b53239-6dd4-45d5-aba0-c4c8a3bf231c')})
+2026-01-14 18:17:37,722.722] base.py line:1846 INFO: SELECT app.id AS app_id, app.account_id AS app_account_id, app.app_config_id AS app_app_config_id, app.draft_app_config_id AS app_draft_app_config_id, app.debug_conversation_id AS app_debug_conversation_id, app.name AS app_name, app.icon AS app_icon, app.description AS app_description, app.status AS app_status, app.updated_at AS app_updated_at, app.created_at AS app_created_at 
+FROM app 
+WHERE app.id = %(pk_1)s::UUID)
+2026-01-14 18:17:37,722.722] base.py line:1846 INFO: [generated in 0.00029s] {'pk_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:17:37,725.725] base.py line:1846 INFO: UPDATE app SET app_config_id=%(app_config_id)s::UUID WHERE app.id = %(app_id)s::UUID)
+2026-01-14 18:17:37,725.725] base.py line:1846 INFO: [generated in 0.00033s] {'app_config_id': UUID('95b53239-6dd4-45d5-aba0-c4c8a3bf231c'), 'app_id': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:17:37,733.733] base.py line:2716 INFO: COMMIT)
+2026-01-14 18:17:37,739.739] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-14 18:17:37,740.740] base.py line:1846 INFO: DELETE FROM app_dataset_join WHERE app_dataset_join.app_id = %(app_id_1)s::UUID)
+2026-01-14 18:17:37,740.740] base.py line:1846 INFO: [generated in 0.00028s] {'app_id_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:17:37,744.744] base.py line:2716 INFO: COMMIT)
+2026-01-14 18:17:37,745.745] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-14 18:17:37,746.746] base.py line:1846 INFO: INSERT INTO app_dataset_join (app_id, dataset_id) VALUES (%(app_id)s::UUID, %(dataset_id)s::UUID) RETURNING app_dataset_join.id, app_dataset_join.updated_at, app_dataset_join.created_at)
+2026-01-14 18:17:37,746.746] base.py line:1846 INFO: [generated in 0.00022s] {'app_id': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66'), 'dataset_id': '7826b06c-4d09-4ca9-ab49-d44d2a113cc7'})
+2026-01-14 18:17:37,748.748] base.py line:2716 INFO: COMMIT)
+2026-01-14 18:17:37,749.749] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-14 18:17:37,749.749] base.py line:1846 INFO: SELECT app.id AS app_id, app.account_id AS app_account_id, app.app_config_id AS app_app_config_id, app.draft_app_config_id AS app_draft_app_config_id, app.debug_conversation_id AS app_debug_conversation_id, app.name AS app_name, app.icon AS app_icon, app.description AS app_description, app.status AS app_status, app.updated_at AS app_updated_at, app.created_at AS app_created_at 
+FROM app 
+WHERE app.id = %(pk_1)s::UUID)
+2026-01-14 18:17:37,749.749] base.py line:1846 INFO: [cached since 0.02732s ago] {'pk_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:17:37,751.751] base.py line:1846 INFO: SELECT app_config_version.id AS app_config_version_id, app_config_version.app_id AS app_config_version_app_id, app_config_version.model_config AS app_config_version_model_config, app_config_version.dialog_round AS app_config_version_dialog_round, app_config_version.preset_prompt AS app_config_version_preset_prompt, app_config_version.tools AS app_config_version_tools, app_config_version.workflows AS app_config_version_workflows, app_config_version.datasets AS app_config_version_datasets, app_config_version.retrieval_config AS app_config_version_retrieval_config, app_config_version.long_term_memory AS app_config_version_long_term_memory, app_config_version.opening_statement AS app_config_version_opening_statement, app_config_version.opening_questions AS app_config_version_opening_questions, app_config_version.speech_to_text AS app_config_version_speech_to_text, app_config_version.text_to_speech AS app_config_version_text_to_speech, app_config_version.review_config AS app_config_version_review_config, app_config_version.version AS app_config_version_version, app_config_version.config_type AS app_config_version_config_type, app_config_version.updated_at AS app_config_version_updated_at, app_config_version.created_at AS app_config_version_created_at 
+FROM app_config_version 
+WHERE app_config_version.app_id = %(app_id_1)s::UUID AND app_config_version.config_type = %(config_type_1)s)
+2026-01-14 18:17:37,751.751] base.py line:1846 INFO: [cached since 0.06754s ago] {'app_id_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66'), 'config_type_1': <AppConfigType.DRAFT: 'draft'>})
+2026-01-14 18:17:37,755.755] base.py line:1846 INFO: SELECT coalesce(max(app_config_version.version), %(coalesce_2)s) AS coalesce_1 
+FROM app_config_version 
+WHERE app_config_version.app_id = %(app_id_1)s::UUID AND app_config_version.config_type = %(config_type_1)s)
+2026-01-14 18:17:37,755.755] base.py line:1846 INFO: [generated in 0.00039s] {'coalesce_2': 0, 'app_id_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66'), 'config_type_1': <AppConfigType.PUBLISHED: 'published'>})
+2026-01-14 18:17:37,759.759] base.py line:1846 INFO: INSERT INTO app_config_version (app_id, model_config, dialog_round, preset_prompt, tools, workflows, datasets, retrieval_config, long_term_memory, opening_statement, opening_questions, speech_to_text, text_to_speech, review_config, version, config_type) VALUES (%(app_id)s::UUID, %(model_config)s::JSONB, %(dialog_round)s, %(preset_prompt)s, %(tools)s::JSONB, %(workflows)s::JSONB, %(datasets)s::JSONB, %(retrieval_config)s::JSONB, %(long_term_memory)s::JSONB, %(opening_statement)s, %(opening_questions)s::JSONB, %(speech_to_text)s::JSONB, %(text_to_speech)s::JSONB, %(review_config)s::JSONB, %(version)s, %(config_type)s) RETURNING app_config_version.id, app_config_version.updated_at, app_config_version.created_at)
+2026-01-14 18:17:37,759.759] base.py line:1846 INFO: [generated in 0.00050s] {'app_id': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66'), 'model_config': '{"model": "gpt-4o-mini", "provider": "openai", "parameters": {"top_p": 0.85, "max_token": 8192, "temperature": 0.5, "presence_penalty": 0.2, "frequency_penalty": 0.2}}', 'dialog_round': 3, 'preset_prompt': '', 'tools': '[{"type": "builtin_tool", "params": {}, "tool_id": "gaode_weather", "provider_id": "gaode"}]', 'workflows': '[]', 'datasets': '["7826b06c-4d09-4ca9-ab49-d44d2a113cc7"]', 'retrieval_config': '{"k": 10, "score": 0.5, "retrieval_strategy": "hybrid"}', 'long_term_memory': '{"enable": false}', 'opening_statement': '', 'opening_questions': '["\\u8fd9\\u662f\\u4e00\\u4e2a\\u5efa\\u8bae\\u95ee\\u9898"]', 'speech_to_text': '{"enable": false}', 'text_to_speech': '{"voice": "echo", "enable": false, "auto_play": false}', 'review_config': '{"enable": false, "keywords": ["\\u6d4b\\u8bd5"], "inputs_config": {"enable": false, "preset_response": "\\u4f60\\u7684\\u8f93\\u5165\\u4e0d\\u5408\\u6cd5"}, "outputs_config": {"enable": true}}', 'version': 1, 'config_type': <AppConfigType.PUBLISHED: 'published'>})
+2026-01-14 18:17:37,764.764] base.py line:2716 INFO: COMMIT)
+2026-01-14 18:17:37,766.766] _internal.py line:97 INFO: 127.0.0.1 - - [14/Jan/2026 18:17:37] "POST /apps/339045e1-e8dd-408d-b83b-6f3fb0179e66/publish HTTP/1.1" 200 -)
+2026-01-14 18:23:51,808.808] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-14 18:23:51,820.820] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-14 18:23:51,821.821] base.py line:1846 INFO: [cached since 374.2s ago] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-14 18:23:51,854.854] base.py line:1846 INFO: SELECT app.id AS app_id, app.account_id AS app_account_id, app.app_config_id AS app_app_config_id, app.draft_app_config_id AS app_draft_app_config_id, app.debug_conversation_id AS app_debug_conversation_id, app.name AS app_name, app.icon AS app_icon, app.description AS app_description, app.status AS app_status, app.updated_at AS app_updated_at, app.created_at AS app_created_at 
+FROM app 
+WHERE app.id = %(pk_1)s::UUID)
+2026-01-14 18:23:51,855.855] base.py line:1846 INFO: [cached since 374.2s ago] {'pk_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:23:51,879.879] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (%(id_1_1)s::UUID) AND dataset.account_id = %(account_id_1)s::UUID)
+2026-01-14 18:23:51,879.879] base.py line:1846 INFO: [generated in 0.00173s] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f'), 'id_1_1': '7826b06c-4d09-4ca9-ab49-d44d2a113cc7'})
+2026-01-14 18:23:51,881.881] base.py line:1846 INFO: SELECT app_config_version.id AS app_config_version_id, app_config_version.app_id AS app_config_version_app_id, app_config_version.model_config AS app_config_version_model_config, app_config_version.dialog_round AS app_config_version_dialog_round, app_config_version.preset_prompt AS app_config_version_preset_prompt, app_config_version.tools AS app_config_version_tools, app_config_version.workflows AS app_config_version_workflows, app_config_version.datasets AS app_config_version_datasets, app_config_version.retrieval_config AS app_config_version_retrieval_config, app_config_version.long_term_memory AS app_config_version_long_term_memory, app_config_version.opening_statement AS app_config_version_opening_statement, app_config_version.opening_questions AS app_config_version_opening_questions, app_config_version.speech_to_text AS app_config_version_speech_to_text, app_config_version.text_to_speech AS app_config_version_text_to_speech, app_config_version.review_config AS app_config_version_review_config, app_config_version.version AS app_config_version_version, app_config_version.config_type AS app_config_version_config_type, app_config_version.updated_at AS app_config_version_updated_at, app_config_version.created_at AS app_config_version_created_at 
+FROM app_config_version 
+WHERE app_config_version.app_id = %(app_id_1)s::UUID AND app_config_version.config_type = %(config_type_1)s)
+2026-01-14 18:23:51,882.882] base.py line:1846 INFO: [cached since 374.2s ago] {'app_id_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66'), 'config_type_1': <AppConfigType.DRAFT: 'draft'>})
+2026-01-14 18:23:51,897.897] base.py line:1846 INFO: UPDATE app_config_version SET tools=%(tools)s::JSONB, opening_questions=%(opening_questions)s::JSONB, review_config=%(review_config)s::JSONB, updated_at=%(updated_at)s WHERE app_config_version.id = %(app_config_version_id)s::UUID)
+2026-01-14 18:23:51,897.897] base.py line:1846 INFO: [generated in 0.00053s] {'tools': '[]', 'opening_questions': '["\\u5173\\u4e8e\\u5b66\\u4e60LLMOps\\u7684\\u5efa\\u8bae", "LLMOps \\u80fd\\u89e3\\u51b3\\u4ec0\\u4e48\\u95ee\\u9898"]', 'review_config': '{"enable": true, "keywords": ["\\u6d4b\\u8bd5"], "inputs_config": {"enable": false, "preset_response": "\\u4f60\\u7684\\u8f93\\u5165\\u4e0d\\u5408\\u6cd5"}, "outputs_config": {"enable": true}}', 'updated_at': datetime.datetime(2026, 1, 14, 18, 23, 51, 885073), 'app_config_version_id': UUID('1fdcf90f-c8b6-4c7c-b913-6205b8fafe4b')})
+2026-01-14 18:23:51,915.915] base.py line:2716 INFO: COMMIT)
+2026-01-14 18:23:51,921.921] _internal.py line:97 INFO: 127.0.0.1 - - [14/Jan/2026 18:23:51] "POST /apps/339045e1-e8dd-408d-b83b-6f3fb0179e66/draft-app-config HTTP/1.1" 200 -)
+2026-01-14 18:23:56,469.469] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-14 18:23:56,470.470] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-14 18:23:56,470.470] base.py line:1846 INFO: [cached since 378.8s ago] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-14 18:23:56,473.473] base.py line:1846 INFO: SELECT app.id AS app_id, app.account_id AS app_account_id, app.app_config_id AS app_app_config_id, app.draft_app_config_id AS app_draft_app_config_id, app.debug_conversation_id AS app_debug_conversation_id, app.name AS app_name, app.icon AS app_icon, app.description AS app_description, app.status AS app_status, app.updated_at AS app_updated_at, app.created_at AS app_created_at 
+FROM app 
+WHERE app.id = %(pk_1)s::UUID)
+2026-01-14 18:23:56,474.474] base.py line:1846 INFO: [cached since 378.8s ago] {'pk_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:23:56,476.476] base.py line:1846 INFO: SELECT app_config_version.id AS app_config_version_id, app_config_version.app_id AS app_config_version_app_id, app_config_version.model_config AS app_config_version_model_config, app_config_version.dialog_round AS app_config_version_dialog_round, app_config_version.preset_prompt AS app_config_version_preset_prompt, app_config_version.tools AS app_config_version_tools, app_config_version.workflows AS app_config_version_workflows, app_config_version.datasets AS app_config_version_datasets, app_config_version.retrieval_config AS app_config_version_retrieval_config, app_config_version.long_term_memory AS app_config_version_long_term_memory, app_config_version.opening_statement AS app_config_version_opening_statement, app_config_version.opening_questions AS app_config_version_opening_questions, app_config_version.speech_to_text AS app_config_version_speech_to_text, app_config_version.text_to_speech AS app_config_version_text_to_speech, app_config_version.review_config AS app_config_version_review_config, app_config_version.version AS app_config_version_version, app_config_version.config_type AS app_config_version_config_type, app_config_version.updated_at AS app_config_version_updated_at, app_config_version.created_at AS app_config_version_created_at 
+FROM app_config_version 
+WHERE app_config_version.app_id = %(app_id_1)s::UUID AND app_config_version.config_type = %(config_type_1)s)
+2026-01-14 18:23:56,476.476] base.py line:1846 INFO: [cached since 378.8s ago] {'app_id_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66'), 'config_type_1': <AppConfigType.DRAFT: 'draft'>})
+2026-01-14 18:23:56,478.478] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (%(id_1_1)s::UUID))
+2026-01-14 18:23:56,478.478] base.py line:1846 INFO: [cached since 378.8s ago] {'id_1_1': '7826b06c-4d09-4ca9-ab49-d44d2a113cc7'})
+2026-01-14 18:23:56,481.481] base.py line:2713 INFO: ROLLBACK)
+2026-01-14 18:23:56,482.482] _internal.py line:97 INFO: 127.0.0.1 - - [14/Jan/2026 18:23:56] "GET /apps/339045e1-e8dd-408d-b83b-6f3fb0179e66/draft-app-config HTTP/1.1" 200 -)
+2026-01-14 18:24:36,822.822] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-14 18:24:36,824.824] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-14 18:24:36,826.826] base.py line:1846 INFO: [cached since 419.2s ago] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-14 18:24:36,828.828] base.py line:1846 INFO: SELECT app.id AS app_id, app.account_id AS app_account_id, app.app_config_id AS app_app_config_id, app.draft_app_config_id AS app_draft_app_config_id, app.debug_conversation_id AS app_debug_conversation_id, app.name AS app_name, app.icon AS app_icon, app.description AS app_description, app.status AS app_status, app.updated_at AS app_updated_at, app.created_at AS app_created_at 
+FROM app 
+WHERE app.id = %(pk_1)s::UUID)
+2026-01-14 18:24:36,828.828] base.py line:1846 INFO: [cached since 419.2s ago] {'pk_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:24:36,831.831] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (%(id_1_1)s::UUID) AND dataset.account_id = %(account_id_1)s::UUID)
+2026-01-14 18:24:36,831.831] base.py line:1846 INFO: [cached since 44.95s ago] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f'), 'id_1_1': '7826b06c-4d09-4ca9-ab49-d44d2a113cc7---'})
+2026-01-14 18:24:36,855.855] http.py line:75 ERROR: An error occurred: (psycopg2.errors.InvalidTextRepresentation) invalid input syntax for type uuid: "7826b06c-4d09-4ca9-ab49-d44d2a113cc7---"
+LINE 3: WHERE dataset.id IN ('7826b06c-4d09-4ca9-ab49-d44d2a113cc7--...
+                             ^
+
+[SQL: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (%(id_1_1)s::UUID) AND dataset.account_id = %(account_id_1)s::UUID]
+[parameters: {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f'), 'id_1_1': '7826b06c-4d09-4ca9-ab49-d44d2a113cc7---'}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h))
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.InvalidTextRepresentation: invalid input syntax for type uuid: "7826b06c-4d09-4ca9-ab49-d44d2a113cc7---"
+LINE 3: WHERE dataset.id IN ('7826b06c-4d09-4ca9-ab49-d44d2a113cc7--...
+                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/app_handler.py", line 60, in update_draft_app_config
+    self.app_service.update_draft_app_config(app_id, draft_app_config, current_user)
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/app_service.py", line 256, in update_draft_app_config
+    draft_app_config = self._validate_draft_app_config(draft_app_config, account)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/app_service.py", line 398, in _validate_draft_app_config
+    ).all()
+      ^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 2351, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 2249, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/sqlalchemy/orm/context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+           ^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.DataError: (psycopg2.errors.InvalidTextRepresentation) invalid input syntax for type uuid: "7826b06c-4d09-4ca9-ab49-d44d2a113cc7---"
+LINE 3: WHERE dataset.id IN ('7826b06c-4d09-4ca9-ab49-d44d2a113cc7--...
+                             ^
+
+[SQL: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (%(id_1_1)s::UUID) AND dataset.account_id = %(account_id_1)s::UUID]
+[parameters: {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f'), 'id_1_1': '7826b06c-4d09-4ca9-ab49-d44d2a113cc7---'}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)
+2026-01-14 18:24:36,994.994] base.py line:2713 INFO: ROLLBACK)
+2026-01-14 18:24:37,047.047] _internal.py line:97 INFO: 127.0.0.1 - - [14/Jan/2026 18:24:37] "[35m[1mPOST /apps/339045e1-e8dd-408d-b83b-6f3fb0179e66/draft-app-config HTTP/1.1[0m" 500 -)
+2026-01-14 18:24:49,449.449] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-14 18:24:49,449.449] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-14 18:24:49,449.449] base.py line:1846 INFO: [cached since 431.8s ago] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-14 18:24:49,452.452] base.py line:1846 INFO: SELECT app.id AS app_id, app.account_id AS app_account_id, app.app_config_id AS app_app_config_id, app.draft_app_config_id AS app_draft_app_config_id, app.debug_conversation_id AS app_debug_conversation_id, app.name AS app_name, app.icon AS app_icon, app.description AS app_description, app.status AS app_status, app.updated_at AS app_updated_at, app.created_at AS app_created_at 
+FROM app 
+WHERE app.id = %(pk_1)s::UUID)
+2026-01-14 18:24:49,452.452] base.py line:1846 INFO: [cached since 431.8s ago] {'pk_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:24:49,456.456] http.py line:75 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/app_service.py", line 386, in _validate_draft_app_config
+    UUID(dataset_id)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/uuid.py", line 178, in __init__
+    raise ValueError('badly formed hexadecimal UUID string')
+ValueError: badly formed hexadecimal UUID string
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/app_handler.py", line 60, in update_draft_app_config
+    self.app_service.update_draft_app_config(app_id, draft_app_config, current_user)
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/app_service.py", line 256, in update_draft_app_config
+    draft_app_config = self._validate_draft_app_config(draft_app_config, account)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/app_service.py", line 388, in _validate_draft_app_config
+    raise ValidationException("知识库列表参数必须是UUID")
+internal.exception.exception.ValidationException
+2026-01-14 18:24:49,465.465] base.py line:2713 INFO: ROLLBACK)
+2026-01-14 18:24:49,466.466] _internal.py line:97 INFO: 127.0.0.1 - - [14/Jan/2026 18:24:49] "POST /apps/339045e1-e8dd-408d-b83b-6f3fb0179e66/draft-app-config HTTP/1.1" 200 -)
+2026-01-14 18:25:03,569.569] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-14 18:25:03,569.569] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-14 18:25:03,570.570] base.py line:1846 INFO: [cached since 445.9s ago] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-14 18:25:03,575.575] base.py line:1846 INFO: SELECT app.id AS app_id, app.account_id AS app_account_id, app.app_config_id AS app_app_config_id, app.draft_app_config_id AS app_draft_app_config_id, app.debug_conversation_id AS app_debug_conversation_id, app.name AS app_name, app.icon AS app_icon, app.description AS app_description, app.status AS app_status, app.updated_at AS app_updated_at, app.created_at AS app_created_at 
+FROM app 
+WHERE app.id = %(pk_1)s::UUID)
+2026-01-14 18:25:03,575.575] base.py line:1846 INFO: [cached since 445.9s ago] {'pk_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:25:03,579.579] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (NULL) AND (1 != 1) AND dataset.account_id = %(account_id_1)s::UUID)
+2026-01-14 18:25:03,579.579] base.py line:1846 INFO: [cached since 71.7s ago] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-14 18:25:03,587.587] base.py line:1846 INFO: SELECT app_config_version.id AS app_config_version_id, app_config_version.app_id AS app_config_version_app_id, app_config_version.model_config AS app_config_version_model_config, app_config_version.dialog_round AS app_config_version_dialog_round, app_config_version.preset_prompt AS app_config_version_preset_prompt, app_config_version.tools AS app_config_version_tools, app_config_version.workflows AS app_config_version_workflows, app_config_version.datasets AS app_config_version_datasets, app_config_version.retrieval_config AS app_config_version_retrieval_config, app_config_version.long_term_memory AS app_config_version_long_term_memory, app_config_version.opening_statement AS app_config_version_opening_statement, app_config_version.opening_questions AS app_config_version_opening_questions, app_config_version.speech_to_text AS app_config_version_speech_to_text, app_config_version.text_to_speech AS app_config_version_text_to_speech, app_config_version.review_config AS app_config_version_review_config, app_config_version.version AS app_config_version_version, app_config_version.config_type AS app_config_version_config_type, app_config_version.updated_at AS app_config_version_updated_at, app_config_version.created_at AS app_config_version_created_at 
+FROM app_config_version 
+WHERE app_config_version.app_id = %(app_id_1)s::UUID AND app_config_version.config_type = %(config_type_1)s)
+2026-01-14 18:25:03,588.588] base.py line:1846 INFO: [cached since 445.9s ago] {'app_id_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66'), 'config_type_1': <AppConfigType.DRAFT: 'draft'>})
+2026-01-14 18:25:03,590.590] base.py line:1846 INFO: UPDATE app_config_version SET datasets=%(datasets)s::JSONB, updated_at=%(updated_at)s WHERE app_config_version.id = %(app_config_version_id)s::UUID)
+2026-01-14 18:25:03,590.590] base.py line:1846 INFO: [generated in 0.00031s] {'datasets': '[]', 'updated_at': datetime.datetime(2026, 1, 14, 18, 25, 3, 588816), 'app_config_version_id': UUID('1fdcf90f-c8b6-4c7c-b913-6205b8fafe4b')})
+2026-01-14 18:25:03,591.591] base.py line:2716 INFO: COMMIT)
+2026-01-14 18:25:03,592.592] _internal.py line:97 INFO: 127.0.0.1 - - [14/Jan/2026 18:25:03] "POST /apps/339045e1-e8dd-408d-b83b-6f3fb0179e66/draft-app-config HTTP/1.1" 200 -)
+2026-01-14 18:25:07,599.599] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-14 18:25:07,600.600] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-14 18:25:07,600.600] base.py line:1846 INFO: [cached since 450s ago] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-14 18:25:07,602.602] base.py line:1846 INFO: SELECT app.id AS app_id, app.account_id AS app_account_id, app.app_config_id AS app_app_config_id, app.draft_app_config_id AS app_draft_app_config_id, app.debug_conversation_id AS app_debug_conversation_id, app.name AS app_name, app.icon AS app_icon, app.description AS app_description, app.status AS app_status, app.updated_at AS app_updated_at, app.created_at AS app_created_at 
+FROM app 
+WHERE app.id = %(pk_1)s::UUID)
+2026-01-14 18:25:07,603.603] base.py line:1846 INFO: [cached since 450s ago] {'pk_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:25:07,604.604] base.py line:1846 INFO: SELECT app_config_version.id AS app_config_version_id, app_config_version.app_id AS app_config_version_app_id, app_config_version.model_config AS app_config_version_model_config, app_config_version.dialog_round AS app_config_version_dialog_round, app_config_version.preset_prompt AS app_config_version_preset_prompt, app_config_version.tools AS app_config_version_tools, app_config_version.workflows AS app_config_version_workflows, app_config_version.datasets AS app_config_version_datasets, app_config_version.retrieval_config AS app_config_version_retrieval_config, app_config_version.long_term_memory AS app_config_version_long_term_memory, app_config_version.opening_statement AS app_config_version_opening_statement, app_config_version.opening_questions AS app_config_version_opening_questions, app_config_version.speech_to_text AS app_config_version_speech_to_text, app_config_version.text_to_speech AS app_config_version_text_to_speech, app_config_version.review_config AS app_config_version_review_config, app_config_version.version AS app_config_version_version, app_config_version.config_type AS app_config_version_config_type, app_config_version.updated_at AS app_config_version_updated_at, app_config_version.created_at AS app_config_version_created_at 
+FROM app_config_version 
+WHERE app_config_version.app_id = %(app_id_1)s::UUID AND app_config_version.config_type = %(config_type_1)s)
+2026-01-14 18:25:07,605.605] base.py line:1846 INFO: [cached since 449.9s ago] {'app_id_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66'), 'config_type_1': <AppConfigType.DRAFT: 'draft'>})
+2026-01-14 18:25:07,606.606] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (NULL) AND (1 != 1))
+2026-01-14 18:25:07,607.607] base.py line:1846 INFO: [cached since 449.9s ago] {})
+2026-01-14 18:25:07,608.608] base.py line:2713 INFO: ROLLBACK)
+2026-01-14 18:25:07,609.609] _internal.py line:97 INFO: 127.0.0.1 - - [14/Jan/2026 18:25:07] "GET /apps/339045e1-e8dd-408d-b83b-6f3fb0179e66/draft-app-config HTTP/1.1" 200 -)
+2026-01-14 18:25:14,841.841] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-14 18:25:14,841.841] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-14 18:25:14,842.842] base.py line:1846 INFO: [cached since 457.2s ago] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-14 18:25:14,844.844] base.py line:1846 INFO: SELECT app.id AS app_id, app.account_id AS app_account_id, app.app_config_id AS app_app_config_id, app.draft_app_config_id AS app_draft_app_config_id, app.debug_conversation_id AS app_debug_conversation_id, app.name AS app_name, app.icon AS app_icon, app.description AS app_description, app.status AS app_status, app.updated_at AS app_updated_at, app.created_at AS app_created_at 
+FROM app 
+WHERE app.id = %(pk_1)s::UUID)
+2026-01-14 18:25:14,844.844] base.py line:1846 INFO: [cached since 457.2s ago] {'pk_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:25:14,848.848] base.py line:1846 INFO: SELECT app_config_version.id AS app_config_version_id, app_config_version.app_id AS app_config_version_app_id, app_config_version.model_config AS app_config_version_model_config, app_config_version.dialog_round AS app_config_version_dialog_round, app_config_version.preset_prompt AS app_config_version_preset_prompt, app_config_version.tools AS app_config_version_tools, app_config_version.workflows AS app_config_version_workflows, app_config_version.datasets AS app_config_version_datasets, app_config_version.retrieval_config AS app_config_version_retrieval_config, app_config_version.long_term_memory AS app_config_version_long_term_memory, app_config_version.opening_statement AS app_config_version_opening_statement, app_config_version.opening_questions AS app_config_version_opening_questions, app_config_version.speech_to_text AS app_config_version_speech_to_text, app_config_version.text_to_speech AS app_config_version_text_to_speech, app_config_version.review_config AS app_config_version_review_config, app_config_version.version AS app_config_version_version, app_config_version.config_type AS app_config_version_config_type, app_config_version.updated_at AS app_config_version_updated_at, app_config_version.created_at AS app_config_version_created_at 
+FROM app_config_version 
+WHERE app_config_version.app_id = %(app_id_1)s::UUID AND app_config_version.config_type = %(config_type_1)s)
+2026-01-14 18:25:14,849.849] base.py line:1846 INFO: [cached since 457.2s ago] {'app_id_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66'), 'config_type_1': <AppConfigType.DRAFT: 'draft'>})
+2026-01-14 18:25:14,851.851] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (NULL) AND (1 != 1))
+2026-01-14 18:25:14,851.851] base.py line:1846 INFO: [cached since 457.2s ago] {})
+2026-01-14 18:25:14,867.867] base.py line:1846 INFO: INSERT INTO app_config (app_id, model_config, dialog_round, preset_prompt, tools, workflows, retrieval_config, long_term_memory, opening_statement, opening_questions, speech_to_text, text_to_speech, review_config) VALUES (%(app_id)s::UUID, %(model_config)s::JSONB, %(dialog_round)s, %(preset_prompt)s, %(tools)s::JSONB, %(workflows)s::JSONB, %(retrieval_config)s::JSONB, %(long_term_memory)s::JSONB, %(opening_statement)s, %(opening_questions)s::JSONB, %(speech_to_text)s::JSONB, %(text_to_speech)s::JSONB, %(review_config)s::JSONB) RETURNING app_config.id, app_config.updated_at, app_config.created_at)
+2026-01-14 18:25:14,867.867] base.py line:1846 INFO: [cached since 457.2s ago] {'app_id': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66'), 'model_config': '{"model": "gpt-4o-mini", "provider": "openai", "parameters": {"top_p": 0.85, "max_token": 8192, "temperature": 0.5, "presence_penalty": 0.2, "frequency_penalty": 0.2}}', 'dialog_round': 3, 'preset_prompt': '', 'tools': '[]', 'workflows': '[]', 'retrieval_config': '{"k": 10, "score": 0.5, "retrieval_strategy": "hybrid"}', 'long_term_memory': '{"enable": false}', 'opening_statement': '', 'opening_questions': '["\\u5173\\u4e8e\\u5b66\\u4e60LLMOps\\u7684\\u5efa\\u8bae", "LLMOps \\u80fd\\u89e3\\u51b3\\u4ec0\\u4e48\\u95ee\\u9898"]', 'speech_to_text': '{"enable": false}', 'text_to_speech': '{"voice": "echo", "enable": false, "auto_play": false}', 'review_config': '{"enable": true, "keywords": ["\\u6d4b\\u8bd5"], "inputs_config": {"enable": false, "preset_response": "\\u4f60\\u7684\\u8f93\\u5165\\u4e0d\\u5408\\u6cd5"}, "outputs_config": {"enable": true}}'})
+2026-01-14 18:25:14,876.876] base.py line:2716 INFO: COMMIT)
+2026-01-14 18:25:14,878.878] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-14 18:25:14,878.878] base.py line:1846 INFO: SELECT app_config.id AS app_config_id, app_config.app_id AS app_config_app_id, app_config.model_config AS app_config_model_config, app_config.dialog_round AS app_config_dialog_round, app_config.preset_prompt AS app_config_preset_prompt, app_config.tools AS app_config_tools, app_config.workflows AS app_config_workflows, app_config.retrieval_config AS app_config_retrieval_config, app_config.long_term_memory AS app_config_long_term_memory, app_config.opening_statement AS app_config_opening_statement, app_config.opening_questions AS app_config_opening_questions, app_config.speech_to_text AS app_config_speech_to_text, app_config.text_to_speech AS app_config_text_to_speech, app_config.review_config AS app_config_review_config, app_config.updated_at AS app_config_updated_at, app_config.created_at AS app_config_created_at 
+FROM app_config 
+WHERE app_config.id = %(pk_1)s::UUID)
+2026-01-14 18:25:14,879.879] base.py line:1846 INFO: [cached since 457.2s ago] {'pk_1': UUID('091929ce-58c7-4186-a081-996ba9e15bf9')})
+2026-01-14 18:25:14,883.883] base.py line:1846 INFO: SELECT app.id AS app_id, app.account_id AS app_account_id, app.app_config_id AS app_app_config_id, app.draft_app_config_id AS app_draft_app_config_id, app.debug_conversation_id AS app_debug_conversation_id, app.name AS app_name, app.icon AS app_icon, app.description AS app_description, app.status AS app_status, app.updated_at AS app_updated_at, app.created_at AS app_created_at 
+FROM app 
+WHERE app.id = %(pk_1)s::UUID)
+2026-01-14 18:25:14,883.883] base.py line:1846 INFO: [cached since 457.2s ago] {'pk_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:25:14,885.885] base.py line:1846 INFO: UPDATE app SET app_config_id=%(app_config_id)s::UUID WHERE app.id = %(app_id)s::UUID)
+2026-01-14 18:25:14,885.885] base.py line:1846 INFO: [cached since 457.2s ago] {'app_config_id': UUID('091929ce-58c7-4186-a081-996ba9e15bf9'), 'app_id': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:25:14,886.886] base.py line:2716 INFO: COMMIT)
+2026-01-14 18:25:14,893.893] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-14 18:25:14,895.895] base.py line:1846 INFO: DELETE FROM app_dataset_join WHERE app_dataset_join.app_id = %(app_id_1)s::UUID)
+2026-01-14 18:25:14,895.895] base.py line:1846 INFO: [cached since 457.2s ago] {'app_id_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:25:14,898.898] base.py line:2716 INFO: COMMIT)
+2026-01-14 18:25:14,900.900] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-14 18:25:14,900.900] base.py line:1846 INFO: SELECT app.id AS app_id, app.account_id AS app_account_id, app.app_config_id AS app_app_config_id, app.draft_app_config_id AS app_draft_app_config_id, app.debug_conversation_id AS app_debug_conversation_id, app.name AS app_name, app.icon AS app_icon, app.description AS app_description, app.status AS app_status, app.updated_at AS app_updated_at, app.created_at AS app_created_at 
+FROM app 
+WHERE app.id = %(pk_1)s::UUID)
+2026-01-14 18:25:14,900.900] base.py line:1846 INFO: [cached since 457.2s ago] {'pk_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:25:14,901.901] base.py line:1846 INFO: SELECT app_config_version.id AS app_config_version_id, app_config_version.app_id AS app_config_version_app_id, app_config_version.model_config AS app_config_version_model_config, app_config_version.dialog_round AS app_config_version_dialog_round, app_config_version.preset_prompt AS app_config_version_preset_prompt, app_config_version.tools AS app_config_version_tools, app_config_version.workflows AS app_config_version_workflows, app_config_version.datasets AS app_config_version_datasets, app_config_version.retrieval_config AS app_config_version_retrieval_config, app_config_version.long_term_memory AS app_config_version_long_term_memory, app_config_version.opening_statement AS app_config_version_opening_statement, app_config_version.opening_questions AS app_config_version_opening_questions, app_config_version.speech_to_text AS app_config_version_speech_to_text, app_config_version.text_to_speech AS app_config_version_text_to_speech, app_config_version.review_config AS app_config_version_review_config, app_config_version.version AS app_config_version_version, app_config_version.config_type AS app_config_version_config_type, app_config_version.updated_at AS app_config_version_updated_at, app_config_version.created_at AS app_config_version_created_at 
+FROM app_config_version 
+WHERE app_config_version.app_id = %(app_id_1)s::UUID AND app_config_version.config_type = %(config_type_1)s)
+2026-01-14 18:25:14,902.902] base.py line:1846 INFO: [cached since 457.2s ago] {'app_id_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66'), 'config_type_1': <AppConfigType.DRAFT: 'draft'>})
+2026-01-14 18:25:14,912.912] base.py line:1846 INFO: SELECT coalesce(max(app_config_version.version), %(coalesce_2)s) AS coalesce_1 
+FROM app_config_version 
+WHERE app_config_version.app_id = %(app_id_1)s::UUID AND app_config_version.config_type = %(config_type_1)s)
+2026-01-14 18:25:14,912.912] base.py line:1846 INFO: [cached since 457.2s ago] {'coalesce_2': 0, 'app_id_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66'), 'config_type_1': <AppConfigType.PUBLISHED: 'published'>})
+2026-01-14 18:25:14,914.914] base.py line:1846 INFO: INSERT INTO app_config_version (app_id, model_config, dialog_round, preset_prompt, tools, workflows, datasets, retrieval_config, long_term_memory, opening_statement, opening_questions, speech_to_text, text_to_speech, review_config, version, config_type) VALUES (%(app_id)s::UUID, %(model_config)s::JSONB, %(dialog_round)s, %(preset_prompt)s, %(tools)s::JSONB, %(workflows)s::JSONB, %(datasets)s::JSONB, %(retrieval_config)s::JSONB, %(long_term_memory)s::JSONB, %(opening_statement)s, %(opening_questions)s::JSONB, %(speech_to_text)s::JSONB, %(text_to_speech)s::JSONB, %(review_config)s::JSONB, %(version)s, %(config_type)s) RETURNING app_config_version.id, app_config_version.updated_at, app_config_version.created_at)
+2026-01-14 18:25:14,914.914] base.py line:1846 INFO: [cached since 457.2s ago] {'app_id': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66'), 'model_config': '{"model": "gpt-4o-mini", "provider": "openai", "parameters": {"top_p": 0.85, "max_token": 8192, "temperature": 0.5, "presence_penalty": 0.2, "frequency_penalty": 0.2}}', 'dialog_round': 3, 'preset_prompt': '', 'tools': '[]', 'workflows': '[]', 'datasets': '[]', 'retrieval_config': '{"k": 10, "score": 0.5, "retrieval_strategy": "hybrid"}', 'long_term_memory': '{"enable": false}', 'opening_statement': '', 'opening_questions': '["\\u5173\\u4e8e\\u5b66\\u4e60LLMOps\\u7684\\u5efa\\u8bae", "LLMOps \\u80fd\\u89e3\\u51b3\\u4ec0\\u4e48\\u95ee\\u9898"]', 'speech_to_text': '{"enable": false}', 'text_to_speech': '{"voice": "echo", "enable": false, "auto_play": false}', 'review_config': '{"enable": true, "keywords": ["\\u6d4b\\u8bd5"], "inputs_config": {"enable": false, "preset_response": "\\u4f60\\u7684\\u8f93\\u5165\\u4e0d\\u5408\\u6cd5"}, "outputs_config": {"enable": true}}', 'version': 2, 'config_type': <AppConfigType.PUBLISHED: 'published'>})
+2026-01-14 18:25:14,916.916] base.py line:2716 INFO: COMMIT)
+2026-01-14 18:25:14,918.918] _internal.py line:97 INFO: 127.0.0.1 - - [14/Jan/2026 18:25:14] "POST /apps/339045e1-e8dd-408d-b83b-6f3fb0179e66/publish HTTP/1.1" 200 -)
+2026-01-14 18:28:37,270.270] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-14 18:28:37,276.276] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-14 18:28:37,278.278] base.py line:1846 INFO: [cached since 659.6s ago] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-14 18:28:37,293.293] base.py line:1846 INFO: SELECT app.id AS app_id, app.account_id AS app_account_id, app.app_config_id AS app_app_config_id, app.draft_app_config_id AS app_draft_app_config_id, app.debug_conversation_id AS app_debug_conversation_id, app.name AS app_name, app.icon AS app_icon, app.description AS app_description, app.status AS app_status, app.updated_at AS app_updated_at, app.created_at AS app_created_at 
+FROM app 
+WHERE app.id = %(pk_1)s::UUID)
+2026-01-14 18:28:37,293.293] base.py line:1846 INFO: [cached since 659.6s ago] {'pk_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66')})
+2026-01-14 18:28:37,307.307] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (%(id_1_1)s::UUID) AND dataset.account_id = %(account_id_1)s::UUID)
+2026-01-14 18:28:37,307.307] base.py line:1846 INFO: [cached since 285.4s ago] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f'), 'id_1_1': '7826b06c-4d09-4ca9-ab49-d44d2a113cc7'})
+2026-01-14 18:28:37,310.310] base.py line:1846 INFO: SELECT app_config_version.id AS app_config_version_id, app_config_version.app_id AS app_config_version_app_id, app_config_version.model_config AS app_config_version_model_config, app_config_version.dialog_round AS app_config_version_dialog_round, app_config_version.preset_prompt AS app_config_version_preset_prompt, app_config_version.tools AS app_config_version_tools, app_config_version.workflows AS app_config_version_workflows, app_config_version.datasets AS app_config_version_datasets, app_config_version.retrieval_config AS app_config_version_retrieval_config, app_config_version.long_term_memory AS app_config_version_long_term_memory, app_config_version.opening_statement AS app_config_version_opening_statement, app_config_version.opening_questions AS app_config_version_opening_questions, app_config_version.speech_to_text AS app_config_version_speech_to_text, app_config_version.text_to_speech AS app_config_version_text_to_speech, app_config_version.review_config AS app_config_version_review_config, app_config_version.version AS app_config_version_version, app_config_version.config_type AS app_config_version_config_type, app_config_version.updated_at AS app_config_version_updated_at, app_config_version.created_at AS app_config_version_created_at 
+FROM app_config_version 
+WHERE app_config_version.app_id = %(app_id_1)s::UUID AND app_config_version.config_type = %(config_type_1)s)
+2026-01-14 18:28:37,311.311] base.py line:1846 INFO: [cached since 659.6s ago] {'app_id_1': UUID('339045e1-e8dd-408d-b83b-6f3fb0179e66'), 'config_type_1': <AppConfigType.DRAFT: 'draft'>})
+2026-01-14 18:28:37,320.320] base.py line:1846 INFO: UPDATE app_config_version SET tools=%(tools)s::JSONB, datasets=%(datasets)s::JSONB, opening_questions=%(opening_questions)s::JSONB, updated_at=%(updated_at)s WHERE app_config_version.id = %(app_config_version_id)s::UUID)
+2026-01-14 18:28:37,320.320] base.py line:1846 INFO: [generated in 0.00057s] {'tools': '[{"type": "builtin_tool", "params": {}, "provider_id": "gaode", "tool_id": "gaode_weather"}]', 'datasets': '["7826b06c-4d09-4ca9-ab49-d44d2a113cc7"]', 'opening_questions': '["\\u5173\\u4e8e\\u5b66\\u4e60Agent\\u6709\\u4ec0\\u4e48\\u5efa\\u8bae"]', 'updated_at': datetime.datetime(2026, 1, 14, 18, 28, 37, 313500), 'app_config_version_id': UUID('1fdcf90f-c8b6-4c7c-b913-6205b8fafe4b')})
+2026-01-14 18:28:37,326.326] base.py line:2716 INFO: COMMIT)
+2026-01-14 18:28:37,333.333] _internal.py line:97 INFO: 127.0.0.1 - - [14/Jan/2026 18:28:37] "POST /apps/339045e1-e8dd-408d-b83b-6f3fb0179e66/draft-app-config HTTP/1.1" 200 -)
