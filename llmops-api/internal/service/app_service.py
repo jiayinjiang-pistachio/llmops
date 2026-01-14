@@ -7,6 +7,7 @@
 @Description    : 
 """
 from dataclasses import dataclass
+from datetime import datetime
 from typing import Any
 from uuid import UUID
 
@@ -255,6 +256,16 @@ class AppService(BaseService):
 
         # 3. 获取当前应用的最新草稿信息
         draft_app_config_record = app.draft_app_config
+
+        # 4. 更新
+        self.update(
+            draft_app_config_record,
+            # todo: 由于目前使用server_onupdate，所以该字段需要手动传递
+            updated_at=datetime.now(),
+            **draft_app_config,
+        )
+
+        return draft_app_config_record
 
     def _validate_draft_app_config(self, draft_app_config: dict[str, Any], account: Account) -> dict[str, Any]:
         """校验传递的应用草稿配置信息，返回校验后的数据"""
