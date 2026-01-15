@@ -13,9 +13,11 @@ from flask import request
 from flask_login import current_user, login_required
 from injector import inject
 
+from internal.entity.dataset_entity import RetrievalStrategy, RetrievalSource
 from internal.schema import CreateAppReq, GetAppResp, GetPublishHistoriesWithPageReq, GetPublishHistoriesWithPageResp, \
     FallbackHistoryToDraftReq, UpdateDebugConversationSummaryReq
 from internal.service import AppService
+from internal.service.retrieval_service import RetrievalService
 from pkg.paginator import PageModel
 # from internal.task.demo_task import demo_task
 from pkg.response import validate_error_json, success_json, success_message
@@ -26,6 +28,7 @@ from pkg.response import validate_error_json, success_json, success_message
 class AppHandler:
     """应用控制器"""
     app_service: AppService
+    retrieval_service: RetrievalService
 
     @login_required
     def create_app(self):
@@ -135,4 +138,19 @@ class AppHandler:
         return success_message("清空应用调试会话记录成功")
 
     def ping(self):
-        pass
+        dataset_retrieval = self.retrieval_service.create_langchain_tool_from_search(
+            dataset_ids=["8210bfbd-0baa-46f5-bcd4-fe2b789fb4f6"],
+            account=current_user,
+            retrieval_strategy=RetrievalStrategy.SEMANTIC,
+            k=10,
+            score=0.5,
+            retrieval_source=RetrievalSource.DEBUGGER,
+        )
+
+        print(f"工具名称：{dataset_retrieval.name}")
+        print(f"工具参数：{dataset_retrieval.args}")
+        print(f"工具描述：{dataset_retrieval.description}")
+
+        content = dataset_retrieval.invoke({"query": "在广东工业大学的教育经历是什么时候"})
+
+        return success_json({"content": content})
