@@ -13,14 +13,13 @@ from flask import request
 from flask_login import current_user, login_required
 from injector import inject
 
-from internal.entity.dataset_entity import RetrievalStrategy, RetrievalSource
 from internal.schema import CreateAppReq, GetAppResp, GetPublishHistoriesWithPageReq, GetPublishHistoriesWithPageResp, \
-    FallbackHistoryToDraftReq, UpdateDebugConversationSummaryReq
+    FallbackHistoryToDraftReq, UpdateDebugConversationSummaryReq, DebugChatReq
 from internal.service import AppService
 from internal.service.retrieval_service import RetrievalService
 from pkg.paginator import PageModel
 # from internal.task.demo_task import demo_task
-from pkg.response import validate_error_json, success_json, success_message
+from pkg.response import validate_error_json, success_json, success_message, compact_generate_response
 
 
 @inject
@@ -137,20 +136,17 @@ class AppHandler:
         self.app_service.delete_debug_conversation(app_id, current_user)
         return success_message("清空应用调试会话记录成功")
 
+    @login_required
+    def debug_chat(self, app_id: UUID):
+        """提取数据并校验数据"""
+        req = DebugChatReq()
+        if not req.validate():
+            return validate_error_json(req.errors)
+
+        # 2. 调用服务发起会话调试
+        response = self.app_service.debug_chat(app_id, req.query.data, current_user)
+
+        return compact_generate_response(response)
+
     def ping(self):
-        dataset_retrieval = self.retrieval_service.create_langchain_tool_from_search(
-            dataset_ids=["8210bfbd-0baa-46f5-bcd4-fe2b789fb4f6"],
-            account=current_user,
-            retrieval_strategy=RetrievalStrategy.SEMANTIC,
-            k=10,
-            score=0.5,
-            retrieval_source=RetrievalSource.DEBUGGER,
-        )
-
-        print(f"工具名称：{dataset_retrieval.name}")
-        print(f"工具参数：{dataset_retrieval.args}")
-        print(f"工具描述：{dataset_retrieval.description}")
-
-        content = dataset_retrieval.invoke({"query": "在广东工业大学的教育经历是什么时候"})
-
-        return success_json({"content": content})
+        pass

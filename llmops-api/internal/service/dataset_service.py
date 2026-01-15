@@ -10,7 +10,6 @@ import logging
 from dataclasses import dataclass
 from uuid import UUID
 
-from flask_login import current_user
 from injector import inject
 from sqlalchemy import desc
 
@@ -118,7 +117,7 @@ class DatasetService(BaseService):
         lc_documents = self.retrieval_service.search_in_datasets(
             dataset_ids=[dataset_id],
             **req.data,
-            account=current_user
+            account_id=account.id,
         )
         lc_document_dict = {
             str(lc_document.metadata["segment_id"]): lc_document

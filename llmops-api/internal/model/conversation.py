@@ -7,7 +7,7 @@
 @Description    : 
 """
 from sqlalchemy import PrimaryKeyConstraint, Column, UUID, text, String, Text, Boolean, DateTime, Integer, Numeric, \
-    Float
+    Float, func
 from sqlalchemy.dialects.postgresql import JSONB
 
 from internal.extension.database_extension import db
@@ -38,6 +38,15 @@ class Conversation(db.Model):
         server_onupdate=text('CURRENT_TIMESTAMP(0)'),
     )
     created_at = Column(DateTime, nullable=False, server_default=text('CURRENT_TIMESTAMP(0)'))
+
+    @property
+    def is_new(self) -> bool:
+        """只读属性，判断该会话是否第一次创建"""
+        message_count = db.session.query(func.count(Message.id)).filter(
+            Message.conversation_id == self.id
+        ).scalar()
+
+        return False if message_count > 1 else True
 
 
 class Message(db.Model):
@@ -111,7 +120,11 @@ class MessageAgentThought(db.Model):
 
     # 推理观察，分别记录LLM与非LLM产生的消息
     event = Column(Text, nullable=False, server_default=text("''::text"))
+    tool = Column(Text, nullable=False, server_default=text("''::text"))  # 工具名称
     tool_input = Column(JSONB, nullable=False, server_default=text("'{}'::jsonb"))
+
+    thought = Column(Text, nullable=False, server_default=text("''::text"))  # 推理内容
+    observation = Column(Text, nullable=False, server_default=text("''::text"))  # 观察内容
 
     # Agent推理观察步骤使用的消息列表（传递prompt消息内容）
     message = Column(JSONB, nullable=False, server_default=text("'[]'::jsonb"))

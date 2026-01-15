@@ -10,7 +10,7 @@ from .account_schema import GetCurrentUserResp, UpdatePasswordReq, UpdateNameReq
 from .api_tool_schema import ValidateOpenAPISchemaReq, CreateAPIToolReq, GetApiToolResp, GetApiToolProviderResp, \
     GetApiToolProvidersWithPageReq, GetApiToolProvidersWithPageResp, UpdateApiToolProviderReq
 from .app_schema import CreateAppReq, GetAppResp, GetPublishHistoriesWithPageReq, GetPublishHistoriesWithPageResp, \
-    FallbackHistoryToDraftReq, UpdateDebugConversationSummaryReq
+    FallbackHistoryToDraftReq, UpdateDebugConversationSummaryReq, DebugChatReq
 from .dataset_schema import CreateDatasetReq, GetDatasetsWithPageReq, GetDatasetResp, UpdateDatasetReq, \
     GetDatasetsWithPageResp, HitReq
 from .document_schema import CreateDocumentsReq, CreateDocumentsResp, UpdateDocumentEnabledReq
@@ -26,6 +26,7 @@ __all__ = [
     "GetPublishHistoriesWithPageResp",
     "FallbackHistoryToDraftReq",
     "UpdateDebugConversationSummaryReq",
+    "DebugChatReq",
     "ValidateOpenAPISchemaReq",
     "ListField",
     "CreateAPIToolReq",

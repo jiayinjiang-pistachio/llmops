@@ -9,6 +9,7 @@
 from dataclasses import dataclass
 from uuid import UUID
 
+from flask import Flask
 from injector import inject
 from langchain.pydantic_v1 import BaseModel, Field
 from langchain.retrievers import EnsembleRetriever
@@ -18,7 +19,7 @@ from sqlalchemy import update
 
 from internal.entity.dataset_entity import RetrievalStrategy, RetrievalSource
 from internal.exception import NotFoundException
-from internal.model import Dataset, DatasetQuery, Segment, Account
+from internal.model import Dataset, DatasetQuery, Segment
 from pkg.sqlalchemy import SQLAlchemy
 from .base_service import BaseService
 from .jieba_service import JiebaService
@@ -39,17 +40,17 @@ class RetrievalService(BaseService):
             self,
             dataset_ids: list[UUID],
             query: str,
+            account_id: UUID,
             retrieval_strategy: str = RetrievalStrategy.SEMANTIC,
             k: int = 4,
             score: float = 0,
             retrieval_source: str = RetrievalSource.HIT_TESTING,
-            account: Account = None
     ) -> list[LCDocument]:
 
         # 1. 提取知识库列表并校验权限同时更新知识库id
         datasets = self.db.session.query(Dataset).filter(
             Dataset.id.in_(dataset_ids),
-            Dataset.account_id == account.id,
+            Dataset.account_id == account_id,
         ).all()
         if datasets is None or len(datasets) == 0:
             raise NotFoundException("当前无知识库可执行检索")
@@ -96,7 +97,7 @@ class RetrievalService(BaseService):
                 source=retrieval_source,
                 # todo:等待APP配置模块完成后进行调整
                 source_app_id=None,
-                created_by=account.id,
+                created_by=account_id,
             )
         segment_ids = [lc_document.metadata["segment_id"] for lc_document in lc_documents]
         if not segment_ids:
@@ -118,8 +119,9 @@ class RetrievalService(BaseService):
 
     def create_langchain_tool_from_search(
             self,
+            flask_app: Flask,
             dataset_ids: list[UUID],
-            account: Account = None,
+            account_id: UUID,
             retrieval_strategy: str = RetrievalStrategy.SEMANTIC,
             k: int = 4,
             score: float = 0,
@@ -135,15 +137,16 @@ class RetrievalService(BaseService):
         def dataset_retrieval(query: str) -> str:
             """如果需要搜索扩展的知识库内容，当你觉得用户的提问超过你的知识范围时，可以尝试调用该工具，输入为搜索query语句，返回数据为检索内容字符串"""
             # 1. 调用search_in_datasets检索得到LangChain文档列表
-            documents = self.search_in_datasets(
-                dataset_ids=dataset_ids,
-                query=query,
-                retrieval_strategy=retrieval_strategy,
-                k=k,
-                score=score,
-                retrieval_source=retrieval_source,
-                account=account,
-            )
+            with flask_app.app_context():
+                documents = self.search_in_datasets(
+                    dataset_ids=dataset_ids,
+                    query=query,
+                    retrieval_strategy=retrieval_strategy,
+                    k=k,
+                    score=score,
+                    retrieval_source=retrieval_source,
+                    account_id=account_id,
+                )
 
             # 2. 将LangChain文档列表转换成字符串后返回
             if len(documents) == 0:

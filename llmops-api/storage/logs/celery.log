@@ -9383,3 +9383,169 @@ Traceback (most recent call last):
   File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/connection.py", line 1085, in send_packed_command
     raise ConnectionError(f"Error {errno} while writing to socket. {errmsg}.")
 redis.exceptions.ConnectionError: Error 32 while writing to socket. Broken pipe.
+[2026-01-15 13:14:19,227: INFO/MainProcess] Connected to redis://8.138.175.92:6379/1
+[2026-01-15 13:14:19,304: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-15 13:14:20,508: INFO/MainProcess] mingle: all alone
+[2026-01-15 13:14:20,892: INFO/MainProcess] celery@jiangjiayindeMacBook-Pro.local ready.
+[2026-01-15 15:03:40,222: WARNING/MainProcess] consumer: Connection to broker lost. Trying to re-establish the connection...
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/connection.py", line 1074, in send_packed_command
+    self._sock.sendall(item)
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/worker/consumer/consumer.py", line 346, in start
+    blueprint.start(self)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/worker/consumer/consumer.py", line 788, in start
+    c.loop(*c.loop_args())
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/worker/loops.py", line 96, in asynloop
+    next(loop)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/kombu/asynchronous/hub.py", line 377, in create_loop
+    cb(*cbargs)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/kombu/transport/redis.py", line 1394, in on_readable
+    self.cycle.on_readable(fileno)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/kombu/transport/redis.py", line 579, in on_readable
+    chan.handlers[type]()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/kombu/transport/redis.py", line 931, in _receive
+    ret.append(self._receive_one(c))
+               ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/kombu/transport/redis.py", line 941, in _receive_one
+    response = c.parse_response()
+               ^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 988, in parse_response
+    self.check_health()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 1026, in check_health
+    conn.send_command("PING", self.HEALTH_CHECK_MESSAGE, check_health=False)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/connection.py", line 1096, in send_command
+    self.send_packed_command(
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/connection.py", line 1085, in send_packed_command
+    raise ConnectionError(f"Error {errno} while writing to socket. {errmsg}.")
+redis.exceptions.ConnectionError: Error 32 while writing to socket. Broken pipe.
+[2026-01-15 16:26:25,037: INFO/MainProcess] Connected to redis://8.138.175.92:6379/1
+[2026-01-15 16:26:25,086: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-15 16:26:26,255: INFO/MainProcess] mingle: all alone
+[2026-01-15 16:26:26,650: INFO/MainProcess] celery@jiangjiayindeMacBook-Pro.local ready.
+[2026-01-15 17:21:50,880: WARNING/MainProcess] consumer: Connection to broker lost. Trying to re-establish the connection...
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/socket.py", line 65, in _read_from_socket
+    data = self._sock.recv(socket_read_size)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: [Errno 60] Operation timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/worker/consumer/consumer.py", line 346, in start
+    blueprint.start(self)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/worker/consumer/consumer.py", line 788, in start
+    c.loop(*c.loop_args())
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/worker/loops.py", line 96, in asynloop
+    next(loop)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/kombu/asynchronous/hub.py", line 312, in create_loop
+    poll_timeout = fire_timers(propagate=propagate) if scheduled else 1
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/kombu/asynchronous/hub.py", line 149, in fire_timers
+    entry()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/kombu/asynchronous/timer.py", line 70, in __call__
+    return self.fun(*self.args, **self.kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/kombu/asynchronous/timer.py", line 137, in _reschedules
+    return fun(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/kombu/transport/redis.py", line 564, in maybe_restore_messages
+    return channel.qos.restore_visible(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/kombu/transport/redis.py", line 417, in restore_visible
+    with Mutex(client, self.unacked_mutex_key,
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/kombu/transport/redis.py", line 173, in Mutex
+    lock_acquired = lock.acquire(blocking=False)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/lock.py", line 227, in acquire
+    if self.do_acquire(token):
+       ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/lock.py", line 243, in do_acquire
+    if self.redis.set(self.name, token, nx=True, px=timeout):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/utils.py", line 417, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/commands/core.py", line 2518, in set
+    return self.execute_command("SET", *pieces, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 657, in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 668, in _execute_command
+    return conn.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/retry.py", line 123, in call_with_retry
+    raise error
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/retry.py", line 116, in call_with_retry
+    return do()
+           ^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 669, in <lambda>
+    lambda: self._send_command_parse_response(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/client.py", line 639, in _send_command_parse_response
+    conn.send_command(*args, **options)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/connection.py", line 1096, in send_command
+    self.send_packed_command(
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/connection.py", line 1069, in send_packed_command
+    self.check_health()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/connection.py", line 1061, in check_health
+    self.retry.call_with_retry(self._send_ping, self._ping_failed)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/retry.py", line 123, in call_with_retry
+    raise error
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/retry.py", line 116, in call_with_retry
+    return do()
+           ^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/connection.py", line 1051, in _send_ping
+    if str_if_bytes(self.read_response()) != "PONG":
+                    ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/connection.py", line 1133, in read_response
+    response = self._parser.read_response(disable_decoding=disable_decoding)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/resp2.py", line 15, in read_response
+    result = self._read_response(disable_decoding=disable_decoding)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/resp2.py", line 25, in _read_response
+    raw = self._buffer.readline()
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/socket.py", line 115, in readline
+    self._read_from_socket()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/redis/_parsers/socket.py", line 78, in _read_from_socket
+    raise TimeoutError("Timeout reading from socket")
+redis.exceptions.TimeoutError: Timeout reading from socket
+[2026-01-15 17:21:51,560: WARNING/MainProcess] /Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/celery/worker/consumer/consumer.py:397: CPendingDeprecationWarning: 
+In Celery 5.1 we introduced an optional breaking change which
+on connection loss cancels all currently executed tasks with late acknowledgement enabled.
+These tasks cannot be acknowledged as the connection is gone, and the tasks are automatically redelivered
+back to the queue. You can enable this behavior using the worker_cancel_long_running_tasks_on_connection_loss
+setting. In Celery 5.1 it is set to False by default. The setting will be set to True by default in Celery 6.0.
+
+  warnings.warn(CANCEL_TASKS_BY_DEFAULT, CPendingDeprecationWarning)
+
+[2026-01-15 17:21:51,861: INFO/MainProcess] Connected to redis://8.138.175.92:6379/1
+[2026-01-15 17:21:51,973: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-15 17:22:18,593: INFO/MainProcess] mingle: all alone
+[2026-01-15 18:23:58,476: INFO/MainProcess] Connected to redis://8.138.175.92:6379/1
+[2026-01-15 18:23:58,546: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-15 18:23:59,744: INFO/MainProcess] mingle: all alone
+[2026-01-15 18:24:00,125: INFO/MainProcess] celery@jiangjiayindeMacBook-Pro.local ready.
+[2026-01-15 18:27:31,450: INFO/MainProcess] Connected to redis://8.138.175.92:6379/1
+[2026-01-15 18:27:31,524: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-15 18:27:32,729: INFO/MainProcess] mingle: all alone
+[2026-01-15 18:27:33,162: INFO/MainProcess] celery@jiangjiayindeMacBook-Pro.local ready.
+[2026-01-15 18:30:58,322: INFO/MainProcess] Connected to redis://8.138.175.92:6379/1
+[2026-01-15 18:30:58,371: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-15 18:30:59,561: INFO/MainProcess] mingle: all alone
+[2026-01-15 18:30:59,908: INFO/MainProcess] celery@jiangjiayindeMacBook-Pro.local ready.

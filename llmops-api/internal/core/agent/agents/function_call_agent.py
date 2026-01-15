@@ -130,32 +130,36 @@ class FunctionCallAgent(BaseAgent):
         gathered = None
         generation_type = ""
 
-        for chunk in llm.stream(state["messages"]):
-            # 聚合处理：LangChain 的 AIMessageChunk 支持通过 + 号自动合并 tool_calls
-            if gathered is None:
-                gathered = chunk
-            else:
-                gathered += chunk
+        try:
+            for chunk in llm.stream(state["messages"]):
+                # 聚合处理：LangChain 的 AIMessageChunk 支持通过 + 号自动合并 tool_calls
+                if gathered is None:
+                    gathered = chunk
+                else:
+                    gathered += chunk
 
-            # 检测生成类型是工具参数还是文本生成
-            if not generation_type:
-                if chunk.tool_call_chunks:
-                    generation_type = "thought"
-                elif chunk.content:
-                    generation_type = "message"
+                # 检测生成类型是工具参数还是文本生成
+                if not generation_type:
+                    if chunk.tool_call_chunks:
+                        generation_type = "thought"
+                    elif chunk.content:
+                        generation_type = "message"
 
-            # 如果生成的是消息则提交智能体消息事件
-            if generation_type == "message":
-                self.agent_queue_manager.publish(AgentQueueEvent(
-                    id=id,
-                    task_id=self.agent_queue_manager.task_id,
-                    event=QueueEvent.AGENT_MESSAGE,
-                    thought=chunk.content,
-                    messages=messages_to_dict(state["messages"]),
-                    answer=chunk.content,
-                    latency=time.perf_counter() - start_at,
+                # 如果生成的是消息则提交智能体消息事件
+                if generation_type == "message":
+                    self.agent_queue_manager.publish(AgentQueueEvent(
+                        id=id,
+                        task_id=self.agent_queue_manager.task_id,
+                        event=QueueEvent.AGENT_MESSAGE,
+                        thought=chunk.content,
+                        message=messages_to_dict(state["messages"]),
+                        answer=chunk.content,
+                        latency=time.perf_counter() - start_at,
 
-                ))
+                    ))
+        except Exception as e:
+            print(f"DEBUG: Error during streaming: {e}")
+            raise e
 
         # 6. 如果类型为推理则添加智能体推理事件
         if generation_type == "thought":
@@ -163,8 +167,9 @@ class FunctionCallAgent(BaseAgent):
                 id=id,
                 task_id=self.agent_queue_manager.task_id,
                 event=QueueEvent.AGENT_THOUGHT,
-                messages=messages_to_dict(state["messages"]),
+                message=messages_to_dict(state["messages"]),
                 latency=time.perf_counter() - start_at,
+                thought=json.dumps(gathered.tool_calls),
             ))
         elif generation_type == "message":
             # 如果LLM直接生成answer，则表示已经拿到最终答案，则停止监听
