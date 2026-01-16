@@ -60,6 +60,8 @@ class Router:
         bp.add_url_rule("/apps/<uuid:app_id>/conversations", methods=["POST"], view_func=self.app_handler.debug_chat)
         bp.add_url_rule("/apps/<uuid:app_id>/conversations/tasks/<uuid:task_id>/stop", methods=["POST"],
                         view_func=self.app_handler.stop_debug_chat)
+        bp.add_url_rule("/apps/<uuid:app_id>/conversations/messages",
+                        view_func=self.app_handler.get_debug_conversation_messages_with_page)
 
         # 3. 内置插件广场模块
         bp.add_url_rule("/builtin-tools", view_func=self.builtin_tool_handler.get_builtin_tools)

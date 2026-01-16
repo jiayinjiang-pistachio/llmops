@@ -15,6 +15,7 @@ from injector import inject
 
 from internal.schema import CreateAppReq, GetAppResp, GetPublishHistoriesWithPageReq, GetPublishHistoriesWithPageResp, \
     FallbackHistoryToDraftReq, UpdateDebugConversationSummaryReq, DebugChatReq
+from internal.schema.app_schema import GetDebugConversationMessagesWithPageReq, GetDebugConversationMessagesWithPageResp
 from internal.service import AppService
 from internal.service.retrieval_service import RetrievalService
 from pkg.paginator import PageModel
@@ -153,6 +154,21 @@ class AppHandler:
         """根据传递的应用id+任务id停止某个应用的指定调试会话"""
         self.app_service.stop_debug_chat(app_id, task_id, current_user)
         return success_message("停止应用调试会话成功")
+
+    @login_required
+    def get_debug_conversation_messages_with_page(self, app_id: UUID):
+        """根据传递的应用id获取该应用的调试会话分页列表记录"""
+        req = GetDebugConversationMessagesWithPageReq(request.args)
+        if not req.validate():
+            return validate_error_json(req.errors)
+
+        # 2. 调用服务获取数据
+        messages, paginator = self.app_service.get_debug_conversation_messages_with_page(app_id, req, current_user)
+
+        # 3. 创建响应结构
+        resp = GetDebugConversationMessagesWithPageResp(many=True)
+
+        return success_json(PageModel(list=resp.dump(messages), paginator=paginator))
 
     def ping(self):
         pass

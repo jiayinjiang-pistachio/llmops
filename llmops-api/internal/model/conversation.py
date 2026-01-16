@@ -7,7 +7,7 @@
 @Description    : 
 """
 from sqlalchemy import PrimaryKeyConstraint, Column, UUID, text, String, Text, Boolean, DateTime, Integer, Numeric, \
-    Float, func
+    Float, func, asc
 from sqlalchemy.dialects.postgresql import JSONB
 
 from internal.extension.database_extension import db
@@ -93,6 +93,13 @@ class Message(db.Model):
         server_onupdate=text('CURRENT_TIMESTAMP(0)'),
     )
     created_at = Column(DateTime, nullable=False, server_default=text('CURRENT_TIMESTAMP(0)'))
+
+    @property
+    def agent_thoughts(self) -> list["MessageAgentThought"]:
+        """只读属性，返回消息智能体推理过程列表"""
+        return db.session.query(MessageAgentThought).filter(
+            MessageAgentThought.message_id == self.id,
+        ).order_by(asc("position")).all()
 
 
 class MessageAgentThought(db.Model):

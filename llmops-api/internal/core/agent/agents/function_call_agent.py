@@ -215,7 +215,7 @@ class FunctionCallAgent(BaseAgent):
         # 6. 如果类型为推理则添加智能体推理事件
         if generation_type == "thought":
             self.agent_queue_manager.publish(task_id, AgentThought(
-                id=id,
+                id=id,  # 之所以可以这样写，是因为拿到的uuid不一样，是因为agent_thought与message是if-else的关系（每次执行到_llm_node时）
                 task_id=task_id,
                 event=QueueEvent.AGENT_THOUGHT,
                 message=messages_to_dict(state["messages"]),
