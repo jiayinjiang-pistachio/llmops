@@ -6,7 +6,7 @@ export const debugApps = async (
   onData: (eventResponse: { [key: string]: any }) => void,
 ) => {
   return ssePost(
-    `/app/${app_id}/debug`,
+    `/apps/${app_id}/conversations`,
     {
       body: {
         query,

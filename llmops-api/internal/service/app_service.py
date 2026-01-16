@@ -8,15 +8,15 @@
 """
 import json
 import os
-import re
-import uuid
 from dataclasses import dataclass
 from datetime import datetime
+from threading import Thread
 from typing import Any, Generator
 from uuid import UUID
 
-from flask import request, current_app
+from flask import request, current_app, Flask
 from injector import inject
+from langchain_core.messages import HumanMessage
 from langchain_openai import ChatOpenAI
 from redis import Redis
 from sqlalchemy import func, desc
@@ -768,11 +768,9 @@ class AppService(BaseService):
         """根据传递的应用id+提问query向特定的应用发起会话调试"""
         # 1. 获取应用信息并校验权限
         app = self.get_app(app_id, account)
-        task_id = uuid.uuid4()
 
         # 2. 获取应用的最新草稿配置信息
         draft_app_config = self.get_draft_app_config(app_id, account)
-        review_config = draft_app_config["review_config"]
 
         # 3. 获取当前应用的调试会话信息
         debug_conversation = app.debug_conversation
@@ -787,31 +785,7 @@ class AppService(BaseService):
             created_by=account.id,
         )
 
-        # 5. 检测是否开启输入审核，并检测输入，如果存在敏感词则使用预设响应并结束代码
-        if review_config["enable"] and review_config["inputs_config"]["enable"]:
-            contains_keyword = any(keyword in query for keyword in review_config["keywords"])
-            if contains_keyword:
-                data = {
-                    "id": str(uuid.uuid4()),
-                    "task_id": str(task_id),
-                    "conversation_id": str(debug_conversation.id),
-                    "message_id": str(message.id),
-                    "event": QueueEvent.AGENT_MESSAGE,
-                    "thought": review_config["inputs_config"]["preset_response"],
-                    "observation": "",
-                    "input": "",
-                    "input_tool": {},
-                    "answer": review_config["inputs_config"]["preset_response"],
-                    "latency": 0,
-                }
-                yield f"event: {QueueEvent.AGENT_MESSAGE.value}\ndata: {json.dumps(data)}\n\n"
-                self.update(
-                    message,
-                    answer=data["answer"],
-                )
-                return
-
-        # todo: 6. 根据传递的model_config实例化不同的LLM模型，等待多LLM接入后该处会发生变化
+        # todo: 5. 根据传递的model_config实例化不同的LLM模型，等待多LLM接入后该处会发生变化
         llm = ChatOpenAI(
             model=draft_app_config["model_config"]["model"],
             # todo: 暂时是用gpt的模型，用本地的baseurl和密钥，到时候再看下是否动态参数传入以支持付费模型
@@ -820,7 +794,7 @@ class AppService(BaseService):
             **draft_app_config["model_config"]["parameters"],
         )
 
-        # 7. 实例化TokenBufferMemory用于提取短期记忆
+        # 6. 实例化TokenBufferMemory用于提取短期记忆
         token_buffer_memory = TokenBufferMemory(
             db=self.db,
             conversation=debug_conversation,
@@ -830,12 +804,12 @@ class AppService(BaseService):
             message_limit=draft_app_config["dialog_round"],
         )
 
-        # 8. 将草稿配置中的tools转换成LangChain工具
+        # 7. 将草稿配置中的tools转换成LangChain工具
         tools = []
         for tool in draft_app_config["tools"]:
-            # 9. 根据不同的工具类型执行不同的操作
+            # 8. 根据不同的工具类型执行不同的操作
             if tool["type"] == "builtin_tool":
-                # 10. 内置工具，通过builtin_provider_manager获取工具实例
+                # 9. 内置工具，通过builtin_provider_manager获取工具实例
                 builtin_tool = self.builtin_provider_manager.get_tool(
                     tool["provider"]["id"],
                     tool["tool"]["name"],
@@ -845,7 +819,7 @@ class AppService(BaseService):
 
                 tools.append(builtin_tool(**tool["tool"]["params"]))
             else:
-                # 11. API工具，首先根据id找到ApiTool记录，然后创建实例
+                # 10. API工具，首先根据id找到ApiTool记录，然后创建实例
                 api_tool: ApiTool = self.get(ApiTool, tool["tool"]["id"])
                 if not api_tool:
                     continue
@@ -864,9 +838,9 @@ class AppService(BaseService):
                     )
                 )
 
-        # 12. 检测是否关联了知识库
+        # 11. 检测是否关联了知识库
         if draft_app_config["datasets"]:
-            # 13. 构建LangChain知识库检索工具
+            # 12. 构建LangChain知识库检索工具
             dataset_retrieval = self.retrieval_service.create_langchain_tool_from_search(
                 flask_app=current_app._get_current_object(),  # <--- 关键点, 使用 _get_current_object() 获取真实的 Flask 实例
                 dataset_ids=[dataset["id"] for dataset in draft_app_config["datasets"]],
@@ -876,78 +850,68 @@ class AppService(BaseService):
             )
             tools.append(dataset_retrieval)
 
-        # 14. todo: 构建Agent智能体，目前暂时使用FunctionCallAgent
+        # 13. todo: 构建Agent智能体，目前暂时使用FunctionCallAgent
         agent = FunctionCallAgent(
+            llm=llm,
             agent_config=AgentConfig(
-                llm=llm,
-                # user_id=account.id,
-                # invoke_from=InvokeFrom.DEBUGGER,
+                user_id=account.id,
+                invoke_from=InvokeFrom.DEBUGGER,
                 enable_long_term_memory=draft_app_config["long_term_memory"]["enable"],
                 tools=tools,
-                # todo: review_config
+                review_config=draft_app_config["review_config"],
             ),
-            agent_queue_manager=AgentQueueManager(
-                user_id=account.id,
-                task_id=task_id,
-                invoke_from=InvokeFrom.DEBUGGER,
-                redis_client=self.redis_client,
-            )
         )
 
-        agent_thought = {}
-        for agent_queue_event in agent.run(query, history, debug_conversation.summary):
+        agent_thoughts = {}
+        for agent_thought in agent.stream({
+            "messages": [HumanMessage(query)],
+            "history": history,
+            "long_term_memory": debug_conversation.summary,
+        }):
             # 15. 提取 thought和answer
-            thought = agent_queue_event.thought
-            answer = agent_queue_event.answer
-            event_id = str(agent_queue_event.id)
-            task_id = str(agent_queue_event.task_id)
+            event_id = str(agent_thought.id)
+            task_id = str(agent_thought.task_id)
 
-            # 16. 检测是否开启输出审核
-            if review_config["enable"] and review_config["outputs_config"]["enable"]:
-                for keyword in review_config["keywords"]:
-                    thought = re.sub(re.escape(keyword), "**", thought, flags=re.IGNORECASE)
-                    answer = re.sub(re.escape(keyword), "**", answer, flags=re.IGNORECASE)
-
-            # 17. 将数据填充到agent_thought，便于存储到数据库中
-            if agent_queue_event.event != QueueEvent.PING:
+            # 16. 将数据填充到agent_thought，便于存储到数据库中
+            if agent_thought.event != QueueEvent.PING:
                 # 18. 除了 agent_message 叠加，其他事件一次性返回
-                if agent_queue_event.event == QueueEvent.AGENT_MESSAGE:
-                    if event_id not in agent_thought:
+                if agent_thought.event == QueueEvent.AGENT_MESSAGE:
+                    if event_id not in agent_thoughts:
                         # 19. 初始化智能体事件
-                        agent_thought[event_id] = {
+                        agent_thoughts[event_id] = {
                             "id": event_id,
                             "task_id": task_id,
-                            "event": agent_queue_event.event,
-                            "thought": agent_queue_event.thought,
-                            "observation": agent_queue_event.observation,
-                            "tool": agent_queue_event.tool,
-                            "tool_input": agent_queue_event.tool_input,
-                            "message": agent_queue_event.message,
-                            "answer": agent_queue_event.answer,
-                            "latency": agent_queue_event.latency,
+                            "event": agent_thought.event,
+                            "thought": agent_thought.thought,
+                            "observation": agent_thought.observation,
+                            "tool": agent_thought.tool,
+                            "tool_input": agent_thought.tool_input,
+                            "message": agent_thought.message,
+                            "answer": agent_thought.answer,
+                            "latency": agent_thought.latency,
                         }
                     else:
                         # 20. 叠加智能体消息
-                        agent_thought[event_id] = {
-                            **agent_thought[event_id],
-                            "thought": agent_thought[event_id]["thought"] + agent_queue_event.thought,
-                            "answer": agent_thought[event_id]["answer"] + agent_queue_event.answer,
-                            "latency": agent_queue_event.latency,
+                        agent_thoughts[event_id] = {
+                            **agent_thoughts[event_id],
+                            "thought": agent_thoughts[event_id]["thought"] + agent_thought.thought,
+                            "answer": agent_thoughts[event_id]["answer"] + agent_thought.answer,
+                            "latency": agent_thought.latency,
                         }
 
                 else:
                     # 21. 处理其他类型事件的消息
-                    agent_thought[event_id] = {
+                    agent_thoughts[event_id] = {
                         "id": event_id,
                         "task_id": task_id,
-                        "event": agent_queue_event.event,
-                        "thought": agent_queue_event.thought,
-                        "observation": agent_queue_event.observation,
-                        "tool": agent_queue_event.tool,
-                        "tool_input": agent_queue_event.tool_input,
-                        "message": agent_queue_event.message,
-                        "answer": agent_queue_event.answer,
-                        "latency": agent_queue_event.latency,
+                        "event": agent_thought.event,
+                        "thought": agent_thought.thought,
+                        "observation": agent_thought.observation,
+                        "tool": agent_thought.tool,
+                        "tool_input": agent_thought.tool_input,
+                        "message": agent_thought.message,
+                        "answer": agent_thought.answer,
+                        "latency": agent_thought.latency,
                     }
 
             data = {
@@ -955,66 +919,120 @@ class AppService(BaseService):
                 "conversation_id": str(debug_conversation.id),
                 "message_id": str(message.id),
                 "task_id": task_id,
-                "event": agent_queue_event.event,
-                "thought": thought,
-                "observation": agent_queue_event.observation,
-                "tool": agent_queue_event.tool,
-                "tool_input": agent_queue_event.tool_input,
-                "answer": answer,
-                "latency": agent_queue_event.latency,
+                "event": agent_thought.event,
+                "thought": agent_thought.thought,
+                "observation": agent_thought.observation,
+                "tool": agent_thought.tool,
+                "tool_input": agent_thought.tool_input,
+                "answer": agent_thought.answer,
+                "latency": agent_thought.latency,
             }
-            yield f"event: {agent_queue_event.event.value}\ndata: {json.dumps(data)}\n\n"
+            yield f"event: {agent_thought.event.value}\ndata: {json.dumps(data)}\n\n"
 
         # 22. 循环将消息以及推理过程添加到数据库
-        position = 0
-        latency = 0
-        for key, item in agent_thought.items():
-            position += 1
-            latency += item["latency"]
+        thread = Thread(
+            target=self._save_agent_thoughts,
+            kwargs={
+                "flask_app": current_app._get_current_object(),
+                "account_id": account.id,
+                "app_id": app_id,
+                "draft_app_config": draft_app_config,
+                "conversation_id": debug_conversation.id,
+                "message_id": message.id,
+                "agent_thoughts": agent_thoughts,
+            }
+        )
+        thread.start()
 
-            self.create(
-                MessageAgentThought,
-                app_id=app_id,
-                conversation_id=debug_conversation.id,
-                message_id=message.id,
-                invoke_from=InvokeFrom.DEBUGGER,
-                created_by=account.id,
-                position=position,
-                event=item["event"],
-                thought=item["thought"],
-                observation=item["observation"],
-                tool=item["tool"],
-                tool_input=item["tool_input"],
-                message=item["message"],
-                answer=item["answer"],
-                latency=item["latency"],
-            )
-            # 如果是agent_message类型事件，则表明该消息已输出完毕，更新消息内容和耗时
-            if item["event"] == QueueEvent.AGENT_MESSAGE:
-                self.update(
-                    message,
-                    message=item["message"],
-                    answer=item["answer"],
-                    latency=latency,
-                )
-                # 完成了消息的输出，如果开启了会话长期记忆，生成新的总结摘要，并更新长期记忆
-                if draft_app_config["long_term_memory"]["enable"]:
-                    # 根据人类消息、AI消息、原始的摘要信息总结生成一段新的摘要
-                    new_summary = self.conversation_service.summary(
-                        query,  # 人类消息
-                        item["answer"],  # AI消息
-                        debug_conversation.summary,  # 旧的摘要总结
+    def _save_agent_thoughts(
+            self,
+            flask_app: Flask,
+            account_id: UUID,
+            app_id: UUID,
+            draft_app_config: dict[str, Any],
+            conversation_id: UUID,
+            message_id: UUID,
+            agent_thoughts: dict[str, Any],
+    ) -> None:
+        """存储智能体推理步骤信息"""
+        with flask_app.app_context():
+            # 1. 定义变量存储推理位置信息
+            position = 0
+            latency = 0
+
+            # 2. 在子线程中，重新查询conversation和message，确保对象会被子线程管理到
+            conversation: Conversation = self.get(Conversation, conversation_id)
+            message: Message = self.get(Message, message_id)
+
+            # 3. 循环遍历所有智能体推理过程执行存储操作
+            for key, item in agent_thoughts.items():
+
+                # 4. 存储长期记忆召回、推理、消息、动作、知识库检索等步骤
+                if item["event"] in [
+                    QueueEvent.LONG_TERM_MEMORY_RECALL,
+                    QueueEvent.AGENT_THOUGHT,
+                    QueueEvent.AGENT_MESSAGE,
+                    QueueEvent.AGENT_ACTION,
+                    QueueEvent.DATASET_RETRIEVAL,
+                ]:
+                    # 5. 更新位置及总耗时
+                    position += 1
+                    latency += item["latency"]
+
+                    self.create(
+                        MessageAgentThought,
+                        app_id=app_id,
+                        conversation_id=conversation.id,
+                        message_id=message.id,
+                        invoke_from=InvokeFrom.DEBUGGER,
+                        created_by=account_id,
+                        position=position,
+                        event=item["event"],
+                        thought=item["thought"],
+                        observation=item["observation"],
+                        tool=item["tool"],
+                        tool_input=item["tool_input"],
+                        message=item["message"],
+                        answer=item["answer"],
+                        latency=item["latency"],
                     )
 
-                    new_conversation_name = debug_conversation.name
-
-                    # 如果会话是第一次创建，那么就生成会话名称
-                    if debug_conversation.is_new:
-                        new_conversation_name = self.conversation_service.generate_conversation_name(query)
-
-                    # 更新会话长期记忆、会话名称
+                # 7. 检测事件是否为agent_message
+                # 如果是agent_message类型事件，则表明该消息已输出完毕，更新消息内容和耗时
+                if item["event"] == QueueEvent.AGENT_MESSAGE:
+                    # 8. 更新消息
                     self.update(
-                        debug_conversation,
-                        summary=new_summary,
-                        name=new_conversation_name,
+                        message,
+                        message=item["message"],
+                        answer=item["answer"],
+                        latency=latency,
                     )
+                    # 9. 完成了消息的输出，如果开启了会话长期记忆，生成新的总结摘要，并更新长期记忆
+                    if draft_app_config["long_term_memory"]["enable"]:
+                        # 根据人类消息、AI消息、原始的摘要信息总结生成一段新的摘要
+                        new_summary = self.conversation_service.summary(
+                            message.query,  # 人类消息
+                            item["answer"],  # AI消息
+                            conversation.summary,  # 旧的摘要总结
+                        )
+
+                        new_conversation_name = conversation.name
+
+                        # 如果会话是第一次创建，那么就生成会话名称
+                        if conversation.is_new:
+                            new_conversation_name = self.conversation_service.generate_conversation_name(message.query)
+
+                        # 更新会话长期记忆、会话名称
+                        self.update(
+                            conversation,
+                            summary=new_summary,
+                            name=new_conversation_name,
+                        )
+
+    def stop_debug_chat(self, app_id: UUID, task_id: UUID, account: Account) -> None:
+        """根据传递的应用id+任务id+账号，停止某个应用的调试会话，中断流式事件"""
+        # 1. 获取应用信息并校验权限
+        app = self.get_app(app_id, account)
+
+        # 2. 调用智能体队列管理器停止特定任务
+        AgentQueueManager.set_stop_flag(task_id, InvokeFrom.DEBUGGER, account.id)
