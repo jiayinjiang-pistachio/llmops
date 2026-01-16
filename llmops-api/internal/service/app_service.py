@@ -1016,21 +1016,22 @@ class AppService(BaseService):
                             item["answer"],  # AI消息
                             conversation.summary,  # 旧的摘要总结
                         )
+                        self.update(
+                            conversation,
+                            summary=new_summary,
+                        )
 
-                        new_conversation_name = conversation.name
-
-                        # 如果会话是第一次创建，那么就生成会话名称
-                        if conversation.is_new:
-                            new_conversation_name = self.conversation_service.generate_conversation_name(message.query)
+                    # 10. 处理新生成会话名称，如果会话是第一次创建，那么就生成会话名称
+                    if conversation.is_new:
+                        new_conversation_name = self.conversation_service.generate_conversation_name(message.query)
 
                         # 更新会话长期记忆、会话名称
                         self.update(
                             conversation,
-                            summary=new_summary,
                             name=new_conversation_name,
                         )
 
-                # 10. 如果是停止或错误，更新消息状态
+                # 11. 如果是停止或错误，更新消息状态
                 if item["event"] in [MessageStatus.STOP, MessageStatus.ERROR]:
                     self.update(
                         message,
