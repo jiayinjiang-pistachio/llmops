@@ -13,7 +13,7 @@ from flask import Flask
 from injector import inject
 
 from internal.handler import AppHandler, BuiltinToolHandler, UploadFileHandler, DatasetHandler, DocumentHandler, \
-    SegmentHandler, OAuthHandler, AccountHandler, AuthHandler
+    SegmentHandler, OAuthHandler, AccountHandler, AuthHandler, AiHandler
 from internal.handler.api_tool_handler import ApiToolHandler
 
 
@@ -31,6 +31,7 @@ class Router:
     oauth_handler: OAuthHandler
     account_handler: AccountHandler
     auth_handler: AuthHandler
+    ai_handler: AiHandler
 
     def register_router(self, app: Flask):
         """注册路由"""
@@ -137,6 +138,11 @@ class Router:
         bp.add_url_rule("/account/password", methods=["POST"], view_func=self.account_handler.update_password)
         bp.add_url_rule("/account/name", methods=["POST"], view_func=self.account_handler.update_name)
         bp.add_url_rule("/account/avatar", methods=["POST"], view_func=self.account_handler.update_avatar)
+
+        # AI辅助模块
+        bp.add_url_rule("/ai/optimize-prompt", methods=["POST"], view_func=self.ai_handler.optimize_prompt)
+        bp.add_url_rule("/ai/suggested-questions", methods=["POST"],
+                        view_func=self.ai_handler.generate_suggested_questions)
 
         # 4. 在应用上去注册蓝图
         app.register_blueprint(bp)

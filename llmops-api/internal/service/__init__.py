@@ -8,6 +8,7 @@
 """
 
 from .account_service import AccountService
+from .ai_service import AiService
 from .api_tool_service import APiToolService
 from .app_service import AppService
 from .base_service import BaseService
@@ -36,4 +37,5 @@ __all__ = [
     "KeywordTableService", "SegmentService",
     "ConversationService", "JwtService",
     "AccountService", "OAuthService",
+    "AiService"
 ]

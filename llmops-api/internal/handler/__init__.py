@@ -8,6 +8,7 @@
 """
 
 from .account_handler import AccountHandler
+from .ai_handler import AiHandler
 from .app_handler import AppHandler
 from .auth_handler import AuthHandler
 from .builtin_tool_handler import BuiltinToolHandler
@@ -26,5 +27,6 @@ __all__ = [
     "SegmentHandler",
     "OAuthHandler",
     "AccountHandler",
-    "AuthHandler"
+    "AuthHandler",
+    "AiHandler"
 ]
