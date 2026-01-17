@@ -125,7 +125,7 @@ export type UpdateDraftAppConfigReq = {
   long_term_memory?: {
     enable: boolean
   }
-  opening_statements?: string
+  opening_statement?: string
   opening_questions?: string[]
   speech_to_text?: {
     enable: boolean

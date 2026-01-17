@@ -29,7 +29,13 @@
           :long_term_memory="draftAppConfigForm.long_term_memory"
         />
         <!-- 对话窗口 -->
-        <PreviewDebugChat />
+        <PreviewDebugChat
+          :suggested_after_answer="draftAppConfigForm.suggested_after_answer"
+          :opening_questions="draftAppConfigForm.opening_questions"
+          :opening_statement="draftAppConfigForm.opening_statement"
+          :app="props.app"
+          :app_id="props.app?.id"
+         />
       </div>
     </div>
   </div>
@@ -53,6 +59,6 @@ const props = defineProps<{
 const route = useRoute()
 const appId = computed(() => String(route.params.app_id))
 
-const { draftAppConfigForm, loadingDraftAppConfig } = useGetDraftAppConfig(appId.value)
+const { draftAppConfigForm, loadDraftAppConfig } = useGetDraftAppConfig(appId.value)
 const { handleUpdateDraftAppConfig } = useUpdateDraftAppConfig()
 </script>

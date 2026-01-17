@@ -173,7 +173,7 @@ export const useGetDraftAppConfig = (app_id: string) => {
   const loading = ref(false)
   const draftAppConfigForm = reactive({} as DraftAppConfig)
 
-  const loadingDraftAppConfig = async (app_id: string) => {
+  const loadDraftAppConfig = async (app_id: string) => {
     try {
       loading.value = true
       const resp = await getDraftAppConfig(app_id)
@@ -196,13 +196,13 @@ export const useGetDraftAppConfig = (app_id: string) => {
   }
 
   onMounted(async () => {
-    await loadingDraftAppConfig(app_id)
+    await loadDraftAppConfig(app_id)
   })
 
   return {
     loading,
     draftAppConfigForm,
-    loadingDraftAppConfig,
+    loadDraftAppConfig,
   }
 }
 

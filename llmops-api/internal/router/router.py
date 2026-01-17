@@ -40,7 +40,6 @@ class Router:
 
         # 2. 将url与对应的控制器方法绑定
         bp.add_url_rule("/ping", view_func=self.app_handler.ping)
-        # bp.add_url_rule("/app/<uuid:app_id>/debug", methods=["POST"], view_func=self.app_handler.debug)
         bp.add_url_rule("/apps", methods=["POST"], view_func=self.app_handler.create_app)
         bp.add_url_rule("/apps/<uuid:app_id>", view_func=self.app_handler.get_app)
         bp.add_url_rule("/apps/<uuid:app_id>/draft-app-config", view_func=self.app_handler.get_draft_app_cconfig)
