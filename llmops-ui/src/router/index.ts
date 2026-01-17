@@ -60,12 +60,12 @@ const router = createRouter({
         {
           path: 'space/datasets/:dataset_id/documents/create',
           name: 'space-datasets-documents-create',
-          component: () => import('@/views/space/datasets/documents/CreateView.vue')
+          component: () => import('@/views/space/datasets/documents/CreateView.vue'),
         },
         {
           path: 'space/datasets/:dataset_id/documents/:document_id/segments',
           name: 'space-datasets-documents-segments-list',
-          component: () => import('@/views/space/datasets/documents/segments/ListView.vue')
+          component: () => import('@/views/space/datasets/documents/segments/ListView.vue'),
         },
         // 应用广场页
         {
@@ -99,12 +99,28 @@ const router = createRouter({
         {
           path: 'auth/authorize/:provider_name',
           name: 'auth-authorize',
-          component: () => import('@/views/auth/AuthorizeView.vue')
+          component: () => import('@/views/auth/AuthorizeView.vue'),
         },
         {
-          path: 'space/apps/:app_id',
-          name: 'space-apps-detail',
-          component: () => import('@/views/space/apps/DetailView.vue'),
+          path: 'space/apps',
+          component: () => import('@/views/space/apps/AppLayoutView.vue'),
+          children: [
+            {
+              path: ':app_id',
+              name: 'space-apps-detail',
+              component: () => import('@/views/space/apps/DetailView.vue'),
+            },
+            {
+              path: ':app_id/published',
+              name: 'space-apps-published',
+              component: () => import('@/views/space/apps/PublishedView.vue'),
+            },
+            {
+              path: ':app_id/analysis',
+              name: 'space-apps-analysis',
+              component: () => import('@/views/space/apps/AnalysisView.vue')
+            }
+          ],
         },
       ],
     },
@@ -120,7 +136,7 @@ router.beforeEach(async (to) => {
 
   if (auth.isLogin() && ['auth-login', 'auth-authorize'].includes(to.name as string)) {
     return {
-      path: '/home'
+      path: '/home',
     }
   }
 })

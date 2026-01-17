@@ -1,6 +1,6 @@
 <template>
   <div class="">
-
+    PublishedView
   </div>
 </template>
 

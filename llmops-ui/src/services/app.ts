@@ -33,7 +33,7 @@ export const updateDraftAppConfig = (app_id: string, req: UpdateDraftAppConfigRe
 
 // 获取应用的调试长期记忆
 export const getDebugConversationSummary = (app_id: string) =>
-  get<BaseResponse<string>>(`/apps/${app_id}/summary`)
+  get<BaseResponse<{summary: string}>>(`/apps/${app_id}/summary`)
 
 // 更新应用的调试长期记忆
 export const updateDebugConversationSummary = (app_id: string, summary: string) =>
