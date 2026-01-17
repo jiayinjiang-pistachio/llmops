@@ -5,6 +5,11 @@ export interface BaseResponse<T> {
   data: T
 }
 
+export type BasePaginatorReq = {
+  current_page: number
+  page_size: number
+}
+
 export interface Paginator {
   total_page: number
   total_record: number
