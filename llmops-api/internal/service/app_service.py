@@ -262,6 +262,7 @@ class AppService(BaseService):
             "opening_questions": draft_app_config.opening_questions,
             "speech_to_text": draft_app_config.speech_to_text,
             "text_to_speech": draft_app_config.text_to_speech,
+            "suggested_after_answer": draft_app_config.suggested_after_answer,
             "review_config": draft_app_config.review_config,
             "updated_at": datetime_to_timestamp(draft_app_config.updated_at),
             "created_at": datetime_to_timestamp(draft_app_config.created_at),
@@ -299,7 +300,7 @@ class AppService(BaseService):
             "model_config", "dialog_round", "preset_prompt",
             "tools", "workflows", "datasets", "retrieval_config",
             "long_term_memory", "opening_statement", "opening_questions",
-            "speech_to_text", "text_to_speech", "review_config",
+            "speech_to_text", "text_to_speech", "suggested_after_answer", "review_config",
         ]
 
         # 2. 判断传递的草稿配置是否在可接受字段内
@@ -517,6 +518,21 @@ class AppService(BaseService):
             ):
                 raise ValidationException("文本转语音设置格式错误")
 
+            # 10 校验回答后建议问题配置
+            if "suggested_after_answer" in draft_app_config:
+                suggested_after_answer = draft_app_config["suggested_after_answer"]
+
+                # 10.1 校验回答后建议问题格式
+                if not suggested_after_answer or not isinstance(suggested_after_answer, dict):
+                    raise ValidationException("长期记忆设置格式错误")
+
+                # 10.2 校验回答后建议问题属性
+                if (
+                        set(suggested_after_answer.keys()) != {"enable"}
+                        or not isinstance(suggested_after_answer["enable"], bool)
+                ):
+                    raise ValidationException("回答后建议问题设置格式错误")
+
         # 15. 校验review_config审核配置
         if "review_config" in draft_app_config:
             review_config = draft_app_config["review_config"]
@@ -610,6 +626,7 @@ class AppService(BaseService):
             opening_questions=draft_app_config["opening_questions"],
             speech_to_text=draft_app_config["speech_to_text"],
             text_to_speech=draft_app_config["text_to_speech"],
+            suggested_after_answer=draft_app_config["suggested_after_answer"],
             review_config=draft_app_config["review_config"],
         )
 

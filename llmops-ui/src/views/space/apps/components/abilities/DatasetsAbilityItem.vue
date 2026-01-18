@@ -1,38 +1,49 @@
 <script setup lang="ts">
-import { nextTick, type PropType, ref, watch } from 'vue'
+import { nextTick, type Ref, ref, watch } from 'vue'
 import { useUpdateDraftAppConfig } from '@/hooks/use-app'
 import { useGetDatasetsWithPage } from '@/hooks/use-dataset'
 import { cloneDeep, isEqual } from 'lodash'
 import { Message } from '@arco-design/web-vue'
+import type { DraftAppConfig } from '@/models/app'
 
 // 1.定义自定义组件所需数据
 const props = defineProps({
   app_id: { type: String, default: '', required: true },
-  retrieval_config: { type: Object, default: {}, required: true },
-  datasets: {
-    type: Array as PropType<
-      {
-        id: string
-        name: string
-        icon: string
-        description: string
-      }[]
-    >,
-    default: [],
-    required: true,
-  },
+  // retrieval_config: { type: Object, default: () => ({}), required: true },
+  // datasets: {
+  //   type: Array as PropType<
+  //     {
+  //       id: string
+  //       name: string
+  //       icon: string
+  //       description: string
+  //     }[]
+  //   >,
+  //   default: () => [],
+  //   required: true,
+  // },
 })
-const emits = defineEmits(['update:datasets', 'update:retrieval_config'])
+// const emits = defineEmits(['update:datasets', 'update:retrieval_config'])
+
+const retrieval_config = defineModel<DraftAppConfig['retrieval_config']>('retrieval_config', {
+  required: true,
+  default: () => ({}),
+})
+const datasets = defineModel<DraftAppConfig['datasets']>('datasets', {
+  required: true,
+  default: () => [],
+})
+
 const { loading: updateDraftAppConfigLoading, handleUpdateDraftAppConfig } =
   useUpdateDraftAppConfig()
-const { loading, paginator, datasets: apiDatasets, loadDatasets } = useGetDatasetsWithPage()
+const { loading, paginator, datasets: apiDatasets, loadMoreData } = useGetDatasetsWithPage()
 const datasetsModalVisible = ref(false)
 const retrievalConfigModalVisible = ref(false)
 const isDatasetsInit = ref(false)
-const activateDatasets = ref<Record<string, any>[]>([])
-const originDatasets = ref<Record<string, any>[]>([])
-const retrievalConfigForm = ref<Record<string, any>>({})
-const originRetrievalConfigForm = ref<Record<string, any>>({})
+const activateDatasets = ref<DraftAppConfig['datasets']>([])
+const originDatasets = ref<DraftAppConfig['datasets']>([])
+const retrievalConfigForm = ref({}) as Ref<DraftAppConfig['retrieval_config']>
+const originRetrievalConfigForm = ref({}) as Ref<DraftAppConfig['retrieval_config']>
 const isRetrievalConfigInit = ref(false)
 
 // 2.定义滚动数据分页处理器
@@ -43,7 +54,7 @@ const handleScroll = async (event: UIEvent) => {
   // 2.2 判断是否滑动到底部
   if (scrollTop + clientHeight >= scrollHeight - 10) {
     if (loading.value) return
-    await loadDatasets()
+    await loadMoreData()
   }
 }
 
@@ -82,8 +93,13 @@ const handleSelectDataset = (idx: number) => {
   // 7.1 提取对应的知识库id
   const dataset = apiDatasets[idx]
 
+  if (dataset == undefined) {
+    Message.error('该知识库不存在')
+    return
+  }
+
   // 7.2 检测id是否选中，如果是选中则删除
-  if (activateDatasets.value.some((activateDataset) => activateDataset.id === dataset.id)) {
+  if (activateDatasets.value.some((activateDataset) => activateDataset.id === dataset?.id)) {
     activateDatasets.value = activateDatasets.value.filter(
       (activateDataset) => activateDataset.id !== dataset.id,
     )
@@ -116,11 +132,13 @@ const handleSubmitDatasets = async () => {
     await nextTick()
 
     // 8.3 双向同步更新props中的数据
-    emits('update:datasets', activateDatasets.value)
+    datasets.value = activateDatasets.value
 
     // 8.4 隐藏模态窗
     handleCancelDatasetsModal()
-  } catch (e) {}
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 // 9.提交更新检索配置
@@ -128,30 +146,31 @@ const handleSubmitRetrievalConfig = async () => {
   try {
     // 9.1 处理数据并完成API接口提交
     await handleUpdateDraftAppConfig(props.app_id, {
-      retrieval_config: retrievalConfigForm.value as any,
+      retrieval_config: retrievalConfigForm.value,
     })
 
     // 9.2 接口更新更新成功，同步表单信息
     originRetrievalConfigForm.value = retrievalConfigForm.value
 
-    // 9.3 双向同步更新props中的数据
-    emits('update:retrieval_config', retrievalConfigForm.value)
+    retrieval_config.value = retrievalConfigForm.value
 
     // 9.4 隐藏模态窗
     handleCancelRetrievalConfigModal()
-  } catch (e) {}
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 // 10.监听草稿配置关联的知识库列表
 watch(
-  () => props.datasets,
+  () => datasets.value,
   (newValue) => {
     // 10.1 检测数据是否初始化
     if (!isDatasetsInit.value || !isDatasetsModified()) {
       // 10.2 判断草稿配置是否已传递配置
       if (newValue && newValue.length > 0) {
         // 10.3 赋初始值
-        const initData = props.datasets.map((dataset) => {
+        const initData = datasets.value.map((dataset) => {
           return {
             id: dataset.id,
             name: dataset.name,
@@ -172,7 +191,7 @@ watch(
 
 // 11.监听检索配置
 watch(
-  () => props.retrieval_config,
+  () => retrieval_config.value,
   (newValue) => {
     // 11.1 检测是否是否更新并且未初始化
     if (!isRetrievalConfigInit.value || !isRetrievalConfigFormModified()) {
@@ -195,13 +214,30 @@ watch(
   async (newValue) => {
     // 12.1 显示状态，重新加载数据，获取最新的知识库列表
     if (newValue) {
-      await loadDatasets(true)
+      await loadMoreData(true)
     } else {
       // 12.2 隐藏状态，清空数据
       apiDatasets.splice(0, apiDatasets.length)
     }
   },
 )
+
+const handleClickDeleteDataset = async (idx: number) => {
+  // 1.清除props中指定的数据
+  const newDatasets = [...datasets.value]
+  newDatasets.splice(idx, 1)
+
+  // 2.提交草稿配置到接口
+  await handleUpdateDraftAppConfig(props.app_id, {
+    datasets: newDatasets.map((item) => item.id),
+  })
+
+  // 3.更新数据并确保数据完成更新
+  isDatasetsInit.value = false
+
+  // 通知父组件，数据发生变化，相当于 emits update:datasets
+  datasets.value = newDatasets
+}
 </script>
 
 <template>
@@ -240,9 +276,9 @@ watch(
           </a-button>
         </a-space>
       </template>
-      <div v-if="props.datasets?.length > 0" class="flex flex-col gap-1">
+      <div v-if="datasets?.length > 0" class="flex flex-col gap-1">
         <div
-          v-for="(dataset, idx) in props.datasets"
+          v-for="(dataset, idx) in datasets"
           :key="dataset.id"
           class="flex items-center justify-between bg-white p-3 rounded-lg cursor-pointer hover:shadow-sm group"
         >
@@ -270,22 +306,7 @@ watch(
             size="mini"
             type="text"
             class="hidden group-hover:block flex-shrink-0 ml-2 !text-red-700 rounded"
-            @click="
-              async () => {
-                // 1.清除props中指定的数据
-                const newDatasets = [...props.datasets]
-                newDatasets.splice(idx, 1)
-
-                // 2.提交草稿配置到接口
-                await handleUpdateDraftAppConfig(props.app_id, {
-                  datasets: newDatasets.map((item) => item.id),
-                })
-
-                // 3.更新数据并确保数据完成更新
-                isDatasetsInit = false
-                emits('update:datasets', newDatasets)
-              }
-            "
+            @click="() => handleClickDeleteDataset(idx)"
           >
             <template #icon>
               <icon-delete />

@@ -6,7 +6,7 @@ import { useUpdateDraftAppConfig } from '@/hooks/use-app'
 // 1.定义自定义组件所需数据
 const props = defineProps({
   app_id: { type: String, default: '', required: true },
-  review_config: { type: Object, default: {}, required: true },
+  review_config: { type: Object, default: () => ({}), required: true },
 })
 const { loading, handleUpdateDraftAppConfig } = useUpdateDraftAppConfig()
 const isInit = ref(false)
@@ -59,7 +59,17 @@ const handleSubmitReviewConfig = async () => {
 
     // 4.3 隐藏模态窗
     handleCancelReviewConfigModal()
-  } catch (e) {}
+  } catch (e) {
+    if (reviewConfigForm.value.enable) {
+      if (
+        !reviewConfigForm.value.inputs_config.enable &&
+        !reviewConfigForm.value.outputs_config.enable
+      ) {
+        reviewConfigForm.value.enable = !reviewConfigForm.value.enable
+      }
+    }
+    console.log(e)
+  }
 }
 
 // 5.监听review_config变化并同步到表单
@@ -94,7 +104,7 @@ watch(
       <template #extra>
         <a-dropdown
           @select="
-            async (value) => {
+            async (value: unknown) => {
               if (Boolean(value) !== reviewConfigForm.enable) {
                 try {
                   // 1.表盖表单数据并确保数据同步

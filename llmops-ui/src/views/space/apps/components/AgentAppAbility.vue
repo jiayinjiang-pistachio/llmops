@@ -1,19 +1,17 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import LongTermMemoryAbilityItem from './abilities/LongTermMemoryAbilityItem.vue'
 import OpeningAbilityItem from './abilities/OpeningAbilityItem.vue'
-// import SuggestedAfterAnswerAbilityItem from './abilities/SuggestedAfterAnswerAbilityItem.vue'
-// import ReviewConfigAbilityItem from './abilities/ReviewConfigAbilityItem.vue'
-// import DatasetsAbilityItem from './abilities/DatasetsAbilityItem.vue'
-// import ToolsAbilityItem from './abilities/ToolsAbilityItem.vue'
+import SuggestedAfterAnswerAbilityItem from './abilities/SuggestedAfterAnswerAbilityItem.vue'
+import ReviewConfigAbilityItem from './abilities/ReviewConfigAbilityItem.vue'
+import DatasetsAbilityItem from './abilities/DatasetsAbilityItem.vue'
+import ToolsAbilityItem from './abilities/ToolsAbilityItem.vue'
 import type { DraftAppConfig } from '@/models/app'
 
 // 1.定义自定义组件所需数据
-const props = defineProps<{
+defineProps<{
   app_id: string
-  draft_app_config: DraftAppConfig
 }>()
-defineEmits(['update:draft_app_config'])
+
 const defaultActivateKeys = [
   'tools',
   'datasets',
@@ -23,7 +21,7 @@ const defaultActivateKeys = [
   'review_config',
 ]
 
-const dynamicDraftAppConfig = computed(() => props.draft_app_config)
+const draft_app_config = defineModel<DraftAppConfig>('draft_app_config', {required: true})
 </script>
 
 <template>
@@ -38,34 +36,34 @@ const dynamicDraftAppConfig = computed(() => props.draft_app_config)
           <icon-right v-else />
         </template>
         <!-- 扩展插件组件 -->
-        <!-- <tools-ability-item v-model:tools="draft_app_config.tools" :app_id="app_id" /> -->
+        <tools-ability-item v-model:tools="draft_app_config.tools" :app_id="app_id" />
         <!-- 知识库组件 -->
-        <!-- <datasets-ability-item
+        <datasets-ability-item
           v-model:retrieval_config="draft_app_config.retrieval_config"
           v-model:datasets="draft_app_config.datasets"
           :app_id="app_id"
-        /> -->
+        />
         <!-- 长期记忆召回 -->
         <long-term-memory-ability-item
-          v-model:long_term_memory="dynamicDraftAppConfig.long_term_memory"
+          v-model:long_term_memory="draft_app_config.long_term_memory"
           :app_id="app_id"
         />
         <!-- 对话开场白 -->
         <opening-ability-item
-          v-model:opening_questions="dynamicDraftAppConfig.opening_questions"
-          v-model:opening_statement="dynamicDraftAppConfig.opening_statement"
+          v-model:opening_questions="draft_app_config.opening_questions"
+          v-model:opening_statement="draft_app_config.opening_statement"
           :app_id="app_id"
         />
         <!-- 回答后生成建议问题 -->
-        <!-- <suggested-after-answer-ability-item
+        <suggested-after-answer-ability-item
           v-model:suggested_after_answer="draft_app_config.suggested_after_answer"
           :app_id="app_id"
-        /> -->
+        />
         <!-- 内容审核 -->
-        <!-- <review-config-ability-item
+        <review-config-ability-item
           :review_config="draft_app_config.review_config"
           :app_id="app_id"
-        /> -->
+        />
       </a-collapse>
     </div>
   </div>

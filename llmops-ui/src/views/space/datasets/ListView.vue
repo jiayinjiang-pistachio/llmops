@@ -164,7 +164,7 @@
 import {
   useCreateOrUpdateDataset,
   useDeleteDataset,
-  useGeDatasetsWithPage,
+  useGetDatasetsWithPage,
 } from '@/hooks/use-dataset'
 import { getDataset } from '@/services/datasets'
 import { uploadImage } from '@/services/upload-file'
@@ -181,7 +181,7 @@ const emit = defineEmits<{
 
 const modalTitle = computed(() => (props.createType === 'dataset' ? '新建知识库' : '更新知识库'))
 
-const { loading, datasets, loadMoreData, initData, paginator } = useGeDatasetsWithPage()
+const { loading, datasets, loadMoreData, initData, paginator } = useGetDatasetsWithPage()
 const { handleDelete } = useDeleteDataset()
 const {
   loading: submitLoading,
@@ -223,7 +223,7 @@ const goUpdate = (dataset_id: string) => {
 
       // 更新表单数据
       formRef.value?.resetFields()
-      form.fileList = [{uid: '1', name: '知识库图标', url: data.icon}]
+      form.fileList = [{ uid: '1', name: '知识库图标', url: data.icon }]
       form.name = data.name
       form.icon = data.icon
       form.description = data.description

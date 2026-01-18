@@ -25,7 +25,7 @@ import { Message, Modal } from '@arco-design/web-vue'
 import { onMounted, reactive, ref, useTemplateRef, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
-export function useGeDatasetsWithPage() {
+export function useGetDatasetsWithPage() {
   const defaultPaginator: Paginator = {
     current_page: 1,
     page_size: 20,

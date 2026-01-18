@@ -1,4 +1,4 @@
-import type { CreateApiToolProviderRequest, GetApiToolProviderResponse, GetAPiToolProvidersWithPageResponse, UpdateApiToolProviderRequest } from '@/models/api-tool'
+import type { CreateApiToolProviderRequest, GetApiToolProviderResponse, GetAPiToolProvidersWithPageResponse, GetApiToolResponse, UpdateApiToolProviderRequest } from '@/models/api-tool'
 import type { BaseResponse } from '@/models/base'
 import { get, post } from '@/utils/request'
 
@@ -50,3 +50,7 @@ export const getApiToolProvider = (provider_id: string) => {
   return get<BaseResponse<GetApiToolProviderResponse>>(`/api-tools/${provider_id}`)
 }
 
+// 获取API工具详情信息
+export const getApiTool = (provider_id: string, tool_name: string) => {
+  return get<GetApiToolResponse>(`/api-tools/${provider_id}/tools/${tool_name}`)
+}

@@ -1,22 +1,26 @@
 <script setup lang="ts">
-import { computed, type PropType, ref } from 'vue'
-import { type GetDraftAppConfigResponse } from '@/models/app'
+import { computed, ref } from 'vue'
+import { type DraftAppConfig } from '@/models/app'
 import { useUpdateDraftAppConfig } from '@/hooks/use-app'
 import { useGetApiTool, useGetApiToolProvidersWithPage } from '@/hooks/use-tool'
 import { useGetBuiltinTool, useGetBuiltinTools, useGetCategories } from '@/hooks/use-builtin-tool'
 import { apiPrefix, typeMap } from '@/config'
 import { Message } from '@arco-design/web-vue'
+import type { BuiltinProviderItem } from '@/models/builtin-tool'
+import type { ApiToolProviderItem } from '@/models/api-tool'
 
 // 1.定义自定义组件所需数据
 const props = defineProps({
   app_id: { type: String, default: '', required: true },
-  tools: {
-    type: Array as PropType<GetDraftAppConfigResponse['data']['tools']>,
-    default: [],
-    required: true,
+})
+
+const tools = defineModel<DraftAppConfig['tools']>('tools', {
+  required: true,
+  default: () => {
+    return []
   },
 })
-const emits = defineEmits(['update:tools'])
+
 const { loading: updateDraftAppConfigLoading, handleUpdateDraftAppConfig } =
   useUpdateDraftAppConfig()
 const { loading: getApiToolLoading, api_tool, loadApiTool } = useGetApiTool()
@@ -47,7 +51,12 @@ const handleShowToolInfoModal = async (idx: number) => {
   // 2.1 获取当前选中的工具
   if (idx === -1) return
   toolInfoIdx.value = idx
-  const tool = props.tools[idx]
+  const tool = tools.value[idx]
+
+  if (tool == undefined) {
+    Message.error('工具不存在')
+    return
+  }
 
   // 2.2 检测不同的工具类型调用不同API接口
   if (tool.type === 'builtin_tool') {
@@ -111,8 +120,13 @@ const handleCancelToolInfoModal = () => {
 
 // 4.定义提交工具设置模态窗
 const handleSubmitToolInfo = async () => {
-  // 4.1 获取当前工具信息
-  const tool = props.tools[toolInfoIdx.value]
+  // 4.1 获取当前工具信
+  const tool = tools.value[toolInfoIdx.value]
+
+  if (!tool) {
+    return Message.error('工具信息不存在')
+  }
+
   if (tool.type === 'api_tool') {
     // 4.2 自定义工具则直接关闭模态窗
     handleCancelToolInfoModal()
@@ -120,8 +134,9 @@ const handleSubmitToolInfo = async () => {
   }
 
   // 4.3 更新草稿配置
-  const newTools = [...props.tools]
-  newTools[toolInfoIdx.value]['tool']['params'] = toolInfoSettingForm.value
+  const newTools = [...tools.value]
+
+  newTools[toolInfoIdx.value]!['tool']['params'] = toolInfoSettingForm.value
   await handleUpdateDraftAppConfig(props.app_id, {
     tools: newTools.map((item) => {
       return {
@@ -134,7 +149,7 @@ const handleSubmitToolInfo = async () => {
   })
 
   // 4.4 更新成功触发同步事件
-  emits('update:tools', newTools)
+  tools.value = newTools
 
   // 4.5 关闭模态窗
   handleCancelToolInfoModal()
@@ -143,7 +158,7 @@ const handleSubmitToolInfo = async () => {
 // 5.删除工具处理器
 const handleDeleteTool = async (idx: number) => {
   // 5.1 提取props中的数据
-  const newTools = [...props.tools]
+  const newTools = [...tools.value]
 
   // 5.2 剔除数据
   newTools.splice(idx, 1)
@@ -161,7 +176,7 @@ const handleDeleteTool = async (idx: number) => {
   })
 
   // 5.4 触发时间更新props
-  emits('update:tools', newTools)
+  tools.value = newTools
 }
 
 // 6.定义显示工具列表模态窗
@@ -191,10 +206,12 @@ const handleScroll = async (event: UIEvent) => {
 // 8.定义添加关联扩展处理器
 const handleSelectTool = async (provider_idx: number, tool_idx: number) => {
   // 8.1 根据不同的类型获取特定的工具信息
-  let selectTool = {}
+  let selectTool = {} as DraftAppConfig['tools'][0]
+
   if (toolsActivateType.value === 'api_tool') {
-    const apiToolProvider = api_tool_providers[provider_idx]
-    const apiTool = apiToolProvider['tools'][tool_idx]
+    const apiToolProvider = api_tool_providers[provider_idx]!
+    const apiTool = apiToolProvider['tools'][tool_idx]!
+
     selectTool = {
       type: 'api_tool',
       provider: {
@@ -213,9 +230,10 @@ const handleSelectTool = async (provider_idx: number, tool_idx: number) => {
       },
     }
   } else {
-    const builtinToolProvider = computedBuiltinTools.value[provider_idx]
-    const builtinTool = builtinToolProvider['tools'][tool_idx]
-    const params = builtinTool['params']
+    const builtinToolProvider = computedBuiltinTools.value[provider_idx]!
+    const builtinTool = builtinToolProvider['tools'][tool_idx]!
+    const params = builtinTool['inputs']
+
     selectTool = {
       type: 'builtin_tool',
       provider: {
@@ -240,12 +258,12 @@ const handleSelectTool = async (provider_idx: number, tool_idx: number) => {
 
   // 8.3 检测是删除还是新增
   if (
-    props.tools.some((item) => {
+    tools.value.some((item) => {
       return item.provider.id === selectTool.provider.id && item.tool.name === selectTool.tool.name
     })
   ) {
     // 8.4 删除关联的工具，筛选数据后更新
-    const newTools = [...props.tools].filter((item) => {
+    const newTools = [...tools.value].filter((item) => {
       return item.provider.id !== selectTool.provider.id && item.tool.name !== selectTool.tool.name
     })
     await handleUpdateDraftAppConfig(props.app_id, {
@@ -260,17 +278,17 @@ const handleSelectTool = async (provider_idx: number, tool_idx: number) => {
     })
 
     // 8.5 双向更新数据，不关闭模态窗
-    emits('update:tools', newTools)
+    tools.value = newTools
     return
   } else {
     // 8.6 新增数据，检测关联插件数是否大于等于5
-    if (props.tools.length >= 5) {
+    if (tools.value.length >= 5) {
       Message.warning('一个Agent应用最多关联5个扩展插件')
       return
     }
 
     // 8.7 添加数据后同步草稿配置
-    const newTools = [...props.tools]
+    const newTools = [...tools.value]
     newTools.push(selectTool)
     await handleUpdateDraftAppConfig(props.app_id, {
       tools: newTools.map((item) => {
@@ -284,13 +302,17 @@ const handleSelectTool = async (provider_idx: number, tool_idx: number) => {
     })
 
     // 8.8 双向更新数据，不关闭模态窗
-    emits('update:tools', newTools)
+    // emits('update:tools', newTools)
+    tools.value = newTools
   }
 }
 
 // 9.定义是否关联工具判断函数
-const isToolSelected = (provider, tool) => {
-  return props.tools.some(
+const isToolSelected = (
+  provider: BuiltinProviderItem | ApiToolProviderItem,
+  tool: BuiltinProviderItem['tools'][0] | ApiToolProviderItem['tools'][0],
+) => {
+  return tools.value.some(
     (item) => item.provider.name === provider.name && item.tool.name === tool.name,
   )
 }
@@ -310,9 +332,9 @@ const isToolSelected = (provider, tool) => {
           </template>
         </a-button>
       </template>
-      <div v-if="props.tools.length > 0" class="flex flex-col gap-1">
+      <div v-if="tools.length > 0" class="flex flex-col gap-1">
         <div
-          v-for="(tool, idx) in props.tools"
+          v-for="(tool, idx) in tools"
           :key="idx"
           class="flex items-center justify-between bg-white p-3 rounded-lg cursor-pointer hover:shadow-sm group"
         >
@@ -455,7 +477,11 @@ const isToolSelected = (provider, tool) => {
         class="h-[calc(100vh-170px)] pb-4 overflow-scroll scrollbar-w-none"
       >
         <a-form v-model:model="toolInfoSettingForm" layout="vertical" class="">
-          <a-form-item v-for="param in toolInfo?.tool?.params" :field="param.name">
+          <a-form-item
+            v-for="param in toolInfo?.tool?.params"
+            :field="param.name"
+            :key="param.type"
+          >
             <template #label>
               <div class="flex items-center gap-1">
                 <div class="text-gray-700">{{ param.label }}</div>

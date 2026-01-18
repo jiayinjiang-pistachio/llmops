@@ -113,6 +113,7 @@ const handleSubmit = async () => {
     <!-- 输入框容器 -->
     <div class="flex-1">
       <a-textarea
+        name="preset-prompt-textarea"
         class="h-full resize-none !bg-transparent !border-0 text-gray-700 px-1 preset-prompt-textarea"
         placeholder="请在这里输入Agent的人设与回复逻辑(预设prompt)"
         :max-length="2000"

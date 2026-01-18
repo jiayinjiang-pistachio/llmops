@@ -60,6 +60,7 @@ export interface DraftAppConfig {
     id: string
     name: string
     description: string
+    icon: string
   }[]
   retrieval_config: {
     retrieval_strategy: string

@@ -57,6 +57,9 @@ DEFAULT_APP_CONFIG = {
         "voice": "echo",
         "auto_play": False,
     },
+    "suggested_after_answer": {
+        "enable": True,
+    },
     "review_config": {
         "enable": False,
         "keywords": [],

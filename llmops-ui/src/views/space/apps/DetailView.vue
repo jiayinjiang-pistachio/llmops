@@ -18,7 +18,8 @@
             />
           </div>
           <!-- 右侧应用能力 -->
-          <AgentAppAbility :draft_app_config="draftAppConfigForm" :app_id="appId" />
+          <AgentAppAbility v-model:draft_app_config="draftAppConfigForm"  :app_id="appId" />
+
         </div>
       </div>
       <!-- 右侧调试会话 -->

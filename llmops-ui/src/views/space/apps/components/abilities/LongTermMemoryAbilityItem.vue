@@ -1,18 +1,30 @@
 <script setup lang="ts">
-import { type PropType } from 'vue'
 import { useUpdateDraftAppConfig } from '@/hooks/use-app'
+import type { DraftAppConfig } from '@/models/app'
 
 // 1.定义自定义组件所需数据
 const props = defineProps({
   app_id: { type: String, default: '', required: true },
-  long_term_memory: {
-    type: Object as PropType<{ enable: boolean }>,
-    default: () => ({ enable: false }),
-    required: true,
-  },
 })
-const emits = defineEmits(['update:long_term_memory'])
 const { handleUpdateDraftAppConfig } = useUpdateDraftAppConfig()
+
+const long_term_memory = defineModel<DraftAppConfig['long_term_memory']>('long_term_memory', {
+  required: true,
+})
+
+const handleSelect = async (value: unknown) => {
+  const newEnable = Boolean(value);
+
+  if (Boolean(value) !== long_term_memory.value.enable) {
+
+    // 【核心变化】：直接给 .value 赋值，会自动触发父组件的更新
+    long_term_memory.value.enable = newEnable
+
+    await handleUpdateDraftAppConfig(props.app_id, {
+      long_term_memory: { enable: newEnable },
+    })
+  }
+}
 </script>
 
 <template>
@@ -22,20 +34,9 @@ const { handleUpdateDraftAppConfig } = useUpdateDraftAppConfig()
         <div class="text-gray-700 font-bold">长期记忆</div>
       </template>
       <template #extra>
-        <a-dropdown
-          @select="
-            async (value: unknown) => {
-              if (Boolean(value) !== props.long_term_memory?.enable) {
-                emits('update:long_term_memory', { enable: Boolean(value) })
-                await handleUpdateDraftAppConfig(props.app_id, {
-                  long_term_memory: { enable: Boolean(value) },
-                })
-              }
-            }
-          "
-        >
+        <a-dropdown @select="handleSelect">
           <a-button size="mini" class="rounded-lg flex items-center gap-1 px-1" @click.stop>
-            {{ props.long_term_memory.enable ? '开启' : '关闭' }}
+            {{ long_term_memory?.enable ? '开启' : '关闭' }}
             <icon-down />
           </a-button>
           <template #content>

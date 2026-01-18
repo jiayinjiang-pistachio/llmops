@@ -7,7 +7,7 @@ const props = defineProps({
   app_id: { type: String, default: '', required: true },
   suggested_after_answer: {
     type: Object as PropType<{ enable: boolean }>,
-    default: { enable: false },
+    default: () => ({ enable: false }),
     required: true,
   },
 })
@@ -24,7 +24,7 @@ const { handleUpdateDraftAppConfig } = useUpdateDraftAppConfig()
       <template #extra>
         <a-dropdown
           @select="
-            async (value) => {
+            async (value: unknown) => {
               if (Boolean(value) !== props.suggested_after_answer?.enable) {
                 emits('update:suggested_after_answer', { enable: Boolean(value) })
                 await handleUpdateDraftAppConfig(props.app_id, {

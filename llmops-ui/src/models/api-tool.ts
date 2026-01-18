@@ -1,4 +1,4 @@
-import type { BasePaginationResponse } from './base'
+import type { BasePaginationResponse, BaseResponse } from './base'
 
 // 获取自定义API插件响应接口
 export type ApiToolProviderItem = {
@@ -46,3 +46,23 @@ export type GetApiToolProviderResponse = {
   headers: { key: string; value: any; }[]
   created_at: number
 }
+
+// 获取自定义API工具详情
+export type GetApiToolResponse = BaseResponse<{
+  id: string
+  name: string
+  description: string
+  provider: {
+    id: string
+    name: string
+    icon: string
+    headers: { key: string; value: string }[]
+    description: string
+  }
+  inputs: {
+    type: string
+    name: string
+    required: boolean
+    description: string
+  }[]
+}>

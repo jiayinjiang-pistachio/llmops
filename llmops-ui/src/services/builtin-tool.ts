@@ -1,4 +1,4 @@
-import type { GetBUiltinToolsResponse, GetCategoriesResponse } from '@/models/builtin-tool'
+import type { GetBuiltinToolResponse, GetBUiltinToolsResponse, GetCategoriesResponse } from '@/models/builtin-tool'
 import { get } from '@/utils/request'
 
 // 获取内置分类列表信息
@@ -10,3 +10,9 @@ export const getCategories = () => {
 export const getBuiltinTools = () => {
   return get<GetBUiltinToolsResponse>('/builtin-tools')
 }
+
+// 获取内置工具详情
+export const getBuiltinTool = (provider_name: string, tool_name: string) => {
+  return get<GetBuiltinToolResponse>(`/builtin-tools/${provider_name}/tools/${tool_name}`)
+}
+
