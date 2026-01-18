@@ -68,7 +68,7 @@
                   String(publishHistory.id),
                   async () => {
                     emits('update:visible', false)
-                    emits('loadDraftAppConfig')
+                    setGetDraftAppConfigFlag(true)
                   },
                 )
               }
@@ -95,6 +95,7 @@
 <script setup lang="ts">
 import { useFallbackHistoryToDraft, useGetPublishHistoriesWithPage } from '@/hooks/use-app'
 import type { AppDetail } from '@/models/app'
+import { useAppStore } from '@/stores/app';
 import moment from 'moment'
 import { watch } from 'vue'
 const props = defineProps<{
@@ -103,6 +104,10 @@ const props = defineProps<{
 }>()
 
 const emits = defineEmits(['update:visible', 'loadDraftAppConfig'])
+
+const appStore = useAppStore()
+const { setGetDraftAppConfigFlag } = appStore
+
 const { loading, paginator, publishHistories, loadPublishHistories } =
   useGetPublishHistoriesWithPage()
 const { handleFallbackHistoryToDraft } = useFallbackHistoryToDraft()

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useUpdateDraftAppConfig } from '@/hooks/use-app'
 import type { DraftAppConfig } from '@/models/app'
+import { useAppStore } from '@/stores/app'
 
 // 1.定义自定义组件所需数据
 const props = defineProps({
@@ -11,6 +12,9 @@ const { handleUpdateDraftAppConfig } = useUpdateDraftAppConfig()
 const long_term_memory = defineModel<DraftAppConfig['long_term_memory']>('long_term_memory', {
   required: true,
 })
+
+const appStore = useAppStore()
+const {setGetAppFlag} = appStore
 
 const handleSelect = async (value: unknown) => {
   const newEnable = Boolean(value);
@@ -23,6 +27,8 @@ const handleSelect = async (value: unknown) => {
     await handleUpdateDraftAppConfig(props.app_id, {
       long_term_memory: { enable: newEnable },
     })
+
+    setGetAppFlag(true)
   }
 }
 </script>

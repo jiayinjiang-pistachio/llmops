@@ -121,68 +121,74 @@ export const ssePost = async (
   if (body) {
     options.body = JSON.stringify(body)
     const response = await fetch(urlWithPrefix, options as RequestInit)
-    return handleStream(response, onData)
+    return await handleStream(response, onData)
   }
 }
 
 function handleStream(response: Response, onData: (data: { [key: string]: any }) => void) {
-  // 1. 检测网络请求是否正常
-  if (!response.ok) {
-    throw new Error('网络请求失败')
-  }
+  return new Promise((resolve, reject) => {
+    // 1. 检测网络请求是否正常
+    if (!response.ok) {
+      reject(new Error('网络请求失败'))
+    }
 
-  // 构建reader及decoder
-  const reader = response.body?.getReader()
-  const decoder = new TextDecoder('utf-8')
+    // 构建reader及decoder
+    const reader = response.body?.getReader()
+    const decoder = new TextDecoder('utf-8')
 
-  let buffer = ''
+    let buffer = ''
 
-  // 3. 构建read函数用于去读取数据
-  const read = () => {
-    let hasError = false
-    reader?.read().then((result: any) => {
-      if (result.done) return
+    // 3. 构建read函数用于去读取数据
+    const read = () => {
+      let hasError = false
+      reader?.read().then((result: any) => {
+        if (result.done) {
+          resolve({})
+          return
+        }
 
-      buffer += decoder.decode(result.value, { stream: true })
-      const lines = buffer.split('\n')
+        buffer += decoder.decode(result.value, { stream: true })
+        const lines = buffer.split('\n')
 
-      let event = ''
-      let data = ''
+        let event = ''
+        let data = ''
 
-      try {
-        lines.forEach((line) => {
-          line = line.trim()
-          if (line.startsWith('event:')) {
-            event = line.slice(6).trim()
-          } else if (line.startsWith('data:')) {
-            data = line.slice(5).trim()
-          }
-
-          if (line === '') {
-            if (event !== '' && data !== '') {
-              onData({
-                event: event,
-                data: JSON.parse(data),
-              })
-              event = ''
-              data = ''
+        try {
+          lines.forEach((line) => {
+            line = line.trim()
+            if (line.startsWith('event:')) {
+              event = line.slice(6).trim()
+            } else if (line.startsWith('data:')) {
+              data = line.slice(5).trim()
             }
-          }
-        })
-        buffer = lines.pop() || ''
-      } catch (e) {
-        hasError = true
-        console.log(e)
-      }
 
-      if (!hasError) {
-        read()
-      }
-    })
-  }
+            if (line === '') {
+              if (event !== '' && data !== '') {
+                onData({
+                  event: event,
+                  data: JSON.parse(data),
+                })
+                event = ''
+                data = ''
+              }
+            }
+          })
+          buffer = lines.pop() || ''
+        } catch (e) {
+          hasError = true
+          console.log(e)
+          reject(e)
+        }
 
-  // 4. 调用read函数去执行对应的数据
-  read()
+        if (!hasError) {
+          read()
+        }
+      })
+    }
+
+    // 4. 调用read函数去执行对应的数据
+    read()
+  })
 }
 
 export const request = <T>(url: string, options = {}) => {

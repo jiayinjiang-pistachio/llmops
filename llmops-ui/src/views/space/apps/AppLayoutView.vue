@@ -132,26 +132,38 @@
     <!-- 底部内容区 -->
     <router-view :app="app" />
     <!-- 发布历史抽屉组件 -->
-    <publish-history-drawer
-      :app="app"
-      v-model:visible="publishHistoryDrawerVisible"
-      @load-draft-app-config="() => {}"
-    />
+    <publish-history-drawer :app="app" v-model:visible="publishHistoryDrawerVisible" />
   </div>
 </template>
 
 <style lang="less"></style>
 
 <script setup lang="ts">
-  import PublishHistoryDrawer from './components/PublishHistoryDrawer.vue'
+import { useAppStore } from '@/stores/app'
+import PublishHistoryDrawer from './components/PublishHistoryDrawer.vue'
 import { useCancelPublish, useGetApp, usePublish } from '@/hooks/use-app'
 import moment from 'moment'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { storeToRefs } from 'pinia'
 
 const route = useRoute()
 const publishHistoryDrawerVisible = ref(false)
 const { loading, app, loadApp } = useGetApp(String(route.params.app_id))
 const { loading: publishLoading, handlePublish } = usePublish()
 const { handleCancelPublish } = useCancelPublish()
+
+const appStore = useAppStore()
+const { setGetAppFlag } = appStore
+const { getAppFlag } = storeToRefs(appStore)
+
+watch(
+  () => getAppFlag.value,
+  async (newValue) => {
+    if (newValue) {
+      await loadApp(String(route.params.app_id), false)
+      setGetAppFlag(false)
+    }
+  },
+)
 </script>

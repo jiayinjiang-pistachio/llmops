@@ -28,15 +28,19 @@ export const useGetApp = (app_id: string) => {
   const loading = ref(false)
   const app = reactive({} as AppDetail)
 
-  const loadApp = async (app_id: string) => {
+  const loadApp = async (app_id: string, loadingFlag = true) => {
     try {
-      loading.value = true
+      if (loadingFlag) {
+        loading.value = true
+      }
       const resp = await getApp(app_id)
       const data = resp.data
 
       Object.assign(app, { ...data })
     } finally {
-      loading.value = false
+      if(loadingFlag) {
+        loading.value = false
+      }
     }
   }
 
@@ -216,8 +220,8 @@ export const useUpdateDraftAppConfig = () => {
     try {
       loading.value = true
 
-      const resp = await updateDraftAppConfig(app_id, draft_app_config)
-      Message.success(resp.message)
+      await updateDraftAppConfig(app_id, draft_app_config)
+      // Message.success(resp.message)
     } finally {
       loading.value = false
     }

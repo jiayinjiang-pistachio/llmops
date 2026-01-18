@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick, type PropType } from 'vue'
 import { useUpdateDraftAppConfig } from '@/hooks/use-app'
+import { useAppStore } from '@/stores/app'
 
 // 1.定义自定义组件所需数据
 const props = defineProps({
@@ -9,6 +10,10 @@ const props = defineProps({
   opening_questions: { type: Array as PropType<string[]>, default: () => [], required: true },
 })
 const emits = defineEmits(['update:opening_statement', 'update:opening_questions'])
+
+const appStore = useAppStore()
+const {setGetAppFlag} = appStore
+
 const { handleUpdateDraftAppConfig } = useUpdateDraftAppConfig()
 const computed_opening_questions = computed({
   get(): string[] {
@@ -30,6 +35,8 @@ const handleUpdateOpeningQuestions = async () => {
   await handleUpdateDraftAppConfig(props.app_id, {
     opening_questions: computed_opening_questions.value.filter((item) => item.trim() !== ''),
   })
+
+  setGetAppFlag(true)
 }
 </script>
 
@@ -59,6 +66,7 @@ const handleUpdateOpeningQuestions = async () => {
                 await handleUpdateDraftAppConfig(props.app_id, {
                   opening_statement: props.opening_statement,
                 })
+                setGetAppFlag(true)
               }
             "
           />

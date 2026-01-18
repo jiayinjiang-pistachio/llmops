@@ -34,8 +34,8 @@
           :suggested_after_answer="draftAppConfigForm.suggested_after_answer"
           :opening_questions="draftAppConfigForm.opening_questions"
           :opening_statement="draftAppConfigForm.opening_statement"
-          :app="props.app"
-          :app_id="props.app?.id"
+          :app="app"
+          :app_id="appId"
          />
       </div>
     </div>
@@ -45,15 +45,17 @@
 <style lang="less"></style>
 
 <script setup lang="ts">
-import { useGetDraftAppConfig, useUpdateDraftAppConfig } from '@/hooks/use-app'
+import { useGetDraftAppConfig } from '@/hooks/use-app'
 import type { AppDetail } from '@/models/app'
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import PresetPromptTextarea from './components/PresetPromptTextarea.vue'
 import AgentAppAbility from './components/AgentAppAbility.vue'
 import PreviewDebugHeader from './components/PreviewDebugHeader.vue'
 import PreviewDebugChat from './components/PreviewDebugChat.vue'
-const props = defineProps<{
+import { useAppStore } from '@/stores/app'
+import { storeToRefs } from 'pinia'
+defineProps<{
   app: AppDetail
 }>()
 
@@ -61,5 +63,18 @@ const route = useRoute()
 const appId = computed(() => String(route.params.app_id))
 
 const { draftAppConfigForm, loadDraftAppConfig } = useGetDraftAppConfig(appId.value)
-const { handleUpdateDraftAppConfig } = useUpdateDraftAppConfig()
+
+const appStore = useAppStore()
+const {setGetDraftAppConfigFlag} = appStore
+const { getDraftAppConfigFlag } = storeToRefs(appStore)
+watch(
+  () => getDraftAppConfigFlag.value,
+  async (newValue) => {
+    if(newValue) {
+      await loadDraftAppConfig(appId.value)
+      setGetDraftAppConfigFlag(false)
+    }
+  }
+)
+
 </script>

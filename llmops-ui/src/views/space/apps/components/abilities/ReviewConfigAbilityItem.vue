@@ -2,12 +2,17 @@
 import { cloneDeep, isEqual } from 'lodash'
 import { nextTick, ref, watch } from 'vue'
 import { useUpdateDraftAppConfig } from '@/hooks/use-app'
+import { useAppStore } from '@/stores/app'
 
 // 1.定义自定义组件所需数据
 const props = defineProps({
   app_id: { type: String, default: '', required: true },
   review_config: { type: Object, default: () => ({}), required: true },
 })
+
+const appStore = useAppStore()
+const { setGetAppFlag } = appStore
+
 const { loading, handleUpdateDraftAppConfig } = useUpdateDraftAppConfig()
 const isInit = ref(false)
 const reviewConfigModalVisible = ref(false)
@@ -59,6 +64,7 @@ const handleSubmitReviewConfig = async () => {
 
     // 4.3 隐藏模态窗
     handleCancelReviewConfigModal()
+    setGetAppFlag(true)
   } catch (e) {
     if (reviewConfigForm.value.enable) {
       if (

@@ -3,6 +3,7 @@ import { useUpdateDraftAppConfig } from '@/hooks/use-app'
 import { useOptimizePrompt } from '@/hooks/use-ai'
 import { ref } from 'vue'
 import { Message } from '@arco-design/web-vue'
+import { useAppStore } from '@/stores/app'
 
 // 1.定义自定义组件所需数据
 const props = defineProps({
@@ -15,8 +16,12 @@ const origin_prompt = ref('')
 const { handleUpdateDraftAppConfig } = useUpdateDraftAppConfig()
 const { loading, optimize_prompt, handleOptimizePrompt } = useOptimizePrompt()
 
+const appStore = useAppStore()
+const { setGetAppFlag } = appStore
+const isChange = ref(false)
+
 // 2.定义替换预设prompt处理器
-const handleReplacePresetPrompt = () => {
+const handleReplacePresetPrompt = async () => {
   // 2.1 检测优化prompt是否为空
   if (optimize_prompt.value.trim() === '') {
     Message.warning('优化prompt为空，请重新生成')
@@ -27,10 +32,13 @@ const handleReplacePresetPrompt = () => {
   emits('update:preset_prompt', optimize_prompt.value)
 
   // 2.3 触发更新草稿配置函数
-  handleUpdateDraftAppConfig(props.app_id, { preset_prompt: optimize_prompt.value })
+  await handleUpdateDraftAppConfig(props.app_id, { preset_prompt: optimize_prompt.value })
 
   // 2.4 隐藏触发器
   optimizeTriggerVisible.value = false
+
+  // 更新app信息-自动保存时间
+  setGetAppFlag(true)
 }
 
 // 3.提交优化prompt处理器
@@ -119,12 +127,21 @@ const handleSubmit = async () => {
         :max-length="2000"
         show-word-limit
         :model-value="props.preset_prompt"
-        @update:model-value="(value) => emits('update:preset_prompt', value)"
+        @update:model-value="
+          (value) => {
+            isChange = true
+            emits('update:preset_prompt', value)
+          }
+        "
         @blur="
-          async () => {
-            await handleUpdateDraftAppConfig(props.app_id, {
-              preset_prompt: props.preset_prompt,
-            })
+          async (value) => {
+            if (isChange) {
+              await handleUpdateDraftAppConfig(props.app_id, {
+                preset_prompt: props.preset_prompt,
+              })
+              await setGetAppFlag(true)
+              isChange = false
+            }
           }
         "
       />

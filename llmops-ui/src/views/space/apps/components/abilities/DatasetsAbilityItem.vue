@@ -5,25 +5,12 @@ import { useGetDatasetsWithPage } from '@/hooks/use-dataset'
 import { cloneDeep, isEqual } from 'lodash'
 import { Message } from '@arco-design/web-vue'
 import type { DraftAppConfig } from '@/models/app'
+import { useAppStore } from '@/stores/app'
 
 // 1.定义自定义组件所需数据
 const props = defineProps({
   app_id: { type: String, default: '', required: true },
-  // retrieval_config: { type: Object, default: () => ({}), required: true },
-  // datasets: {
-  //   type: Array as PropType<
-  //     {
-  //       id: string
-  //       name: string
-  //       icon: string
-  //       description: string
-  //     }[]
-  //   >,
-  //   default: () => [],
-  //   required: true,
-  // },
 })
-// const emits = defineEmits(['update:datasets', 'update:retrieval_config'])
 
 const retrieval_config = defineModel<DraftAppConfig['retrieval_config']>('retrieval_config', {
   required: true,
@@ -45,6 +32,9 @@ const originDatasets = ref<DraftAppConfig['datasets']>([])
 const retrievalConfigForm = ref({}) as Ref<DraftAppConfig['retrieval_config']>
 const originRetrievalConfigForm = ref({}) as Ref<DraftAppConfig['retrieval_config']>
 const isRetrievalConfigInit = ref(false)
+
+const appStore = useAppStore()
+const { setGetAppFlag } = appStore
 
 // 2.定义滚动数据分页处理器
 const handleScroll = async (event: UIEvent) => {
@@ -136,6 +126,8 @@ const handleSubmitDatasets = async () => {
 
     // 8.4 隐藏模态窗
     handleCancelDatasetsModal()
+
+    setGetAppFlag(true)
   } catch (e) {
     console.log(e)
   }
@@ -156,6 +148,8 @@ const handleSubmitRetrievalConfig = async () => {
 
     // 9.4 隐藏模态窗
     handleCancelRetrievalConfigModal()
+
+    setGetAppFlag(true)
   } catch (e) {
     console.log(e)
   }
@@ -237,6 +231,8 @@ const handleClickDeleteDataset = async (idx: number) => {
 
   // 通知父组件，数据发生变化，相当于 emits update:datasets
   datasets.value = newDatasets
+
+  setGetAppFlag(true)
 }
 </script>
 

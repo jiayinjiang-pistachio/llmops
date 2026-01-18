@@ -8,6 +8,7 @@ import { apiPrefix, typeMap } from '@/config'
 import { Message } from '@arco-design/web-vue'
 import type { BuiltinProviderItem } from '@/models/builtin-tool'
 import type { ApiToolProviderItem } from '@/models/api-tool'
+import { useAppStore } from '@/stores/app'
 
 // 1.定义自定义组件所需数据
 const props = defineProps({
@@ -45,6 +46,9 @@ const computedBuiltinTools = computed(() => {
   if (toolsActivateCategory.value === 'all') return builtin_tools
   return builtin_tools.filter((item) => item.category === toolsActivateCategory.value)
 })
+
+const appStore = useAppStore()
+const { setGetAppFlag } = appStore
 
 // 2.定义显示工具设置模态窗
 const handleShowToolInfoModal = async (idx: number) => {
@@ -153,6 +157,8 @@ const handleSubmitToolInfo = async () => {
 
   // 4.5 关闭模态窗
   handleCancelToolInfoModal()
+
+  setGetAppFlag(true)
 }
 
 // 5.删除工具处理器
@@ -177,6 +183,8 @@ const handleDeleteTool = async (idx: number) => {
 
   // 5.4 触发时间更新props
   tools.value = newTools
+
+  setGetAppFlag(true)
 }
 
 // 6.定义显示工具列表模态窗
@@ -279,6 +287,8 @@ const handleSelectTool = async (provider_idx: number, tool_idx: number) => {
 
     // 8.5 双向更新数据，不关闭模态窗
     tools.value = newTools
+
+    setGetAppFlag(true)
     return
   } else {
     // 8.6 新增数据，检测关联插件数是否大于等于5
@@ -304,6 +314,8 @@ const handleSelectTool = async (provider_idx: number, tool_idx: number) => {
     // 8.8 双向更新数据，不关闭模态窗
     // emits('update:tools', newTools)
     tools.value = newTools
+
+    setGetAppFlag(true)
   }
 }
 
@@ -608,7 +620,7 @@ const isToolSelected = (
             <div class="text-lg font-bold text-gray-700">
               {{ toolsActivateType === 'api_tool' ? '自定义插件' : '内置插件' }}
             </div>
-            <a-button size="mini" type="text" class="!text-gray-700 ml-6">
+            <a-button size="mini" type="text" class="!text-gray-700 ml-6" @click="toolsModalVisible = false">
               <template #icon>
                 <icon-close />
               </template>
