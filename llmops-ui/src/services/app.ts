@@ -33,7 +33,7 @@ export const updateDraftAppConfig = (app_id: string, req: UpdateDraftAppConfigRe
 
 // 获取应用的调试长期记忆
 export const getDebugConversationSummary = (app_id: string) =>
-  get<BaseResponse<{summary: string}>>(`/apps/${app_id}/summary`)
+  get<BaseResponse<{ summary: string }>>(`/apps/${app_id}/summary`)
 
 // 更新应用的调试长期记忆
 export const updateDebugConversationSummary = (app_id: string, summary: string) =>
@@ -42,12 +42,14 @@ export const updateDebugConversationSummary = (app_id: string, summary: string) 
   })
 
 // 应用调试会话，该接口为流式事件输出
-export const debugChat = (
+export const debugChat = async (
   app_id: string,
   query: string,
   onData: (event_response: Record<string, any>) => void,
-) =>
-  ssePost(
+  signal?: AbortSignal
+) => {
+  console.log('debugChat start...')
+  const sseResult = await ssePost(
     `/apps/${app_id}/conversations`,
     {
       body: {
@@ -55,7 +57,13 @@ export const debugChat = (
       },
     },
     onData,
+    signal
   )
+  console.log('debugChat end...')
+
+
+  return sseResult
+}
 
 // 停止某次应用的调试会话
 export const stopDebugChat = (app_id: string, task_id: string) =>

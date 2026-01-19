@@ -38,7 +38,7 @@ export const useGetApp = (app_id: string) => {
 
       Object.assign(app, { ...data })
     } finally {
-      if(loadingFlag) {
+      if (loadingFlag) {
         loading.value = false
       }
     }
@@ -331,17 +331,36 @@ export const useGetDebugConversationMessagesWithPage = () => {
 
 export const useDebugChat = () => {
   const loading = ref(false)
+  let abortController: AbortController | null = null // 记录当前的控制器
 
   const handleDebugChat = async (
     app_id: string,
     query: string,
     onData: (event_response: Record<string, any>) => void,
   ) => {
+    // 如果上一次还在 loading，先中断它
+    if (abortController) {
+      abortController.abort()
+    }
+
+    abortController = new AbortController()
+
     try {
       loading.value = true
-      await debugChat(app_id, query, onData)
+
+      console.log('loading...start')
+      // 将 signal 传递下去
+      await debugChat(app_id, query, onData, abortController.signal)
+      console.log('loading end...')
+    } catch (err: any) {
+      if (err.name === 'AbortError') {
+        console.log('请求已被主动取消')
+      } else {
+        throw err
+      }
     } finally {
       loading.value = false
+      abortController = null
     }
   }
 

@@ -1,0 +1,3 @@
+.vue-virtual-scroller {
+  scroll-behavior: smooth; /* 让滚动更自然 */
+}

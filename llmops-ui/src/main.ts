@@ -8,6 +8,7 @@ import router from './router'
 
 import '@arco-design/web-vue/dist/arco.css'
 import '@/assets/styles/tailwindcss.css'
+import '@/assets/styles/global.css'
 
 
 const app = createApp(App)

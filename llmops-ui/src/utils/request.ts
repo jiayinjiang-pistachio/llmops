@@ -99,96 +99,146 @@ const baseFetch = async <T>(url: string, fetchOptions: FetchOptionType): Promise
   ]) as Promise<T>
 }
 
-// 封装基于post的sse（流式事件响应）请求
+// // 封装基于post的sse（流式事件响应）请求
+// export const ssePost = async (
+//   url: string,
+//   fetchOptions: FetchOptionType,
+//   onData: (data: { [key: string]: any }) => void,
+//   signal?: AbortSignal,
+// ) => {
+//   // 组装基础的fetch请求配置
+//   // 关键：将信号传入 fetch
+//   const options = Object.assign(
+//     {},
+//     baseFetchOptions,
+//     {
+//       method: 'POST',
+//       headers: new Headers({
+//         'Content-Type': 'application/json',
+//         Connection: 'close', // 核心：告诉后端不要 Keep-Alive
+//         'Cache-Control': 'no-cache',
+//       }),
+//       signal,
+//     },
+//     fetchOptions,
+//   )
+//   const { credential } = useCredentialStore()
+//   const access_token = credential.access_token
+//   if (access_token) {
+//     options.headers.set('Authorization', `Bearer ${access_token}`)
+//   }
+
+//   // 组装请求URL
+//   const urlWithPrefix = `${apiPrefix}${url.startsWith('/') ? url : `/${url}`}`
+
+//   const { body } = fetchOptions
+//   console.log('body: ', body)
+
+//   if (body) {
+//     console.log('body...')
+//     options.body = JSON.stringify(body)
+//   }
+
+//   console.log('not body...')
+
+//   return handleStream(urlWithPrefix, options as RequestInit, onData)
+// }
+
 export const ssePost = async (
   url: string,
   fetchOptions: FetchOptionType,
   onData: (data: { [key: string]: any }) => void,
+  signal?: AbortSignal,
 ) => {
-  // 组装基础的fetch请求配置
-  const options = Object.assign({}, baseFetchOptions, { method: 'POST' }, fetchOptions)
   const { credential } = useCredentialStore()
+
+  // 创建标准的 Headers 对象
+  const headers = new Headers(fetchOptions.headers)
+  headers.set('Content-Type', 'application/json')
+  headers.set('Connection', 'close') // 强制短连接
+  headers.set('Cache-Control', 'no-cache')
+
   const access_token = credential.access_token
   if (access_token) {
-    options.headers.set('Authorization', `Bearer ${access_token}`)
+    headers.set('Authorization', `Bearer ${access_token}`)
   }
 
-  // 组装请求URL
+  const options: RequestInit = {
+    ...fetchOptions,
+    method: 'POST',
+    headers: headers,
+    signal: signal, // 必须在这里传入，handleStream 里的 fetch 才会响应 abort()
+    body: fetchOptions.body ? JSON.stringify(fetchOptions.body) : undefined,
+  }
+
   const urlWithPrefix = `${apiPrefix}${url.startsWith('/') ? url : `/${url}`}`
-
-  const { body } = fetchOptions
-  // debugger
-  if (body) {
-    options.body = JSON.stringify(body)
-    const response = await fetch(urlWithPrefix, options as RequestInit)
-    return await handleStream(response, onData)
-  }
+  return handleStream(urlWithPrefix, options, onData)
 }
 
-function handleStream(response: Response, onData: (data: { [key: string]: any }) => void) {
-  return new Promise((resolve, reject) => {
-    // 1. 检测网络请求是否正常
-    if (!response.ok) {
-      reject(new Error('网络请求失败'))
-    }
+async function handleStream(
+  urlWithPrefix: string,
+  options: RequestInit,
+  onData: (data: { [key: string]: any }) => void,
+) {
+  console.log('before fetch ...')
+  const response = await fetch(urlWithPrefix, options)
+  console.log('after fetch...')
 
-    // 构建reader及decoder
-    const reader = response.body?.getReader()
-    const decoder = new TextDecoder('utf-8')
+  if (!response.ok) throw new Error('网络请求失败')
 
-    let buffer = ''
+  const reader = response.body?.getReader()
+  const decoder = new TextDecoder('utf-8')
+  if (!reader) return
 
-    // 3. 构建read函数用于去读取数据
-    const read = () => {
-      let hasError = false
-      reader?.read().then((result: any) => {
-        if (result.done) {
-          resolve({})
-          return
-        }
+  let buffer = ''
 
-        buffer += decoder.decode(result.value, { stream: true })
-        const lines = buffer.split('\n')
+  try {
+    while (true) {
+      const { done, value } = await reader.read()
+      if (done) break
+
+      buffer += decoder.decode(value, { stream: true })
+
+      // SSE 标准事件是以两个换行符分隔的
+      const parts = buffer.split('\n\n')
+      // 最后一部分可能不完整，留到下次处理
+      buffer = parts.pop() || ''
+
+      for (const part of parts) {
+        if (!part.trim()) continue
 
         let event = ''
         let data = ''
+        const lines = part.split('\n')
 
-        try {
-          lines.forEach((line) => {
-            line = line.trim()
-            if (line.startsWith('event:')) {
-              event = line.slice(6).trim()
-            } else if (line.startsWith('data:')) {
-              data = line.slice(5).trim()
-            }
+        lines.forEach((line) => {
+          const trimmed = line.trim()
+          if (trimmed.startsWith('event:')) event = trimmed.slice(6).trim()
+          else if (trimmed.startsWith('data:')) data = trimmed.slice(5).trim()
+        })
 
-            if (line === '') {
-              if (event !== '' && data !== '') {
-                onData({
-                  event: event,
-                  data: JSON.parse(data),
-                })
-                event = ''
-                data = ''
-              }
-            }
-          })
-          buffer = lines.pop() || ''
-        } catch (e) {
-          hasError = true
-          console.log(e)
-          reject(e)
+        if (event && data) {
+          try {
+            onData({ event, data: JSON.parse(data) })
+          } catch (e) {
+            console.error('解析数据失败:', data, e)
+          }
         }
-
-        if (!hasError) {
-          read()
-        }
-      })
+      }
     }
-
-    // 4. 调用read函数去执行对应的数据
-    read()
-  })
+  } catch (error: any) {
+    if (error.name === 'AbortError') {
+      console.log('Fetch aborted by user')
+    } else {
+      console.error('Stream read error:', error)
+      throw error
+    }
+  } finally {
+    // 【核心修改】强制取消读取器，释放浏览器 TCP 连接通道
+    await reader.cancel()
+    reader.releaseLock()
+    console.log('Reader lock and connection released')
+  }
 }
 
 export const request = <T>(url: string, options = {}) => {

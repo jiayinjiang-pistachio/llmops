@@ -56,14 +56,23 @@ const restoreScrollPosition = () => {
   scroller.value.$el.scrollTop = scroller.value.$el.scrollHeight - scrollHeight.value
 }
 
+const isAtBottom = ref(true) // 默认在底部
+
 // 4.定义滚动函数
 const handleScroll = async (event: UIEvent) => {
-  const { scrollTop } = event.target as HTMLElement
+  const { scrollTop, scrollHeight, clientHeight } = event.target as HTMLElement
+
+  // 1. 处理加载更多历史消息 (原逻辑)
   if (scrollTop <= 0 && !getDebugConversationMessagesWithPageLoading.value) {
     saveScrollHeight()
     await loadDebugConversationMessages(String(route.params?.app_id), false)
     restoreScrollPosition()
   }
+
+  // 2. 【新增】检测用户是否手动向上滚动了
+  // 阈值设为 50px，容忍微小的误差
+  const bottomThreshold = 50
+  isAtBottom.value = scrollHeight - scrollTop - clientHeight < bottomThreshold
 }
 
 // 5.定义输入框提交函数
@@ -79,6 +88,11 @@ const handleSubmit = async () => {
     Message.warning('上一次提问还未结束，请稍等')
     return
   }
+
+  // 发送时，强制回归底部并开启锁定模式
+  isAtBottom.value = true;
+  await nextTick(); // 等待 DOM 更新，确保人类消息已经插入
+  scroller.value.scrollToBottom();
 
   // 5.3 满足条件，处理正式提问的前置工作，涵盖：清空建议问题、删除消息id、任务id
   suggested_questions.value = []
@@ -175,12 +189,15 @@ const handleSubmit = async () => {
         messages.value[0].agent_thoughts = agent_thoughts
       }
 
-      scroller.value.scrollToBottom()
+      // 【修改这里】只有当用户本就在底部时，才跟随新内容滚动
+      if (isAtBottom.value) {
+        scroller.value.scrollToBottom()
+      }
     }
   })
 
   // 5.7 判断是否开启建议问题生成，如果开启了则发起api请求获取数据
-  if (props.suggested_after_answer.enable) {
+  if (props.suggested_after_answer.enable && message_id.value) {
     await handleGenerateSuggestedQuestions(message_id.value)
     setTimeout(() => scroller.value && scroller.value.scrollToBottom(), 100)
   }
@@ -261,18 +278,13 @@ onMounted(async () => {
         <div class="text-lg text-gray-700">{{ app.name }}</div>
       </div>
       <!-- 对话开场白 -->
-      <div
-        v-if="opening_statement"
-        class="bg-gray-100 w-full px-4 py-3 rounded-lg text-gray-700"
-      >
+      <div v-if="opening_statement" class="bg-gray-100 w-full px-4 py-3 rounded-lg text-gray-700">
         {{ opening_statement }}
       </div>
       <!-- 开场白建议问题 -->
       <div class="flex items-center flex-wrap gap-2 w-full">
         <div
-          v-for="(opening_question, idx) in opening_questions.filter(
-            (item) => item.trim() !== '',
-          )"
+          v-for="(opening_question, idx) in opening_questions.filter((item) => item.trim() !== '')"
           :key="idx"
           class="px-4 py-1.5 border rounded-lg text-gray-700 cursor-pointer hover:bg-gray-50"
           @click="async () => await handleSubmitQuestion(opening_question)"
