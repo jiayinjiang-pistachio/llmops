@@ -10510,3 +10510,20 @@ Traceback (most recent call last):
     chan, type = self._fd_to_chan[fileno]
                  ~~~~~~~~~~~~~~~~^^^^^^^^
 KeyError: 22
+[2026-01-19 15:27:41,908: INFO/MainProcess] Connected to redis://8.138.175.92:6379/1
+[2026-01-19 15:27:41,983: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-19 15:27:43,214: INFO/MainProcess] mingle: all alone
+[2026-01-19 15:27:43,627: INFO/MainProcess] celery@jiangjiayindeMacBook-Pro.local ready.
+
+
+
+
+
+
+
+
+
+[2026-01-19 15:44:46,141: INFO/MainProcess] Connected to redis://8.138.175.92:6379/1
+[2026-01-19 15:44:46,224: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-19 15:44:47,424: INFO/MainProcess] mingle: all alone
+[2026-01-19 15:44:47,834: INFO/MainProcess] celery@jiangjiayindeMacBook-Pro.local ready.

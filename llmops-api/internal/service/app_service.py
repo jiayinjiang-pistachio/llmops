@@ -877,6 +877,7 @@ class AppService(BaseService):
                 enable_long_term_memory=draft_app_config["long_term_memory"]["enable"],
                 tools=tools,
                 review_config=draft_app_config["review_config"],
+                preset_prompt=draft_app_config["preset_prompt"],
             ),
         )
 

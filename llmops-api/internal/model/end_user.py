@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+@Time           : 2026/1/19 16:41
+@Author         : jiayinkong@163.com
+@File           : end_user.py
+@Description    : 
+"""
+from sqlalchemy import PrimaryKeyConstraint, Column, UUID, text, DateTime
+
+from internal.extension.database_extension import db
+
+
+class EndUser(db.Model):
+    """总端用户表模型"""
+    __tablename__ = "end_user"
+    __table_args__ = (
+        PrimaryKeyConstraint("id", name="pk_end_user_id"),)
+
+    id = Column(UUID, nullable=False, server_default=text("uuid_generate_v4()"))
+    tenant_id = Column(UUID, nullable=False)  # 归属的账号/空间id
+    app_id = Column(UUID, nullable=False)  # 归属的应用id，终端用户智能在应用下使用
+    updated_at = Column(
+        DateTime,
+        nullable=False,
+        server_default=text('CURRENT_TIMESTAMP(0)'),
+        server_onupdate=text('CURRENT_TIMESTAMP(0)')
+    )
+    created_at = Column(DateTime, nullable=False, server_default=text('CURRENT_TIMESTAMP(0)'))
