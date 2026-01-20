@@ -15,6 +15,7 @@ from .app_schema import CreateAppReq, GetAppResp, GetPublishHistoriesWithPageReq
 from .dataset_schema import CreateDatasetReq, GetDatasetsWithPageReq, GetDatasetResp, UpdateDatasetReq, \
     GetDatasetsWithPageResp, HitReq
 from .document_schema import CreateDocumentsReq, CreateDocumentsResp, UpdateDocumentEnabledReq
+from .openapi_schema import OpenAPIChatReq
 from .schema import ListField
 from .segment_schema import GetSegmentsWithPageReq, GetSegmentsWithPageResp, UpdateSegmentEnabledReq, GetSegmentResp, \
     UpdateSegmentReq
@@ -56,5 +57,6 @@ __all__ = [
     "GetApiKeysWithPageResp",
     "UpdateApiKeyReq",
     "UpdateApiKeyIsActiveReq",
-    "CreateApiKeyReq"
+    "CreateApiKeyReq",
+    "OpenAPIChatReq",
 ]

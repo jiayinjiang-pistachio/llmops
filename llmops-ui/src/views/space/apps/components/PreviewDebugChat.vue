@@ -92,7 +92,7 @@ const handleSubmit = async () => {
   // 发送时，强制回归底部并开启锁定模式
   isAtBottom.value = true;
   await nextTick(); // 等待 DOM 更新，确保人类消息已经插入
-  scroller.value.scrollToBottom();
+  scroller.value?.scrollToBottom();
 
   // 5.3 满足条件，处理正式提问的前置工作，涵盖：清空建议问题、删除消息id、任务id
   suggested_questions.value = []
@@ -191,7 +191,7 @@ const handleSubmit = async () => {
 
       // 【修改这里】只有当用户本就在底部时，才跟随新内容滚动
       if (isAtBottom.value) {
-        scroller.value.scrollToBottom()
+        scroller.value?.scrollToBottom()
       }
     }
   })
@@ -227,7 +227,7 @@ onMounted(async () => {
   await nextTick(() => {
     // 确保在视图更新完成后执行滚动操作
     if (scroller.value) {
-      scroller.value.scrollToBottom()
+      scroller.value?.scrollToBottom()
     }
   })
 })

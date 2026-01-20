@@ -171,4 +171,28 @@ class AppHandler:
         return success_json(PageModel(list=resp.dump(messages), paginator=paginator))
 
     def ping(self):
-        pass
+        from internal.core.agent.agents import FunctionCallAgent
+
+        from langchain_openai import ChatOpenAI
+        import os
+
+        from internal.core.agent.entities.agent_entity import AgentConfig
+        import uuid
+        from internal.core.tools.builtin_tools.providers.google.google_serper import google_serper
+        from langchain_core.messages import HumanMessage
+
+        agent = FunctionCallAgent(
+            llm=ChatOpenAI(
+                model="gpt-4o-mini",
+                api_key=os.getenv("GPTSAPI_API_KEY"),
+                base_url=os.getenv("OPENAI_API_BASE"),
+            ),
+            agent_config=AgentConfig(
+                user_id=uuid.uuid4(),
+                tools=[google_serper()]
+            )
+        )
+
+        agent_result = agent.invoke({"messages": [HumanMessage("帮我搜下2024年北京半程马拉松的前三名成绩是多少")]})
+
+        return success_json({"agent_result": agent_result.model_dump()})

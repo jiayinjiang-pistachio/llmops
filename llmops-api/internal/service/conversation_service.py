@@ -9,20 +9,26 @@
 import logging
 import os
 from dataclasses import dataclass
+from typing import Any
+from uuid import UUID
 
+from flask import Flask
 from injector import inject
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 
+from internal.core.agent.entities.queue_entity import AgentThought, QueueEvent
 from internal.entity.conversation_entity import SUMMARIZER_TEMPLATE, CONVERSATION_NAME_TEMPLATE, ConversationInfo, \
-    SUGGESTED_QUESTIONS_TEMPLATE, SuggestedQuestions
+    SUGGESTED_QUESTIONS_TEMPLATE, SuggestedQuestions, InvokeFrom
+from internal.model import Conversation, Message, MessageAgentThought
 from pkg.sqlalchemy import SQLAlchemy
+from .base_service import BaseService
 
 
 @inject
 @dataclass
-class ConversationService:
+class ConversationService(BaseService):
     """会话服务"""
     db: SQLAlchemy
 
@@ -128,3 +134,98 @@ class ConversationService:
             questions = questions[:3]
 
         return questions
+
+    def save_agent_thought(
+            self,
+            flask_app: Flask,
+            account_id: UUID,
+            app_id: UUID,
+            app_config: dict[str, Any],
+            conversation_id: UUID,
+            message_id: UUID,
+            agent_thoughts: list[AgentThought],
+    ):
+        """存储智能体推理步骤消息"""
+        with flask_app.app_context():
+            # 1. 定义变量存储推理位置信息
+            position = 0
+            latency = 0
+
+            # 2. 在子线程中，重新查询conversation和message，确保对象会被子线程管理到
+            conversation: Conversation = self.get(Conversation, conversation_id)
+            message: Message = self.get(Message, message_id)
+
+            # 3. 循环遍历所有智能体推理过程执行存储操作
+            for agent_thought in agent_thoughts:
+
+                # 4. 存储长期记忆召回、推理、消息、动作、知识库检索等步骤
+                if agent_thought.event in [
+                    QueueEvent.LONG_TERM_MEMORY_RECALL,
+                    QueueEvent.AGENT_THOUGHT,
+                    QueueEvent.AGENT_MESSAGE,
+                    QueueEvent.AGENT_ACTION,
+                    QueueEvent.DATASET_RETRIEVAL,
+                ]:
+                    # 5. 更新位置及总耗时
+                    position += 1
+                    latency += agent_thought.latency
+
+                    self.create(
+                        MessageAgentThought,
+                        app_id=app_id,
+                        conversation_id=conversation.id,
+                        message_id=message.id,
+                        invoke_from=InvokeFrom.DEBUGGER,
+                        created_by=account_id,
+                        position=position,
+                        event=agent_thought.event,
+                        thought=agent_thought.thought,
+                        observation=agent_thought.observation,
+                        tool=agent_thought.tool,
+                        tool_input=agent_thought.tool_input,
+                        message=agent_thought.message,
+                        answer=agent_thought.answer,
+                        latency=agent_thought.latency,
+                    )
+
+                # 7. 检测事件是否为agent_message
+                # 如果是agent_message类型事件，则表明该消息已输出完毕，更新消息内容和耗时
+                if agent_thought.event == QueueEvent.AGENT_MESSAGE:
+                    # 8. 更新消息
+                    self.update(
+                        message,
+                        message=agent_thought.message,
+                        answer=agent_thought.answer,
+                        latency=latency,
+                    )
+                    # 9. 完成了消息的输出，如果开启了会话长期记忆，生成新的总结摘要，并更新长期记忆
+                    if app_config["long_term_memory"]["enable"]:
+                        # 根据人类消息、AI消息、原始的摘要信息总结生成一段新的摘要
+                        new_summary = self.summary(
+                            message.query,  # 人类消息
+                            agent_thought.answer,  # AI消息
+                            conversation.summary,  # 旧的摘要总结
+                        )
+                        self.update(
+                            conversation,
+                            summary=new_summary,
+                        )
+
+                    # 10. 处理新生成会话名称，如果会话是第一次创建，那么就生成会话名称
+                    if conversation.is_new:
+                        new_conversation_name = self.generate_conversation_name(message.query)
+
+                        # 更新会话长期记忆、会话名称
+                        self.update(
+                            conversation,
+                            name=new_conversation_name,
+                        )
+
+                # 11. 如果是停止或错误，更新消息状态
+                if agent_thought.event in [QueueEvent.STOP, QueueEvent.ERROR, QueueEvent.TIMEOUT]:
+                    self.update(
+                        message,
+                        status=agent_thought.event,
+                        observation=agent_thought.observation,
+                    )
+                    break

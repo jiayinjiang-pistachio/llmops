@@ -19,7 +19,7 @@ from langgraph.graph.state import CompiledStateGraph
 
 from internal.core.agent.agents.agent_queue_manager import AgentQueueManager
 from internal.core.agent.entities.agent_entity import AgentConfig, AgentState
-from internal.core.agent.entities.queue_entity import AgentResult
+from internal.core.agent.entities.queue_entity import AgentResult, AgentThought, QueueEvent
 from internal.exception import FailException
 
 
@@ -51,14 +51,60 @@ class BaseAgent(Serializable, Runnable):
 
     def invoke(self, input: AgentState, config: Optional[RunnableConfig] = None) -> AgentResult:
         """块内容响应，一次性生成完整内容返回"""
-        pass
+        # 1. 调用stream方法获取流式事件输出数据
+        agent_result = AgentResult(query=input["messages"][0].content)
+
+        agent_thoughts: dict[str, AgentThought] = {}
+        for agent_thought in self.stream(input, config):
+            # 2. 提取事件id
+            event_id = str(agent_thought.id)
+
+            # 3. 除了ping事件，其他事件都记录
+            if agent_thought.event != QueueEvent.PING:
+
+                # 单独处理agent_message事件，叠加处理
+                if agent_thought.event == QueueEvent.AGENT_MESSAGE:
+                    if event_id not in agent_thoughts:
+                        # 初始化事件存储到agent_thoughts
+                        agent_thoughts[event_id] = agent_thought
+                    else:
+                        # 叠加智能体消息事件
+                        agent_thoughts[event_id] = agent_thoughts[event_id].model_copy(update={
+                            "thought": agent_thoughts[event_id].thought + agent_thought.thought,
+                            "answer": agent_thoughts[event_id].answer + agent_thought.answer,
+                            "latency": agent_thought.latency,
+                        })
+
+                    # 更新智能体消息答案
+                    agent_result.answer += agent_thought.answer
+                else:
+                    # 4. 处理其他事件，覆盖处理
+                    agent_thoughts[event_id] = agent_thought
+
+                    if agent_thought.event in [QueueEvent.STOP, QueueEvent.ERROR, QueueEvent.TIMEOUT]:
+                        agent_result.status = agent_thought.event
+                        agent_result.error = agent_thought.observation if agent_thought.event == QueueEvent.ERROR else ""
+
+        agent_result.agent_thoughts = [agent_thought for agent_thought in agent_thoughts.values()]
+
+        # next 相当于ts的find函数，找到第一个符合条件的就返回
+        agent_result.message = next(
+            (agent_thought.message for agent_thought in agent_thoughts.values()
+             if agent_thought.event == QueueEvent.AGENT_MESSAGE),
+            []
+        )
+
+        # 计算总耗时
+        agent_result.latency = sum([agent_thought.latency for agent_thought in agent_thoughts.values()])
+
+        return agent_result
 
     def stream(
             self,
             input: AgentState,
             config: Optional[RunnableConfig] = None,
             **kwargs: Optional[Any],
-    ) -> Iterator[AgentResult]:
+    ) -> Iterator[AgentThought]:
         """流式输出，每个node节点或LLM每生成一个token时则会返回响应内容"""
         # 1. 检测子类是否已构建Agent智能体，如果未构建则抛出错误
         if not self._agent:
