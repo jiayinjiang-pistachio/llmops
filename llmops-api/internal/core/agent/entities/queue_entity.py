@@ -11,6 +11,8 @@ from uuid import UUID
 
 from pydantic import BaseModel, Field
 
+from internal.entity.conversation_entity import MessageStatus
+
 
 class QueueEvent(str, Enum):
     """队列事件枚举类型"""
@@ -60,5 +62,26 @@ class AgentThought(BaseModel):
 
 class AgentResult(BaseModel):
     """智能体推理观察最终结果"""
-    # todo: 智能体块内容响应，等智能体API开放接口实现
-    pass
+    query = ""  # 原始用户提问
+
+    message: list[dict] = Field(default_factory=list)  # 产生最终答案的消息列表
+    message_token_count: int = 0  # 消息花费的token数
+    message_unit_price: float = 0  # 消息花费的单价
+    message_price_unit: float = 0  # 价格单元
+
+    # 答案相关的数据
+    answer: str = ""  # Agent生成的最终答案
+    answer_token_count: int = 0  # LLM生成答案的token数
+    answer_unit_price: float = 0  # 单价
+    answer_price_unit: float = 0  # 价格单元
+
+    # agent推理统计相关
+    total_token_count: int = 0  # 总token消耗数量
+    total_price: float = 0  # 总价格
+    latency: float = 0  # 总耗时
+
+    status: MessageStatus = MessageStatus.NORMAL  # 消息状态
+
+    error: str = ""  # 错误信息
+
+    agent_thoughts: list[AgentThought] = Field(default_factory=list)  # 产生答案的推理步骤

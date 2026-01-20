@@ -10527,3 +10527,7 @@ KeyError: 22
 [2026-01-19 15:44:46,224: INFO/MainProcess] mingle: searching for neighbors
 [2026-01-19 15:44:47,424: INFO/MainProcess] mingle: all alone
 [2026-01-19 15:44:47,834: INFO/MainProcess] celery@jiangjiayindeMacBook-Pro.local ready.
+[2026-01-19 19:51:43,598: INFO/MainProcess] Connected to redis://8.138.175.92:6379/1
+[2026-01-19 19:51:43,664: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-19 19:51:44,882: INFO/MainProcess] mingle: all alone
+[2026-01-19 19:51:45,265: INFO/MainProcess] celery@jiangjiayindeMacBook-Pro.local ready.

@@ -7,6 +7,7 @@
 @Description    : 请求和响应的结构体
 """
 from .account_schema import GetCurrentUserResp, UpdatePasswordReq, UpdateNameReq, UpdateAvatarReq
+from .api_key_schema import CreateApiKeyReq, GetApiKeysWithPageResp, UpdateApiKeyReq, UpdateApiKeyIsActiveReq
 from .api_tool_schema import ValidateOpenAPISchemaReq, CreateAPIToolReq, GetApiToolResp, GetApiToolProviderResp, \
     GetApiToolProvidersWithPageReq, GetApiToolProvidersWithPageResp, UpdateApiToolProviderReq
 from .app_schema import CreateAppReq, GetAppResp, GetPublishHistoriesWithPageReq, GetPublishHistoriesWithPageResp, \
@@ -52,4 +53,8 @@ __all__ = [
     "UpdatePasswordReq",
     "UpdateNameReq",
     "UpdateAvatarReq",
+    "GetApiKeysWithPageResp",
+    "UpdateApiKeyReq",
+    "UpdateApiKeyIsActiveReq",
+    "CreateApiKeyReq"
 ]

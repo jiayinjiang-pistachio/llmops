@@ -13,7 +13,7 @@ from flask import Flask
 from injector import inject
 
 from internal.handler import AppHandler, BuiltinToolHandler, UploadFileHandler, DatasetHandler, DocumentHandler, \
-    SegmentHandler, OAuthHandler, AccountHandler, AuthHandler, AiHandler
+    SegmentHandler, OAuthHandler, AccountHandler, AuthHandler, AiHandler, ApiKeyHandler, OpenapiHandler
 from internal.handler.api_tool_handler import ApiToolHandler
 
 
@@ -32,11 +32,14 @@ class Router:
     account_handler: AccountHandler
     auth_handler: AuthHandler
     ai_handler: AiHandler
+    api_key_handler: ApiKeyHandler
+    openapi_handler: OpenapiHandler
 
     def register_router(self, app: Flask):
         """注册路由"""
         # 1. 创建蓝图
         bp = Blueprint("llmops", import_name=__name__, url_prefix="")
+        openapi_bp = Blueprint("openapi", __name__, url_prefix="")
 
         # 2. 将url与对应的控制器方法绑定
         bp.add_url_rule("/ping", view_func=self.app_handler.ping)
@@ -143,5 +146,17 @@ class Router:
         bp.add_url_rule("/ai/suggested-questions", methods=["POST"],
                         view_func=self.ai_handler.generate_suggested_questions)
 
+        # API密钥模块
+        bp.add_url_rule("/openapi/api-keys", view_func=self.api_key_handler.get_api_keys_with_page)
+        bp.add_url_rule("/openapi/api-keys", methods=["POST"], view_func=self.api_key_handler.create_api_key)
+        bp.add_url_rule("/openapi/api-keys/<uuid:api_key_id>", methods=["POST"],
+                        view_func=self.api_key_handler.update_api_key)
+        bp.add_url_rule("/openapi/api-keys/<uuid:api_key_id>/is-active", methods=["POST"],
+                        view_func=self.api_key_handler.update_api_key_is_active)
+        bp.add_url_rule("/openapi/api-keys/<uuid:api_key_id>/delete", methods=["POST"],
+                        view_func=self.api_key_handler.delete_api_key)
+        openapi_bp.add_url_rule("/openapi/chat", methods=["POST"], view_func=self.openapi_handler.chat)
+
         # 4. 在应用上去注册蓝图
         app.register_blueprint(bp)
+        app.register_blueprint(openapi_bp)
