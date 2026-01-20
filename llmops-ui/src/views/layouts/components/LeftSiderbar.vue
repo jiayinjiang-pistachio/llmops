@@ -38,11 +38,11 @@
       插件广场
     </router-link>
     <router-link
-      to="/open"
+      to="/openapi"
       class="flex items-center gap-2 h-8 leading-8 rounded-lg transition-all px-2 text-gray-700 hove:text-gray-900 hover:bg-gray-200"
       active-class="bg-gray-100"
     >
-      <icon-open-api-full v-if="route.path.startsWith('/open')" />
+      <icon-open-api-full v-if="route.path.startsWith('/openapi')" />
       <icon-open-api />
       开放 API
     </router-link>
