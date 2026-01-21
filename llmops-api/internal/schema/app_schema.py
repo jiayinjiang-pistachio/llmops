@@ -13,10 +13,50 @@ from marshmallow import Schema, fields, pre_dump
 from wtforms import StringField, IntegerField
 from wtforms.validators import DataRequired, Length, URL, Optional, NumberRange
 
+from internal.entity.app_entity import AppStatus
 from internal.exception import ValidationException
 from internal.lib.helper import datetime_to_timestamp
 from internal.model import App, AppConfigVersion, Message
 from pkg.paginator import PaginatorReq
+
+
+class GetAppsWithPageReq(PaginatorReq):
+    """获取app应用分页列表请求结构体"""
+    search_word = StringField("search_word", default="", validators=[
+        Optional()
+    ])
+
+
+class GetAppsWithPageResp(Schema):
+    """获取app应用分页列表响应结构体"""
+    id = fields.UUID(dump_default="")
+    name = fields.String(dump_default="")
+    icon = fields.String(dump_default="")
+    description = fields.String(dump_default="")
+    preset_prompt = fields.String(dump_default="")
+    model_config = fields.Dict(dump_default={})
+    status = fields.String(dump_default="")
+    updated_at = fields.Integer(dump_default=0)
+    created_at = fields.Integer(dump_default=0)
+
+    @pre_dump
+    def process_data(self, data: App, **kwargs):
+        app_config = data.app_config if data.status == AppStatus.PUBLISHED else data.draft_app_config
+
+        return {
+            "id": data.id,
+            "name": data.name,
+            "icon": data.icon,
+            "description": data.description,
+            "preset_prompt": app_config.preset_prompt,
+            "model_config": {
+                "provider": app_config.model_config.get("provider", ""),
+                "model": app_config.model_config.get("model", ""),
+            },
+            "status": data.status,
+            "updated_at": datetime_to_timestamp(data.updated_at),
+            "created_at": datetime_to_timestamp(data.created_at),
+        }
 
 
 class CreateAppReq(FlaskForm):
@@ -59,6 +99,21 @@ class GetAppResp(Schema):
             "updated_at": datetime_to_timestamp(data.updated_at),
             "created_at": datetime_to_timestamp(data.created_at)
         }
+
+
+class UpdateAppReq(FlaskForm):
+    """更新app应用请求结构体"""
+    name = StringField("name", validators=[
+        DataRequired(message="app名称不能为空"),
+        Length(max=40, message="应用名称长度最大不能超过40个字符"),
+    ])
+    icon = StringField("icon", validators=[
+        DataRequired(message="应用的图标不能为空"),
+        URL(message="应用的图标必须是URL链接")
+    ])
+    description = StringField("description", default="", validators=[
+        Length(max=800, message="应用描述的长度不能超过800个字符")
+    ])
 
 
 class GetPublishHistoriesWithPageReq(PaginatorReq):

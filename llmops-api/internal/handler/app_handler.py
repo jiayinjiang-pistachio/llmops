@@ -13,9 +13,11 @@ from flask import request
 from flask_login import current_user, login_required
 from injector import inject
 
-from internal.schema import CreateAppReq, GetAppResp, GetPublishHistoriesWithPageReq, GetPublishHistoriesWithPageResp, \
-    FallbackHistoryToDraftReq, UpdateDebugConversationSummaryReq, DebugChatReq
-from internal.schema.app_schema import GetDebugConversationMessagesWithPageReq, GetDebugConversationMessagesWithPageResp
+from internal.schema import (
+    CreateAppReq, GetAppResp, GetPublishHistoriesWithPageReq, GetPublishHistoriesWithPageResp,
+    FallbackHistoryToDraftReq, UpdateDebugConversationSummaryReq, DebugChatReq, GetDebugConversationMessagesWithPageReq,
+    GetDebugConversationMessagesWithPageResp, GetAppsWithPageReq, GetAppsWithPageResp, UpdateAppReq
+)
 from internal.service import AppService
 from internal.service.retrieval_service import RetrievalService
 from pkg.paginator import PageModel
@@ -29,6 +31,22 @@ class AppHandler:
     """应用控制器"""
     app_service: AppService
     retrieval_service: RetrievalService
+
+    @login_required
+    def get_apps_with_page(self):
+        """获取app应用列表分页数据"""
+        # 1. 提取请求数据并校验
+        req = GetAppsWithPageReq(request.args)
+        if not req.validate():
+            return validate_error_json(req.errors)
+
+        # 2. 调用服务获取应用列表、分页数据
+        apps, paginator = self.app_service.get_apps_with_page(req, current_user)
+
+        # 3. 响应结构体
+        resp = GetAppsWithPageResp(many=True)
+
+        return success_json(PageModel(list=resp.dump(apps), paginator=paginator))
 
     @login_required
     def create_app(self):
@@ -48,6 +66,25 @@ class AppHandler:
         resp = GetAppResp()
 
         return success_json(resp.dump(app))
+
+    @login_required
+    def update_app(self, app_id: UUID):
+        """根据传递的app id和新应用信息，更新应用信息"""
+        # 1. 提取请求数据并校验
+        req = UpdateAppReq()
+        if not req.validate():
+            return validate_error_json(req.errors)
+
+        # 2. 调用服务更新应用信息
+        self.app_service.update_app(app_id, current_user, **req.data)
+
+        return success_message("修改Agent智能体应用成功")
+
+    @login_required
+    def delete_app(self, app_id: UUID):
+        """根据传递的app id，删除应用"""
+        self.app_service.delete_app(app_id, current_user)
+        return success_message("删除Agent智能体应用成功")
 
     @login_required
     def get_draft_app_cconfig(self, app_id: UUID):

@@ -22,9 +22,13 @@ from redis import Redis
 from sqlalchemy import func, desc
 
 from internal.entity.app_entity import AppStatus, AppConfigType, DEFAULT_APP_CONFIG
-from internal.model import App, Account, AppConfigVersion, ApiTool, Dataset, AppConfig, AppDatasetJoin, Conversation, \
+from internal.model import (
+    App, Account, AppConfigVersion, ApiTool, Dataset, AppConfig, AppDatasetJoin, Conversation,
     Message
-from internal.schema import CreateAppReq, GetPublishHistoriesWithPageReq
+)
+from internal.schema import (
+    CreateAppReq, GetPublishHistoriesWithPageReq, GetDebugConversationMessagesWithPageReq, GetAppsWithPageReq
+)
 from pkg.paginator import Paginator
 from pkg.sqlalchemy import SQLAlchemy
 from .app_config_service import AppConfigService
@@ -41,7 +45,6 @@ from ..core.tools.builtin_tools.providers import BuiltinProviderManager
 from ..entity.conversation_entity import InvokeFrom, MessageStatus
 from ..entity.dataset_entity import RetrievalSource
 from ..exception import NotFoundException, ForbiddenException, ValidationException, FailException
-from ..schema.app_schema import GetDebugConversationMessagesWithPageReq
 
 
 @inject
@@ -100,18 +103,6 @@ class AppService(BaseService):
         if app.account_id != account.id:
             raise ForbiddenException("当前账号无权限访问该应用，请核实后重试")
 
-        return app
-
-    def update_app(self, id: UUID) -> App:
-        with self.db.auto_commit():
-            app = self.get_app(id)
-            app.name = "慕课网机器人"
-        return app
-
-    def delete_app(self, id: UUID) -> App:
-        with self.db.auto_commit():
-            app = self.get_app(id)
-            self.db.session.delete(app)
         return app
 
     def get_draft_app_config(self, app_id: UUID, account: Account) -> dict[str, Any]:
@@ -795,3 +786,33 @@ class AppService(BaseService):
         )
 
         return messages, paginator
+
+    def get_apps_with_page(self, req: GetAppsWithPageReq, account: Account):
+        """根据传递的信息，获取应用列表的分页数据"""
+        paginator = Paginator(db=self.db, req=req)
+        filters = [App.account_id == account.id]
+
+        if req.search_word.data:
+            filters.append(App.name.ilike("%" + req.search_word.data + "%"))
+
+        apps = paginator.paginate(
+            self.db.session.query(App).filter(*filters).order_by(desc("created_at"))
+        )
+
+        return apps, paginator
+
+    def update_app(self, app_id: UUID, account: Account, **kwargs):
+        # 1. 获取应用信息并校验权限
+        app = self.get_app(app_id, account)
+
+        # 2. 更新应用信息
+        self.update(app, **kwargs)
+
+        return app
+
+    def delete_app(self, app_id: UUID, account: Account):
+        """根据传递的app_id删除应用"""
+        app = self.get_app(app_id, account)
+        self.delete(app)
+
+        return app

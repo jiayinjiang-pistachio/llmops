@@ -10,8 +10,11 @@ from .account_schema import GetCurrentUserResp, UpdatePasswordReq, UpdateNameReq
 from .api_key_schema import CreateApiKeyReq, GetApiKeysWithPageResp, UpdateApiKeyReq, UpdateApiKeyIsActiveReq
 from .api_tool_schema import ValidateOpenAPISchemaReq, CreateAPIToolReq, GetApiToolResp, GetApiToolProviderResp, \
     GetApiToolProvidersWithPageReq, GetApiToolProvidersWithPageResp, UpdateApiToolProviderReq
-from .app_schema import CreateAppReq, GetAppResp, GetPublishHistoriesWithPageReq, GetPublishHistoriesWithPageResp, \
-    FallbackHistoryToDraftReq, UpdateDebugConversationSummaryReq, DebugChatReq
+from .app_schema import (
+    CreateAppReq, GetAppResp, GetPublishHistoriesWithPageReq, GetPublishHistoriesWithPageResp,
+    FallbackHistoryToDraftReq, UpdateDebugConversationSummaryReq, DebugChatReq, GetAppsWithPageReq, GetAppsWithPageResp,
+    UpdateAppReq, GetDebugConversationMessagesWithPageReq, GetDebugConversationMessagesWithPageResp
+)
 from .dataset_schema import CreateDatasetReq, GetDatasetsWithPageReq, GetDatasetResp, UpdateDatasetReq, \
     GetDatasetsWithPageResp, HitReq
 from .document_schema import CreateDocumentsReq, CreateDocumentsResp, UpdateDocumentEnabledReq
@@ -59,4 +62,9 @@ __all__ = [
     "UpdateApiKeyIsActiveReq",
     "CreateApiKeyReq",
     "OpenAPIChatReq",
+    "GetAppsWithPageReq",
+    "GetAppsWithPageResp",
+    "UpdateAppReq",
+    "GetDebugConversationMessagesWithPageReq",
+    "GetDebugConversationMessagesWithPageResp",
 ]
