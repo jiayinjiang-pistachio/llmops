@@ -49,3 +49,10 @@ def datetime_to_timestamp(dt: datetime) -> int:
 def combine_documents(documents: list[Document]) -> str:
     """将对应的文档列表使用换行符进行合并"""
     return "\n\n".join(document.page_content for document in documents)
+
+
+def remove_fields(data: dict, fields: list[str]):
+    """根据传递的字典和字段列表，遍历字段列表，从字典中移除这些字段"""
+    for field in fields:
+        data.pop(field, None)
+    return data

@@ -45,6 +45,7 @@ from ..core.tools.builtin_tools.providers import BuiltinProviderManager
 from ..entity.conversation_entity import InvokeFrom, MessageStatus
 from ..entity.dataset_entity import RetrievalSource
 from ..exception import NotFoundException, ForbiddenException, ValidationException, FailException
+from ..lib.helper import remove_fields
 
 
 @inject
@@ -816,3 +817,41 @@ class AppService(BaseService):
         self.delete(app)
 
         return app
+
+    def copy_app(self, app_id: UUID, account: Account) -> App:
+        """根据传递的app_id，拷贝Agent相关信息并创建一个新Agent"""
+        app = self.get_app(app_id, account)
+        draft_app_config = app.draft_app_config
+
+        app_dict = app.__dict__.copy()
+        draft_app_config_dict = draft_app_config.__dict__.copy()
+
+        app_remove_fields = [
+            "id", "app_config_id", "draft_app_config_id", "debug_conversation_id",
+            "status", "updated_at", "created_at", "_sa_instance_state",
+        ]
+        draft_app_config_remove_fields = [
+            "id", "app_id", "version", "updated_at", "created_at", "_sa_instance_state",
+        ]
+
+        remove_fields(app_dict, app_remove_fields)
+        remove_fields(draft_app_config_dict, draft_app_config_remove_fields)
+
+        with self.db.auto_commit():
+            new_app = App(**app_dict, status=AppStatus.DRAFT)
+
+            self.db.session.add(new_app)
+            self.db.session.flush()
+
+            # 根据新app_id，创建新的 draft_app_config
+            new_draft_app_config = AppConfigVersion(
+                **draft_app_config_dict,
+                app_id=new_app.id,
+                version=0,
+            )
+            self.db.session.add(new_draft_app_config)
+            self.db.session.flush()
+
+            new_app.draft_app_config_id = new_draft_app_config.id
+
+        return new_app

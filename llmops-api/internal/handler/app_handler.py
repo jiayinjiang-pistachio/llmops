@@ -87,6 +87,12 @@ class AppHandler:
         return success_message("删除Agent智能体应用成功")
 
     @login_required
+    def copy_app(self, app_id: UUID):
+        """根据传递的app_id，快速拷贝该应用"""
+        app = self.app_service.copy_app(app_id, current_user)
+        return success_json({"id": app.id})
+
+    @login_required
     def get_draft_app_cconfig(self, app_id: UUID):
         """获取草稿配置信息"""
         draft_config = self.app_service.get_draft_app_config(app_id, current_user)
