@@ -188,3 +188,26 @@ export type GetPublishHistoriesWithPageResp = BasePaginationResponse<PublishHist
 export type GetDebugConversationMessagesWithPageReq = BasePaginatorReq & {
   created_at?: number
 }
+
+// 更新应用请求结构
+export type UpdateAppRequest = { name: string; icon: string; description: string }
+
+// 获取应用分页列表数据请求
+export type GetAppsWithPageRequest = BasePaginatorReq & { search_word: string }
+
+// 获取应用分页列表数据响应
+export type GetAppsWithPageResponse = BasePaginationResponse<{
+  id: string
+  name: string
+  icon: string
+  description: string
+  preset_prompt: string
+  model_config: {
+    provider: string
+    model: string
+  }
+  status: string
+  updated_at: number
+  created_at: number
+}>
+

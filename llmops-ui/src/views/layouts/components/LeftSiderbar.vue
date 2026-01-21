@@ -6,7 +6,7 @@
       active-class="bg-gray-100"
     >
       <icon-home-full v-if="route.path.startsWith('/home')" />
-      <icon-home />
+      <icon-home v-else />
       主页
     </router-link>
     <router-link
