@@ -15,6 +15,9 @@ from .app_schema import (
     FallbackHistoryToDraftReq, UpdateDebugConversationSummaryReq, DebugChatReq, GetAppsWithPageReq, GetAppsWithPageResp,
     UpdateAppReq, GetDebugConversationMessagesWithPageReq, GetDebugConversationMessagesWithPageResp
 )
+from .builtin_app_schema import (
+    GetBuiltinAppCategoriesResp, GetBuiltinAppsResp, AddBuiltinAppToSpaceReq
+)
 from .dataset_schema import CreateDatasetReq, GetDatasetsWithPageReq, GetDatasetResp, UpdateDatasetReq, \
     GetDatasetsWithPageResp, HitReq
 from .document_schema import CreateDocumentsReq, CreateDocumentsResp, UpdateDocumentEnabledReq
@@ -67,4 +70,7 @@ __all__ = [
     "UpdateAppReq",
     "GetDebugConversationMessagesWithPageReq",
     "GetDebugConversationMessagesWithPageResp",
+    "GetBuiltinAppsResp",
+    "GetBuiltinAppCategoriesResp",
+    "AddBuiltinAppToSpaceReq",
 ]

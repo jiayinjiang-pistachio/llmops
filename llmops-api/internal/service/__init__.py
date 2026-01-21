@@ -14,6 +14,7 @@ from .api_tool_service import APiToolService
 from .app_config_service import AppConfigService
 from .app_service import AppService
 from .base_service import BaseService
+from .builtin_app_service import BuiltinAppService
 from .builtin_tool_service import BuiltinToolService
 from .conversation_service import ConversationService
 from .cos_service import CosService
@@ -42,4 +43,5 @@ __all__ = [
     "AccountService", "OAuthService",
     "AiService", "ApiKeyService",
     "OpenapiService", "AppConfigService",
+    "BuiltinAppService"
 ]

@@ -12,8 +12,11 @@ from flask import Blueprint  # 修正：从 flask 直接导入 Blueprint
 from flask import Flask
 from injector import inject
 
-from internal.handler import AppHandler, BuiltinToolHandler, UploadFileHandler, DatasetHandler, DocumentHandler, \
-    SegmentHandler, OAuthHandler, AccountHandler, AuthHandler, AiHandler, ApiKeyHandler, OpenapiHandler
+from internal.handler import (
+    AppHandler, BuiltinToolHandler, UploadFileHandler, DatasetHandler, DocumentHandler,
+    SegmentHandler, OAuthHandler, AccountHandler, AuthHandler, AiHandler, ApiKeyHandler, OpenapiHandler,
+    BuiltinAppHandler
+)
 from internal.handler.api_tool_handler import ApiToolHandler
 
 
@@ -34,6 +37,7 @@ class Router:
     ai_handler: AiHandler
     api_key_handler: ApiKeyHandler
     openapi_handler: OpenapiHandler
+    builtin_app_handler: BuiltinAppHandler
 
     def register_router(self, app: Flask):
         """注册路由"""
@@ -160,6 +164,12 @@ class Router:
         bp.add_url_rule("/openapi/api-keys/<uuid:api_key_id>/delete", methods=["POST"],
                         view_func=self.api_key_handler.delete_api_key)
         openapi_bp.add_url_rule("/openapi/chat", methods=["POST"], view_func=self.openapi_handler.chat)
+
+        # 内置应用模块
+        bp.add_url_rule("/builtin-apps/categories", view_func=self.builtin_app_handler.get_builtin_app_categories)
+        bp.add_url_rule("/builtin-apps", view_func=self.builtin_app_handler.get_builtin_apps)
+        bp.add_url_rule("/builtin-apps/add-builtin-app-to-space", methods=["POST"],
+                        view_func=self.builtin_app_handler.add_builtin_app_to_space)
 
         # 4. 在应用上去注册蓝图
         app.register_blueprint(bp)
