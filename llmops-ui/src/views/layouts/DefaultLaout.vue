@@ -59,11 +59,15 @@
       <router-view />
     </a-layout-content>
   </a-layout>
+  <!-- 设置模态窗 -->
+  <setting-modal v-model:visible="settingModalVisible" />
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
 import LeftSiderbar from './components/LeftSiderbar.vue'
+import SettingModal from '@/views/layouts/components/SettingModal.vue'
+
+import { useRouter } from 'vue-router'
 import { onMounted, ref } from 'vue'
 import { useCredentialStore } from '@/stores/credential'
 import { useAccountStore } from '@/stores/account'

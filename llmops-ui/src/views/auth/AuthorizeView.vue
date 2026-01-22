@@ -18,7 +18,7 @@ const credentialStore = useCredentialStore()
 onMounted(async () => {
   try {
     const resp = await authorize(route.params.provider_name as string, route.query.code as string)
-    Message.success('登录成功，正在跳转')
+    Message.success('登录成功')
 
     credentialStore.update(resp.data)
     await router.replace({

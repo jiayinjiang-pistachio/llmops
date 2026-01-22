@@ -95,7 +95,7 @@ const handleSubmit = async ({ errors }: { errors: Record<string, ValidatedError>
   try {
     passwordLoading.value = true
     const resp = await passwordLogin(loginForm.email, loginForm.password)
-    Message.success('登录成功，正在跳转')
+    Message.success('登录成功')
     credentialStore.update(resp.data)
     await router.replace({
       path: '/home',

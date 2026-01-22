@@ -15,7 +15,7 @@
       active-class="bg-gray-100"
     >
       <icon-space-full v-if="route.path.startsWith('/space')" />
-      <icon-space />
+      <icon-space v-else />
       个人空间
     </router-link>
     <div class="text-gray-500 text-sm px-2">探索</div>
@@ -25,7 +25,7 @@
       active-class="bg-gray-100"
     >
       <icon-app-full v-if="route.path.startsWith('/store/apps')" />
-      <icon-app />
+      <icon-app v-else />
       应用广场
     </router-link>
     <router-link
@@ -34,7 +34,7 @@
       active-class="bg-gray-100"
     >
       <icon-tool-full v-if="route.path.startsWith('/store/tools')" />
-      <icon-tool />
+      <icon-tool v-else />
       插件广场
     </router-link>
     <router-link
@@ -43,7 +43,7 @@
       active-class="bg-gray-100"
     >
       <icon-open-api-full v-if="route.path.startsWith('/openapi')" />
-      <icon-open-api />
+      <icon-open-api v-else />
       开放 API
     </router-link>
   </div>
