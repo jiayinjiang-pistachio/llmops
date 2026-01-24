@@ -19,7 +19,7 @@ from internal.core.workflow.entities.node_entity import NodeType
 from internal.core.workflow.entities.variable_entity import VariableTypeMap
 from internal.core.workflow.entities.workflow_entity import WorkflowConfig, WorkflowState
 from internal.core.workflow.nodes import (
-    StartNode, EndNode, LLMNode, TemplateTransformNode, DatasetRetrievalNode, CodeNode, ToolNode
+    StartNode, EndNode, LLMNode, TemplateTransformNode, DatasetRetrievalNode, CodeNode, ToolNode, HttpRequestNode
 )
 
 NodeClasses = {
@@ -29,6 +29,7 @@ NodeClasses = {
     NodeType.CODE: CodeNode,
     NodeType.TEMPLATTE_TRANSFORM: TemplateTransformNode,
     NodeType.TOOL: ToolNode,
+    NodeType.HTTP_REQUEST: HttpRequestNode,
     NodeType.END: EndNode,
 }
 
@@ -122,6 +123,11 @@ class Workflow(BaseTool):
                 graph.add_node(
                     node_flag,
                     NodeClasses[NodeType.TOOL](node_data=node),
+                )
+            elif node.get("node_type") == NodeType.HTTP_REQUEST:
+                graph.add_node(
+                    node_flag,
+                    NodeClasses[NodeType.HTTP_REQUEST](node_data=node),
                 )
             elif node.get("node_type") == NodeType.END:
                 graph.add_node(

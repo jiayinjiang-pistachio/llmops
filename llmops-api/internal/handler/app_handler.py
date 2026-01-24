@@ -294,15 +294,15 @@ class AppHandler:
                     # "f3f28f75-8e60-4eba-b6df-4d1b390bbd89"
                 ],
             },
-            # {
-            #     "id": "675fca50-1228-8008-82dc-0c714158534c",
-            #     "node_type": "http_request",
-            #     "title": "HTTP请求",
-            #     "description": "",
-            #     "url": "https://www.langchain.com/",
-            #     "method": "get",
-            #     "inputs": [],
-            # },
+            {
+                "id": "675fca50-1228-8008-82dc-0c714158534c",
+                "node_type": "http_request",
+                "title": "HTTP请求",
+                "description": "",
+                "url": "https://www.langchain.com/",
+                "method": "get",
+                "inputs": [],
+            },
             {
                 "id": "eba75e0b-21b7-46ed-8d21-791724f0740f",
                 "node_type": "llm",
@@ -557,28 +557,28 @@ class AppHandler:
                     #         }
                     #     }
                     # },
-                    # {
-                    #     "name": "http_request_text",
-                    #     "type": "string",
-                    #     "value": {
-                    #         "type": "ref",
-                    #         "content": {
-                    #             "ref_node_id": "675fca50-1228-8008-82dc-0c714158534c",
-                    #             "ref_var_name": "text",
-                    #         }
-                    #     }
-                    # },
-                    # {
-                    #     "name": "http_request_status_code",
-                    #     "type": "int",
-                    #     "value": {
-                    #         "type": "ref",
-                    #         "content": {
-                    #             "ref_node_id": "675fca50-1228-8008-82dc-0c714158534c",
-                    #             "ref_var_name": "status_code",
-                    #         }
-                    #     }
-                    # }
+                    {
+                        "name": "http_request_text",
+                        "type": "string",
+                        "value": {
+                            "type": "ref",
+                            "content": {
+                                "ref_node_id": "675fca50-1228-8008-82dc-0c714158534c",
+                                "ref_var_name": "text",
+                            }
+                        }
+                    },
+                    {
+                        "name": "http_request_status_code",
+                        "type": "int",
+                        "value": {
+                            "type": "ref",
+                            "content": {
+                                "ref_node_id": "675fca50-1228-8008-82dc-0c714158534c",
+                                "ref_var_name": "status_code",
+                            }
+                        }
+                    }
                 ]
             },
         ]
@@ -672,9 +672,16 @@ class AppHandler:
                 "target_type": "code",
             },
             {
-                "id": "c8732feb-9c6d-4528-8103-ad33af9a1629",
+                "id": "675f8403-cbf4-8008-9aae-d508d8337000",
                 "source": "4a9ed43d-e886-49f7-af9f-9e85d83b27aa",
                 "source_type": "code",
+                "target": "675fca50-1228-8008-82dc-0c714158534c",
+                "target_type": "http_request",
+            },
+            {
+                "id": "c8732feb-9c6d-4528-8103-ad33af9a1629",
+                "source": "675fca50-1228-8008-82dc-0c714158534c",
+                "source_type": "http_request",
                 "target": "623b7671-0bc2-446c-bf5e-5e25032a522e",
                 "target_type": "template_transform",
             },

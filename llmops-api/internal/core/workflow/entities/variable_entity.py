@@ -7,7 +7,7 @@
 @Description    : 
 """
 from enum import Enum
-from typing import Union
+from typing import Union, Any
 from uuid import UUID
 
 from langchain_core.pydantic_v1 import BaseModel, Field
@@ -60,3 +60,4 @@ class VariableEntity(BaseModel):
     required: bool = True  # 是否必填
     type: VariableType = VariableType.STRING  # 变量类型
     value: Value = Field(default_factory=lambda: {"type": VariableValueType.LITERAL, "content": ""})  # 变量的值
+    meta: dict[str, Any] = Field(default_factory=dict)  # 变量元数据，存储一些额外信息
