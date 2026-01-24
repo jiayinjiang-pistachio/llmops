@@ -51,7 +51,7 @@ class HttpRequestNodeData(BaseNodeData):
         ]
     )
 
-    @validator("inputs", pre=True)
+    @validator("inputs")
     def validate_inputs(cls, inputs: list[VariableEntity]) -> list[VariableEntity]:
         """校验输入列表数据"""
         for input in inputs:

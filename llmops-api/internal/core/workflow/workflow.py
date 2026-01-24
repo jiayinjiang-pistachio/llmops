@@ -16,7 +16,7 @@ from langchain_core.tools import BaseTool
 from langgraph.graph.state import CompiledStateGraph, StateGraph
 
 from internal.core.workflow.entities.node_entity import NodeType
-from internal.core.workflow.entities.variable_entity import VariableTypeMap
+from internal.core.workflow.entities.variable_entity import VARIABLE_TYPE_MAP
 from internal.core.workflow.entities.workflow_entity import WorkflowConfig, WorkflowState
 from internal.core.workflow.nodes import (
     StartNode, EndNode, LLMNode, TemplateTransformNode, DatasetRetrievalNode, CodeNode, ToolNode, HttpRequestNode
@@ -66,7 +66,7 @@ class Workflow(BaseTool):
         # 循环遍历所有输入信息，并创建字段映射
         for input in inputs:
             filed_name = input.get("name")
-            field_type = VariableTypeMap.get(input.get("type"), str)
+            field_type = VARIABLE_TYPE_MAP.get(input.get("type"), str)
             field_description = input.get("description", "")
             field_required = input.get("required", True)
 
@@ -135,19 +135,41 @@ class Workflow(BaseTool):
                     NodeClasses[NodeType.END](node_data=node),
                 )
 
+        parallel_edges = {}  # 键是终点，值是起点列表
+        start_node = ""
+        end_node = ""
         # 循环遍历所有边，添加边
         for edge in edges:
             # 添加边映射关系
-            graph.add_edge(
-                f"{edge.get('source_type')}_{edge.get('source')}",
-                f"{edge.get('target_type')}_{edge.get('target')}",
-            )
+            source_node = f"{edge.get('source_type')}_{edge.get('source')}"
+            target_node = f"{edge.get('target_type')}_{edge.get('target')}"
+
+            if target_node not in parallel_edges:
+                parallel_edges[target_node] = [source_node]
+            else:
+                parallel_edges[target_node].append(source_node)
 
             # 检测特殊的边（开始节点和结束节点）
             if edge.get("source_type") == NodeType.START:
-                graph.set_entry_point(f"{edge.get('source_type')}_{edge.get('source')}")
+                start_node = source_node
             elif edge.get("target_type") == NodeType.END:
-                graph.set_finish_point(f"{edge.get('target_type')}_{edge.get('target')}")
+                end_node = target_node
+
+        graph.set_entry_point(start_node)
+        graph.set_finish_point(end_node)
+
+        # 循环遍历合并边
+        for target_node, source_nodes in parallel_edges.items():
+            graph.add_edge(source_nodes, target_node)
+
+        # # 构建图程序并编译
+        # workflow = graph.compile()
+        #
+        # image_data = workflow.get_graph().draw_mermaid_png()
+        # with open("workflow.png", "wb") as f:
+        #     f.write(image_data)
+        #
+        # return workflow
 
         return graph.compile()
 

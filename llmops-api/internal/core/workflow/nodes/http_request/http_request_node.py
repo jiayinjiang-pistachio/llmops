@@ -12,12 +12,11 @@ import requests
 from langchain_core.runnables import RunnableConfig
 
 from internal.core.workflow.entities.node_entity import NodeResult, NodeStatus
-from internal.core.workflow.entities.variable_entity import VariableEntity, VariableValueType, \
-    VariableTypeDefaultValueMap
 from internal.core.workflow.entities.workflow_entity import WorkflowState
 from internal.core.workflow.nodes import BaseNode
 from internal.core.workflow.nodes.http_request.http_request_entity import HttpRequestNodeData, HttpRequestInputType, \
     HttpRequestMethod
+from internal.core.workflow.utils.helper import extract_variables_from_state
 
 
 class HttpRequestNode(BaseNode):
@@ -25,31 +24,16 @@ class HttpRequestNode(BaseNode):
 
     def invoke(self, state: WorkflowState, config: Optional[RunnableConfig] = None) -> WorkflowState:
         """http request 节点执行函数"""
-        inputs: list[VariableEntity] = self.node_data.inputs
-
-        _input_dict = {}
-        for input in inputs:
-            # 判断input的值类型
-            if input.value.type == VariableValueType.LITERAL:
-                _input_dict[input.name] = input.value.content
-            else:
-                # input 的值是引用类型
-                # 循环上一个节点的node_results
-                for node_result in state["node_results"]:
-                    # 寻找当前input所对应的引用节点
-                    if input.value.content.ref_node_id == node_result.node_data.id:
-                        _input_dict[input.name] = node_result.outputs.get(
-                            input.value.content.ref_var_name,
-                            VariableTypeDefaultValueMap.get(input.type)
-                        )
+        # 提取节点输入变量字典
+        _inputs_dict = extract_variables_from_state(self.node_data.inputs, state)
 
         inputs_dict = {
             HttpRequestInputType.PARAMS: {},
             HttpRequestInputType.HEADERS: {},
             HttpRequestInputType.BODY: {},
         }
-        for input in inputs:
-            inputs_dict[input.meta.get("type")][input.name] = _input_dict.get(input.name)
+        for input in self.node_data.inputs:
+            inputs_dict[input.meta.get("type")][input.name] = _inputs_dict.get(input.name)
 
         # 请求方法映射
         request_methods = {

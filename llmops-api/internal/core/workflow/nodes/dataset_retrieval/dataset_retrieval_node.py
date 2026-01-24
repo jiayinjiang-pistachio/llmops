@@ -15,11 +15,10 @@ from langchain_core.runnables import RunnableConfig
 from langchain_core.tools import BaseTool
 
 from internal.core.workflow.entities.node_entity import NodeResult, NodeStatus
-from internal.core.workflow.entities.variable_entity import VariableEntity, VariableValueType, \
-    VariableTypeDefaultValueMap
 from internal.core.workflow.entities.workflow_entity import WorkflowState
 from internal.core.workflow.nodes import BaseNode
 from internal.core.workflow.nodes.dataset_retrieval.dataset_retrieval_entity import DatasetRetrievalNodeData
+from internal.core.workflow.utils.helper import extract_variables_from_state
 
 
 class DatasetRetrievalNode(BaseNode):
@@ -45,21 +44,8 @@ class DatasetRetrievalNode(BaseNode):
 
     def invoke(self, state: WorkflowState, config: Optional[RunnableConfig] = None) -> WorkflowState:
         """知识库检索节点执行函数，得到知识库检索的结果"""
-        query_input: VariableEntity = self.node_data.inputs[0]
-
-        inputs_dict = {}
-        if query_input.value.type == VariableValueType.LITERAL:
-            # 直接输入类型
-            inputs_dict[query_input.name] = query_input.value.content
-        else:
-            # 引用类型
-            for node_result in state["node_results"]:
-                if query_input.value.content.ref_node_id == node_result.node_data.id:
-                    # 找到引用节点
-                    inputs_dict[query_input.name] = node_result.outputs.get(
-                        query_input.value.content.ref_var_name,
-                        VariableTypeDefaultValueMap.get(query_input.type)
-                    )
+        # 提取节点输入变量字典映射
+        inputs_dict = extract_variables_from_state(self.node_data.inputs, state)
 
         # 调用知识库检索工具
         combine_documents = self._retrieval_tool.invoke(inputs_dict)

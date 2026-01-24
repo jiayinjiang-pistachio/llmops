@@ -11,7 +11,7 @@ from typing import Optional
 from langchain_core.runnables import RunnableConfig
 
 from internal.core.workflow.entities.node_entity import NodeResult, NodeStatus
-from internal.core.workflow.entities.variable_entity import VariableTypeDefaultValueMap
+from internal.core.workflow.entities.variable_entity import VARIABLE_TYPE_DEFAULT_VALUE_MAP
 from internal.core.workflow.entities.workflow_entity import WorkflowState
 from internal.core.workflow.nodes import BaseNode
 from internal.core.workflow.nodes.start.start_entity import StartNodeData
@@ -37,7 +37,7 @@ class StartNode(BaseNode):
                 if input.required:
                     raise FailException(f"工作流参数生成出错，{input.name}为必填参数")
                 else:
-                    input_value = VariableTypeDefaultValueMap.get(input.type)
+                    input_value = VARIABLE_TYPE_DEFAULT_VALUE_MAP.get(input.type)
 
             outputs[input.name] = input_value
 

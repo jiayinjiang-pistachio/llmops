@@ -12,11 +12,11 @@ from typing import Optional
 from langchain_core.runnables import RunnableConfig
 
 from internal.core.workflow.entities.node_entity import NodeResult, NodeStatus
-from internal.core.workflow.entities.variable_entity import VariableEntity, VariableValueType, \
-    VariableTypeDefaultValueMap
+from internal.core.workflow.entities.variable_entity import VARIABLE_TYPE_DEFAULT_VALUE_MAP
 from internal.core.workflow.entities.workflow_entity import WorkflowState
 from internal.core.workflow.nodes import BaseNode
 from internal.core.workflow.nodes.code.code_entity import CodeNodeData
+from internal.core.workflow.utils.helper import extract_variables_from_state
 from internal.exception import FailException
 
 
@@ -25,23 +25,9 @@ class CodeNode(BaseNode):
 
     def invoke(self, state: WorkflowState, config: Optional[RunnableConfig] = None) -> WorkflowState:
         """python code 节点执行函数"""
-        inputs: list[VariableEntity] = self.node_data.inputs
 
-        inputs_dict = {}
-        for input in inputs:
-            # 判断input的值类型
-            if input.value.type == VariableValueType.LITERAL:
-                inputs_dict[input.name] = input.value.content
-            else:
-                # input 的值是引用类型
-                # 循环上一个节点的node_results
-                for node_result in state["node_results"]:
-                    # 寻找当前input所对应的引用节点
-                    if input.value.content.ref_node_id == node_result.node_data.id:
-                        inputs_dict[input.name] = node_result.outputs.get(
-                            input.value.content.ref_var_name,
-                            VariableTypeDefaultValueMap.get(input.type)
-                        )
+        # 从状态中提取输入数据
+        inputs_dict = extract_variables_from_state(self.node_data.inputs, state)
 
         # todo: 执行python代码，该方法目前可以执行任意代码。所以非常危险，后续考虑迁移到沙箱
         result = self._execute_function(self.node_data.code, params=inputs_dict)
@@ -54,7 +40,7 @@ class CodeNode(BaseNode):
             # 提取输出数据，非严格校验
             outputs_dict[output.name] = result.get(
                 output.name,
-                VariableTypeDefaultValueMap.get(output.type)
+                VARIABLE_TYPE_DEFAULT_VALUE_MAP.get(output.type)
             )
 
         # 构建状态数据并返回

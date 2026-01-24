@@ -8,8 +8,7 @@
 """
 from uuid import UUID
 
-from langchain_core.pydantic_v1 import BaseModel, Field
-from pydantic import model_validator
+from langchain_core.pydantic_v1 import BaseModel, Field, validator
 
 from internal.core.workflow.entities.node_entity import BaseNodeData
 from internal.core.workflow.entities.variable_entity import VariableEntity, VariableValueType, VariableType
@@ -36,17 +35,15 @@ class DatasetRetrievalNodeData(BaseNodeData):
         ]
     )
 
-    @classmethod
-    @model_validator(mode="before")
-    def validate_inputs(cls, values):
-        inputs = values.get("inputs", [])
+    @validator("inputs")
+    def validate_inputs(self, inputs: list[VariableEntity]) -> list[VariableEntity]:
 
         if len(inputs) != 1:
             raise FailException("知识库节点输入变量信息出错")
 
-        input_query: VariableEntity = inputs[0]
+        query_input: VariableEntity = inputs[0]
 
-        if input_query.name != "query" or input_query.type != VariableType.STRING or input_query.required is False:
+        if query_input.name != "query" or query_input.type != VariableType.STRING or query_input.required is False:
             raise FailException("知识库节点输入变量名/变量类型/必填属性出错")
 
-        return values
+        return inputs

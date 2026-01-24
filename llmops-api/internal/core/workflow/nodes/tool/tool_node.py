@@ -14,11 +14,10 @@ from langchain_core.runnables import RunnableConfig
 from langchain_core.tools import BaseTool
 
 from internal.core.workflow.entities.node_entity import NodeResult, NodeStatus
-from internal.core.workflow.entities.variable_entity import VariableEntity, VariableValueType, \
-    VariableTypeDefaultValueMap
 from internal.core.workflow.entities.workflow_entity import WorkflowState
 from internal.core.workflow.nodes import BaseNode
 from internal.core.workflow.nodes.tool.tool_entity import ToolNodeData
+from internal.core.workflow.utils.helper import extract_variables_from_state
 from internal.exception import FailException
 
 
@@ -82,19 +81,8 @@ class ToolNode(BaseNode):
 
     def invoke(self, state: WorkflowState, config: Optional[RunnableConfig] = None) -> WorkflowState:
         """工具调用节点执行函数，根据传递的信息调用预设的插件，包括内置插件和API自定义插件"""
-        inputs: list[VariableEntity] = self.node_data.inputs
-
-        inputs_dict = {}
-        for input in inputs:
-            if input.value.type == VariableValueType.LITERAL:
-                inputs_dict[input.name] = input.value.content
-            else:
-                for node_result in state["node_results"]:
-                    if input.value.content.ref_node_id == node_result.node_data.id:
-                        inputs_dict[input.name] = node_result.outputs.get(
-                            input.value.content.ref_var_name,
-                            VariableTypeDefaultValueMap.get(input.type)
-                        )
+        # 从状态中提取出输入数据
+        inputs_dict = extract_variables_from_state(self.node_data.inputs, state)
 
         # 调用插件并提取结果
         try:
@@ -109,12 +97,9 @@ class ToolNode(BaseNode):
         # 构建输出结构
         outputs = {}
         if self.node_data.outputs:
-            print("node_data_outputs: ", self.node_data.outputs[0].name)
             outputs[self.node_data.outputs[0].name] = result
         else:
             outputs["text"] = result
-
-        print("output_api_tool_text: ", outputs)
 
         return {
             "node_results": [

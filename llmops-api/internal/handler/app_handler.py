@@ -412,28 +412,28 @@ class AppHandler:
                     }
                 ]
             },
-            # {
-            #     "id": "2f6cf40d-0219-421b-92ff-229fdde15ecb",
-            #     "node_type": "tool",
-            #     "title": "内置工具",
-            #     "description": "",
-            #     "type": "builtin_tool",
-            #     "provider_id": "google",
-            #     "tool_id": "google_serper",
-            #     "inputs": [
-            #         {
-            #             "name": "query",
-            #             "type": "string",
-            #             "value": {
-            #                 "type": "ref",
-            #                 "content": {
-            #                     "ref_node_id": "18d938c4-ecd7-4a6b-9403-3625224b96cc",
-            #                     "ref_var_name": "query"
-            #                 }
-            #             }
-            #         }
-            #     ]
-            # },
+            {
+                "id": "2f6cf40d-0219-421b-92ff-229fdde15ecb",
+                "node_type": "tool",
+                "title": "内置工具",
+                "description": "",
+                "type": "builtin_tool",
+                "provider_id": "google",
+                "tool_id": "google_serper",
+                "inputs": [
+                    {
+                        "name": "query",
+                        "type": "string",
+                        "value": {
+                            "type": "ref",
+                            "content": {
+                                "ref_node_id": "18d938c4-ecd7-4a6b-9403-3625224b96cc",
+                                "ref_var_name": "query"
+                            }
+                        }
+                    }
+                ]
+            },
             {
                 "id": "e9fc1f95-1a59-4ba4-a87d-2ad349287234",
                 "node_type": "tool",
@@ -546,17 +546,17 @@ class AppHandler:
                             }
                         }
                     },
-                    # {
-                    #     "name": "google_search_result",
-                    #     "type": "string",
-                    #     "value": {
-                    #         "type": "ref",
-                    #         "content": {
-                    #             "ref_node_id": "2f6cf40d-0219-421b-92ff-229fdde15ecb",
-                    #             "ref_var_name": "text",
-                    #         }
-                    #     }
-                    # },
+                    {
+                        "name": "google_search_result",
+                        "type": "string",
+                        "value": {
+                            "type": "ref",
+                            "content": {
+                                "ref_node_id": "2f6cf40d-0219-421b-92ff-229fdde15ecb",
+                                "ref_var_name": "text",
+                            }
+                        }
+                    },
                     {
                         "name": "http_request_text",
                         "type": "string",
@@ -582,74 +582,9 @@ class AppHandler:
                 ]
             },
         ]
+
         edges = [
-            # 并行线路1
-            # {
-            #     "id": "675fca50-1228-8008-82dc-0c714158534c",
-            #     "source": "18d938c4-ecd7-4a6b-9403-3625224b96cc",
-            #     "source_type": "start",
-            #     "target": "868b5769-1925-4e7b-8aa4-af7c3d444d91",
-            #     "target_type": "dataset_retrieval",
-            # },
-            # {
-            #     "id": "675fcd37-f308-8008-a6f4-389a0b1ed0ca",
-            #     "source": "868b5769-1925-4e7b-8aa4-af7c3d444d91",
-            #     "source_type": "dataset_retrieval",
-            #     "target": "eba75e0b-21b7-46ed-8d21-791724f0740f",
-            #     "target_type": "llm",
-            # },
-            # {
-            #     "id": "675fa28c-6f94-8008-b5ae-2eba3300b2e6",
-            #     "source": "eba75e0b-21b7-46ed-8d21-791724f0740f",
-            #     "source_type": "llm",
-            #     "target": "4a9ed43d-e886-49f7-af9f-9e85d83b27aa",
-            #     "target_type": "code",
-            # },
-            # {
-            #     "id": "675f9964-0028-8008-8046-d017996f3d3c",
-            #     "source": "4a9ed43d-e886-49f7-af9f-9e85d83b27aa",
-            #     "source_type": "code",
-            #     "target": "860c8411-37ed-4872-b53f-30afa0290211",
-            #     "target_type": "end",
-            # },
-            # 并行线路2
-            # {
-            #     "id": "675f9290-5990-8008-ab62-5a0ff8d95edc",
-            #     "source": "18d938c4-ecd7-4a6b-9403-3625224b96cc",
-            #     "source_type": "start",
-            #     "target": "675fca50-1228-8008-82dc-0c714158534c",
-            #     "target_type": "http_request",
-            # },
-            # {
-            #     "id": "675f90b4-7bb8-8008-8b72-ba26ce50951c",
-            #     "source": "675fca50-1228-8008-82dc-0c714158534c",
-            #     "source_type": "http_request",
-            #     "target": "623b7671-0bc2-446c-bf5e-5e25032a522e",
-            #     "target_type": "template_transform",
-            # },
-            # {
-            #     "id": "675f8c7e-e600-8008-885b-6a1271cb4365",
-            #     "source": "623b7671-0bc2-446c-bf5e-5e25032a522e",
-            #     "source_type": "template_transform",
-            #     "target": "860c8411-37ed-4872-b53f-30afa0290211",
-            #     "target_type": "end",
-            # },
-            # 并行线路3
-            # {
-            #     "id": "675f850a-de28-8008-9f27-d508d8337e49",
-            #     "source": "18d938c4-ecd7-4a6b-9403-3625224b96cc",
-            #     "source_type": "start",
-            #     "target": "2f6cf40d-0219-421b-92ff-229fdde15ecb",
-            #     "target_type": "tool",
-            # },
-            # {
-            #     "id": "675f8403-cbf4-8008-9aae-76ecae12c675",
-            #     "source": "2f6cf40d-0219-421b-92ff-229fdde15ecb",
-            #     "source_type": "tool",
-            #     "target": "860c8411-37ed-4872-b53f-30afa0290211",
-            #     "target_type": "end",
-            # },
-            # 并行线路4
+            # 开始->知识库检索
             {
                 "id": "c8732feb-9c6d-4528-8103-ad33af9a162a",
                 "source": "18d938c4-ecd7-4a6b-9403-3625224b96cc",
@@ -657,6 +592,7 @@ class AppHandler:
                 "target": "868b5769-1925-4e7b-8aa4-af7c3d444d91",
                 "target_type": "dataset_retrieval",
             },
+            # 知识库检索->大语言模型
             {
                 "id": "675f8403-cbf4-8008-9aae-76ecae12c675",
                 "source": "868b5769-1925-4e7b-8aa4-af7c3d444d91",
@@ -664,6 +600,7 @@ class AppHandler:
                 "target": "eba75e0b-21b7-46ed-8d21-791724f0740f",
                 "target_type": "llm",
             },
+            # 大语言模型->代码code
             {
                 "id": "675f8403-cbf4-8008-9aae-d508d8337e49",
                 "source": "eba75e0b-21b7-46ed-8d21-791724f0740f",
@@ -671,13 +608,23 @@ class AppHandler:
                 "target": "4a9ed43d-e886-49f7-af9f-9e85d83b27aa",
                 "target_type": "code",
             },
+            # 代码code->结束
             {
                 "id": "675f8403-cbf4-8008-9aae-d508d8337000",
                 "source": "4a9ed43d-e886-49f7-af9f-9e85d83b27aa",
                 "source_type": "code",
+                "target": "860c8411-37ed-4872-b53f-30afa0290211",
+                "target_type": "end",
+            },
+            # 开始->http请求
+            {
+                "id": "c8732feb-9c6d-4528-8103-ad33af9a1611",
+                "source": "18d938c4-ecd7-4a6b-9403-3625224b96cc",
+                "source_type": "start",
                 "target": "675fca50-1228-8008-82dc-0c714158534c",
                 "target_type": "http_request",
             },
+            # http请求->模板转换
             {
                 "id": "c8732feb-9c6d-4528-8103-ad33af9a1629",
                 "source": "675fca50-1228-8008-82dc-0c714158534c",
@@ -685,22 +632,41 @@ class AppHandler:
                 "target": "623b7671-0bc2-446c-bf5e-5e25032a522e",
                 "target_type": "template_transform",
             },
-            # {
-            #     "id": "675f850a-de28-8008-9f27-d508d8337e50",
-            #     "source": "623b7671-0bc2-446c-bf5e-5e25032a522e",
-            #     "source_type": "template_transform",
-            #     "target": "2f6cf40d-0219-421b-92ff-229fdde15ecb",
-            #     "target_type": "tool",
-            # },
+            # 模板转换->结束
             {
-                "id": "675f850a-de28-8008-9f27-d508d8337333",
+                "id": "51e993f4-a832-48bc-8211-59b37acf678c",
                 "source": "623b7671-0bc2-446c-bf5e-5e25032a522e",
                 "source_type": "template_transform",
+                "target": "860c8411-37ed-4872-b53f-30afa0290211",
+                "target_type": "end",
+            },
+            # 开始->工具1
+            {
+                "id": "675f8533-de28-8228-9f27-d508d8337e00",
+                "source": "18d938c4-ecd7-4a6b-9403-3625224b96cc",
+                "source_type": "start",
+                "target": "2f6cf40d-0219-421b-92ff-229fdde15ecb",
+                "target_type": "tool",
+            },
+            # 工具1->结束
+            {
+                "id": "675f8533-de28-8008-9f27-d508d8337e00",
+                "source": "2f6cf40d-0219-421b-92ff-229fdde15ecb",
+                "source_type": "tool",
+                "target": "860c8411-37ed-4872-b53f-30afa0290211",
+                "target_type": "end",
+            },
+            # 开始->工具2
+            {
+                "id": "675f8533-de28-8228-9f27-d50812337e00",
+                "source": "18d938c4-ecd7-4a6b-9403-3625224b96cc",
+                "source_type": "start",
                 "target": "e9fc1f95-1a59-4ba4-a87d-2ad349287234",
                 "target_type": "tool",
             },
+            # 工具2->结束
             {
-                "id": "51e993f4-a832-48bc-8211-59b37acf688c",
+                "id": "675f8533-de28-8008-9f27-d508d8937e00",
                 "source": "e9fc1f95-1a59-4ba4-a87d-2ad349287234",
                 "source_type": "tool",
                 "target": "860c8411-37ed-4872-b53f-30afa0290211",
