@@ -16,7 +16,6 @@ from internal.core.workflow.entities.node_entity import BaseNodeData
 
 class BaseNode(RunnableSerializable, ABC):
     """基础节点类"""
-    # node_data_cls: type[BaseNodeData]
     # 关键修改：使用 ClassVar 显式声明这是一个类变量
     node_data_cls: ClassVar[type[BaseNodeData]]
     node_data: BaseNodeData

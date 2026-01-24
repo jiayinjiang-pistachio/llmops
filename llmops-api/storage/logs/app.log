@@ -1,30 +1,459 @@
-2026-01-22 15:40:47,520.520] _internal.py line:97 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+2026-01-24 10:23:28,714.714] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-24 10:23:28,714.714] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 10:23:28,716.716] base.py line:1846 INFO: select current_schema())
+2026-01-24 10:23:28,716.716] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 10:23:28,716.716] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-24 10:23:28,717.717] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 10:23:28,717.717] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:23:28,722.722] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-24 10:23:28,722.722] base.py line:1846 INFO: [generated in 0.00037s] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-24 10:23:29,579.579] base.py line:1846 INFO: SELECT api_tool.id AS api_tool_id, api_tool.account_id AS api_tool_account_id, api_tool.provider_id AS api_tool_provider_id, api_tool.name AS api_tool_name, api_tool.description AS api_tool_description, api_tool.url AS api_tool_url, api_tool.method AS api_tool_method, api_tool.parameters AS api_tool_parameters, api_tool.updated_at AS api_tool_updated_at, api_tool.created_at AS api_tool_created_at 
+FROM api_tool 
+WHERE api_tool.provider_id = %(provider_id_1)s::UUID AND api_tool.name = %(name_1)s)
+2026-01-24 10:23:29,579.579] base.py line:1846 INFO: [generated in 0.00037s] {'provider_id_1': 'a96b86d0-d3e9-44d3-81dd-f4193734c52c', 'name_1': 'YoudaoSuggest'})
+2026-01-24 10:23:29,587.587] base.py line:1846 INFO: SELECT api_tool_provider.id AS api_tool_provider_id, api_tool_provider.account_id AS api_tool_provider_account_id, api_tool_provider.name AS api_tool_provider_name, api_tool_provider.icon AS api_tool_provider_icon, api_tool_provider.description AS api_tool_provider_description, api_tool_provider.openapi_schema AS api_tool_provider_openapi_schema, api_tool_provider.headers AS api_tool_provider_headers, api_tool_provider.updated_at AS api_tool_provider_updated_at, api_tool_provider.created_at AS api_tool_provider_created_at 
+FROM api_tool_provider 
+WHERE api_tool_provider.id = %(pk_1)s::UUID)
+2026-01-24 10:23:29,587.587] base.py line:1846 INFO: [generated in 0.00031s] {'pk_1': UUID('a96b86d0-d3e9-44d3-81dd-f4193734c52c')})
+2026-01-24 10:23:29,804.804] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:23:29,809.809] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (%(id_1_1)s::UUID, %(id_1_2)s::UUID) AND dataset.account_id = %(account_id_1)s::UUID)
+2026-01-24 10:23:29,810.810] base.py line:1846 INFO: [generated in 0.00078s] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f'), 'id_1_1': UUID('8210bfbd-0baa-46f5-bcd4-fe2b789fb4f6'), 'id_1_2': UUID('4e25b342-1a2b-40f9-86a7-da3052f2a75a')})
+2026-01-24 10:23:30,756.756] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 10:23:30,756.756] base.py line:1846 INFO: [generated in 0.00037s] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 10:23:30,764.764] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:23:30,767.767] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:23:30,768.768] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 10:23:30,768.768] base.py line:1846 INFO: [cached since 0.01199s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 10:23:30,769.769] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:23:30,770.770] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:23:30,771.771] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 10:23:30,771.771] base.py line:1846 INFO: [cached since 0.01518s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 10:23:30,772.772] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:23:30,773.773] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:23:30,774.774] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 10:23:30,774.774] base.py line:1846 INFO: [cached since 0.01829s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 10:23:30,777.777] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:23:30,780.780] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:23:30,781.781] base.py line:1846 INFO: UPDATE segment SET hit_count=(segment.hit_count + %(hit_count_1)s) WHERE segment.id IN (%(id_1_1)s::UUID, %(id_1_2)s::UUID, %(id_1_3)s::UUID, %(id_1_4)s::UUID))
+2026-01-24 10:23:30,781.781] base.py line:1846 INFO: [generated in 0.00030s] {'hit_count_1': 1, 'id_1_1': '50ef3f1e-080f-4b4d-b318-bf817fbcfa21', 'id_1_2': '733ab697-e6a5-4fba-877b-a4fe698caecf', 'id_1_3': '40c0652a-84c9-457e-8ed2-78404b9e6631', 'id_1_4': '6545e7f5-e1da-44cd-8566-54493a46ac1c'})
+2026-01-24 10:23:30,793.793] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:23:40,115.115] base.py line:2713 INFO: ROLLBACK)
+2026-01-24 10:23:40,116.116] _internal.py line:97 INFO: 127.0.0.1 - - [24/Jan/2026 10:23:40] "GET /ping HTTP/1.1" 200 -)
+2026-01-24 10:35:51,982.982] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/nodes/end/end_node.py', reloading)
+2026-01-24 10:35:54,990.990] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-24 10:36:12,791.791] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-24 10:36:12,841.841] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-24 10:36:13,195.195] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-24 10:36:13,195.195] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 10:36:13,197.197] base.py line:1846 INFO: select current_schema())
+2026-01-24 10:36:13,197.197] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 10:36:13,198.198] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-24 10:36:13,198.198] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 10:36:13,199.199] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:36:13,203.203] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-24 10:36:13,204.204] base.py line:1846 INFO: [generated in 0.00059s] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-24 10:36:14,194.194] base.py line:1846 INFO: SELECT api_tool.id AS api_tool_id, api_tool.account_id AS api_tool_account_id, api_tool.provider_id AS api_tool_provider_id, api_tool.name AS api_tool_name, api_tool.description AS api_tool_description, api_tool.url AS api_tool_url, api_tool.method AS api_tool_method, api_tool.parameters AS api_tool_parameters, api_tool.updated_at AS api_tool_updated_at, api_tool.created_at AS api_tool_created_at 
+FROM api_tool 
+WHERE api_tool.provider_id = %(provider_id_1)s::UUID AND api_tool.name = %(name_1)s)
+2026-01-24 10:36:14,194.194] base.py line:1846 INFO: [generated in 0.00041s] {'provider_id_1': 'a96b86d0-d3e9-44d3-81dd-f4193734c52c', 'name_1': 'YoudaoSuggest'})
+2026-01-24 10:36:14,203.203] base.py line:1846 INFO: SELECT api_tool_provider.id AS api_tool_provider_id, api_tool_provider.account_id AS api_tool_provider_account_id, api_tool_provider.name AS api_tool_provider_name, api_tool_provider.icon AS api_tool_provider_icon, api_tool_provider.description AS api_tool_provider_description, api_tool_provider.openapi_schema AS api_tool_provider_openapi_schema, api_tool_provider.headers AS api_tool_provider_headers, api_tool_provider.updated_at AS api_tool_provider_updated_at, api_tool_provider.created_at AS api_tool_provider_created_at 
+FROM api_tool_provider 
+WHERE api_tool_provider.id = %(pk_1)s::UUID)
+2026-01-24 10:36:14,203.203] base.py line:1846 INFO: [generated in 0.00053s] {'pk_1': UUID('a96b86d0-d3e9-44d3-81dd-f4193734c52c')})
+2026-01-24 10:36:14,593.593] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:36:14,597.597] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (%(id_1_1)s::UUID, %(id_1_2)s::UUID) AND dataset.account_id = %(account_id_1)s::UUID)
+2026-01-24 10:36:14,597.597] base.py line:1846 INFO: [generated in 0.00066s] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f'), 'id_1_1': UUID('8210bfbd-0baa-46f5-bcd4-fe2b789fb4f6'), 'id_1_2': UUID('4e25b342-1a2b-40f9-86a7-da3052f2a75a')})
+2026-01-24 10:36:15,505.505] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 10:36:15,505.505] base.py line:1846 INFO: [generated in 0.00045s] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 10:36:15,517.517] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:36:15,520.520] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:36:15,520.520] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 10:36:15,521.521] base.py line:1846 INFO: [cached since 0.01586s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 10:36:15,522.522] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:36:15,523.523] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:36:15,523.523] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 10:36:15,523.523] base.py line:1846 INFO: [cached since 0.01878s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 10:36:15,524.524] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:36:15,525.525] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:36:15,526.526] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 10:36:15,526.526] base.py line:1846 INFO: [cached since 0.0213s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 10:36:15,529.529] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:36:15,531.531] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:36:15,532.532] base.py line:1846 INFO: UPDATE segment SET hit_count=(segment.hit_count + %(hit_count_1)s) WHERE segment.id IN (%(id_1_1)s::UUID, %(id_1_2)s::UUID, %(id_1_3)s::UUID, %(id_1_4)s::UUID))
+2026-01-24 10:36:15,532.532] base.py line:1846 INFO: [generated in 0.00030s] {'hit_count_1': 1, 'id_1_1': '50ef3f1e-080f-4b4d-b318-bf817fbcfa21', 'id_1_2': '733ab697-e6a5-4fba-877b-a4fe698caecf', 'id_1_3': '40c0652a-84c9-457e-8ed2-78404b9e6631', 'id_1_4': '6545e7f5-e1da-44cd-8566-54493a46ac1c'})
+2026-01-24 10:36:15,537.537] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:36:30,477.477] base.py line:2713 INFO: ROLLBACK)
+2026-01-24 10:36:30,478.478] _internal.py line:97 INFO: 127.0.0.1 - - [24/Jan/2026 10:36:30] "GET /ping HTTP/1.1" 200 -)
+2026-01-24 10:41:48,022.022] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/app_handler.py', reloading)
+2026-01-24 10:41:50,318.318] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-24 10:42:05,985.985] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-24 10:42:06,031.031] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-24 10:43:05,702.702] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/nodes/end/end_node.py', reloading)
+2026-01-24 10:43:06,712.712] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-24 10:43:25,713.713] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-24 10:43:25,742.742] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-24 10:43:26,045.045] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-24 10:43:26,045.045] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 10:43:26,047.047] base.py line:1846 INFO: select current_schema())
+2026-01-24 10:43:26,047.047] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 10:43:26,055.055] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-24 10:43:26,056.056] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 10:43:26,057.057] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:43:26,061.061] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-24 10:43:26,061.061] base.py line:1846 INFO: [generated in 0.00036s] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-24 10:43:27,022.022] base.py line:1846 INFO: SELECT api_tool.id AS api_tool_id, api_tool.account_id AS api_tool_account_id, api_tool.provider_id AS api_tool_provider_id, api_tool.name AS api_tool_name, api_tool.description AS api_tool_description, api_tool.url AS api_tool_url, api_tool.method AS api_tool_method, api_tool.parameters AS api_tool_parameters, api_tool.updated_at AS api_tool_updated_at, api_tool.created_at AS api_tool_created_at 
+FROM api_tool 
+WHERE api_tool.provider_id = %(provider_id_1)s::UUID AND api_tool.name = %(name_1)s)
+2026-01-24 10:43:27,022.022] base.py line:1846 INFO: [generated in 0.00038s] {'provider_id_1': 'a96b86d0-d3e9-44d3-81dd-f4193734c52c', 'name_1': 'YoudaoSuggest'})
+2026-01-24 10:43:27,029.029] base.py line:1846 INFO: SELECT api_tool_provider.id AS api_tool_provider_id, api_tool_provider.account_id AS api_tool_provider_account_id, api_tool_provider.name AS api_tool_provider_name, api_tool_provider.icon AS api_tool_provider_icon, api_tool_provider.description AS api_tool_provider_description, api_tool_provider.openapi_schema AS api_tool_provider_openapi_schema, api_tool_provider.headers AS api_tool_provider_headers, api_tool_provider.updated_at AS api_tool_provider_updated_at, api_tool_provider.created_at AS api_tool_provider_created_at 
+FROM api_tool_provider 
+WHERE api_tool_provider.id = %(pk_1)s::UUID)
+2026-01-24 10:43:27,029.029] base.py line:1846 INFO: [generated in 0.00028s] {'pk_1': UUID('a96b86d0-d3e9-44d3-81dd-f4193734c52c')})
+2026-01-24 10:43:27,240.240] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:43:27,243.243] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (%(id_1_1)s::UUID, %(id_1_2)s::UUID) AND dataset.account_id = %(account_id_1)s::UUID)
+2026-01-24 10:43:27,243.243] base.py line:1846 INFO: [generated in 0.00045s] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f'), 'id_1_1': UUID('8210bfbd-0baa-46f5-bcd4-fe2b789fb4f6'), 'id_1_2': UUID('4e25b342-1a2b-40f9-86a7-da3052f2a75a')})
+2026-01-24 10:43:27,944.944] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 10:43:27,944.944] base.py line:1846 INFO: [generated in 0.00037s] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 10:43:27,955.955] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:43:27,958.958] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:43:27,958.958] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 10:43:27,958.958] base.py line:1846 INFO: [cached since 0.01445s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 10:43:27,960.960] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:43:27,961.961] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:43:27,961.961] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 10:43:27,961.961] base.py line:1846 INFO: [cached since 0.01741s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 10:43:27,962.962] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:43:27,963.963] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:43:27,963.963] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 10:43:27,963.963] base.py line:1846 INFO: [cached since 0.01977s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 10:43:27,965.965] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:43:27,967.967] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:43:27,968.968] base.py line:1846 INFO: UPDATE segment SET hit_count=(segment.hit_count + %(hit_count_1)s) WHERE segment.id IN (%(id_1_1)s::UUID, %(id_1_2)s::UUID, %(id_1_3)s::UUID, %(id_1_4)s::UUID))
+2026-01-24 10:43:27,968.968] base.py line:1846 INFO: [generated in 0.00035s] {'hit_count_1': 1, 'id_1_1': '50ef3f1e-080f-4b4d-b318-bf817fbcfa21', 'id_1_2': '733ab697-e6a5-4fba-877b-a4fe698caecf', 'id_1_3': '40c0652a-84c9-457e-8ed2-78404b9e6631', 'id_1_4': '6545e7f5-e1da-44cd-8566-54493a46ac1c'})
+2026-01-24 10:43:27,976.976] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:43:42,592.592] base.py line:2713 INFO: ROLLBACK)
+2026-01-24 10:43:42,592.592] _internal.py line:97 INFO: 127.0.0.1 - - [24/Jan/2026 10:43:42] "GET /ping HTTP/1.1" 200 -)
+2026-01-24 10:47:28,658.658] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/nodes/end/end_node.py', reloading)
+2026-01-24 10:47:31,751.751] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-24 10:47:48,432.432] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-24 10:47:48,459.459] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-24 10:47:48,767.767] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-24 10:47:48,767.767] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 10:47:48,769.769] base.py line:1846 INFO: select current_schema())
+2026-01-24 10:47:48,769.769] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 10:47:48,781.781] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-24 10:47:48,781.781] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 10:47:48,782.782] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:47:48,787.787] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-24 10:47:48,787.787] base.py line:1846 INFO: [generated in 0.00047s] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-24 10:47:49,944.944] base.py line:1846 INFO: SELECT api_tool.id AS api_tool_id, api_tool.account_id AS api_tool_account_id, api_tool.provider_id AS api_tool_provider_id, api_tool.name AS api_tool_name, api_tool.description AS api_tool_description, api_tool.url AS api_tool_url, api_tool.method AS api_tool_method, api_tool.parameters AS api_tool_parameters, api_tool.updated_at AS api_tool_updated_at, api_tool.created_at AS api_tool_created_at 
+FROM api_tool 
+WHERE api_tool.provider_id = %(provider_id_1)s::UUID AND api_tool.name = %(name_1)s)
+2026-01-24 10:47:49,945.945] base.py line:1846 INFO: [generated in 0.00034s] {'provider_id_1': 'a96b86d0-d3e9-44d3-81dd-f4193734c52c', 'name_1': 'YoudaoSuggest'})
+2026-01-24 10:47:49,953.953] base.py line:1846 INFO: SELECT api_tool_provider.id AS api_tool_provider_id, api_tool_provider.account_id AS api_tool_provider_account_id, api_tool_provider.name AS api_tool_provider_name, api_tool_provider.icon AS api_tool_provider_icon, api_tool_provider.description AS api_tool_provider_description, api_tool_provider.openapi_schema AS api_tool_provider_openapi_schema, api_tool_provider.headers AS api_tool_provider_headers, api_tool_provider.updated_at AS api_tool_provider_updated_at, api_tool_provider.created_at AS api_tool_provider_created_at 
+FROM api_tool_provider 
+WHERE api_tool_provider.id = %(pk_1)s::UUID)
+2026-01-24 10:47:49,954.954] base.py line:1846 INFO: [generated in 0.00043s] {'pk_1': UUID('a96b86d0-d3e9-44d3-81dd-f4193734c52c')})
+2026-01-24 10:47:50,231.231] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:47:50,235.235] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (%(id_1_1)s::UUID, %(id_1_2)s::UUID) AND dataset.account_id = %(account_id_1)s::UUID)
+2026-01-24 10:47:50,235.235] base.py line:1846 INFO: [generated in 0.00051s] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f'), 'id_1_1': UUID('8210bfbd-0baa-46f5-bcd4-fe2b789fb4f6'), 'id_1_2': UUID('4e25b342-1a2b-40f9-86a7-da3052f2a75a')})
+2026-01-24 10:47:51,239.239] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 10:47:51,240.240] base.py line:1846 INFO: [generated in 0.00047s] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 10:47:51,248.248] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:47:51,249.249] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:47:51,250.250] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 10:47:51,250.250] base.py line:1846 INFO: [cached since 0.01111s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 10:47:51,252.252] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:47:51,253.253] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:47:51,253.253] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 10:47:51,253.253] base.py line:1846 INFO: [cached since 0.01408s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 10:47:51,255.255] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:47:51,256.256] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:47:51,256.256] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 10:47:51,257.257] base.py line:1846 INFO: [cached since 0.01766s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 10:47:51,258.258] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:47:51,261.261] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:47:51,263.263] base.py line:1846 INFO: UPDATE segment SET hit_count=(segment.hit_count + %(hit_count_1)s) WHERE segment.id IN (%(id_1_1)s::UUID, %(id_1_2)s::UUID, %(id_1_3)s::UUID, %(id_1_4)s::UUID))
+2026-01-24 10:47:51,263.263] base.py line:1846 INFO: [generated in 0.00029s] {'hit_count_1': 1, 'id_1_1': '50ef3f1e-080f-4b4d-b318-bf817fbcfa21', 'id_1_2': '733ab697-e6a5-4fba-877b-a4fe698caecf', 'id_1_3': '40c0652a-84c9-457e-8ed2-78404b9e6631', 'id_1_4': '6545e7f5-e1da-44cd-8566-54493a46ac1c'})
+2026-01-24 10:47:51,267.267] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:48:04,862.862] base.py line:2713 INFO: ROLLBACK)
+2026-01-24 10:48:04,863.863] _internal.py line:97 INFO: 127.0.0.1 - - [24/Jan/2026 10:48:04] "GET /ping HTTP/1.1" 200 -)
+2026-01-24 10:49:37,984.984] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/nodes/end/end_node.py', reloading)
+2026-01-24 10:49:39,953.953] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-24 10:50:00,307.307] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-24 10:50:00,332.332] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-24 10:50:00,654.654] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-24 10:50:00,654.654] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 10:50:00,656.656] base.py line:1846 INFO: select current_schema())
+2026-01-24 10:50:00,656.656] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 10:50:00,658.658] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-24 10:50:00,658.658] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 10:50:00,660.660] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:50:00,667.667] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-24 10:50:00,668.668] base.py line:1846 INFO: [generated in 0.00081s] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-24 10:50:01,701.701] base.py line:1846 INFO: SELECT api_tool.id AS api_tool_id, api_tool.account_id AS api_tool_account_id, api_tool.provider_id AS api_tool_provider_id, api_tool.name AS api_tool_name, api_tool.description AS api_tool_description, api_tool.url AS api_tool_url, api_tool.method AS api_tool_method, api_tool.parameters AS api_tool_parameters, api_tool.updated_at AS api_tool_updated_at, api_tool.created_at AS api_tool_created_at 
+FROM api_tool 
+WHERE api_tool.provider_id = %(provider_id_1)s::UUID AND api_tool.name = %(name_1)s)
+2026-01-24 10:50:01,702.702] base.py line:1846 INFO: [generated in 0.00101s] {'provider_id_1': 'a96b86d0-d3e9-44d3-81dd-f4193734c52c', 'name_1': 'YoudaoSuggest'})
+2026-01-24 10:50:01,709.709] base.py line:1846 INFO: SELECT api_tool_provider.id AS api_tool_provider_id, api_tool_provider.account_id AS api_tool_provider_account_id, api_tool_provider.name AS api_tool_provider_name, api_tool_provider.icon AS api_tool_provider_icon, api_tool_provider.description AS api_tool_provider_description, api_tool_provider.openapi_schema AS api_tool_provider_openapi_schema, api_tool_provider.headers AS api_tool_provider_headers, api_tool_provider.updated_at AS api_tool_provider_updated_at, api_tool_provider.created_at AS api_tool_provider_created_at 
+FROM api_tool_provider 
+WHERE api_tool_provider.id = %(pk_1)s::UUID)
+2026-01-24 10:50:01,709.709] base.py line:1846 INFO: [generated in 0.00029s] {'pk_1': UUID('a96b86d0-d3e9-44d3-81dd-f4193734c52c')})
+2026-01-24 10:50:01,963.963] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:50:01,967.967] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (%(id_1_1)s::UUID, %(id_1_2)s::UUID) AND dataset.account_id = %(account_id_1)s::UUID)
+2026-01-24 10:50:01,967.967] base.py line:1846 INFO: [generated in 0.00054s] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f'), 'id_1_1': UUID('8210bfbd-0baa-46f5-bcd4-fe2b789fb4f6'), 'id_1_2': UUID('4e25b342-1a2b-40f9-86a7-da3052f2a75a')})
+2026-01-24 10:50:03,410.410] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 10:50:03,410.410] base.py line:1846 INFO: [generated in 0.00042s] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 10:50:03,421.421] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:50:03,422.422] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:50:03,423.423] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 10:50:03,423.423] base.py line:1846 INFO: [cached since 0.01291s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 10:50:03,424.424] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:50:03,425.425] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:50:03,425.425] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 10:50:03,425.425] base.py line:1846 INFO: [cached since 0.01525s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 10:50:03,426.426] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:50:03,428.428] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:50:03,428.428] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 10:50:03,428.428] base.py line:1846 INFO: [cached since 0.01835s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 10:50:03,430.430] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:50:03,431.431] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:50:03,433.433] base.py line:1846 INFO: UPDATE segment SET hit_count=(segment.hit_count + %(hit_count_1)s) WHERE segment.id IN (%(id_1_1)s::UUID, %(id_1_2)s::UUID, %(id_1_3)s::UUID, %(id_1_4)s::UUID))
+2026-01-24 10:50:03,433.433] base.py line:1846 INFO: [generated in 0.00035s] {'hit_count_1': 1, 'id_1_1': '50ef3f1e-080f-4b4d-b318-bf817fbcfa21', 'id_1_2': '733ab697-e6a5-4fba-877b-a4fe698caecf', 'id_1_3': '40c0652a-84c9-457e-8ed2-78404b9e6631', 'id_1_4': '6545e7f5-e1da-44cd-8566-54493a46ac1c'})
+2026-01-24 10:50:03,437.437] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:50:19,382.382] base.py line:2713 INFO: ROLLBACK)
+2026-01-24 10:50:19,384.384] _internal.py line:97 INFO: 127.0.0.1 - - [24/Jan/2026 10:50:19] "GET /ping HTTP/1.1" 200 -)
+2026-01-24 10:52:07,848.848] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/nodes/end/end_node.py', reloading)
+2026-01-24 10:52:09,928.928] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-24 10:52:27,653.653] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-24 10:52:27,681.681] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-24 10:53:29,786.786] _internal.py line:97 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on http://127.0.0.1:5000)
-2026-01-22 15:40:47,520.520] _internal.py line:97 INFO: [33mPress CTRL+C to quit[0m)
-2026-01-22 15:40:47,523.523] _internal.py line:97 INFO:  * Restarting with stat)
-2026-01-22 15:41:03,047.047] _internal.py line:97 WARNING:  * Debugger is active!)
-2026-01-22 15:41:03,078.078] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
-2026-01-22 15:42:06,958.958] _internal.py line:97 INFO: 127.0.0.1 - - [22/Jan/2026 15:42:06] "[35m[1mGET /ping HTTP/1.1[0m" 500 -)
-2026-01-22 15:42:37,662.662] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/app_handler.py', reloading)
-2026-01-22 15:42:39,159.159] _internal.py line:97 INFO:  * Restarting with stat)
-2026-01-22 15:42:55,287.287] _internal.py line:97 WARNING:  * Debugger is active!)
-2026-01-22 15:42:55,313.313] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
-2026-01-22 15:42:55,586.586] _internal.py line:97 INFO: 127.0.0.1 - - [22/Jan/2026 15:42:55] "GET /ping HTTP/1.1" 200 -)
-2026-01-22 19:26:02,228.228] _internal.py line:97 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+2026-01-24 10:53:29,787.787] _internal.py line:97 INFO: [33mPress CTRL+C to quit[0m)
+2026-01-24 10:53:29,795.795] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-24 10:53:55,752.752] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-24 10:53:55,790.790] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-24 10:56:16,311.311] _internal.py line:97 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on http://127.0.0.1:5000)
-2026-01-22 19:26:02,228.228] _internal.py line:97 INFO: [33mPress CTRL+C to quit[0m)
-2026-01-22 19:26:02,230.230] _internal.py line:97 INFO:  * Restarting with stat)
-2026-01-22 19:26:17,481.481] _internal.py line:97 WARNING:  * Debugger is active!)
-2026-01-22 19:26:17,522.522] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
-2026-01-22 19:26:49,269.269] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/entities/variable_entity.py', reloading)
-2026-01-22 19:26:50,113.113] _internal.py line:97 INFO:  * Restarting with stat)
-2026-01-22 19:27:06,372.372] _internal.py line:97 WARNING:  * Debugger is active!)
-2026-01-22 19:27:06,395.395] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
-2026-01-22 19:27:25,651.651] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/entities/variable_entity.py', reloading)
-2026-01-22 19:27:26,460.460] _internal.py line:97 INFO:  * Restarting with stat)
-2026-01-22 19:27:43,321.321] _internal.py line:97 WARNING:  * Debugger is active!)
-2026-01-22 19:27:43,345.345] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
-2026-01-22 19:27:43,574.574] http.py line:75 ERROR: An error occurred: 'StartNode' object has no attribute 'node_data_cls')
+2026-01-24 10:56:16,312.312] _internal.py line:97 INFO: [33mPress CTRL+C to quit[0m)
+2026-01-24 10:56:16,314.314] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-24 10:56:30,882.882] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-24 10:56:30,931.931] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-24 10:57:39,481.481] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-24 10:57:39,482.482] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 10:57:39,488.488] base.py line:1846 INFO: select current_schema())
+2026-01-24 10:57:39,488.488] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 10:57:39,490.490] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-24 10:57:39,490.490] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 10:57:39,492.492] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:57:39,501.501] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-24 10:57:39,501.501] base.py line:1846 INFO: [generated in 0.00053s] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-24 10:57:40,612.612] base.py line:1846 INFO: SELECT api_tool.id AS api_tool_id, api_tool.account_id AS api_tool_account_id, api_tool.provider_id AS api_tool_provider_id, api_tool.name AS api_tool_name, api_tool.description AS api_tool_description, api_tool.url AS api_tool_url, api_tool.method AS api_tool_method, api_tool.parameters AS api_tool_parameters, api_tool.updated_at AS api_tool_updated_at, api_tool.created_at AS api_tool_created_at 
+FROM api_tool 
+WHERE api_tool.provider_id = %(provider_id_1)s::UUID AND api_tool.name = %(name_1)s)
+2026-01-24 10:57:40,612.612] base.py line:1846 INFO: [generated in 0.00057s] {'provider_id_1': 'a96b86d0-d3e9-44d3-81dd-f4193734c52c', 'name_1': 'YoudaoSuggest'})
+2026-01-24 10:57:40,630.630] base.py line:1846 INFO: SELECT api_tool_provider.id AS api_tool_provider_id, api_tool_provider.account_id AS api_tool_provider_account_id, api_tool_provider.name AS api_tool_provider_name, api_tool_provider.icon AS api_tool_provider_icon, api_tool_provider.description AS api_tool_provider_description, api_tool_provider.openapi_schema AS api_tool_provider_openapi_schema, api_tool_provider.headers AS api_tool_provider_headers, api_tool_provider.updated_at AS api_tool_provider_updated_at, api_tool_provider.created_at AS api_tool_provider_created_at 
+FROM api_tool_provider 
+WHERE api_tool_provider.id = %(pk_1)s::UUID)
+2026-01-24 10:57:40,632.632] base.py line:1846 INFO: [generated in 0.00228s] {'pk_1': UUID('a96b86d0-d3e9-44d3-81dd-f4193734c52c')})
+2026-01-24 10:57:41,092.092] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:57:41,095.095] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (%(id_1_1)s::UUID, %(id_1_2)s::UUID) AND dataset.account_id = %(account_id_1)s::UUID)
+2026-01-24 10:57:41,095.095] base.py line:1846 INFO: [generated in 0.00061s] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f'), 'id_1_1': UUID('8210bfbd-0baa-46f5-bcd4-fe2b789fb4f6'), 'id_1_2': UUID('4e25b342-1a2b-40f9-86a7-da3052f2a75a')})
+2026-01-24 10:57:42,144.144] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 10:57:42,144.144] base.py line:1846 INFO: [generated in 0.00037s] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 10:57:42,157.157] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:57:42,160.160] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:57:42,160.160] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 10:57:42,160.160] base.py line:1846 INFO: [cached since 0.01693s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 10:57:42,163.163] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:57:42,164.164] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:57:42,165.165] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 10:57:42,165.165] base.py line:1846 INFO: [cached since 0.02171s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 10:57:42,166.166] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:57:42,167.167] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:57:42,168.168] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 10:57:42,168.168] base.py line:1846 INFO: [cached since 0.02424s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 10:57:42,169.169] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:57:42,171.171] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 10:57:42,174.174] base.py line:1846 INFO: UPDATE segment SET hit_count=(segment.hit_count + %(hit_count_1)s) WHERE segment.id IN (%(id_1_1)s::UUID, %(id_1_2)s::UUID, %(id_1_3)s::UUID, %(id_1_4)s::UUID))
+2026-01-24 10:57:42,174.174] base.py line:1846 INFO: [generated in 0.00043s] {'hit_count_1': 1, 'id_1_1': '50ef3f1e-080f-4b4d-b318-bf817fbcfa21', 'id_1_2': '733ab697-e6a5-4fba-877b-a4fe698caecf', 'id_1_3': '40c0652a-84c9-457e-8ed2-78404b9e6631', 'id_1_4': '6545e7f5-e1da-44cd-8566-54493a46ac1c'})
+2026-01-24 10:57:42,181.181] base.py line:2716 INFO: COMMIT)
+2026-01-24 10:57:56,447.447] base.py line:2713 INFO: ROLLBACK)
+2026-01-24 10:57:56,448.448] _internal.py line:97 INFO: 127.0.0.1 - - [24/Jan/2026 10:57:56] "GET /ping HTTP/1.1" 200 -)
+2026-01-24 10:59:46,458.458] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/nodes/end/end_node.py', reloading)
+2026-01-24 10:59:48,008.008] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-24 11:00:04,455.455] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-24 11:00:04,483.483] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-24 11:00:04,841.841] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-24 11:00:04,841.841] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 11:00:04,842.842] base.py line:1846 INFO: select current_schema())
+2026-01-24 11:00:04,843.843] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 11:00:04,843.843] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-24 11:00:04,843.843] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 11:00:04,844.844] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:00:04,849.849] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-24 11:00:04,849.849] base.py line:1846 INFO: [generated in 0.00034s] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-24 11:00:06,128.128] base.py line:1846 INFO: SELECT api_tool.id AS api_tool_id, api_tool.account_id AS api_tool_account_id, api_tool.provider_id AS api_tool_provider_id, api_tool.name AS api_tool_name, api_tool.description AS api_tool_description, api_tool.url AS api_tool_url, api_tool.method AS api_tool_method, api_tool.parameters AS api_tool_parameters, api_tool.updated_at AS api_tool_updated_at, api_tool.created_at AS api_tool_created_at 
+FROM api_tool 
+WHERE api_tool.provider_id = %(provider_id_1)s::UUID AND api_tool.name = %(name_1)s)
+2026-01-24 11:00:06,128.128] base.py line:1846 INFO: [generated in 0.00037s] {'provider_id_1': 'a96b86d0-d3e9-44d3-81dd-f4193734c52c', 'name_1': 'YoudaoSuggest'})
+2026-01-24 11:00:06,135.135] base.py line:1846 INFO: SELECT api_tool_provider.id AS api_tool_provider_id, api_tool_provider.account_id AS api_tool_provider_account_id, api_tool_provider.name AS api_tool_provider_name, api_tool_provider.icon AS api_tool_provider_icon, api_tool_provider.description AS api_tool_provider_description, api_tool_provider.openapi_schema AS api_tool_provider_openapi_schema, api_tool_provider.headers AS api_tool_provider_headers, api_tool_provider.updated_at AS api_tool_provider_updated_at, api_tool_provider.created_at AS api_tool_provider_created_at 
+FROM api_tool_provider 
+WHERE api_tool_provider.id = %(pk_1)s::UUID)
+2026-01-24 11:00:06,135.135] base.py line:1846 INFO: [generated in 0.00028s] {'pk_1': UUID('a96b86d0-d3e9-44d3-81dd-f4193734c52c')})
+2026-01-24 11:00:06,492.492] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:00:06,495.495] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (%(id_1_1)s::UUID, %(id_1_2)s::UUID) AND dataset.account_id = %(account_id_1)s::UUID)
+2026-01-24 11:00:06,495.495] base.py line:1846 INFO: [generated in 0.00045s] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f'), 'id_1_1': UUID('8210bfbd-0baa-46f5-bcd4-fe2b789fb4f6'), 'id_1_2': UUID('4e25b342-1a2b-40f9-86a7-da3052f2a75a')})
+2026-01-24 11:00:07,507.507] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 11:00:07,507.507] base.py line:1846 INFO: [generated in 0.00049s] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 11:00:07,516.516] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:00:07,517.517] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:00:07,518.518] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 11:00:07,518.518] base.py line:1846 INFO: [cached since 0.01144s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 11:00:07,519.519] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:00:07,520.520] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:00:07,521.521] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 11:00:07,521.521] base.py line:1846 INFO: [cached since 0.01426s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 11:00:07,523.523] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:00:07,524.524] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:00:07,524.524] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 11:00:07,524.524] base.py line:1846 INFO: [cached since 0.0175s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 11:00:07,525.525] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:00:07,527.527] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:00:07,528.528] base.py line:1846 INFO: UPDATE segment SET hit_count=(segment.hit_count + %(hit_count_1)s) WHERE segment.id IN (%(id_1_1)s::UUID, %(id_1_2)s::UUID, %(id_1_3)s::UUID, %(id_1_4)s::UUID))
+2026-01-24 11:00:07,528.528] base.py line:1846 INFO: [generated in 0.00035s] {'hit_count_1': 1, 'id_1_1': '50ef3f1e-080f-4b4d-b318-bf817fbcfa21', 'id_1_2': '733ab697-e6a5-4fba-877b-a4fe698caecf', 'id_1_3': '40c0652a-84c9-457e-8ed2-78404b9e6631', 'id_1_4': '6545e7f5-e1da-44cd-8566-54493a46ac1c'})
+2026-01-24 11:00:07,531.531] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:00:18,640.640] base.py line:2713 INFO: ROLLBACK)
+2026-01-24 11:00:18,641.641] _internal.py line:97 INFO: 127.0.0.1 - - [24/Jan/2026 11:00:18] "GET /ping HTTP/1.1" 200 -)
+2026-01-24 11:02:37,322.322] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/nodes/end/end_node.py', reloading)
+2026-01-24 11:02:39,855.855] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-24 11:02:57,335.335] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-24 11:02:57,379.379] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-24 11:02:57,720.720] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-24 11:02:57,720.720] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 11:02:57,721.721] base.py line:1846 INFO: select current_schema())
+2026-01-24 11:02:57,721.721] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 11:02:57,722.722] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-24 11:02:57,722.722] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 11:02:57,723.723] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:02:57,727.727] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-24 11:02:57,727.727] base.py line:1846 INFO: [generated in 0.00038s] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-24 11:02:58,587.587] base.py line:1846 INFO: SELECT api_tool.id AS api_tool_id, api_tool.account_id AS api_tool_account_id, api_tool.provider_id AS api_tool_provider_id, api_tool.name AS api_tool_name, api_tool.description AS api_tool_description, api_tool.url AS api_tool_url, api_tool.method AS api_tool_method, api_tool.parameters AS api_tool_parameters, api_tool.updated_at AS api_tool_updated_at, api_tool.created_at AS api_tool_created_at 
+FROM api_tool 
+WHERE api_tool.provider_id = %(provider_id_1)s::UUID AND api_tool.name = %(name_1)s)
+2026-01-24 11:02:58,587.587] base.py line:1846 INFO: [generated in 0.00036s] {'provider_id_1': 'a96b86d0-d3e9-44d3-81dd-f4193734c52c', 'name_1': 'YoudaoSuggest'})
+2026-01-24 11:02:58,595.595] base.py line:1846 INFO: SELECT api_tool_provider.id AS api_tool_provider_id, api_tool_provider.account_id AS api_tool_provider_account_id, api_tool_provider.name AS api_tool_provider_name, api_tool_provider.icon AS api_tool_provider_icon, api_tool_provider.description AS api_tool_provider_description, api_tool_provider.openapi_schema AS api_tool_provider_openapi_schema, api_tool_provider.headers AS api_tool_provider_headers, api_tool_provider.updated_at AS api_tool_provider_updated_at, api_tool_provider.created_at AS api_tool_provider_created_at 
+FROM api_tool_provider 
+WHERE api_tool_provider.id = %(pk_1)s::UUID)
+2026-01-24 11:02:58,595.595] base.py line:1846 INFO: [generated in 0.00033s] {'pk_1': UUID('a96b86d0-d3e9-44d3-81dd-f4193734c52c')})
+2026-01-24 11:02:58,812.812] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:02:58,815.815] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (%(id_1_1)s::UUID, %(id_1_2)s::UUID) AND dataset.account_id = %(account_id_1)s::UUID)
+2026-01-24 11:02:58,815.815] base.py line:1846 INFO: [generated in 0.00044s] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f'), 'id_1_1': UUID('8210bfbd-0baa-46f5-bcd4-fe2b789fb4f6'), 'id_1_2': UUID('4e25b342-1a2b-40f9-86a7-da3052f2a75a')})
+2026-01-24 11:02:59,593.593] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 11:02:59,594.594] base.py line:1846 INFO: [generated in 0.00036s] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 11:02:59,602.602] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:02:59,604.604] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:02:59,604.604] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 11:02:59,605.605] base.py line:1846 INFO: [cached since 0.01146s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 11:02:59,607.607] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:02:59,608.608] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:02:59,608.608] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 11:02:59,608.608] base.py line:1846 INFO: [cached since 0.01516s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 11:02:59,610.610] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:02:59,612.612] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:02:59,612.612] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 11:02:59,612.612] base.py line:1846 INFO: [cached since 0.01904s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 11:02:59,613.613] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:02:59,615.615] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:02:59,617.617] base.py line:1846 INFO: UPDATE segment SET hit_count=(segment.hit_count + %(hit_count_1)s) WHERE segment.id IN (%(id_1_1)s::UUID, %(id_1_2)s::UUID, %(id_1_3)s::UUID, %(id_1_4)s::UUID))
+2026-01-24 11:02:59,617.617] base.py line:1846 INFO: [generated in 0.00035s] {'hit_count_1': 1, 'id_1_1': '50ef3f1e-080f-4b4d-b318-bf817fbcfa21', 'id_1_2': '733ab697-e6a5-4fba-877b-a4fe698caecf', 'id_1_3': '40c0652a-84c9-457e-8ed2-78404b9e6631', 'id_1_4': '6545e7f5-e1da-44cd-8566-54493a46ac1c'})
+2026-01-24 11:02:59,621.621] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:03:10,127.127] base.py line:2713 INFO: ROLLBACK)
+2026-01-24 11:03:10,129.129] _internal.py line:97 INFO: 127.0.0.1 - - [24/Jan/2026 11:03:10] "GET /ping HTTP/1.1" 200 -)
+2026-01-24 11:04:46,985.985] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/nodes/tool/tool_node.py', reloading)
+2026-01-24 11:04:48,734.734] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-24 11:05:04,434.434] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-24 11:05:04,458.458] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-24 11:07:12,209.209] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/nodes/tool/tool_node.py', reloading)
+2026-01-24 11:07:14,218.218] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-24 11:07:30,463.463] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-24 11:07:30,519.519] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-24 11:07:30,828.828] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-24 11:07:30,829.829] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 11:07:30,830.830] base.py line:1846 INFO: select current_schema())
+2026-01-24 11:07:30,830.830] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 11:07:30,831.831] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-24 11:07:30,831.831] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 11:07:30,832.832] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:07:30,837.837] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-24 11:07:30,837.837] base.py line:1846 INFO: [generated in 0.00035s] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-24 11:07:31,733.733] base.py line:1846 INFO: SELECT api_tool.id AS api_tool_id, api_tool.account_id AS api_tool_account_id, api_tool.provider_id AS api_tool_provider_id, api_tool.name AS api_tool_name, api_tool.description AS api_tool_description, api_tool.url AS api_tool_url, api_tool.method AS api_tool_method, api_tool.parameters AS api_tool_parameters, api_tool.updated_at AS api_tool_updated_at, api_tool.created_at AS api_tool_created_at 
+FROM api_tool 
+WHERE api_tool.provider_id = %(provider_id_1)s::UUID AND api_tool.name = %(name_1)s)
+2026-01-24 11:07:31,734.734] base.py line:1846 INFO: [generated in 0.00035s] {'provider_id_1': 'a96b86d0-d3e9-44d3-81dd-f4193734c52c', 'name_1': 'YoudaoSuggest'})
+2026-01-24 11:07:31,752.752] base.py line:1846 INFO: SELECT api_tool_provider.id AS api_tool_provider_id, api_tool_provider.account_id AS api_tool_provider_account_id, api_tool_provider.name AS api_tool_provider_name, api_tool_provider.icon AS api_tool_provider_icon, api_tool_provider.description AS api_tool_provider_description, api_tool_provider.openapi_schema AS api_tool_provider_openapi_schema, api_tool_provider.headers AS api_tool_provider_headers, api_tool_provider.updated_at AS api_tool_provider_updated_at, api_tool_provider.created_at AS api_tool_provider_created_at 
+FROM api_tool_provider 
+WHERE api_tool_provider.id = %(pk_1)s::UUID)
+2026-01-24 11:07:31,752.752] base.py line:1846 INFO: [generated in 0.00033s] {'pk_1': UUID('a96b86d0-d3e9-44d3-81dd-f4193734c52c')})
+2026-01-24 11:07:32,051.051] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:07:32,054.054] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (%(id_1_1)s::UUID, %(id_1_2)s::UUID) AND dataset.account_id = %(account_id_1)s::UUID)
+2026-01-24 11:07:32,054.054] base.py line:1846 INFO: [generated in 0.00040s] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f'), 'id_1_1': UUID('8210bfbd-0baa-46f5-bcd4-fe2b789fb4f6'), 'id_1_2': UUID('4e25b342-1a2b-40f9-86a7-da3052f2a75a')})
+2026-01-24 11:07:33,277.277] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 11:07:33,278.278] base.py line:1846 INFO: [generated in 0.00035s] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 11:07:33,287.287] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:07:33,289.289] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:07:33,290.290] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 11:07:33,290.290] base.py line:1846 INFO: [cached since 0.01261s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 11:07:33,291.291] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:07:33,292.292] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:07:33,292.292] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 11:07:33,293.293] base.py line:1846 INFO: [cached since 0.01524s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 11:07:33,293.293] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:07:33,294.294] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:07:33,295.295] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 11:07:33,295.295] base.py line:1846 INFO: [cached since 0.01764s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 11:07:33,296.296] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:07:33,298.298] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:07:33,300.300] base.py line:1846 INFO: UPDATE segment SET hit_count=(segment.hit_count + %(hit_count_1)s) WHERE segment.id IN (%(id_1_1)s::UUID, %(id_1_2)s::UUID, %(id_1_3)s::UUID, %(id_1_4)s::UUID))
+2026-01-24 11:07:33,300.300] base.py line:1846 INFO: [generated in 0.00036s] {'hit_count_1': 1, 'id_1_1': '50ef3f1e-080f-4b4d-b318-bf817fbcfa21', 'id_1_2': '733ab697-e6a5-4fba-877b-a4fe698caecf', 'id_1_3': '40c0652a-84c9-457e-8ed2-78404b9e6631', 'id_1_4': '6545e7f5-e1da-44cd-8566-54493a46ac1c'})
+2026-01-24 11:07:33,305.305] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:07:46,422.422] http.py line:75 ERROR: An error occurred: 'ToolNode' object has no attribute 'node_result')
 Traceback (most recent call last):
   File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
     rv = self.dispatch_request()
@@ -32,25 +461,98 @@ Traceback (most recent call last):
   File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/app_handler.py", line 642, in ping
-    workflow = Workflow(workflow_config=WorkflowConfig(
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/workflow.py", line 43, in __init__
-    self._workflow = self._build_workflow()
-                     ^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/workflow.py", line 85, in _build_workflow
-    NodeClasses[NodeType.START](node_data=node),
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/nodes/base_node.py", line 23, in __init__
-    super().__init__(*args, node_data=self.node_data_cls(**node_data), **kwargs)
-                                      ^^^^^^^^^^^^^^^^^^
-AttributeError: 'StartNode' object has no attribute 'node_data_cls'
-2026-01-22 19:27:43,656.656] _internal.py line:97 INFO: 127.0.0.1 - - [22/Jan/2026 19:27:43] "[35m[1mGET /ping HTTP/1.1[0m" 500 -)
-2026-01-22 19:28:54,676.676] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/nodes/start/start_node.py', reloading)
-2026-01-22 19:28:55,612.612] _internal.py line:97 INFO:  * Restarting with stat)
-2026-01-22 19:29:13,965.965] _internal.py line:97 WARNING:  * Debugger is active!)
-2026-01-22 19:29:14,002.002] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
-2026-01-22 19:29:14,224.224] http.py line:75 ERROR: An error occurred: 'StartNode' object has no attribute 'node_data_cls')
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/app_handler.py", line 712, in ping
+    result = workflow.invoke({"query": "请给我一些油性皮肤护肤建议", "location": "广州", "q": "love"})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/langchain_core/tools/base.py", line 397, in invoke
+    return self.run(tool_input, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/langchain_core/tools/base.py", line 586, in run
+    raise error_to_raise
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/langchain_core/tools/base.py", line 555, in run
+    response = context.run(self._run, *tool_args, **tool_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/workflow.py", line 149, in _run
+    return self._workflow.invoke({"inputs": kwargs})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/langgraph/pregel/__init__.py", line 1424, in invoke
+    for chunk in self.stream(
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/langgraph/pregel/__init__.py", line 1102, in stream
+    _panic_or_proceed(all_futures, loop.step)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/langgraph/pregel/__init__.py", line 1540, in _panic_or_proceed
+    raise exc
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/langgraph/pregel/executor.py", line 60, in done
+    task.result()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/langgraph/pregel/retry.py", line 26, in run_with_retry
+    task.proc.invoke(task.input, task.config)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/langchain_core/runnables/base.py", line 2877, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/nodes/tool/tool_node.py", line 112, in invoke
+    print("node_data_outputs: ", self.node_result.outputs[0].name)
+                                 ^^^^^^^^^^^^^^^^
+AttributeError: 'ToolNode' object has no attribute 'node_result'
+2026-01-24 11:07:46,432.432] base.py line:2713 INFO: ROLLBACK)
+2026-01-24 11:07:46,447.447] _internal.py line:97 INFO: 127.0.0.1 - - [24/Jan/2026 11:07:46] "[35m[1mGET /ping HTTP/1.1[0m" 500 -)
+2026-01-24 11:08:15,181.181] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/nodes/tool/tool_node.py', reloading)
+2026-01-24 11:08:16,513.513] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-24 11:08:33,748.748] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-24 11:08:33,778.778] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-24 11:08:34,117.117] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-24 11:08:34,117.117] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 11:08:34,119.119] base.py line:1846 INFO: select current_schema())
+2026-01-24 11:08:34,119.119] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 11:08:34,120.120] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-24 11:08:34,120.120] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 11:08:34,122.122] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:08:34,127.127] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-24 11:08:34,128.128] base.py line:1846 INFO: [generated in 0.00033s] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-24 11:08:35,589.589] base.py line:1846 INFO: SELECT api_tool.id AS api_tool_id, api_tool.account_id AS api_tool_account_id, api_tool.provider_id AS api_tool_provider_id, api_tool.name AS api_tool_name, api_tool.description AS api_tool_description, api_tool.url AS api_tool_url, api_tool.method AS api_tool_method, api_tool.parameters AS api_tool_parameters, api_tool.updated_at AS api_tool_updated_at, api_tool.created_at AS api_tool_created_at 
+FROM api_tool 
+WHERE api_tool.provider_id = %(provider_id_1)s::UUID AND api_tool.name = %(name_1)s)
+2026-01-24 11:08:35,589.589] base.py line:1846 INFO: [generated in 0.00037s] {'provider_id_1': 'a96b86d0-d3e9-44d3-81dd-f4193734c52c', 'name_1': 'YoudaoSuggest'})
+2026-01-24 11:08:35,596.596] base.py line:1846 INFO: SELECT api_tool_provider.id AS api_tool_provider_id, api_tool_provider.account_id AS api_tool_provider_account_id, api_tool_provider.name AS api_tool_provider_name, api_tool_provider.icon AS api_tool_provider_icon, api_tool_provider.description AS api_tool_provider_description, api_tool_provider.openapi_schema AS api_tool_provider_openapi_schema, api_tool_provider.headers AS api_tool_provider_headers, api_tool_provider.updated_at AS api_tool_provider_updated_at, api_tool_provider.created_at AS api_tool_provider_created_at 
+FROM api_tool_provider 
+WHERE api_tool_provider.id = %(pk_1)s::UUID)
+2026-01-24 11:08:35,596.596] base.py line:1846 INFO: [generated in 0.00043s] {'pk_1': UUID('a96b86d0-d3e9-44d3-81dd-f4193734c52c')})
+2026-01-24 11:08:35,899.899] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:08:35,902.902] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (%(id_1_1)s::UUID, %(id_1_2)s::UUID) AND dataset.account_id = %(account_id_1)s::UUID)
+2026-01-24 11:08:35,903.903] base.py line:1846 INFO: [generated in 0.00069s] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f'), 'id_1_1': UUID('8210bfbd-0baa-46f5-bcd4-fe2b789fb4f6'), 'id_1_2': UUID('4e25b342-1a2b-40f9-86a7-da3052f2a75a')})
+2026-01-24 11:08:36,582.582] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 11:08:36,582.582] base.py line:1846 INFO: [generated in 0.00046s] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 11:08:36,592.592] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:08:36,595.595] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:08:36,596.596] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 11:08:36,596.596] base.py line:1846 INFO: [cached since 0.01393s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 11:08:36,597.597] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:08:36,598.598] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:08:36,598.598] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 11:08:36,599.599] base.py line:1846 INFO: [cached since 0.0167s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 11:08:36,599.599] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:08:36,600.600] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:08:36,601.601] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 11:08:36,601.601] base.py line:1846 INFO: [cached since 0.01908s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 11:08:36,602.602] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:08:36,603.603] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:08:36,605.605] base.py line:1846 INFO: UPDATE segment SET hit_count=(segment.hit_count + %(hit_count_1)s) WHERE segment.id IN (%(id_1_1)s::UUID, %(id_1_2)s::UUID, %(id_1_3)s::UUID, %(id_1_4)s::UUID))
+2026-01-24 11:08:36,605.605] base.py line:1846 INFO: [generated in 0.00029s] {'hit_count_1': 1, 'id_1_1': '50ef3f1e-080f-4b4d-b318-bf817fbcfa21', 'id_1_2': '733ab697-e6a5-4fba-877b-a4fe698caecf', 'id_1_3': '40c0652a-84c9-457e-8ed2-78404b9e6631', 'id_1_4': '6545e7f5-e1da-44cd-8566-54493a46ac1c'})
+2026-01-24 11:08:36,608.608] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:08:50,254.254] http.py line:75 ERROR: An error occurred: 'api_tool_text')
 Traceback (most recent call last):
   File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
     rv = self.dispatch_request()
@@ -58,25 +560,123 @@ Traceback (most recent call last):
   File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/app_handler.py", line 642, in ping
-    workflow = Workflow(workflow_config=WorkflowConfig(
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/workflow.py", line 43, in __init__
-    self._workflow = self._build_workflow()
-                     ^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/workflow.py", line 85, in _build_workflow
-    NodeClasses[NodeType.START](node_data=node),
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/nodes/base_node.py", line 23, in __init__
-    super().__init__(*args, node_data=self.node_data_cls(**node_data), **kwargs)
-                                      ^^^^^^^^^^^^^^^^^^
-AttributeError: 'StartNode' object has no attribute 'node_data_cls'
-2026-01-22 19:29:14,253.253] _internal.py line:97 INFO: 127.0.0.1 - - [22/Jan/2026 19:29:14] "[35m[1mGET /ping HTTP/1.1[0m" 500 -)
-2026-01-22 19:34:29,073.073] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/nodes/base_node.py', reloading)
-2026-01-22 19:34:30,350.350] _internal.py line:97 INFO:  * Restarting with stat)
-2026-01-22 19:34:47,893.893] _internal.py line:97 WARNING:  * Debugger is active!)
-2026-01-22 19:34:47,928.928] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
-2026-01-22 19:34:48,125.125] http.py line:75 ERROR: An error occurred: type object 'StartNode' has no attribute 'node_data_cls')
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/app_handler.py", line 712, in ping
+    result = workflow.invoke({"query": "请给我一些油性皮肤护肤建议", "location": "广州", "q": "love"})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/langchain_core/tools/base.py", line 397, in invoke
+    return self.run(tool_input, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/langchain_core/tools/base.py", line 586, in run
+    raise error_to_raise
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/langchain_core/tools/base.py", line 555, in run
+    response = context.run(self._run, *tool_args, **tool_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/workflow.py", line 149, in _run
+    return self._workflow.invoke({"inputs": kwargs})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/langgraph/pregel/__init__.py", line 1424, in invoke
+    for chunk in self.stream(
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/langgraph/pregel/__init__.py", line 1102, in stream
+    _panic_or_proceed(all_futures, loop.step)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/langgraph/pregel/__init__.py", line 1540, in _panic_or_proceed
+    raise exc
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/langgraph/pregel/executor.py", line 60, in done
+    task.result()
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/langgraph/pregel/retry.py", line 26, in run_with_retry
+    task.proc.invoke(task.input, task.config)
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/langchain_core/runnables/base.py", line 2877, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/nodes/tool/tool_node.py", line 117, in invoke
+    print("output_api_tool_text: ", outputs["api_tool_text"])
+                                    ~~~~~~~^^^^^^^^^^^^^^^^^
+KeyError: 'api_tool_text'
+2026-01-24 11:08:50,263.263] base.py line:2713 INFO: ROLLBACK)
+2026-01-24 11:08:50,279.279] _internal.py line:97 INFO: 127.0.0.1 - - [24/Jan/2026 11:08:50] "[35m[1mGET /ping HTTP/1.1[0m" 500 -)
+2026-01-24 11:09:16,473.473] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/nodes/tool/tool_node.py', reloading)
+2026-01-24 11:09:17,761.761] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-24 11:09:33,838.838] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-24 11:09:33,864.864] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-24 11:09:34,173.173] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-24 11:09:34,173.173] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 11:09:34,175.175] base.py line:1846 INFO: select current_schema())
+2026-01-24 11:09:34,175.175] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 11:09:34,176.176] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-24 11:09:34,176.176] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 11:09:34,177.177] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:09:34,181.181] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-24 11:09:34,181.181] base.py line:1846 INFO: [generated in 0.00034s] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-24 11:09:35,292.292] base.py line:1846 INFO: SELECT api_tool.id AS api_tool_id, api_tool.account_id AS api_tool_account_id, api_tool.provider_id AS api_tool_provider_id, api_tool.name AS api_tool_name, api_tool.description AS api_tool_description, api_tool.url AS api_tool_url, api_tool.method AS api_tool_method, api_tool.parameters AS api_tool_parameters, api_tool.updated_at AS api_tool_updated_at, api_tool.created_at AS api_tool_created_at 
+FROM api_tool 
+WHERE api_tool.provider_id = %(provider_id_1)s::UUID AND api_tool.name = %(name_1)s)
+2026-01-24 11:09:35,292.292] base.py line:1846 INFO: [generated in 0.00032s] {'provider_id_1': 'a96b86d0-d3e9-44d3-81dd-f4193734c52c', 'name_1': 'YoudaoSuggest'})
+2026-01-24 11:09:35,300.300] base.py line:1846 INFO: SELECT api_tool_provider.id AS api_tool_provider_id, api_tool_provider.account_id AS api_tool_provider_account_id, api_tool_provider.name AS api_tool_provider_name, api_tool_provider.icon AS api_tool_provider_icon, api_tool_provider.description AS api_tool_provider_description, api_tool_provider.openapi_schema AS api_tool_provider_openapi_schema, api_tool_provider.headers AS api_tool_provider_headers, api_tool_provider.updated_at AS api_tool_provider_updated_at, api_tool_provider.created_at AS api_tool_provider_created_at 
+FROM api_tool_provider 
+WHERE api_tool_provider.id = %(pk_1)s::UUID)
+2026-01-24 11:09:35,301.301] base.py line:1846 INFO: [generated in 0.00030s] {'pk_1': UUID('a96b86d0-d3e9-44d3-81dd-f4193734c52c')})
+2026-01-24 11:09:35,603.603] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:09:35,605.605] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (%(id_1_1)s::UUID, %(id_1_2)s::UUID) AND dataset.account_id = %(account_id_1)s::UUID)
+2026-01-24 11:09:35,606.606] base.py line:1846 INFO: [generated in 0.00041s] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f'), 'id_1_1': UUID('8210bfbd-0baa-46f5-bcd4-fe2b789fb4f6'), 'id_1_2': UUID('4e25b342-1a2b-40f9-86a7-da3052f2a75a')})
+2026-01-24 11:09:36,401.401] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 11:09:36,401.401] base.py line:1846 INFO: [generated in 0.00047s] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 11:09:36,407.407] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:09:36,409.409] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:09:36,410.410] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 11:09:36,410.410] base.py line:1846 INFO: [cached since 0.00963s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 11:09:36,413.413] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:09:36,414.414] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:09:36,415.415] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 11:09:36,415.415] base.py line:1846 INFO: [cached since 0.01474s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 11:09:36,416.416] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:09:36,417.417] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:09:36,418.418] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 11:09:36,418.418] base.py line:1846 INFO: [cached since 0.01776s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 11:09:36,419.419] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:09:36,421.421] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:09:36,422.422] base.py line:1846 INFO: UPDATE segment SET hit_count=(segment.hit_count + %(hit_count_1)s) WHERE segment.id IN (%(id_1_1)s::UUID, %(id_1_2)s::UUID, %(id_1_3)s::UUID, %(id_1_4)s::UUID))
+2026-01-24 11:09:36,423.423] base.py line:1846 INFO: [generated in 0.00035s] {'hit_count_1': 1, 'id_1_1': '50ef3f1e-080f-4b4d-b318-bf817fbcfa21', 'id_1_2': '733ab697-e6a5-4fba-877b-a4fe698caecf', 'id_1_3': '40c0652a-84c9-457e-8ed2-78404b9e6631', 'id_1_4': '6545e7f5-e1da-44cd-8566-54493a46ac1c'})
+2026-01-24 11:09:36,429.429] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:09:49,423.423] base.py line:2713 INFO: ROLLBACK)
+2026-01-24 11:09:49,425.425] _internal.py line:97 INFO: 127.0.0.1 - - [24/Jan/2026 11:09:49] "GET /ping HTTP/1.1" 200 -)
+2026-01-24 11:16:47,008.008] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/app_handler.py', reloading)
+2026-01-24 11:16:49,335.335] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-24 11:17:05,662.662] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-24 11:17:05,695.695] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-24 11:17:06,080.080] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-24 11:17:06,081.081] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 11:17:06,082.082] base.py line:1846 INFO: select current_schema())
+2026-01-24 11:17:06,082.082] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 11:17:06,083.083] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-24 11:17:06,083.083] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 11:17:06,084.084] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:17:06,089.089] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-24 11:17:06,089.089] base.py line:1846 INFO: [generated in 0.00037s] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-24 11:17:07,246.246] base.py line:1846 INFO: SELECT api_tool.id AS api_tool_id, api_tool.account_id AS api_tool_account_id, api_tool.provider_id AS api_tool_provider_id, api_tool.name AS api_tool_name, api_tool.description AS api_tool_description, api_tool.url AS api_tool_url, api_tool.method AS api_tool_method, api_tool.parameters AS api_tool_parameters, api_tool.updated_at AS api_tool_updated_at, api_tool.created_at AS api_tool_created_at 
+FROM api_tool 
+WHERE api_tool.provider_id = %(provider_id_1)s::UUID AND api_tool.name = %(name_1)s)
+2026-01-24 11:17:07,246.246] base.py line:1846 INFO: [generated in 0.00054s] {'provider_id_1': 'a96b86d0-d3e9-44d3-81dd-f4193734c52c', 'name_1': 'YoudaoSuggest'})
+2026-01-24 11:17:07,307.307] base.py line:1846 INFO: SELECT api_tool_provider.id AS api_tool_provider_id, api_tool_provider.account_id AS api_tool_provider_account_id, api_tool_provider.name AS api_tool_provider_name, api_tool_provider.icon AS api_tool_provider_icon, api_tool_provider.description AS api_tool_provider_description, api_tool_provider.openapi_schema AS api_tool_provider_openapi_schema, api_tool_provider.headers AS api_tool_provider_headers, api_tool_provider.updated_at AS api_tool_provider_updated_at, api_tool_provider.created_at AS api_tool_provider_created_at 
+FROM api_tool_provider 
+WHERE api_tool_provider.id = %(pk_1)s::UUID)
+2026-01-24 11:17:07,307.307] base.py line:1846 INFO: [generated in 0.00054s] {'pk_1': UUID('a96b86d0-d3e9-44d3-81dd-f4193734c52c')})
+2026-01-24 11:17:07,313.313] http.py line:75 ERROR: An error occurred: Found edge starting at unknown node 'tool_2f6cf40d-0219-421b-92ff-229fdde15ecb')
 Traceback (most recent call last):
   File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
     rv = self.dispatch_request()
@@ -84,126 +684,77 @@ Traceback (most recent call last):
   File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/app_handler.py", line 642, in ping
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/app_handler.py", line 704, in ping
     workflow = Workflow(workflow_config=WorkflowConfig(
                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/workflow.py", line 43, in __init__
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/workflow.py", line 51, in __init__
     self._workflow = self._build_workflow()
                      ^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/workflow.py", line 85, in _build_workflow
-    NodeClasses[NodeType.START](node_data=node),
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/nodes/base_node.py", line 23, in __init__
-    data_inst = self.__class__.node_data_cls(**node_data)
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: type object 'StartNode' has no attribute 'node_data_cls'
-2026-01-22 19:34:48,168.168] _internal.py line:97 INFO: 127.0.0.1 - - [22/Jan/2026 19:34:48] "[35m[1mGET /ping HTTP/1.1[0m" 500 -)
-2026-01-22 19:35:23,176.176] _internal.py line:97 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/workflow.py", line 146, in _build_workflow
+    return graph.compile()
+           ^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/langgraph/graph/state.py", line 412, in compile
+    self.validate(
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/langgraph/graph/graph.py", line 335, in validate
+    raise ValueError(f"Found edge starting at unknown node '{source}'")
+ValueError: Found edge starting at unknown node 'tool_2f6cf40d-0219-421b-92ff-229fdde15ecb'
+2026-01-24 11:17:07,357.357] base.py line:2713 INFO: ROLLBACK)
+2026-01-24 11:17:07,394.394] _internal.py line:97 INFO: 127.0.0.1 - - [24/Jan/2026 11:17:07] "[35m[1mGET /ping HTTP/1.1[0m" 500 -)
+2026-01-24 11:17:41,960.960] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/app_handler.py', reloading)
+2026-01-24 11:17:43,488.488] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-24 11:18:00,268.268] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-24 11:18:00,318.318] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-24 11:18:00,678.678] base.py line:1846 INFO: select pg_catalog.version())
+2026-01-24 11:18:00,678.678] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 11:18:00,679.679] base.py line:1846 INFO: select current_schema())
+2026-01-24 11:18:00,680.680] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 11:18:00,680.680] base.py line:1846 INFO: show standard_conforming_strings)
+2026-01-24 11:18:00,680.680] base.py line:1846 INFO: [raw sql] {})
+2026-01-24 11:18:00,681.681] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:18:00,686.686] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-01-24 11:18:00,686.686] base.py line:1846 INFO: [generated in 0.00041s] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-01-24 11:18:01,608.608] base.py line:1846 INFO: SELECT api_tool.id AS api_tool_id, api_tool.account_id AS api_tool_account_id, api_tool.provider_id AS api_tool_provider_id, api_tool.name AS api_tool_name, api_tool.description AS api_tool_description, api_tool.url AS api_tool_url, api_tool.method AS api_tool_method, api_tool.parameters AS api_tool_parameters, api_tool.updated_at AS api_tool_updated_at, api_tool.created_at AS api_tool_created_at 
+FROM api_tool 
+WHERE api_tool.provider_id = %(provider_id_1)s::UUID AND api_tool.name = %(name_1)s)
+2026-01-24 11:18:01,608.608] base.py line:1846 INFO: [generated in 0.00036s] {'provider_id_1': 'a96b86d0-d3e9-44d3-81dd-f4193734c52c', 'name_1': 'YoudaoSuggest'})
+2026-01-24 11:18:01,625.625] base.py line:1846 INFO: SELECT api_tool_provider.id AS api_tool_provider_id, api_tool_provider.account_id AS api_tool_provider_account_id, api_tool_provider.name AS api_tool_provider_name, api_tool_provider.icon AS api_tool_provider_icon, api_tool_provider.description AS api_tool_provider_description, api_tool_provider.openapi_schema AS api_tool_provider_openapi_schema, api_tool_provider.headers AS api_tool_provider_headers, api_tool_provider.updated_at AS api_tool_provider_updated_at, api_tool_provider.created_at AS api_tool_provider_created_at 
+FROM api_tool_provider 
+WHERE api_tool_provider.id = %(pk_1)s::UUID)
+2026-01-24 11:18:01,626.626] base.py line:1846 INFO: [generated in 0.00044s] {'pk_1': UUID('a96b86d0-d3e9-44d3-81dd-f4193734c52c')})
+2026-01-24 11:18:01,984.984] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:18:01,989.989] base.py line:1846 INFO: SELECT dataset.id AS dataset_id, dataset.account_id AS dataset_account_id, dataset.name AS dataset_name, dataset.icon AS dataset_icon, dataset.description AS dataset_description, dataset.updated_at AS dataset_updated_at, dataset.created_at AS dataset_created_at 
+FROM dataset 
+WHERE dataset.id IN (%(id_1_1)s::UUID, %(id_1_2)s::UUID) AND dataset.account_id = %(account_id_1)s::UUID)
+2026-01-24 11:18:01,992.992] base.py line:1846 INFO: [generated in 0.00371s] {'account_id_1': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f'), 'id_1_1': UUID('8210bfbd-0baa-46f5-bcd4-fe2b789fb4f6'), 'id_1_2': UUID('4e25b342-1a2b-40f9-86a7-da3052f2a75a')})
+2026-01-24 11:18:03,456.456] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 11:18:03,456.456] base.py line:1846 INFO: [generated in 0.00041s] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 11:18:03,468.468] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:18:03,471.471] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:18:03,472.472] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 11:18:03,472.472] base.py line:1846 INFO: [cached since 0.01657s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 11:18:03,474.474] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:18:03,476.476] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:18:03,476.476] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 11:18:03,476.476] base.py line:1846 INFO: [cached since 0.0209s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 11:18:03,477.477] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:18:03,478.478] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:18:03,479.479] base.py line:1846 INFO: INSERT INTO dataset_query (dataset_id, query, source, source_app_id, created_by) VALUES (%(dataset_id)s::UUID, %(query)s, %(source)s, %(source_app_id)s::UUID, %(created_by)s::UUID) RETURNING dataset_query.id, dataset_query.updated_at, dataset_query.created_at)
+2026-01-24 11:18:03,479.479] base.py line:1846 INFO: [cached since 0.02361s ago] {'dataset_id': '4e25b342-1a2b-40f9-86a7-da3052f2a75a', 'query': '请给我一些油性皮肤护肤建议', 'source': <RetrievalSource.HIT_TESTING: 'hit_testing'>, 'source_app_id': None, 'created_by': UUID('46db30d1-3199-4e79-a0cd-abf12fa6858f')})
+2026-01-24 11:18:03,480.480] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:18:03,482.482] base.py line:2710 INFO: BEGIN (implicit))
+2026-01-24 11:18:03,484.484] base.py line:1846 INFO: UPDATE segment SET hit_count=(segment.hit_count + %(hit_count_1)s) WHERE segment.id IN (%(id_1_1)s::UUID, %(id_1_2)s::UUID, %(id_1_3)s::UUID, %(id_1_4)s::UUID))
+2026-01-24 11:18:03,484.484] base.py line:1846 INFO: [generated in 0.00047s] {'hit_count_1': 1, 'id_1_1': '50ef3f1e-080f-4b4d-b318-bf817fbcfa21', 'id_1_2': '733ab697-e6a5-4fba-877b-a4fe698caecf', 'id_1_3': '40c0652a-84c9-457e-8ed2-78404b9e6631', 'id_1_4': '6545e7f5-e1da-44cd-8566-54493a46ac1c'})
+2026-01-24 11:18:03,488.488] base.py line:2716 INFO: COMMIT)
+2026-01-24 11:18:17,464.464] base.py line:2713 INFO: ROLLBACK)
+2026-01-24 11:18:17,465.465] _internal.py line:97 INFO: 127.0.0.1 - - [24/Jan/2026 11:18:17] "GET /ping HTTP/1.1" 200 -)
+2026-01-24 11:22:40,849.849] _internal.py line:97 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on http://127.0.0.1:5000)
-2026-01-22 19:35:23,176.176] _internal.py line:97 INFO: [33mPress CTRL+C to quit[0m)
-2026-01-22 19:35:23,178.178] _internal.py line:97 INFO:  * Restarting with stat)
-2026-01-22 19:35:39,317.317] _internal.py line:97 WARNING:  * Debugger is active!)
-2026-01-22 19:35:39,343.343] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
-2026-01-22 19:35:39,455.455] http.py line:75 ERROR: An error occurred: type object 'StartNode' has no attribute 'node_data_cls')
-Traceback (most recent call last):
-  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/app_handler.py", line 642, in ping
-    workflow = Workflow(workflow_config=WorkflowConfig(
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/workflow.py", line 43, in __init__
-    self._workflow = self._build_workflow()
-                     ^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/workflow.py", line 85, in _build_workflow
-    NodeClasses[NodeType.START](node_data=node),
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/nodes/base_node.py", line 23, in __init__
-    data_inst = self.__class__.node_data_cls(**node_data)
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: type object 'StartNode' has no attribute 'node_data_cls'
-2026-01-22 19:35:39,483.483] _internal.py line:97 INFO: 127.0.0.1 - - [22/Jan/2026 19:35:39] "[35m[1mGET /ping HTTP/1.1[0m" 500 -)
-2026-01-22 19:37:51,625.625] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/nodes/base_node.py', reloading)
-2026-01-22 19:37:52,466.466] _internal.py line:97 INFO:  * Restarting with stat)
-2026-01-22 19:38:09,763.763] _internal.py line:97 WARNING:  * Debugger is active!)
-2026-01-22 19:38:09,794.794] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
-2026-01-22 19:38:10,029.029] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/nodes/base_node.py', reloading)
-2026-01-22 19:38:11,076.076] _internal.py line:97 INFO:  * Restarting with stat)
-2026-01-22 19:38:29,788.788] _internal.py line:97 WARNING:  * Debugger is active!)
-2026-01-22 19:38:29,810.810] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
-2026-01-22 19:39:08,974.974] http.py line:75 ERROR: An error occurred: 10 validation errors for EndNodeData
-outputs -> 0 -> value -> content -> ref_node_name
-  field required (type=value_error.missing)
-outputs -> 0 -> value -> content
-  str type expected (type=type_error.str)
-outputs -> 0 -> value -> content
-  value is not a valid integer (type=type_error.integer)
-outputs -> 0 -> value -> content
-  value is not a valid float (type=type_error.float)
-outputs -> 0 -> value -> content
-  value could not be parsed to a boolean (type=type_error.bool)
-outputs -> 1 -> value -> content -> ref_node_name
-  field required (type=value_error.missing)
-outputs -> 1 -> value -> content
-  str type expected (type=type_error.str)
-outputs -> 1 -> value -> content
-  value is not a valid integer (type=type_error.integer)
-outputs -> 1 -> value -> content
-  value is not a valid float (type=type_error.float)
-outputs -> 1 -> value -> content
-  value could not be parsed to a boolean (type=type_error.bool))
-Traceback (most recent call last):
-  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/app_handler.py", line 642, in ping
-    workflow = Workflow(workflow_config=WorkflowConfig(
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/workflow.py", line 43, in __init__
-    self._workflow = self._build_workflow()
-                     ^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/workflow.py", line 90, in _build_workflow
-    NodeClasses[NodeType.END](node_data=node),
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/nodes/base_node.py", line 26, in __init__
-    cls_data = self.__class__.node_data_cls(**node_data)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/pydantic/v1/main.py", line 347, in __init__
-    raise validation_error
-pydantic.v1.error_wrappers.ValidationError: 10 validation errors for EndNodeData
-outputs -> 0 -> value -> content -> ref_node_name
-  field required (type=value_error.missing)
-outputs -> 0 -> value -> content
-  str type expected (type=type_error.str)
-outputs -> 0 -> value -> content
-  value is not a valid integer (type=type_error.integer)
-outputs -> 0 -> value -> content
-  value is not a valid float (type=type_error.float)
-outputs -> 0 -> value -> content
-  value could not be parsed to a boolean (type=type_error.bool)
-outputs -> 1 -> value -> content -> ref_node_name
-  field required (type=value_error.missing)
-outputs -> 1 -> value -> content
-  str type expected (type=type_error.str)
-outputs -> 1 -> value -> content
-  value is not a valid integer (type=type_error.integer)
-outputs -> 1 -> value -> content
-  value is not a valid float (type=type_error.float)
-outputs -> 1 -> value -> content
-  value could not be parsed to a boolean (type=type_error.bool)
-2026-01-22 19:39:08,999.999] _internal.py line:97 INFO: 127.0.0.1 - - [22/Jan/2026 19:39:08] "[35m[1mGET /ping HTTP/1.1[0m" 500 -)
-2026-01-22 19:45:52,729.729] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/entities/variable_entity.py', reloading)
-2026-01-22 19:45:54,232.232] _internal.py line:97 INFO:  * Restarting with stat)
-2026-01-22 19:46:11,288.288] _internal.py line:97 WARNING:  * Debugger is active!)
-2026-01-22 19:46:11,339.339] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
-2026-01-22 19:46:16,131.131] _internal.py line:97 INFO: 127.0.0.1 - - [22/Jan/2026 19:46:16] "GET /ping HTTP/1.1" 200 -)
-2026-01-22 20:09:52,624.624] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/workflow/nodes/end/end_node.py', reloading)
-2026-01-22 20:09:54,386.386] _internal.py line:97 INFO:  * Restarting with stat)
-2026-01-22 20:10:10,467.467] _internal.py line:97 WARNING:  * Debugger is active!)
-2026-01-22 20:10:10,490.490] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-01-24 11:22:40,850.850] _internal.py line:97 INFO: [33mPress CTRL+C to quit[0m)
+2026-01-24 11:22:40,852.852] _internal.py line:97 INFO:  * Restarting with stat)
+2026-01-24 11:22:55,769.769] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-01-24 11:22:55,803.803] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)

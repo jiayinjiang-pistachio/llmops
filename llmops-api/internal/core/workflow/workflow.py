@@ -8,6 +8,7 @@
 """
 from typing import Any, Optional, Iterator
 
+from flask import current_app
 from langchain_core.pydantic_v1 import PrivateAttr, BaseModel, Field, create_model
 from langchain_core.runnables import RunnableConfig
 from langchain_core.runnables.utils import Input, Output
@@ -17,10 +18,17 @@ from langgraph.graph.state import CompiledStateGraph, StateGraph
 from internal.core.workflow.entities.node_entity import NodeType
 from internal.core.workflow.entities.variable_entity import VariableTypeMap
 from internal.core.workflow.entities.workflow_entity import WorkflowConfig, WorkflowState
-from internal.core.workflow.nodes import StartNode, EndNode
+from internal.core.workflow.nodes import (
+    StartNode, EndNode, LLMNode, TemplateTransformNode, DatasetRetrievalNode, CodeNode, ToolNode
+)
 
 NodeClasses = {
     NodeType.START: StartNode,
+    NodeType.DATASET_RETRIEVAL: DatasetRetrievalNode,
+    NodeType.LLM: LLMNode,
+    NodeType.CODE: CodeNode,
+    NodeType.TEMPLATTE_TRANSFORM: TemplateTransformNode,
+    NodeType.TOOL: ToolNode,
     NodeType.END: EndNode,
 }
 
@@ -79,14 +87,45 @@ class Workflow(BaseTool):
 
         # 循环遍历所有节点，添加节点
         for node in nodes:
+            node_flag = f"{node.get('node_type')}_{node.get('id')}"
+
             if node.get("node_type") == NodeType.START:
                 graph.add_node(
-                    f"{NodeType.START.value}_{node.get('id')}",
+                    node_flag,
                     NodeClasses[NodeType.START](node_data=node),
+                )
+            elif node.get("node_type") == NodeType.DATASET_RETRIEVAL:
+                graph.add_node(
+                    node_flag,
+                    NodeClasses[NodeType.DATASET_RETRIEVAL](
+                        flask_app=current_app._get_current_object(),
+                        account_id=self._workflow_config.account_id,
+                        node_data=node,
+                    ),
+                )
+            elif node.get("node_type") == NodeType.LLM:
+                graph.add_node(
+                    node_flag,
+                    NodeClasses[NodeType.LLM](node_data=node),
+                )
+            elif node.get("node_type") == NodeType.CODE:
+                graph.add_node(
+                    node_flag,
+                    NodeClasses[NodeType.CODE](node_data=node),
+                )
+            elif node.get("node_type") == NodeType.TEMPLATTE_TRANSFORM:
+                graph.add_node(
+                    node_flag,
+                    NodeClasses[NodeType.TEMPLATTE_TRANSFORM](node_data=node),
+                )
+            elif node.get("node_type") == NodeType.TOOL:
+                graph.add_node(
+                    node_flag,
+                    NodeClasses[NodeType.TOOL](node_data=node),
                 )
             elif node.get("node_type") == NodeType.END:
                 graph.add_node(
-                    f"{NodeType.END.value}_{node.get('id')}",
+                    node_flag,
                     NodeClasses[NodeType.END](node_data=node),
                 )
 

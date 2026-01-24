@@ -68,6 +68,6 @@ class GaodeWeatherTool(BaseTool):
 
 
 @add_attributes("args_schema", GaodeWeatherArgsSchema)
-def gaode_weather(**kwargs) -> BaseModel:
+def gaode_weather(**kwargs) -> BaseTool:
     """获取高德天气预报查询工具"""
     return GaodeWeatherTool()

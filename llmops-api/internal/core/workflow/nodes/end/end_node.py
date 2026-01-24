@@ -28,18 +28,26 @@ class EndNode(BaseNode):
         outputs_dict = {}
         for output in outputs:
 
+            print("output: ", output)
+
             if output.value.type == VariableValueType.LITERAL:
                 # 直接输入类型，直接输出
                 outputs_dict[output.name] = output.value.content
+                print("直接类型", output.name)
             else:
                 # 引用类型
                 for node_result in state["node_results"]:
                     # 找到当前输出内容节点所引用的上一层节点
+                    if output.name == "youdao_suggest_result":
+                        print("youdao_suggest_result: ", output.value.content.ref_node_id == node_result.node_data.id)
                     if output.value.content.ref_node_id == node_result.node_data.id:
+                        print("output_name: ", output.name, node_result.node_data.id)
                         outputs_dict[output.name] = node_result.outputs.get(
                             output.value.content.ref_var_name,
                             VariableTypeDefaultValueMap.get(output.type)
                         )
+
+        print("outputs_dict: ", outputs_dict)
 
         return {
             "outputs": outputs_dict,

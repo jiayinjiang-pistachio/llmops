@@ -1,4 +1,0 @@
-[2026-01-22 15:40:58,603: INFO/MainProcess] Connected to redis://8.138.175.92:6379/1
-[2026-01-22 15:40:58,684: INFO/MainProcess] mingle: searching for neighbors
-[2026-01-22 15:40:59,849: INFO/MainProcess] mingle: all alone
-[2026-01-22 15:41:00,270: INFO/MainProcess] celery@jiangjiayindeMacBook-Pro.local ready.

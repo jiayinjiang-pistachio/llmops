@@ -7,6 +7,7 @@
 @Description    : 
 """
 from typing import Any, TypedDict, Annotated
+from uuid import UUID
 
 from langchain_core.pydantic_v1 import BaseModel, Field
 
@@ -30,6 +31,7 @@ def _process_node(left: list[NodeResult], right: list[NodeResult]) -> NodeResult
 
 class WorkflowConfig(BaseModel):
     """工作流配置信息"""
+    account_id: UUID
     name: str = ""  # 工作流名称
     description: str = ""  # 工作流描述信息
     nodes: list[dict[str, Any]] = Field(default_factory=list)  # 工作流对应的节点
