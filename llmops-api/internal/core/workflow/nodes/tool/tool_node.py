@@ -23,13 +23,12 @@ from internal.exception import FailException
 
 class ToolNode(BaseNode):
     """工具调用节点"""
-
-    node_data_cls = ToolNodeData
+    node_data = ToolNodeData
     _tool: BaseTool = PrivateAttr(None)  # LangChain工具实例
 
-    def __init__(self, *args, node_data: dict[str, Any], **kwargs: Any):
+    def __init__(self, *args, **kwargs: Any):
         """构造函数，完成对工具的初始化"""
-        super().__init__(*args, node_data=node_data, **kwargs)
+        super().__init__(*args, **kwargs)
 
         # 导入依赖注入及工具提供者
         from app.http.app import injector

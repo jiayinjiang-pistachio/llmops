@@ -6,8 +6,9 @@
 @File           : variable_entity.py
 @Description    : 
 """
+import re
 from enum import Enum
-from typing import Union, Any, re
+from typing import Union, Any
 from uuid import UUID
 
 from langchain_core.pydantic_v1 import BaseModel, Field, validator
@@ -44,7 +45,7 @@ VARIABLE_DESCRIPTION_MAX_LENGTH = 1024
 
 
 class VariableValueType(str, Enum):
-    Ref = "ref"  # 引用类型
+    REF = "ref"  # 引用类型
     LITERAL = "literal"  # 直接输入
     GENERATED = "generated"  # 生成的值，一般用在开始节点/output中
 

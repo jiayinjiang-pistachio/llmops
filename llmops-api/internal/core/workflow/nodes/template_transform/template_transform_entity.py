@@ -12,7 +12,7 @@ from internal.core.workflow.entities.node_entity import BaseNodeData
 from internal.core.workflow.entities.variable_entity import VariableEntity, VariableValueType
 
 
-class templateTransformNodeData(BaseNodeData):
+class TemplateTransformNodeData(BaseNodeData):
     template: str  # 需要拼接转换的字符串模板
     inputs: list[VariableEntity] = Field(default=list)
     outputs: list[VariableEntity] = Field(

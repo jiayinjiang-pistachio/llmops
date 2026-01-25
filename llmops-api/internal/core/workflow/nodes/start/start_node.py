@@ -20,7 +20,7 @@ from internal.exception import FailException
 
 class StartNode(BaseNode):
     # 这里不需要写类型标注，直接赋值即可，它会覆盖基类的 ClassVar
-    node_data_cls = StartNodeData
+    node_data = StartNodeData
 
     def invoke(self, state: WorkflowState, config: Optional[RunnableConfig] = None) -> WorkflowState:
         """开始节点执行函数，提取状态中的输入数据并生成节点结果"""

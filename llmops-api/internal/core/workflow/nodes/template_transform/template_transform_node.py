@@ -14,12 +14,12 @@ from langchain_core.runnables import RunnableConfig
 from internal.core.workflow.entities.node_entity import NodeResult, NodeStatus
 from internal.core.workflow.entities.workflow_entity import WorkflowState
 from internal.core.workflow.nodes import BaseNode
-from .template_transform_entity import templateTransformNodeData
+from .template_transform_entity import TemplateTransformNodeData
 from ...utils.helper import extract_variables_from_state
 
 
 class TemplateTransformNode(BaseNode):
-    node_data_cls = templateTransformNodeData
+    node_data = TemplateTransformNodeData
 
     def invoke(self, state: WorkflowState, config: Optional[RunnableConfig] = None) -> WorkflowState:
         """模板转换节点执行函数"""

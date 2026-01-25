@@ -20,7 +20,7 @@ from internal.core.workflow.utils.helper import extract_variables_from_state
 
 
 class HttpRequestNode(BaseNode):
-    node_data_cls = HttpRequestNodeData
+    node_data = HttpRequestNodeData
 
     def invoke(self, state: WorkflowState, config: Optional[RunnableConfig] = None) -> WorkflowState:
         """http request 节点执行函数"""

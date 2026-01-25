@@ -22,11 +22,11 @@ from internal.core.workflow.utils.helper import extract_variables_from_state
 
 
 class DatasetRetrievalNode(BaseNode):
-    node_data_cls = DatasetRetrievalNodeData
+    node_data = DatasetRetrievalNodeData
     _retrieval_tool: BaseTool = PrivateAttr(None)
 
-    def __init__(self, *args, flask_app: Flask, account_id: UUID, node_data: dict[str, Any], **kwargs: Any):
-        super().__init__(*args, node_data=node_data, **kwargs)
+    def __init__(self, *args, flask_app: Flask, account_id: UUID, **kwargs: Any):
+        super().__init__(*args, **kwargs)
 
         from app.http.module import injector
         from internal.service.retrieval_service import RetrievalService

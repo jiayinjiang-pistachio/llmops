@@ -30,6 +30,7 @@ from .process_rule_service import ProcessRuleService
 from .segment_service import SegmentService
 from .upload_file_srevice import UploadFileService
 from .vector_database_service import VectorDatabaseService
+from .workflow_service import WorkflowService
 
 __all__ = [
     "AppService", "VectorDatabaseService",
@@ -43,5 +44,5 @@ __all__ = [
     "AccountService", "OAuthService",
     "AiService", "ApiKeyService",
     "OpenapiService", "AppConfigService",
-    "BuiltinAppService"
+    "BuiltinAppService", "WorkflowService",
 ]

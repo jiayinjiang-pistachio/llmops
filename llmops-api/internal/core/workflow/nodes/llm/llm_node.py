@@ -22,7 +22,7 @@ from internal.core.workflow.utils.helper import extract_variables_from_state
 
 class LLMNode(BaseNode):
     # 这里不需要写类型标注，直接赋值即可，它会覆盖基类的 ClassVar
-    node_data_cls = LLMNodeData
+    node_data = LLMNodeData
 
     def invoke(self, state: WorkflowState, config: Optional[RunnableConfig] = None) -> WorkflowState:
         """llm节点的执行函数"""

@@ -18,7 +18,7 @@ from internal.core.workflow.utils.helper import extract_variables_from_state
 
 
 class EndNode(BaseNode):
-    node_data_cls = EndNodeData
+    node_data = EndNodeData
 
     def invoke(self, state: WorkflowState, config: Optional[RunnableConfig] = None) -> WorkflowState:
         """结束节点执行函数"""

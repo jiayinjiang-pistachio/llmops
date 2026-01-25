@@ -21,7 +21,7 @@ from internal.exception import FailException
 
 
 class CodeNode(BaseNode):
-    node_data_cls = CodeNodeData
+    node_data = CodeNodeData
 
     def invoke(self, state: WorkflowState, config: Optional[RunnableConfig] = None) -> WorkflowState:
         """python code 节点执行函数"""

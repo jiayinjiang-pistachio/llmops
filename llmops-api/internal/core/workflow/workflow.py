@@ -21,6 +21,7 @@ from internal.core.workflow.entities.workflow_entity import WorkflowConfig, Work
 from internal.core.workflow.nodes import (
     StartNode, EndNode, LLMNode, TemplateTransformNode, DatasetRetrievalNode, CodeNode, ToolNode, HttpRequestNode
 )
+from internal.exception import ValidationException
 
 NodeClasses = {
     NodeType.START: StartNode,
@@ -59,16 +60,16 @@ class Workflow(BaseTool):
 
         # 从开始节点中找出原始的输入inputs
         inputs = next(
-            (node.get("inputs", []) for node in workflow_config.nodes if node.get("node_type") == NodeType.START),
+            (node.inputs for node in workflow_config.nodes if node.node_type == NodeType.START),
             []
         )
 
         # 循环遍历所有输入信息，并创建字段映射
         for input in inputs:
-            filed_name = input.get("name")
-            field_type = VARIABLE_TYPE_MAP.get(input.get("type"), str)
-            field_description = input.get("description", "")
-            field_required = input.get("required", True)
+            filed_name = input.name
+            field_type = VARIABLE_TYPE_MAP.get(input.type, str)
+            field_description = input.description
+            field_required = input.required
 
             fields[filed_name] = (
                 field_type if field_required else Optional[field_type],
@@ -88,14 +89,14 @@ class Workflow(BaseTool):
 
         # 循环遍历所有节点，添加节点
         for node in nodes:
-            node_flag = f"{node.get('node_type')}_{node.get('id')}"
+            node_flag = f"{node.node_type}_{node.id}"
 
-            if node.get("node_type") == NodeType.START:
+            if node.node_type == NodeType.START:
                 graph.add_node(
                     node_flag,
                     NodeClasses[NodeType.START](node_data=node),
                 )
-            elif node.get("node_type") == NodeType.DATASET_RETRIEVAL:
+            elif node.node_type == NodeType.DATASET_RETRIEVAL:
                 graph.add_node(
                     node_flag,
                     NodeClasses[NodeType.DATASET_RETRIEVAL](
@@ -104,36 +105,38 @@ class Workflow(BaseTool):
                         node_data=node,
                     ),
                 )
-            elif node.get("node_type") == NodeType.LLM:
+            elif node.node_type == NodeType.LLM:
                 graph.add_node(
                     node_flag,
                     NodeClasses[NodeType.LLM](node_data=node),
                 )
-            elif node.get("node_type") == NodeType.CODE:
+            elif node.node_type == NodeType.CODE:
                 graph.add_node(
                     node_flag,
                     NodeClasses[NodeType.CODE](node_data=node),
                 )
-            elif node.get("node_type") == NodeType.TEMPLATTE_TRANSFORM:
+            elif node.node_type == NodeType.TEMPLATTE_TRANSFORM:
                 graph.add_node(
                     node_flag,
                     NodeClasses[NodeType.TEMPLATTE_TRANSFORM](node_data=node),
                 )
-            elif node.get("node_type") == NodeType.TOOL:
+            elif node.node_type == NodeType.TOOL:
                 graph.add_node(
                     node_flag,
                     NodeClasses[NodeType.TOOL](node_data=node),
                 )
-            elif node.get("node_type") == NodeType.HTTP_REQUEST:
+            elif node.node_type == NodeType.HTTP_REQUEST:
                 graph.add_node(
                     node_flag,
                     NodeClasses[NodeType.HTTP_REQUEST](node_data=node),
                 )
-            elif node.get("node_type") == NodeType.END:
+            elif node.node_type == NodeType.END:
                 graph.add_node(
                     node_flag,
                     NodeClasses[NodeType.END](node_data=node),
                 )
+            else:
+                raise ValidationException("工作流节点类型错误，请核实后重试")
 
         parallel_edges = {}  # 键是终点，值是起点列表
         start_node = ""
@@ -141,8 +144,8 @@ class Workflow(BaseTool):
         # 循环遍历所有边，添加边
         for edge in edges:
             # 添加边映射关系
-            source_node = f"{edge.get('source_type')}_{edge.get('source')}"
-            target_node = f"{edge.get('target_type')}_{edge.get('target')}"
+            source_node = f"{edge.source_type}_{edge.source}"
+            target_node = f"{edge.target_type}_{edge.target}"
 
             if target_node not in parallel_edges:
                 parallel_edges[target_node] = [source_node]
@@ -150,9 +153,10 @@ class Workflow(BaseTool):
                 parallel_edges[target_node].append(source_node)
 
             # 检测特殊的边（开始节点和结束节点）
-            if edge.get("source_type") == NodeType.START:
+            if edge.source_type == NodeType.START:
                 start_node = source_node
-            elif edge.get("target_type") == NodeType.END:
+
+            if edge.target_type == NodeType.END:
                 end_node = target_node
 
         graph.set_entry_point(start_node)

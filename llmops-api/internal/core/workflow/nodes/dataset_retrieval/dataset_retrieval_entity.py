@@ -36,7 +36,7 @@ class DatasetRetrievalNodeData(BaseNodeData):
     )
 
     @validator("inputs")
-    def validate_inputs(self, inputs: list[VariableEntity]) -> list[VariableEntity]:
+    def validate_inputs(cls, inputs: list[VariableEntity]) -> list[VariableEntity]:
 
         if len(inputs) != 1:
             raise FailException("知识库节点输入变量信息出错")
