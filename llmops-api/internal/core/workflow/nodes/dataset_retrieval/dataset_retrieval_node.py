@@ -6,6 +6,7 @@
 @File           : dataset_retrieval_node.py
 @Description    : 
 """
+import time
 from typing import Optional, Any
 from uuid import UUID
 
@@ -44,6 +45,8 @@ class DatasetRetrievalNode(BaseNode):
 
     def invoke(self, state: WorkflowState, config: Optional[RunnableConfig] = None) -> WorkflowState:
         """知识库检索节点执行函数，得到知识库检索的结果"""
+        start_at = time.perf_counter()
+
         # 提取节点输入变量字典映射
         inputs_dict = extract_variables_from_state(self.node_data.inputs, state)
 
@@ -64,6 +67,7 @@ class DatasetRetrievalNode(BaseNode):
                     inputs=inputs_dict,
                     outputs=outputs,
                     status=NodeStatus.SUCCEEDED,
+                    latency=(time.perf_counter() - start_at),
                 )
             ]
         }

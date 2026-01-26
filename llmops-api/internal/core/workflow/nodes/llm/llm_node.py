@@ -7,6 +7,7 @@
 @Description    : 
 """
 import os
+import time
 from typing import Optional
 
 from jinja2 import Template
@@ -26,6 +27,8 @@ class LLMNode(BaseNode):
 
     def invoke(self, state: WorkflowState, config: Optional[RunnableConfig] = None) -> WorkflowState:
         """llm节点的执行函数"""
+        start_at = time.perf_counter()
+
         inputs_dict = extract_variables_from_state(self.node_data.inputs, state)
 
         # 使用jinja2格式模板信息
@@ -41,7 +44,10 @@ class LLMNode(BaseNode):
         )
 
         # 调用LLM并传递prompt后提取数据
-        content = llm.invoke(prompt_value).content
+        # content = llm.invoke(prompt_value).content
+        content = ""
+        for chunk in llm.stream(prompt_value):
+            content += chunk
 
         outputs = {}
         if self.node_data.outputs:
@@ -56,6 +62,7 @@ class LLMNode(BaseNode):
                     inputs=inputs_dict,
                     outputs=outputs,
                     status=NodeStatus.SUCCEEDED,
+                    latency=(time.perf_counter() - start_at),
                 )
             ]
         }

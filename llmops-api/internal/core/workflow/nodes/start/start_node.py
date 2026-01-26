@@ -6,6 +6,7 @@
 @File           : start_node.py
 @Description    : 
 """
+import time
 from typing import Optional
 
 from langchain_core.runnables import RunnableConfig
@@ -24,7 +25,7 @@ class StartNode(BaseNode):
 
     def invoke(self, state: WorkflowState, config: Optional[RunnableConfig] = None) -> WorkflowState:
         """开始节点执行函数，提取状态中的输入数据并生成节点结果"""
-        # node_data = self._node_data_cls(**self.node_data)
+        start_at = time.perf_counter()
 
         # 提取节点数据中的输入数据
         inputs = self.node_data.inputs
@@ -48,6 +49,7 @@ class StartNode(BaseNode):
                     status=NodeStatus.SUCCEEDED,
                     inputs=state["inputs"],
                     outputs=outputs,
+                    latency=(time.perf_counter() - start_at),
                 )
             ]
         }

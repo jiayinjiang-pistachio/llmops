@@ -6,6 +6,7 @@
 @File           : http_request_node.py
 @Description    : 
 """
+import time
 from typing import Optional
 
 import requests
@@ -24,6 +25,8 @@ class HttpRequestNode(BaseNode):
 
     def invoke(self, state: WorkflowState, config: Optional[RunnableConfig] = None) -> WorkflowState:
         """http request 节点执行函数"""
+        start_at = time.perf_counter()
+
         # 提取节点输入变量字典
         _inputs_dict = extract_variables_from_state(self.node_data.inputs, state)
 
@@ -78,6 +81,7 @@ class HttpRequestNode(BaseNode):
                     inputs=inputs_dict,
                     outputs=outputs,
                     status=NodeStatus.SUCCEEDED,
+                    latency=(time.perf_counter() - start_at),
                 )
             ]
         }

@@ -7,6 +7,7 @@
 @Description    : 
 """
 import ast
+import time
 from typing import Optional
 
 from langchain_core.runnables import RunnableConfig
@@ -25,6 +26,7 @@ class CodeNode(BaseNode):
 
     def invoke(self, state: WorkflowState, config: Optional[RunnableConfig] = None) -> WorkflowState:
         """python code 节点执行函数"""
+        start_at = time.perf_counter()
 
         # 从状态中提取输入数据
         inputs_dict = extract_variables_from_state(self.node_data.inputs, state)
@@ -51,6 +53,7 @@ class CodeNode(BaseNode):
                     inputs=inputs_dict,
                     outputs=outputs_dict,
                     status=NodeStatus.SUCCEEDED,
+                    latency=(time.perf_counter() - start_at),
                 )
             ]
         }

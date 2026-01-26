@@ -6,6 +6,7 @@
 @File           : template_transform_node.py
 @Description    : 
 """
+import time
 from typing import Optional
 
 from jinja2 import Template
@@ -23,6 +24,8 @@ class TemplateTransformNode(BaseNode):
 
     def invoke(self, state: WorkflowState, config: Optional[RunnableConfig] = None) -> WorkflowState:
         """模板转换节点执行函数"""
+        start_at = time.perf_counter()
+
         inputs_dict = extract_variables_from_state(self.node_data.inputs, state)
 
         # 使用jinja2格式模板信息
@@ -40,6 +43,7 @@ class TemplateTransformNode(BaseNode):
                     inputs=inputs_dict,
                     outputs=outputs,
                     status=NodeStatus.SUCCEEDED,
+                    latency=(time.perf_counter() - start_at),
                 )
             ]
         }

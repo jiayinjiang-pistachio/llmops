@@ -7,6 +7,7 @@
 @Description    : 
 """
 import json
+import time
 from typing import Any, Optional
 
 from langchain_core.pydantic_v1 import PrivateAttr
@@ -80,6 +81,8 @@ class ToolNode(BaseNode):
 
     def invoke(self, state: WorkflowState, config: Optional[RunnableConfig] = None) -> WorkflowState:
         """工具调用节点执行函数，根据传递的信息调用预设的插件，包括内置插件和API自定义插件"""
+        start_at = time.perf_counter()
+
         # 从状态中提取出输入数据
         inputs_dict = extract_variables_from_state(self.node_data.inputs, state)
 
@@ -107,6 +110,7 @@ class ToolNode(BaseNode):
                     inputs=inputs_dict,
                     outputs=outputs,
                     status=NodeStatus.SUCCEEDED,
+                    latency=(time.perf_counter() - start_at),
                 )
             ]
         }
