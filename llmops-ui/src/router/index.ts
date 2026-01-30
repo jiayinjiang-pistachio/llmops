@@ -129,9 +129,14 @@ const router = createRouter({
             {
               path: ':app_id/analysis',
               name: 'space-apps-analysis',
-              component: () => import('@/views/space/apps/AnalysisView.vue')
-            }
+              component: () => import('@/views/space/apps/AnalysisView.vue'),
+            },
           ],
+        },
+        {
+          path: 'space/workflows/:workflow_id',
+          name: 'space-workflows-detail',
+          component: () => import('@/views/space/workflows/DetailView.vue'),
         },
       ],
     },

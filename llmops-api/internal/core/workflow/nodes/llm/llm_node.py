@@ -44,10 +44,10 @@ class LLMNode(BaseNode):
         )
 
         # 调用LLM并传递prompt后提取数据
-        # content = llm.invoke(prompt_value).content
-        content = ""
-        for chunk in llm.stream(prompt_value):
-            content += chunk
+        content = llm.invoke(prompt_value).content
+        # content = ""
+        # for chunk in llm.stream(prompt_value):
+        #     content += chunk
 
         outputs = {}
         if self.node_data.outputs:

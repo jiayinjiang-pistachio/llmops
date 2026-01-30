@@ -18,6 +18,9 @@
   },
   "dependencies": {
     "@types/lodash": "^4.17.23",
+    "@vue-flow/background": "^1.3.2",
+    "@vue-flow/core": "^1.48.1",
+    "@vue-flow/minimap": "^1.5.4",
     "highlight.js": "^11.11.1",
     "lodash": "^4.17.21",
     "moment": "^2.30.1",

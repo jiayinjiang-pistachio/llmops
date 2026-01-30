@@ -8,7 +8,7 @@
 """
 from typing import Any
 
-from langchain_core.pydantic_v1 import Field
+from langchain_core.pydantic_v1 import Field, validator
 
 from internal.core.workflow.entities.node_entity import BaseNodeData
 from internal.core.workflow.entities.variable_entity import VariableEntity, VariableValueType
@@ -24,7 +24,6 @@ class LLMNodeData(BaseNodeData):
     )
     inputs: list[VariableEntity] = Field(default_factory=list)
     outputs: list[VariableEntity] = Field(
-        exclude=True,  # 即使外界传入outputs也不改变默认值
         default_factory=lambda: [
             VariableEntity(
                 name="output",
@@ -32,3 +31,9 @@ class LLMNodeData(BaseNodeData):
             )
         ]
     )
+
+    @validator("outputs", pre=True)
+    def validate_outputs(cls, value: list[VariableEntity]) -> list[VariableEntity]:
+        return [
+            VariableEntity(name="output", value={"type": VariableValueType.GENERATED})
+        ]

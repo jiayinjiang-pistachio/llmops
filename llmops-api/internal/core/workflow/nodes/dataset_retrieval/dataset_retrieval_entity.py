@@ -29,11 +29,16 @@ class DatasetRetrievalNodeData(BaseNodeData):
     retrieval_config: RetrievalConfig = RetrievalConfig()
     inputs: list[VariableEntity] = Field(default_factory=list)
     outputs: list[VariableEntity] = Field(
-        exclude=True,
         default_factory=lambda: [
             VariableEntity(name="combine_documents", value={"type": VariableValueType.GENERATED})
         ]
     )
+
+    @validator("outputs", pre=True)
+    def validate_outputs(cls, value: list[VariableEntity]) -> list[VariableEntity]:
+        return [
+            VariableEntity(name="combine_documents", value={"type": VariableValueType.GENERATED})
+        ]
 
     @validator("inputs")
     def validate_inputs(cls, inputs: list[VariableEntity]) -> list[VariableEntity]:

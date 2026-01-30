@@ -150,10 +150,15 @@ class WorkflowService(BaseService):
 
         # 2.提取草稿图结构信息并校验(不更新校验后的数据到数据库)
         draft_graph = workflow.draft_graph
+        for node_1 in draft_graph["nodes"]:
+            print("node_1_type: ", node_1.get("node_type"))
+
         validate_draft_graph = self._validate_graph(draft_graph, account)
 
         # 3.循环遍历节点信息，为工具节点/知识库节点附加元数据
         for node in validate_draft_graph["nodes"]:
+            print("node_type: ", node.get("node_type"))
+
             if node.get("node_type") == NodeType.TOOL:
                 # 4.判断工具的类型执行不同的操作
                 if node.get("tool_type") == "builtin_tool":
@@ -278,6 +283,8 @@ class WorkflowService(BaseService):
                 # 6.实例化节点数据类型，如果出错则跳过当前数据
                 node_data = node_data_cls(**node)
 
+                print("node_data_id: ", node_data.id)
+
                 # 7.判断节点id是否唯一，如果不唯一，则将当前节点清除
                 if node_data.id in node_data_dict:
                     raise ValidationException("工作流节点id必须唯一，请核实后重试")
@@ -320,7 +327,8 @@ class WorkflowService(BaseService):
 
                 # 13.将数据添加到node_data_dict中
                 node_data_dict[node_data.id] = node_data
-            except Exception:
+            except Exception as e:
+                print("_validate_graph error: ", str(e))
                 continue
 
         # 14.循环校验edges中各个节点对应的数据

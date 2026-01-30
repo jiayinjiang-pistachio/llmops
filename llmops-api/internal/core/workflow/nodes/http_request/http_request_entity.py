@@ -51,6 +51,20 @@ class HttpRequestNodeData(BaseNodeData):
         ]
     )
 
+    @validator("outputs", pre=True)
+    def validate_outputs(cls, v) -> list[VariableEntity]:
+        return [
+            VariableEntity(
+                name="status_code",
+                type=VariableType.INT,
+                value={"type": VariableValueType.GENERATED, "content": 0}
+            ),
+            VariableEntity(
+                name="text",
+                value={"type": VariableValueType.GENERATED}
+            )
+        ]
+
     @validator("inputs")
     def validate_inputs(cls, inputs: list[VariableEntity]) -> list[VariableEntity]:
         """校验输入列表数据"""

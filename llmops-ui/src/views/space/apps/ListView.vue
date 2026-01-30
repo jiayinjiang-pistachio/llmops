@@ -78,6 +78,10 @@ watch(
                   class="text-base text-gray-900 font-bold"
                 >
                   {{ app.name }}
+                  <icon-check-circle-fill
+                    v-if="app.status === 'published'"
+                    class="text-green-700"
+                  />
                 </router-link>
                 <div class="text-xs text-gray-500 line-clamp-1">
                   {{ app.model_config.provider }} · {{ app.model_config.model }}

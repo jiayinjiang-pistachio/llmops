@@ -166,16 +166,16 @@ class Workflow(BaseTool):
         for target_node, source_nodes in parallel_edges.items():
             graph.add_edge(source_nodes, target_node)
 
-        # # 构建图程序并编译
-        # workflow = graph.compile()
-        #
-        # image_data = workflow.get_graph().draw_mermaid_png()
-        # with open("workflow.png", "wb") as f:
-        #     f.write(image_data)
-        #
-        # return workflow
+        # 构建图程序并编译
+        workflow = graph.compile()
 
-        return graph.compile()
+        image_data = workflow.get_graph().draw_mermaid_png()
+        with open("workflow.png", "wb") as f:
+            f.write(image_data)
+
+        return workflow
+
+        # return graph.compile()
 
     def _run(self, *args: Any, **kwargs: Any) -> Any:
         return self._workflow.invoke({"inputs": kwargs})
