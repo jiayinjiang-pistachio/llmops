@@ -186,6 +186,13 @@ async function handleStream(
 
   if (!response.ok) throw new Error('网络请求失败')
 
+  const contentType = response.headers.get('Content-Type')
+  if(contentType === 'application/json') {
+    // 接口为json输出，意味着出错，直接返回json数据
+    const json = await response.json()
+    return json
+  }
+
   const reader = response.body?.getReader()
   const decoder = new TextDecoder('utf-8')
   if (!reader) return

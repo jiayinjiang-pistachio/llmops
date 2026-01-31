@@ -57,7 +57,8 @@ class Http(Flask):
         # 5. 解决前后端跨域
         CORS(self, resources={
             r"/*": {
-                "origins": "*",
+                # "origins": "*",
+                "origins": ["http://localhost:5173"],  # 替换为你前端实际的地址
                 "supports_credentials": True,
                 # "methods": ["GET", "POST"],
                 # "allow_headers": ["Content-Type"],

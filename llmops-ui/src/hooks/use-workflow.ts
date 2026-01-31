@@ -171,8 +171,8 @@ export const useDeleteWorkflow = () => {
 export const useGetDraftGraph = () => {
   // 1.定义hooks所需数据
   const loading = ref(false)
-  const nodes = ref<Record<string, any>[]>([])
-  const edges = ref<Record<string, any>[]>([])
+  const nodes = ref<any>([])
+  const edges = ref<any>([])
 
   // 2.定义加载数据函数
   const loadDraftGraph = async (workflow_id: string) => {
@@ -184,15 +184,9 @@ export const useGetDraftGraph = () => {
 
       // 4.处理节点数据并赋值
       nodes.value = data.nodes.map((node) => {
-        // // 5.删除不传递的数据并构建新节点数据存储到data中
-        // const { id, node_type: type, position, ...data } = node
-        // return { id, type, position, data }
-        return {
-          id: node.id,
-          type: node.node_type,
-          position: node.position,
-          data: node,
-        }
+        // 5.删除不传递的数据并构建新节点数据存储到data中
+        const { id, node_type: type, position, ...data } = node
+        return { id, type, position, data }
       })
 
       // 6.处理边数据

@@ -7,6 +7,7 @@
 @Description    : 
 """
 from enum import Enum
+from typing import Optional
 
 from langchain_core.pydantic_v1 import HttpUrl, Field, validator
 
@@ -34,7 +35,7 @@ class HttpRequestInputType(str, Enum):
 
 class HttpRequestNodeData(BaseNodeData):
     """http请求节点信息"""
-    url: HttpUrl = ""  # 请求URL地址
+    url: Optional[HttpUrl] = None  # 请求URL地址
     method: HttpRequestMethod = HttpRequestMethod.GET
     inputs: list[VariableEntity] = Field(default_factory=list)
     outputs: list[VariableEntity] = Field(
@@ -50,6 +51,10 @@ class HttpRequestNodeData(BaseNodeData):
             )
         ]
     )
+
+    @validator("url", pre=True, always=True)
+    def validate_url(cls, url: Optional[HttpUrl]):
+        return url if url != "" else None
 
     @validator("outputs", pre=True)
     def validate_outputs(cls, v) -> list[VariableEntity]:

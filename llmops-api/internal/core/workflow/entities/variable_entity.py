@@ -8,7 +8,7 @@
 """
 import re
 from enum import Enum
-from typing import Union, Any
+from typing import Union, Any, Optional
 from uuid import UUID
 
 from langchain_core.pydantic_v1 import BaseModel, Field, validator
@@ -60,6 +60,10 @@ class VariableEntity(BaseModel):
             """如果变量值类型是引用类型，则使用Content记录引用节点id+引用节点的变量名"""
             ref_node_id: UUID
             ref_var_name: str
+
+            @validator("ref_node_id", pre=True, always=True)
+            def validate_ref_node_id(cls, ref_node_id: Optional[UUID]):
+                return ref_node_id if ref_node_id != "" else None
 
         type: VariableValueType = VariableValueType.LITERAL
         content: Union[Content, str, int, float, bool] = ""
