@@ -430,3 +430,138 @@ WHERE account.id = %(pk_1)s::UUID)
 2026-02-01 20:56:36,290.290] _internal.py line:97 INFO:  * Restarting with stat)
 2026-02-01 20:57:05,058.058] _internal.py line:97 WARNING:  * Debugger is active!)
 2026-02-01 20:57:05,091.091] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-02-01 21:16:40,826.826] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/language_model_handler.py', reloading)
+2026-02-01 21:16:45,707.707] _internal.py line:97 INFO:  * Restarting with stat)
+2026-02-01 21:17:12,356.356] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-02-01 21:17:12,399.399] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-02-01 21:36:03,508.508] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/language_model_handler.py', reloading)
+2026-02-01 21:36:06,696.696] _internal.py line:97 INFO:  * Restarting with stat)
+2026-02-01 21:36:35,790.790] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-02-01 21:36:35,846.846] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-02-01 21:44:08,646.646] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/__init__.py', reloading)
+2026-02-01 21:44:14,883.883] _internal.py line:97 INFO:  * Restarting with stat)
+2026-02-01 21:44:41,264.264] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-02-01 21:44:41,293.293] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-02-01 21:44:53,062.062] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/__init__.py', reloading)
+2026-02-01 21:44:55,258.258] _internal.py line:97 INFO:  * Restarting with stat)
+2026-02-01 21:45:26,819.819] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-02-01 21:45:26,853.853] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-02-01 21:47:52,123.123] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/router/router.py', reloading)
+2026-02-01 21:47:55,212.212] _internal.py line:97 INFO:  * Restarting with stat)
+2026-02-01 21:48:18,483.483] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-02-01 21:48:18,516.516] _internal.py line:97 INFO:  * Debugger PIN: 813-120-833)
+2026-02-01 21:48:49,663.663] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/router/router.py', reloading)
+2026-02-01 21:48:51,174.174] _internal.py line:97 INFO:  * Restarting with stat)
+2026-02-01 21:49:29,571.571] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-02-01 21:49:29,621.621] _internal.py line:97 INFO:  * Debugger PIN: 813-120-833)
+2026-02-01 21:49:56,290.290] _internal.py line:97 INFO: 127.0.0.1 - - [01/Feb/2026 21:49:56] "[35m[1mGET /language-models HTTP/1.1[0m" 500 -)
+2026-02-01 21:50:32,567.567] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/router/router.py', reloading)
+2026-02-01 21:50:35,064.064] _internal.py line:97 INFO:  * Restarting with stat)
+2026-02-01 21:51:06,022.022] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-02-01 21:51:06,072.072] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-02-01 21:51:07,030.030] base.py line:1846 INFO: select pg_catalog.version())
+2026-02-01 21:51:07,030.030] base.py line:1846 INFO: [raw sql] {})
+2026-02-01 21:51:07,061.061] base.py line:1846 INFO: select current_schema())
+2026-02-01 21:51:07,062.062] base.py line:1846 INFO: [raw sql] {})
+2026-02-01 21:51:07,092.092] base.py line:1846 INFO: show standard_conforming_strings)
+2026-02-01 21:51:07,092.092] base.py line:1846 INFO: [raw sql] {})
+2026-02-01 21:51:07,094.094] base.py line:2710 INFO: BEGIN (implicit))
+2026-02-01 21:51:07,102.102] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-02-01 21:51:07,102.102] base.py line:1846 INFO: [generated in 0.00046s] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-02-01 21:51:07,153.153] http.py line:76 ERROR: An error occurred: 'ProviderEntity' object has no attribute 'support_model_types')
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/language_model_handler.py", line 29, in get_language_models
+    return success_json(self.language_model_service.get_language_models())
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/language_model_service.py", line 49, in get_language_models
+    "support_model_types": provider_entity.support_model_types,
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ProviderEntity' object has no attribute 'support_model_types'
+2026-02-01 21:51:07,160.160] base.py line:2713 INFO: ROLLBACK)
+2026-02-01 21:51:07,170.170] _internal.py line:97 INFO: 127.0.0.1 - - [01/Feb/2026 21:51:07] "[35m[1mGET /language-models HTTP/1.1[0m" 500 -)
+2026-02-01 21:52:10,095.095] _internal.py line:97 INFO: 127.0.0.1 - - [01/Feb/2026 21:52:10] "GET /language-models/openai/icon HTTP/1.1" 200 -)
+2026-02-01 21:52:16,491.491] _internal.py line:97 INFO: 127.0.0.1 - - [01/Feb/2026 21:52:16] "GET /language-models/deepseek/icon HTTP/1.1" 200 -)
+2026-02-01 21:52:21,783.783] http.py line:76 ERROR: An error occurred: )
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/language_model_handler.py", line 38, in get_language_model_icon
+    icon, mimetype = self.language_model_service.get_language_model_icon(provider_name)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/language_model_service.py", line 119, in get_language_model_icon
+    provider = self.language_model_manager.get_provider(provider_name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/core/language_model/language_model_manager.py", line 56, in get_provider
+    raise NotFoundException("该模型服务提供商不存在，请核实后重试")
+internal.exception.exception.NotFoundException
+2026-02-01 21:52:21,796.796] _internal.py line:97 INFO: 127.0.0.1 - - [01/Feb/2026 21:52:21] "GET /language-models/zhipu/icon HTTP/1.1" 200 -)
+2026-02-01 21:52:25,264.264] _internal.py line:97 INFO: 127.0.0.1 - - [01/Feb/2026 21:52:25] "GET /language-models/zhipuai/icon HTTP/1.1" 200 -)
+2026-02-01 21:52:30,642.642] _internal.py line:97 INFO: 127.0.0.1 - - [01/Feb/2026 21:52:30] "GET /language-models/google/icon HTTP/1.1" 200 -)
+2026-02-01 21:52:54,106.106] base.py line:2710 INFO: BEGIN (implicit))
+2026-02-01 21:52:54,114.114] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-02-01 21:52:54,115.115] base.py line:1846 INFO: [cached since 107s ago] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-02-01 21:52:54,141.141] http.py line:76 ERROR: An error occurred: 'ProviderEntity' object has no attribute 'support_model_types')
+Traceback (most recent call last):
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/miniconda3/envs/llmops_v4_latest/lib/python3.11/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/handler/language_model_handler.py", line 29, in get_language_models
+    return success_json(self.language_model_service.get_language_models())
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/language_model_service.py", line 49, in get_language_models
+    "support_model_types": provider_entity.support_model_types,
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ProviderEntity' object has no attribute 'support_model_types'
+2026-02-01 21:52:54,145.145] base.py line:2713 INFO: ROLLBACK)
+2026-02-01 21:52:54,163.163] _internal.py line:97 INFO: 127.0.0.1 - - [01/Feb/2026 21:52:54] "[35m[1mGET /language-models HTTP/1.1[0m" 500 -)
+2026-02-01 21:54:07,307.307] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/language_model_service.py', reloading)
+2026-02-01 21:54:09,712.712] _internal.py line:97 INFO:  * Restarting with stat)
+2026-02-01 21:54:35,128.128] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-02-01 21:54:35,154.154] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-02-01 21:54:54,919.919] _internal.py line:97 INFO:  * Detected change in '/Users/koukeshitone/Desktop/技术相关/2025/llmops/llmops-api/internal/service/language_model_service.py', reloading)
+2026-02-01 21:54:57,110.110] _internal.py line:97 INFO:  * Restarting with stat)
+2026-02-01 21:55:27,434.434] _internal.py line:97 WARNING:  * Debugger is active!)
+2026-02-01 21:55:27,484.484] _internal.py line:97 INFO:  * Debugger PIN: 441-569-038)
+2026-02-01 21:55:28,025.025] base.py line:1846 INFO: select pg_catalog.version())
+2026-02-01 21:55:28,026.026] base.py line:1846 INFO: [raw sql] {})
+2026-02-01 21:55:28,028.028] base.py line:1846 INFO: select current_schema())
+2026-02-01 21:55:28,028.028] base.py line:1846 INFO: [raw sql] {})
+2026-02-01 21:55:28,030.030] base.py line:1846 INFO: show standard_conforming_strings)
+2026-02-01 21:55:28,031.031] base.py line:1846 INFO: [raw sql] {})
+2026-02-01 21:55:28,035.035] base.py line:2710 INFO: BEGIN (implicit))
+2026-02-01 21:55:28,045.045] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-02-01 21:55:28,045.045] base.py line:1846 INFO: [generated in 0.00044s] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-02-01 21:55:28,055.055] base.py line:2713 INFO: ROLLBACK)
+2026-02-01 21:55:28,056.056] _internal.py line:97 INFO: 127.0.0.1 - - [01/Feb/2026 21:55:28] "GET /language-models HTTP/1.1" 200 -)
+2026-02-01 22:01:17,408.408] base.py line:2710 INFO: BEGIN (implicit))
+2026-02-01 22:01:17,420.420] base.py line:1846 INFO: SELECT account.id AS account_id, account.name AS account_name, account.email AS account_email, account.avatar AS account_avatar, account.password AS account_password, account.password_salt AS account_password_salt, account.last_login_at AS account_last_login_at, account.last_login_ip AS account_last_login_ip, account.updated_at AS account_updated_at, account.created_at AS account_created_at 
+FROM account 
+WHERE account.id = %(pk_1)s::UUID)
+2026-02-01 22:01:17,421.421] base.py line:1846 INFO: [cached since 349.4s ago] {'pk_1': '46db30d1-3199-4e79-a0cd-abf12fa6858f'})
+2026-02-01 22:01:17,458.458] base.py line:2713 INFO: ROLLBACK)
+2026-02-01 22:01:17,462.462] _internal.py line:97 INFO: 127.0.0.1 - - [01/Feb/2026 22:01:17] "GET /language-models/google/gemini-2.5-flash-lite HTTP/1.1" 200 -)

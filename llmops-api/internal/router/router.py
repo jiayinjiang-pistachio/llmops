@@ -15,7 +15,7 @@ from injector import inject
 from internal.handler import (
     AppHandler, BuiltinToolHandler, UploadFileHandler, DatasetHandler, DocumentHandler,
     SegmentHandler, OAuthHandler, AccountHandler, AuthHandler, AiHandler, ApiKeyHandler, OpenapiHandler,
-    BuiltinAppHandler, WorkflowHandler
+    BuiltinAppHandler, WorkflowHandler, LanguageModelHandler
 )
 from internal.handler.api_tool_handler import ApiToolHandler
 
@@ -39,6 +39,7 @@ class Router:
     openapi_handler: OpenapiHandler
     builtin_app_handler: BuiltinAppHandler
     workflow_handler: WorkflowHandler
+    language_model_handler: LanguageModelHandler
 
     def register_router(self, app: Flask):
         """注册路由"""
@@ -198,6 +199,13 @@ class Router:
             methods=["POST"],
             view_func=self.workflow_handler.cancel_publish_workflow,
         )
+
+        # 语言模型模块
+        bp.add_url_rule("/language-models", view_func=self.language_model_handler.get_language_models)
+        bp.add_url_rule("/language-models/<string:provider_name>/icon",
+                        view_func=self.language_model_handler.get_language_model_icon)
+        bp.add_url_rule("/language-models/<string:provider_name>/<string:model_name>",
+                        view_func=self.language_model_handler.get_language_model)
 
         # 4. 在应用上去注册蓝图
         app.register_blueprint(bp)

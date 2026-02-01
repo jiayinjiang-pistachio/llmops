@@ -7,7 +7,7 @@ features:
 context_window: 128000
 max_output_tokens: 64000
 attributes:
-  model: deepseek-chat
+  model: deepseek-reasoner
 parameters:
   - name: temperature
     use_template: temperature
