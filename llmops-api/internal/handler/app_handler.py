@@ -6,6 +6,7 @@
 @File           : app_handler.py
 @Description    : 
 """
+import os
 from dataclasses import dataclass
 from uuid import UUID
 
@@ -13,6 +14,7 @@ from flask import request
 from flask_login import current_user, login_required
 from injector import inject
 
+from internal.core.language_model import LanguageModelManager
 from internal.schema import (
     CreateAppReq, GetAppResp, GetPublishHistoriesWithPageReq, GetPublishHistoriesWithPageResp,
     FallbackHistoryToDraftReq, UpdateDebugConversationSummaryReq, DebugChatReq, GetDebugConversationMessagesWithPageReq,
@@ -31,6 +33,7 @@ class AppHandler:
     """应用控制器"""
     app_service: AppService
     retrieval_service: RetrievalService
+    language_model_manager: LanguageModelManager
 
     @login_required
     def get_apps_with_page(self):
@@ -215,6 +218,73 @@ class AppHandler:
 
     @login_required
     def ping(self):
+        provider = self.language_model_manager.get_provider("zhipuai")
+        model_entity = provider.get_model_entity("glm-4.7-flash")
+        model_class = provider.get_model_class(model_entity.model_type)
+        llm = model_class(**{
+            **model_entity.attributes,
+            "features": model_entity.features,
+            "metadata": model_entity.metadata,
+        })
+
+        return success_json({
+            "content": llm.invoke("你好，你是？").content,
+            "features": llm.features,
+            "metadata": llm.metadata,
+        })
+
+    @login_required
+    def ping_temp2(self):
+        # model_class = self.language_model_manager.get_model_class_by_provider_and_model("google", "gemini-1.5-flash")
+        # model_class = self.language_model_manager.get_model_class_by_provider_and_model(
+        #     "google",
+        #     "gemini-3-flash-preview"
+        # )
+        model_class = self.language_model_manager.get_model_class_by_provider_and_model("openai", "gpt-5-mini")
+
+        # model_class = self.language_model_manager.get_model_class_by_provider_and_model(
+        #     "zhipuai",
+        #     "glm-4.6v-flash",
+        # )
+
+        # model_class = self.language_model_manager.get_model_class_by_provider_and_model(
+        #     "deepseek",
+        #     "deepseek-reasoner"
+        # )
+
+        # llm = model_class(
+        #     model="gemini-3-flash-preview",
+        #     api_key=os.getenv("GPTSAPI_API_KEY"),
+        #     base_url=os.getenv("OPENAI_API_BASE")
+        # )
+
+        # llm = model_class(
+        #     model="gemini-2.5-flash-image-hd",
+        #     api_key=os.getenv("GPTSAPI_API_KEY"),
+        #     base_url=os.getenv("OPENAI_API_BASE_V3")
+        # )
+
+        llm = model_class(
+            model="gpt-5-mini",
+            api_key=os.getenv("GPTSAPI_API_KEY"),
+            base_url=os.getenv("OPENAI_API_BASE")
+        )
+
+        # llm = model_class(
+        #     model="glm-4.6v-flash",
+        # )
+
+        # llm = model_class(
+        #     api_key=os.getenv("DEEPSEEK_API_KEY"),
+        #     base_url=os.getenv("DEEPSEEK_BASE_URL"),
+        #     model="deepseek-reasoner",
+        #     temperature=0.5,
+        # )
+
+        return success_message(llm.invoke("你好，请告诉我你的模型，你会生成图片吗").content)
+
+    @login_required
+    def ping_temp(self):
         # pass
         # from internal.core.workflow import Workflow
         # from internal.core.workflow.entities.workflow_entity import WorkflowConfig

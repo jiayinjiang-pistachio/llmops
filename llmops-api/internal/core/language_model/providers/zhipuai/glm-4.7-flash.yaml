@@ -1,0 +1,18 @@
+model: glm-4.7-flash
+label: glm-4.7-flash（文本模型）
+model_type: chat
+features:
+  - tool_call        # 支持函数调用
+  - agent_thought    # 支持推理
+  - image_input # 支持多模态输入
+context_window: 200000
+max_output_tokens: 128000  # 默认最大输出
+attributes:
+  model: glm-4.7-flash
+parameters:
+  - name: temperature
+    use_template: temperature
+  - name: top_p
+    use_template: top_p
+  - name: max_tokens  # 对应 OpenAI 的 max_completion_tokens
+    default: 128000

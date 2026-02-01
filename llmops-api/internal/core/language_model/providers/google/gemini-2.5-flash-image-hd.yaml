@@ -1,0 +1,19 @@
+model: gemini-2.5-flash-image-hd
+label: gemini-2.5-flash-image-hd
+model_type: chat
+features:
+  - tool_call        # 支持函数调用
+  - agent_thought    # 支持推理
+context_window: 1048576  # Flash 支持 100万上下文
+max_output_tokens: 65536  # 默认最大输出
+attributes:
+  model: gemini-2.5-flash-image-hd
+parameters:
+  - name: temperature
+    use_template: temperature
+  - name: top_p
+    use_template: top_p
+  - name: top_k          # Google 特有参数，建议加上
+    default: 40
+  - name: max_output_tokens  # 对应 OpenAI 的 max_completion_tokens
+    default: 65536

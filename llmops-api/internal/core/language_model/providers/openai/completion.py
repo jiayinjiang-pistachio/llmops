@@ -1,0 +1,16 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+@Time           : 2026/2/1 11:10
+@Author         : jiayinkong@163.com
+@File           : completion.py
+@Description    : 
+"""
+from langchain_openai import OpenAI
+
+from internal.core.language_model.entities.model_entity import BaseLanguageModel
+
+
+class Completion(OpenAI, BaseLanguageModel):
+    """OpenAI聊天模型基类"""
+    pass
