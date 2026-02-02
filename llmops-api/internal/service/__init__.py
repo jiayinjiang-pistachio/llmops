@@ -13,6 +13,7 @@ from .api_key_service import ApiKeyService
 from .api_tool_service import APiToolService
 from .app_config_service import AppConfigService
 from .app_service import AppService
+from .assistant_agent_service import AssistantAgentService
 from .base_service import BaseService
 from .builtin_app_service import BuiltinAppService
 from .builtin_tool_service import BuiltinToolService
@@ -21,6 +22,7 @@ from .cos_service import CosService
 from .dataset_service import DatasetService
 from .document_service import DocumentService
 from .embeddings_service import EmbeddingsService
+from .faiss_service import FaissService
 from .jieba_service import JiebaService
 from .jwt_service import JwtService
 from .keyword_table_service import KeywordTableService
@@ -46,5 +48,6 @@ __all__ = [
     "AiService", "ApiKeyService",
     "OpenapiService", "AppConfigService",
     "BuiltinAppService", "WorkflowService",
-    "LanguageModelService"
+    "LanguageModelService", "AssistantAgentService",
+    "FaissService",
 ]

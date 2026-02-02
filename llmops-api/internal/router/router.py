@@ -15,7 +15,7 @@ from injector import inject
 from internal.handler import (
     AppHandler, BuiltinToolHandler, UploadFileHandler, DatasetHandler, DocumentHandler,
     SegmentHandler, OAuthHandler, AccountHandler, AuthHandler, AiHandler, ApiKeyHandler, OpenapiHandler,
-    BuiltinAppHandler, WorkflowHandler, LanguageModelHandler
+    BuiltinAppHandler, WorkflowHandler, LanguageModelHandler, AssistantAgentHandler
 )
 from internal.handler.api_tool_handler import ApiToolHandler
 
@@ -40,6 +40,7 @@ class Router:
     builtin_app_handler: BuiltinAppHandler
     workflow_handler: WorkflowHandler
     language_model_handler: LanguageModelHandler
+    assistant_agent_handler: AssistantAgentHandler
 
     def register_router(self, app: Flask):
         """注册路由"""
@@ -206,6 +207,16 @@ class Router:
                         view_func=self.language_model_handler.get_language_model_icon)
         bp.add_url_rule("/language-models/<string:provider_name>/<string:model_name>",
                         view_func=self.language_model_handler.get_language_model)
+
+        # 辅助agent模块
+        bp.add_url_rule("/assistant-agent/chat", methods=["POST"],
+                        view_func=self.assistant_agent_handler.assistant_agent_chat)
+        bp.add_url_rule("/assistant-agent/chat/<uuid:task_id>/stop", methods=["POST"],
+                        view_func=self.assistant_agent_handler.stop_assistant_agent_chat)
+        bp.add_url_rule("/assistant-agent/messages",
+                        view_func=self.assistant_agent_handler.get_assistant_agent_messages_with_page)
+        bp.add_url_rule("/assistant-agent/delete-conversation", methods=["POST"],
+                        view_func=self.assistant_agent_handler.delete_assistant_agent_conversation)
 
         # 4. 在应用上去注册蓝图
         app.register_blueprint(bp)

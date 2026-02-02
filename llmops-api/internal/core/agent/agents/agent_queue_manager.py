@@ -128,7 +128,11 @@ class AgentQueueManager:
         # 2. 判断任务队列是否存在，不存在则创建，并添加缓存键标识
         if not q:
             # 3. 判断用户的类型生成不同的缓存键前缀（debugger/app/service_api）
-            user_prefix = "account" if self.invoke_from in [InvokeFrom.WEB_APP, InvokeFrom.DEBUGGER] else "end-user"
+            user_prefix = "account" if self.invoke_from in [
+                InvokeFrom.WEB_APP,
+                InvokeFrom.DEBUGGER,
+                InvokeFrom.ASSISTANT_AGENT
+            ] else "end-user"
 
             # 4. 设置任务对应的缓存键，代表这次任务开始了
             self.redis_client.setex(
@@ -166,7 +170,11 @@ class AgentQueueManager:
             return
 
         # 3. 计算对应缓存键的结果
-        user_prefix = "account" if invoke_from in [InvokeFrom.WEB_APP, InvokeFrom.DEBUGGER] else "end-user"
+        user_prefix = "account" if invoke_from in [
+            InvokeFrom.WEB_APP,
+            InvokeFrom.DEBUGGER,
+            InvokeFrom.ASSISTANT_AGENT
+        ] else "end-user"
         if result.decode("utf-8") != f"{user_prefix}-{str(user_id)}":
             return
 

@@ -113,3 +113,4 @@ class InvokeFrom(str, Enum):
     SERVICE_API = "service_api"
     WEB_APP = "web_app"
     DEBUGGER = "debugger"
+    ASSISTANT_AGENT = "assistant_agent"
