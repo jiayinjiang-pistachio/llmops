@@ -7,7 +7,6 @@
 @Description    : 
 """
 import json
-import os
 from dataclasses import dataclass
 from threading import Thread
 from typing import Generator
@@ -15,7 +14,6 @@ from typing import Generator
 from flask import current_app
 from injector import inject
 from langchain_core.messages import HumanMessage
-from langchain_openai import ChatOpenAI
 
 from pkg.response import Response
 from pkg.sqlalchemy import SQLAlchemy
@@ -23,6 +21,7 @@ from .app_config_service import AppConfigService
 from .app_service import AppService
 from .base_service import BaseService
 from .conversation_service import ConversationService
+from .language_model_service import LanguageModelService
 from .retrieval_service import RetrievalService
 from ..core.agent.agents import FunctionCallAgent
 from ..core.agent.entities.agent_entity import AgentConfig
@@ -45,6 +44,7 @@ class OpenapiService(BaseService):
     app_config_service: AppConfigService
     retrieval_service: RetrievalService
     conversation_service: ConversationService
+    language_model_service: LanguageModelService
 
     def chat(self, req: OpenAPIChatReq, account: Account):
         """根据传递的请求+账号信息发起聊天对话，返回数据为块内容或生成器"""
@@ -96,14 +96,8 @@ class OpenapiService(BaseService):
             "status": MessageStatus.NORMAL,
         })
 
-        # todo: 9. 根据传递的Model_config创建LLM实例，等待多LLM接入时调整
-        llm = ChatOpenAI(
-            model=app_config["model_config"]["model"],
-            # todo
-            api_key=os.getenv("GPTSAPI_API_KEY"),
-            base_url=os.getenv("OPENAI_API_BASE"),
-            **app_config["model_config"]["parameters"],
-        )
+        # 从大语言模型管理器中加载模型
+        llm = self.language_model_service.load_language_model(app_config.get("model_config", {}))
 
         # 10. 实例化TokenBufferMemory用户提取短期记忆
         token_buffer_memory = TokenBufferMemory(

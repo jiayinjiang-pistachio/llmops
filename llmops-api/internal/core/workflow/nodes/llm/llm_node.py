@@ -6,13 +6,11 @@
 @File           : llm_node.py
 @Description    : 
 """
-import os
 import time
 from typing import Optional
 
 from jinja2 import Template
 from langchain_core.runnables import RunnableConfig
-from langchain_openai import ChatOpenAI
 
 from internal.core.workflow.entities.node_entity import NodeResult, NodeStatus
 from internal.core.workflow.entities.workflow_entity import WorkflowState
@@ -35,13 +33,18 @@ class LLMNode(BaseNode):
         template = Template(self.node_data.prompt)
         prompt_value = template.render(**inputs_dict)
 
-        # 根据配置创建LLM实例，todo:等待多模态接入时完善
-        llm = ChatOpenAI(
-            model=self.node_data.language_model_config.get("model", "gpt-4o-mini"),
-            api_key=os.getenv("GPTSAPI_API_KEY"),
-            base_url=os.getenv("OPENAI_API_BASE"),
-            **self.node_data.language_model_config.get("parameters", {}),
-        )
+        # 根据配置创建LLM实例
+        from app.http.module import injector
+        from internal.service import LanguageModelService
+        language_model_service = injector.get(LanguageModelService)
+        llm = language_model_service.load_language_model(self.node_data.language_model_config)
+
+        # llm = ChatOpenAI(
+        #     model=self.node_data.language_model_config.get("model", "gpt-4o-mini"),
+        #     api_key=os.getenv("GPTSAPI_API_KEY"),
+        #     base_url=os.getenv("OPENAI_API_BASE"),
+        #     **self.node_data.language_model_config.get("parameters", {}),
+        # )
 
         # 调用LLM并传递prompt后提取数据
         content = llm.invoke(prompt_value).content

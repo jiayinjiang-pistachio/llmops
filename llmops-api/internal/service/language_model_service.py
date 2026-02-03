@@ -6,6 +6,7 @@
 @File           : language_model_service.py
 @Description    : 
 """
+import logging
 import mimetypes
 import os
 from dataclasses import dataclass
@@ -13,10 +14,12 @@ from typing import Any
 
 from flask import current_app
 from injector import inject
+from langchain_openai import ChatOpenAI
 
 from pkg.sqlalchemy import SQLAlchemy
 from .base_service import BaseService
 from ..core.language_model import LanguageModelManager
+from ..core.language_model.entities.model_entity import BaseLanguageModel
 from ..exception import NotFoundException
 from ..lib.helper import convert_model_to_dict
 
@@ -100,3 +103,72 @@ class LanguageModelService(BaseService):
         with open(icon_path, "rb") as f:
             byte_data = f.read()
             return byte_data, mimetype
+
+    def load_language_model(self, model_config: dict[str, Any]) -> BaseLanguageModel:
+        """根据传递的模型配置加载模型，并返回模型实体"""
+        try:
+            provider_name = model_config.get("provider", "")
+            model_name = model_config.get("model", "")
+            parameters = model_config.get("parameters", {})
+
+            # 从模型管理器中获取提供者、模型实体、模型类
+            provider = self.language_model_manager.get_provider(provider_name)
+            model_entity = provider.get_model_entity(model_name)
+            model_class = provider.get_model_class(model_entity.model_type)
+
+            # 根据不同的模型厂商，进行实例化
+            if provider == "openai":
+                # 实例化模型后返回
+                return model_class(
+                    **model_entity.attributes,
+                    **parameters,
+                    api_key=os.getenv("GPTSAPI_API_KEY"),
+                    base_url=os.getenv("OPENAI_API_BASE"),
+                    features=model_entity.features,
+                    metadata=model_entity.metadata,
+                )
+            elif provider == "deepseek":
+                return model_class(
+                    **model_entity.attributes,
+                    **parameters,
+                    api_key=os.getenv("DEEPSEEK_API_KEY"),
+                    base_url=os.getenv("DEEPSEEK_BASE_URL"),
+                )
+            elif provider == "google":
+                # 判断模型名称
+                if model_name == "gemini-2.5-flash-image-hd":
+                    return model_class(
+                        **model_entity.attributes,
+                        **parameters,
+                        api_key=os.getenv("GPTSAPI_API_KEY"),
+                        base_url=os.getenv("OPENAI_API_BASE_V3")
+                    )
+                else:
+                    return model_class(
+                        **model_entity.attributes,
+                        **parameters,
+                        api_key=os.getenv("GPTSAPI_API_KEY"),
+                        base_url=os.getenv("OPENAI_API_BASE"),
+                    )
+            elif provider == "zhipuai":
+                return model_class(
+                    **model_entity.attributes,
+                    **parameters,
+                )
+            else:
+                raise NotFoundException("该模型提供商不存在，已为您设置默认的模型")
+
+        except Exception as e:
+            logging.exception(f"加载大语言模型出错：{str(e)}")
+            return self.load_default_language_model()
+
+    @classmethod
+    def load_default_language_model(cls):
+        """加载默认的大语言模型，在模型管理器中获取不到模型或出错时，使用默认模型兜底"""
+        return ChatOpenAI(
+            model="gpt-4o-mini",
+            api_key=os.getenv("GPTSAPI_API_KEY"),
+            base_url=os.getenv("OPENAI_API_BASE"),
+            temperature=1,
+            max_tokens=8192,
+        )

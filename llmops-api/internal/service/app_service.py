@@ -42,6 +42,7 @@ from .app_config_service import AppConfigService
 from .base_service import BaseService
 from .conversation_service import ConversationService
 from .cos_service import CosService
+from .language_model_service import LanguageModelService
 from .retrieval_service import RetrievalService
 from ..core.agent.agents import FunctionCallAgent
 from ..core.agent.agents.agent_queue_manager import AgentQueueManager
@@ -69,6 +70,7 @@ class AppService(BaseService):
     conversation_service: ConversationService
     app_config_service: AppConfigService
     cos_service: CosService
+    language_model_service: LanguageModelService
 
     def auto_create_app(self, name: str, description: str, account_id: UUID):
         """根据传递的应用名称+描述+账号ID利用AI创建一个Agent智能体"""
@@ -738,14 +740,14 @@ class AppService(BaseService):
             invoke_from=InvokeFrom.DEBUGGER,
         )
 
-        # todo: 5. 根据传递的model_config实例化不同的LLM模型，等待多LLM接入后该处会发生变化
-        llm = ChatOpenAI(
-            model=draft_app_config["model_config"]["model"],
-            # todo: 暂时是用gpt的模型，用本地的baseurl和密钥，到时候再看下是否动态参数传入以支持付费模型
-            api_key=os.getenv("GPTSAPI_API_KEY"),
-            base_url=os.getenv("OPENAI_API_BASE"),
-            **draft_app_config["model_config"]["parameters"],
-        )
+        # 从语言管理器中，加载大语言模型
+        llm = self.language_model_service.load_language_model(draft_app_config.get("model_config", {}))
+        # llm = ChatOpenAI(
+        #     model=draft_app_config["model_config"]["model"],
+        #     api_key=os.getenv("GPTSAPI_API_KEY"),
+        #     base_url=os.getenv("OPENAI_API_BASE"),
+        #     **draft_app_config["model_config"]["parameters"],
+        # )
 
         # 6. 实例化TokenBufferMemory用于提取短期记忆
         token_buffer_memory = TokenBufferMemory(
