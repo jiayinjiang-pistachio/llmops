@@ -9,6 +9,7 @@
 import os
 
 import weaviate
+import weaviate.classes as wvc
 from injector import inject
 from langchain_core.vectorstores import VectorStoreRetriever
 from langchain_weaviate import WeaviateVectorStore
@@ -37,6 +38,13 @@ class VectorDatabaseService:
         self.client = weaviate.connect_to_local(
             host=os.getenv("WEAVIATE_HOST"),
             port=int(os.getenv("WEAVIATE_PORT")),
+            grpc_port=50051,
+            # 核心修改：跳过初始化检查
+            skip_init_checks=True,
+            # 或者增加超时时间
+            additional_config=wvc.init.AdditionalConfig(
+                timeout=wvc.init.Timeout(init=30)
+            )
         )
 
         # 核心：确保这个新名字的 Collection 有正确的类型

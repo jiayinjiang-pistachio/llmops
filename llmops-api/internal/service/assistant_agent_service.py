@@ -17,6 +17,8 @@ from uuid import UUID
 from flask import current_app
 from injector import inject
 from langchain_core.messages import HumanMessage
+from langchain_core.pydantic_v1 import BaseModel, Field
+from langchain_core.tools import BaseTool, tool
 from langchain_openai import ChatOpenAI
 from sqlalchemy import desc
 
@@ -33,6 +35,7 @@ from ..core.memory import TokenBufferMemory
 from ..entity.conversation_entity import InvokeFrom, MessageStatus
 from ..model import Account, Message
 from ..schema import GetDebugConversationMessagesWithPageReq
+from ..task.app_task import auto_create_app
 
 
 @inject
@@ -83,6 +86,7 @@ class AssistantAgentService(BaseService):
         # 6. 将faiss向量数据库知识库检索工具添加到工具列表
         tools = [
             self.faiss_service.convert_faiss_to_tool(),
+            self.convert_create_app_to_tool(account_id=account.id),
         ]
 
         # 7. 构建Agent智能体，目前暂时使用FunctionCallAgent
@@ -169,8 +173,6 @@ class AssistantAgentService(BaseService):
         # 1. 获取会话记录
         conversation = account.assistant_agent_conversation
 
-        print("---conversation_id----", conversation.id)
-
         # 2. 构建分页器并构建游标条件
         paginator = Paginator(db=self.db, req=req)
         filters = []
@@ -194,3 +196,22 @@ class AssistantAgentService(BaseService):
     def delete_conversation(self, account: Account) -> None:
         """根据传递的账号清空辅助agent智能体消息列表"""
         self.update(account, assistant_agent_conversation_id=None)
+
+    @classmethod
+    def convert_create_app_to_tool(cls, account_id: UUID) -> BaseTool:
+        """定义自动创建Agent应用的LangChain工具"""
+
+        class CreateAppInput(BaseModel):
+            name: str = Field(description="需要创建的Agent/应用名称，长度不超过50个字符")
+            description: str = Field(description="需要创建的Agent/应用描述，请详细概括该应用的功能")
+
+        @tool("create_app", args_schema=CreateAppInput)
+        def create_app(name: str, description: str) -> str:
+            """如果用户提出了需要创建一个Agent或应用，你可以调用此工具，参数的输入是应用的名称和描述，返回的数据是创建后的成功提示"""
+            # 1. 调用celery异步任务在后端创建应用
+            auto_create_app.delay(name=name, description=description, account_id=account_id)
+
+            # 2. 返回成功提示
+            return f"已调用后端异步任务创建Agent应用。\n应用名称：{name}\n应用描述：{description}"
+
+        return create_app
