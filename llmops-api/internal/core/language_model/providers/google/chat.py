@@ -6,10 +6,12 @@
 @File           : chat.py
 @Description    : 
 """
+import json
 import time
 from typing import List, Optional, Any
 
 import requests
+import tiktoken
 from langchain_core.callbacks import CallbackManagerForLLMRun
 from langchain_core.messages import BaseMessage, AIMessage
 from langchain_core.outputs import ChatResult, ChatGeneration
@@ -98,3 +100,22 @@ class Chat(ChatOpenAI, BaseLanguageModel):
             content = f"生图模型调用出错: {str(e)}"
 
         return ChatResult(generations=[ChatGeneration(message=AIMessage(content=content))])
+
+    def get_num_tokens_from_messages(self, messages: List[BaseMessage]) -> int:
+        """手动计算 Token 数量，支持 cl100k_base 编码"""
+        try:
+            encoding = tiktoken.get_encoding("cl100k_base")
+        except Exception:
+            # 兜底逻辑：如果无法获取编码器，按字符长度估算
+            return sum(len(str(m.content)) // 2 + 3 for m in messages) + 3
+
+        num_tokens = 0
+        for message in messages:
+            num_tokens += 3  # 每条消息的角色前缀等消耗
+            content = message.content or ""
+            if isinstance(content, list):
+                content = json.dumps(content)
+            num_tokens += len(encoding.encode(content))
+
+        num_tokens += 3  # 结束 bonus
+        return num_tokens

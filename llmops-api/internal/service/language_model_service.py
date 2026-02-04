@@ -116,8 +116,11 @@ class LanguageModelService(BaseService):
             model_entity = provider.get_model_entity(model_name)
             model_class = provider.get_model_class(model_entity.model_type)
 
+            print("-------load_language_model.provider---", provider)
+
             # 根据不同的模型厂商，进行实例化
-            if provider == "openai":
+            if provider.name == "openai":
+                print("---openai_model_class---")
                 # 实例化模型后返回
                 return model_class(
                     **model_entity.attributes,
@@ -127,14 +130,16 @@ class LanguageModelService(BaseService):
                     features=model_entity.features,
                     metadata=model_entity.metadata,
                 )
-            elif provider == "deepseek":
+            elif provider.name == "deepseek":
+                print("---deepseek_model_class---")
                 return model_class(
                     **model_entity.attributes,
                     **parameters,
                     api_key=os.getenv("DEEPSEEK_API_KEY"),
                     base_url=os.getenv("DEEPSEEK_BASE_URL"),
                 )
-            elif provider == "google":
+            elif provider.name == "google":
+                print("---google_model_class---")
                 # 判断模型名称
                 if model_name == "gemini-2.5-flash-image-hd":
                     return model_class(
@@ -150,12 +155,14 @@ class LanguageModelService(BaseService):
                         api_key=os.getenv("GPTSAPI_API_KEY"),
                         base_url=os.getenv("OPENAI_API_BASE"),
                     )
-            elif provider == "zhipuai":
+            elif provider.name == "zhipuai":
+                print("----zhipuai_model_class---")
                 return model_class(
                     **model_entity.attributes,
                     **parameters,
                 )
             else:
+                print("----other_model_class---")
                 raise NotFoundException("该模型提供商不存在，已为您设置默认的模型")
 
         except Exception as e:

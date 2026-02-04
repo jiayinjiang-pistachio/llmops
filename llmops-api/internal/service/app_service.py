@@ -48,6 +48,8 @@ from ..core.agent.agents import FunctionCallAgent
 from ..core.agent.agents.agent_queue_manager import AgentQueueManager
 from ..core.agent.entities.agent_entity import AgentConfig
 from ..core.agent.entities.queue_entity import QueueEvent, AgentThought
+from ..core.language_model import LanguageModelManager
+from ..core.language_model.entities.model_entity import ModelParameterType
 from ..core.memory import TokenBufferMemory
 from ..core.tools.api_tools.providers import ApiProviderManager
 from ..core.tools.builtin_tools.providers import BuiltinProviderManager
@@ -55,7 +57,7 @@ from ..entity.ai_entity import OPTIMIZE_PROMPT_TEMPLATE
 from ..entity.conversation_entity import InvokeFrom, MessageStatus
 from ..entity.dataset_entity import RetrievalSource
 from ..exception import NotFoundException, ForbiddenException, ValidationException, FailException
-from ..lib.helper import remove_fields
+from ..lib.helper import remove_fields, get_value_type
 
 
 @inject
@@ -71,6 +73,7 @@ class AppService(BaseService):
     app_config_service: AppConfigService
     cos_service: CosService
     language_model_service: LanguageModelService
+    language_model_manager: LanguageModelManager
 
     def auto_create_app(self, name: str, description: str, account_id: UUID):
         """根据传递的应用名称+描述+账号ID利用AI创建一个Agent智能体"""
@@ -247,7 +250,81 @@ class AppService(BaseService):
         ):
             raise ValidationException("草稿配置字段出错，请核实后重试")
 
-        # 3 todo: 校验model_config字段，等待多LLM接入时完成该步骤校验
+        # 3. 校验model_config字段，provider、model出错时抛出错误（严格校验），parameters使用宽松校验，出错时使用默认值
+        if "model_config" in draft_app_config:
+            print("---update_model_config.model_name---", draft_app_config["model_config"])
+
+            # 3.1 判断模型配置是否为字典
+            model_config = draft_app_config["model_config"]
+            if not isinstance(model_config, dict):
+                raise ValidationException("模型配置格式错误，请核实后重试")
+
+            # 3.2 判断model_config键信息是否正确
+            if set(model_config.keys()) != {"provider", "model", "parameters"}:
+                raise ValidationException("模型的参数键配置存在格式错误")
+
+            # 3.3 判断provider是否存在、类型是否正确
+            if not model_config["provider"] or not isinstance(model_config["provider"], str):
+                raise ValidationException("模型提供商类型必须为字符串")
+            # 判断provider是否是本项目支持的
+            provider = self.language_model_manager.get_provider(model_config["provider"])
+            if not provider:
+                raise ValidationException("暂不支持该模型提供商")
+
+            # 判断model是否存在、类型是否正确
+            if not model_config.get("model") or not isinstance(model_config["model"], str):
+                raise ValidationException("模型名称必须是字符串")
+
+            model_entity = provider.get_model_entity(model_config["model"])
+            if not model_entity:
+                raise ValidationException("暂不支持该模型")
+
+            # 判断parameters信息是否错误
+            if not isinstance(model_config["parameters"], dict):
+                raise ValidationException("模型参数parameters必须是字典")
+
+            # 删除传递的多余的parameter，或者少传递的parameter用默认值补上
+            parameters = {}
+            for parameter in model_entity.parameters:
+                parameter_value = model_config.get("parameters").get(parameter.name, parameter.default)
+
+                # 判断参数是否必填
+                if parameter.required:
+                    # 参数必填则不允许为None，如果为None设置为默认值
+                    if parameter_value is None:
+                        parameter_value = parameter.default
+                    else:
+                        # 判断parameter_value的类型
+                        value_type = get_value_type(parameter_value)
+                        if value_type != parameter.type.value:
+                            parameter_value = parameter.default
+                else:
+                    # 非必填，如果数据非空需要校验
+                    if parameter_value is not None:
+                        if get_value_type(parameter_value) != parameter.type:
+                            parameter_value = parameter.default
+
+                # 判断参数是否存在options，如果存在则数值必须在options中选择
+                if parameter.options and parameter_value not in parameter.options:
+                    parameter_value = parameter.default
+
+                # 参数类型为int\float，如果存在min\max需要校验
+                if parameter.type in [ModelParameterType.INT,
+                                      ModelParameterType.FLOAT] and parameter_value is not None:
+                    # 校验数值的min、max
+                    if (
+                            (parameter.min and parameter_value < parameter.min) or
+                            (parameter.max and parameter_value > parameter.max)
+                    ):
+                        parameter_value = parameter.default
+
+                parameters[parameter.name] = parameter_value
+
+            # 赋值操作
+            model_config["parameters"] = parameters
+
+            print("---update_draft_app_config---.model_config---", model_config)
+            draft_app_config["model_config"] = model_config
 
         # 4. 校验dialog_round上下文轮数，校验数据类型以及范围
         if "dialog_round" in draft_app_config:

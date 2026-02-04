@@ -17,10 +17,13 @@ from sqlalchemy import UUID
 from internal.core.tools.api_tools.entities import ToolEntity
 from internal.core.tools.api_tools.providers import ApiProviderManager
 from internal.core.tools.builtin_tools.providers import BuiltinProviderManager
-from internal.lib.helper import datetime_to_timestamp
+from internal.lib.helper import datetime_to_timestamp, get_value_type
 from internal.model import App, ApiTool, Dataset, AppConfigVersion, AppConfig, AppDatasetJoin
 from pkg.sqlalchemy import SQLAlchemy
 from .base_service import BaseService
+from ..core.language_model import LanguageModelManager
+from ..core.language_model.entities.model_entity import ModelParameterType
+from ..entity.app_entity import DEFAULT_APP_CONFIG
 
 
 @inject
@@ -30,13 +33,18 @@ class AppConfigService(BaseService):
     db: SQLAlchemy
     builtin_provider_manager: BuiltinProviderManager
     api_provider_manager: ApiProviderManager
+    language_model_manager: LanguageModelManager
 
     def get_draft_app_config(self, app: App) -> dict[str, Any]:
         """根据传递的应用获取该应用的草稿配置"""
         # 1.获取应用草稿配置信息
         draft_app_config = app.draft_app_config
 
-        # 2. todo: 校验model_config
+        # 2. 校验model_config信息，如果使用了不存在的提供者或模型，则使用默认值（宽松校验）
+        validate_model_config = self._process_and_validate_model_config(draft_app_config.model_config)
+        if draft_app_config.model_config != validate_model_config:
+            # 更新草稿配置
+            self.update(draft_app_config, model_config=validate_model_config)
 
         # 3. 校验工具
         tools, validate_tools = self._process_and_validate_tools(draft_app_config.tools)
@@ -61,6 +69,7 @@ class AppConfigService(BaseService):
 
         # 8. 将数据转换成字典返回
         return self._process_and_transform_app_config(
+            validate_model_config,
             tools,
             workflows,
             datasets,
@@ -72,7 +81,11 @@ class AppConfigService(BaseService):
         # 1. 提取应用的运行时配置
         app_config = app.app_config
 
-        # todo: 2. 校验model_config
+        # 2. 校验model_config，如果运行时配置的model_config发生变化，则进行更新
+        validate_model_config = self._process_and_validate_model_config(app_config.model_config)
+        if app_config.model_config != validate_model_config:
+            print("---validate_model_config---", validate_model_config)
+            self.update(app_config, model_config=validate_model_config)
 
         # 3. 循环遍历工具列表删除已经被删除的工具信息
         tools, validate_tools = self._process_and_validate_tools(app_config.tools)
@@ -99,10 +112,11 @@ class AppConfigService(BaseService):
 
         # 20. 将数据转换成字典后返回
         return self._process_and_transform_app_config(
+            validate_model_config,
             tools,
             workflows,
             datasets,
-            app_config
+            app_config,
         )
 
     def get_langchian_tools_by_tool_config(self, tools_config: list[dict]) -> list[BaseTool]:
@@ -257,15 +271,18 @@ class AppConfigService(BaseService):
 
     def _process_and_transform_app_config(
             self,
+            model_config: dict[str, Any],
             tools: list[dict],
             workflows: list[dict],
             datasets: list[UUID],
             app_config: Union[AppConfig, AppConfigVersion]
     ) -> dict[str, Any]:
         """根据新的工具信息、工作流信息、知识库信息，获取转换后的应用配置"""
+        print("----_process_and_transform_app_config.model_config----", model_config)
+
         return {
             "id": str(app_config.id),
-            "model_config": app_config.model_config,
+            "model_config": model_config,
             "dialog_round": app_config.dialog_round,
             "preset_prompt": app_config.preset_prompt,
             "tools": tools,
@@ -282,3 +299,88 @@ class AppConfigService(BaseService):
             "updated_at": datetime_to_timestamp(app_config.updated_at),
             "created_at": datetime_to_timestamp(app_config.created_at),
         }
+
+    def _process_and_validate_model_config(self, origin_model_config: dict[str, Any]) -> dict[str, Any]:
+        """根据传递的模型配置处理并校验，随后返回校验后的信息"""
+        print("---origin_model_config---", origin_model_config)
+        # 1. 判断model_config是否为字典
+        if not isinstance(origin_model_config, dict):
+            return DEFAULT_APP_CONFIG["model_config"]
+
+        # 2. 提取origin_model_config中的provider、model、parameters
+        model_config = {
+            "provider": origin_model_config.get("provider", ""),
+            "model": origin_model_config.get("model", ""),
+            "parameters": origin_model_config.get("parameters", {}),
+        }
+
+        print("---model_config---", model_config)
+
+        # 3. 判断provider是否存在、类型是否正确
+        if not model_config["provider"] or not isinstance(model_config["provider"], str):
+            return DEFAULT_APP_CONFIG["model_config"]
+
+        # 判断provider是否是本项目支持的
+        provider = self.language_model_manager.get_provider(model_config["provider"])
+
+        print("---provider---", provider)
+
+        if not provider:
+            return DEFAULT_APP_CONFIG["model_config"]
+
+        # 判断model是否存在、类型是否正确
+        if not model_config.get("model") or not isinstance(model_config["model"], str):
+            return DEFAULT_APP_CONFIG["model_config"]
+
+        model_entity = provider.get_model_entity(model_config["model"])
+
+        print("---model_entity---", model_entity)
+
+        if not model_entity:
+            return DEFAULT_APP_CONFIG["model_config"]
+
+        # 判断parameters信息是否错误
+        if not isinstance(model_config["parameters"], dict):
+            model_config["parameters"] = {
+                parameter.name: parameter.default for parameter in model_entity.parameters
+            }
+        # 删除传递的多余的parameter，或者少传递的parameter用默认值补上
+        parameters = {}
+        for parameter in model_entity.parameters:
+            parameter_value = model_config.get("parameters").get(parameter.name, parameter.default)
+
+            # 判断参数是否必填
+            if parameter.required:
+                # 参数必填则不允许为None，如果为None设置为默认值
+                if parameter_value is None:
+                    parameter_value = parameter.default
+                else:
+                    # 判断parameter_value的类型
+                    value_type = get_value_type(parameter_value)
+                    if value_type != parameter.type.value:
+                        parameter_value = parameter.default
+            else:
+                # 非必填，如果数据非空需要校验
+                if parameter_value is not None:
+                    if get_value_type(parameter_value) != parameter.type:
+                        parameter_value = parameter.default
+
+            # 判断参数是否存在options，如果存在则数值必须在options中选择
+            if parameter.options and parameter_value not in parameter.options:
+                parameter_value = parameter.default
+
+            # 参数类型为int\float，如果存在min\max需要校验
+            if parameter.type in [ModelParameterType.INT, ModelParameterType.FLOAT] and parameter_value is not None:
+                # 校验数值的min、max
+                if (
+                        (parameter.min and parameter_value < parameter.min) or
+                        (parameter.max and parameter_value > parameter.max)
+                ):
+                    parameter_value = parameter.default
+
+            parameters[parameter.name] = parameter_value
+
+        # 赋值操作
+        model_config["parameters"] = parameters
+
+        return model_config

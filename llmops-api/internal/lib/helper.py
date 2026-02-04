@@ -89,3 +89,15 @@ def convert_model_to_dict(obj: Any, *args, **kwargs):
 
     # 7.对其他类型的字段，保持原样
     return obj
+
+
+def get_value_type(value: Any):
+    value_type = type(value).__name__
+
+    if value_type == "str":
+        return "string"
+
+    if value_type == "bool":
+        return "boolean"
+
+    return value_type

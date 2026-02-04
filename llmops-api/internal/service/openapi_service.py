@@ -134,6 +134,7 @@ class OpenapiService(BaseService):
                 enable_long_term_memory=app_config["long_term_memory"]["enable"],
                 tools=tools,
                 review_config=app_config["review_config"],
+                preset_prompt=app_config["preset_prompt"],
             )
         )
 
