@@ -17,7 +17,7 @@ DEFAULT_MODEL_PARAMETER_TEMPLATE = {
         "help": "温度控制随机性，较低的温度会导致较少的随机生成。随着温度接近零，模型将变得更稳定，较高的温度会导致更多随机内容被生成",
         "required": False,
         "default": 1,
-        "min": 1,
+        "min": 0.1,
         "max": 1,
         "precision": 2,  # 保留小数位2位
         "options": [],

@@ -44,12 +44,12 @@ from .conversation_service import ConversationService
 from .cos_service import CosService
 from .language_model_service import LanguageModelService
 from .retrieval_service import RetrievalService
-from ..core.agent.agents import FunctionCallAgent
+from ..core.agent.agents import FunctionCallAgent, ReACTAgent
 from ..core.agent.agents.agent_queue_manager import AgentQueueManager
 from ..core.agent.entities.agent_entity import AgentConfig
 from ..core.agent.entities.queue_entity import QueueEvent, AgentThought
 from ..core.language_model import LanguageModelManager
-from ..core.language_model.entities.model_entity import ModelParameterType
+from ..core.language_model.entities.model_entity import ModelParameterType, ModelFeature
 from ..core.memory import TokenBufferMemory
 from ..core.tools.api_tools.providers import ApiProviderManager
 from ..core.tools.builtin_tools.providers import BuiltinProviderManager
@@ -819,12 +819,6 @@ class AppService(BaseService):
 
         # 从语言管理器中，加载大语言模型
         llm = self.language_model_service.load_language_model(draft_app_config.get("model_config", {}))
-        # llm = ChatOpenAI(
-        #     model=draft_app_config["model_config"]["model"],
-        #     api_key=os.getenv("GPTSAPI_API_KEY"),
-        #     base_url=os.getenv("OPENAI_API_BASE"),
-        #     **draft_app_config["model_config"]["parameters"],
-        # )
 
         # 6. 实例化TokenBufferMemory用于提取短期记忆
         token_buffer_memory = TokenBufferMemory(
@@ -851,8 +845,9 @@ class AppService(BaseService):
             )
             tools.append(dataset_retrieval)
 
-        # 10. todo: 构建Agent智能体，目前暂时使用FunctionCallAgent
-        agent = FunctionCallAgent(
+        # 10. 构建Agent智能体，根据LLM是否支持tool_call，决定使用不同的agent
+        agent_class = FunctionCallAgent if ModelFeature.TOOL_CALL in llm.features else ReACTAgent
+        agent = agent_class(
             llm=llm,
             agent_config=AgentConfig(
                 user_id=account.id,

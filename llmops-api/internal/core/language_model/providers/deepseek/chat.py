@@ -18,7 +18,7 @@ from internal.core.language_model.entities.model_entity import BaseLanguageModel
 
 class Chat(BaseChatOpenAI, BaseLanguageModel):
     """deepseek聊天模型基础类"""
-    
+
     def __init__(self, api_key: str, base_url: str, **kwargs):
         super().__init__(openai_api_key=api_key, openai_api_base=base_url, **kwargs)
 

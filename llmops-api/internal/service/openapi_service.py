@@ -23,9 +23,10 @@ from .base_service import BaseService
 from .conversation_service import ConversationService
 from .language_model_service import LanguageModelService
 from .retrieval_service import RetrievalService
-from ..core.agent.agents import FunctionCallAgent
+from ..core.agent.agents import FunctionCallAgent, ReACTAgent
 from ..core.agent.entities.agent_entity import AgentConfig
 from ..core.agent.entities.queue_entity import AgentThought, QueueEvent
+from ..core.language_model.entities.model_entity import ModelFeature
 from ..core.memory import TokenBufferMemory
 from ..entity.app_entity import AppStatus
 from ..entity.conversation_entity import InvokeFrom, MessageStatus
@@ -125,8 +126,9 @@ class OpenapiService(BaseService):
             )
             tools.append(dataset_retrieval)
 
-        # todo: 14. 构建Agent智能体，目前暂时使用FunctionCallAgent
-        agent = FunctionCallAgent(
+        #  14. 构建Agent智能体，根据LLM是否支持tool_call，决定使用不同的agent
+        agent_class = FunctionCallAgent if ModelFeature.TOOL_CALL in llm.features else ReACTAgent
+        agent = agent_class(
             llm=llm,
             agent_config=AgentConfig(
                 user_id=account.id,

@@ -2,7 +2,7 @@ model: glm-4.7-flash
 label: glm-4.7-flash（文本模型）
 model_type: chat
 features:
-  - tool_call        # 支持函数调用
+  #  - tool_call        # 支持函数调用
   - agent_thought    # 支持推理
   - image_input # 支持多模态输入
 context_window: 200000
@@ -15,4 +15,9 @@ parameters:
   - name: top_p
     use_template: top_p
   - name: max_tokens  # 对应 OpenAI 的 max_completion_tokens
-    default: 128000
+    label: 最大标记
+    type: int
+    default: 8000
+    help: 要生成的标记的最大数量，类型为整型
+    min: 1
+    max: 128000

@@ -2,7 +2,7 @@ model: glm-4.6v-flash
 label: glm-4.6v-flash（视觉模型）
 model_type: chat
 features:
-  - tool_call        # 支持函数调用
+  #  - tool_call        # 支持函数调用，FunctionCallAgent对智普模型的函数调用支持不好，已调通ReACTAgent的too_call功能，先用ReACTAgent
   - agent_thought    # 支持推理
 context_window: 128000  # Flash 支持 100万上下文
 max_output_tokens: 32000  # 默认最大输出
@@ -14,4 +14,9 @@ parameters:
   - name: top_p
     use_template: top_p
   - name: max_tokens  # 对应 OpenAI 的 max_completion_tokens
-    default: 32000
+    default: 4096
+    type: int
+    label: 最大标记
+    help: 要生成的标记的最大数量，类型为整型
+    min: 1
+    max: 32000

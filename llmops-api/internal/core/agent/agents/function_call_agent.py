@@ -183,11 +183,11 @@ class FunctionCallAgent(BaseAgent):
                     gathered += chunk
 
                 # 检测生成类型是工具参数还是文本生成
-                if not generation_type:
-                    if chunk.tool_call_chunks:
-                        generation_type = "thought"
-                    elif chunk.content:
-                        generation_type = "message"
+                # if not generation_type:
+                if chunk.tool_call_chunks or (chunk.tool_calls and len(chunk.tool_calls) > 0):
+                    generation_type = "thought"
+                elif chunk.content:
+                    generation_type = "message"
 
                 # 如果生成的是消息则提交智能体消息事件
                 if generation_type == "message":
@@ -207,6 +207,7 @@ class FunctionCallAgent(BaseAgent):
                         latency=time.perf_counter() - start_at,
 
                     ))
+
         except Exception as e:
             logging.exception(f"LLM节点发生错误，错误信息：{str(e)}")
             self.agent_queue_manager.publish_error(task_id, f"LLM节点发生错误，错误信息：{str(e)}")
@@ -234,6 +235,7 @@ class FunctionCallAgent(BaseAgent):
 
     def _tools(self, state: AgentState) -> AgentState:
         """工具调用节点"""
+        print("----进行tools调用----", state["iteration_count"])
         # 1. 将工具列表转换成字典，便于调用指定工具
         tools_to_dict = {
             tool.name: tool
@@ -290,6 +292,8 @@ class FunctionCallAgent(BaseAgent):
         messages = state["messages"]
 
         ai_message = messages[-1]
+
+        print("----ai_message-----", ai_message)
 
         if hasattr(ai_message, "tool_calls") and len(ai_message.tool_calls) > 0:
             return "tools"

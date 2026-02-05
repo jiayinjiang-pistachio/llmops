@@ -6,13 +6,13 @@
   supported_model_types:
     - chat
     - completion
-- name: google
-  label: Google
-  description: Google 提供的模型，例如 gemini-2.5-flash-lite。
-  icon: icon.svg
-  background: "transparent"
-  supported_model_types:
-    - chat
+#- name: google
+#  label: Google
+#  description: Google 提供的模型，例如 gemini-2.5-flash-lite。
+#  icon: icon.svg
+#  background: "transparent"
+#  supported_model_types:
+#    - chat
 - name: zhipuai
   label: 智普
   description: 智谱提供的模型，例如 glm-4.7-flash。

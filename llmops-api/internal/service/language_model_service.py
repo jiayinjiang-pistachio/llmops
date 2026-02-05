@@ -116,8 +116,6 @@ class LanguageModelService(BaseService):
             model_entity = provider.get_model_entity(model_name)
             model_class = provider.get_model_class(model_entity.model_type)
 
-            print("-------load_language_model.provider---", provider)
-
             # 根据不同的模型厂商，进行实例化
             if provider.name == "openai":
                 print("---openai_model_class---")
@@ -137,6 +135,8 @@ class LanguageModelService(BaseService):
                     **parameters,
                     api_key=os.getenv("DEEPSEEK_API_KEY"),
                     base_url=os.getenv("DEEPSEEK_BASE_URL"),
+                    features=model_entity.features,
+                    metadata=model_entity.metadata,
                 )
             elif provider.name == "google":
                 print("---google_model_class---")
@@ -146,7 +146,9 @@ class LanguageModelService(BaseService):
                         **model_entity.attributes,
                         **parameters,
                         api_key=os.getenv("GPTSAPI_API_KEY"),
-                        base_url=os.getenv("OPENAI_API_BASE_V3")
+                        base_url=os.getenv("OPENAI_API_BASE_V3"),
+                        features=model_entity.features,
+                        metadata=model_entity.metadata,
                     )
                 else:
                     return model_class(
@@ -154,12 +156,19 @@ class LanguageModelService(BaseService):
                         **parameters,
                         api_key=os.getenv("GPTSAPI_API_KEY"),
                         base_url=os.getenv("OPENAI_API_BASE"),
+                        features=model_entity.features,
+                        metadata=model_entity.metadata,
                     )
             elif provider.name == "zhipuai":
-                print("----zhipuai_model_class---")
+                print("----zhipuai_model_class---", model_entity.label)
                 return model_class(
                     **model_entity.attributes,
                     **parameters,
+                    streaming=True,
+                    api_key=os.getenv("ZHIPUAI_API_KEY"),
+                    base_url=os.getenv("ZHIPUAI_BASE_URL"),
+                    features=model_entity.features,
+                    metadata=model_entity.metadata,
                 )
             else:
                 print("----other_model_class---")
