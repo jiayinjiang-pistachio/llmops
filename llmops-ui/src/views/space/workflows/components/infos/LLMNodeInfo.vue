@@ -5,6 +5,7 @@ import { cloneDeep } from 'lodash'
 import { getReferencedVariables } from '@/utils/helper'
 import { Message } from '@arco-design/web-vue'
 import type { ValidatedError } from '@arco-design/web-vue/es/form/interface'
+import ModelConfig from './components/ModelConfig.vue'
 
 // 1.定义自定义组件所需数据
 const props = defineProps<{
@@ -39,6 +40,9 @@ const onSubmit = async ({ errors }: { errors: Record<string, ValidatedError> | u
 
   // 4.2 深度拷贝表单数据内容
   const cloneInputs = cloneDeep(form.value.inputs)
+  const cloneModelConfig = cloneDeep(form.value.model_config)
+
+  debugger
 
   // 4.3 数据校验通过，通过事件触发数据更新
   emits('updateNode', {
@@ -46,6 +50,7 @@ const onSubmit = async ({ errors }: { errors: Record<string, ValidatedError> | u
     title: form.value.title,
     description: form.value.description,
     prompt: form.value.prompt,
+    model_config: cloneModelConfig,
     inputs: cloneInputs.map((input: any) => {
       return {
         name: input.name,
@@ -80,17 +85,7 @@ watch(
       title: newNode.data.title,
       description: newNode.data.description,
       prompt: newNode.data.prompt,
-      model_config: {
-        provider: 'openai',
-        model: 'gpt-4o-mini',
-        parameters: {
-          frequency_penalty: 0.2,
-          max_tokens: 8192,
-          presence_penalty: 0.2,
-          temperature: 0.5,
-          top_p: 0.85,
-        },
-      },
+      model_config: newNode.data.language_model_config,
       inputs: cloneInputs.map((input: any) => {
         // 5.1 计算引用的变量值信息
         const ref =
@@ -166,6 +161,22 @@ watch(
     <a-divider class="my-2" />
     <!-- 表单信息 -->
     <a-form size="mini" :model="form" layout="vertical" @submit="onSubmit">
+      <!-- 模型选择 -->
+      <div class="flex flex-col gap-2">
+        <!-- 标题天&操作按钮 -->
+        <div class="flex items-center justify-between">
+          <!-- 左侧标题 -->
+          <div class="flex items-center gap-2 text-gray-700 font-semibold">
+            <div class="">语言模型配置</div>
+            <a-tooltip content="选择不同的大语言模型作为节点的底座模型">
+              <icon-question-circle />
+            </a-tooltip>
+          </div>
+          <!-- 右侧选择模型 -->
+          <model-config v-model:model_config="form.model_config" />
+        </div>
+      </div>
+      <a-divider class="my-4" />
       <!-- 输入参数 -->
       <div class="flex flex-col gap-2">
         <!-- 标题&操作按钮 -->

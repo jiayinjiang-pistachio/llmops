@@ -152,7 +152,7 @@ const props = defineProps<{
   workflowId: string
 }>()
 
-const emits = defineEmits(['update:visible'])
+const emits = defineEmits(['update:visible', 'run-result'])
 
 const { nodes } = useVueFlow()
 const form = ref<Record<string, any>>({})
@@ -222,5 +222,18 @@ watch(
       form.value = {}
     }
   },
+)
+
+watch(
+  () => outputs.value,
+  (newValue) => {
+    if(newValue) {
+      console.log('run-success')
+      emits('run-result', 'succeeded')
+    } else {
+      console.log('run-fail')
+      emits('run-result', 'failed')
+    }
+  }
 )
 </script>

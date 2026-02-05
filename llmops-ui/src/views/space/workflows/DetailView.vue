@@ -37,8 +37,7 @@
                 {{ workflow.status === 'draft' ? '草稿' : '已发布' }}
               </div>
               <a-tag size="small" class="rounded h-[18px] leading-[18px] bg-gray-200 text-gray-500">
-                已自动保存 {{ moment(workflow.updated_at * 1000).format('HH:mm:ss') }}-
-                {{ nodeInofVisible }}
+                已自动保存 {{ moment(workflow.updated_at * 1000).format('HH:mm:ss') }}
               </a-tag>
             </div>
           </div>
@@ -53,7 +52,12 @@
               :loading="publishWorkflowLoading"
               type="primary"
               class="!rounded-tl-lg !rounded-bl-lg"
-              @click="() => handlePublishWorkflow(String(workflow.id))"
+              @click="
+                async () => {
+                  await handlePublishWorkflow(String(workflow.id))
+                  await loadWorkflow(String(workflow.id))
+                }
+              "
             >
               更新发布
             </a-button>
@@ -71,7 +75,12 @@
                 <a-doption
                   :disabled="workflow.status !== 'published'"
                   class="!text-red-700"
-                  @click="() => handleCancelPublish(String(workflow.id))"
+                  @click="
+                    async () => {
+                      await handleCancelPublish(String(workflow.id))
+                      await loadWorkflow(String(workflow.id))
+                    }
+                  "
                 >
                   取消发布
                 </a-doption>
@@ -309,6 +318,7 @@
         <DebugModal
           :workflow-id="String(route.params.workflow_id ?? '')"
           v-model:visible="isDebug"
+          @run-result="onRunResult"
         />
         <!-- 节点信息容器 -->
         <StartNodeInfo
@@ -649,10 +659,11 @@ const onChange = () => {
   handleUpdateDraftGraph(
     String(route.params.workflow_id),
     convertGraphToReq(nodes.value, edges.value),
+    false,
   )
 }
 
-const onUpdateNode = (nodeData: Record<string, any>) => {
+const onUpdateNode = async (nodeData: Record<string, any>) => {
   // 获取该节点对应的索引
   const idx = nodes.value.findIndex((node: any) => node.id === nodeData.id)
 
@@ -665,10 +676,22 @@ const onUpdateNode = (nodeData: Record<string, any>) => {
   }
 
   // 调用API发起更新请求
-  handleUpdateDraftGraph(
+  await handleUpdateDraftGraph(
     String(route.params.workflow_id),
     convertGraphToReq(nodes.value, edges.value),
+    false,
   )
+
+  const workflowId = String(route.params.workflow_id)
+  await loadWorkflow(workflowId)
+  await loadDraftGraph(workflowId)
+}
+
+const onRunResult = () => {
+  setTimeout(async () => {
+    const workflowId = String(route.params.workflow_id)
+    await loadWorkflow(workflowId)
+  }, 1000 * 3)
 }
 
 const handleClickDebug = () => {

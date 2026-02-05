@@ -7,6 +7,11 @@
         <div class="flex items-center h-16 border-b p-4">
           <div class="text-lg text-gray-700">应用编排</div>
           <!-- LLM模型配置 -->
+          <ModelConfig
+            :dialog-round="draftAppConfigForm.dialog_round"
+            v-model:model_config="draftAppConfigForm.model_config"
+            :app_id="String(route.params.app_id)"
+          />
         </div>
         <!-- 底部编排区域 -->
         <div class="grid grid-cols-[13fr_13fr] overflow-hidden h-[calc(100vh-141px)]">
@@ -55,6 +60,8 @@ import PreviewDebugHeader from './components/PreviewDebugHeader.vue'
 import PreviewDebugChat from './components/PreviewDebugChat.vue'
 import { useAppStore } from '@/stores/app'
 import { storeToRefs } from 'pinia'
+import ModelConfig from './components/ModelConfig.vue'
+
 defineProps<{
   app: AppDetail
 }>()

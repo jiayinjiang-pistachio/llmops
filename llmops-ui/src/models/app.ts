@@ -24,11 +24,9 @@ export type CreateAppReq = {
 // 回去特定应用的草稿配置响应结构
 export interface DraftAppConfig {
   id: string
-  modal_config: {
+  model_config: {
     provider: string
     model: string
-    api_key?: string // todo
-    base_url?: string // todo
     parameters: Record<string, any>
   }
   dialog_round: number
@@ -101,11 +99,9 @@ export type GetDraftAppConfigResp = BaseResponse<DraftAppConfig>
 
 // 更新特定应用的草稿配置请求结构
 export type UpdateDraftAppConfigReq = {
-  model?: {
+  model_config?: {
     provider: string
     model: string
-    api_key?: string // todo
-    base_url?: string // todo
     parameters: Record<string, any>
   }
   dialog_round?: number

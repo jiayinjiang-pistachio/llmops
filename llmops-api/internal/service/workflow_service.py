@@ -439,18 +439,26 @@ class WorkflowService(BaseService):
 
                 if is_fully_completed:
                     # 1. 更新运行记录
-                    self.update(workflow_result, status=WorkflowResultStatus.SUCCEEDED, state=node_results,
-                                latency=duration)
-
-                    # 2. 重新获取对象并更新，确保 Session 活跃
-                    # 这样写最稳妥，能避开所有对象状态过期的坑
-                    target_workflow = self.db.session.query(Workflow).filter_by(id=wid).first()
-                    if target_workflow:
-                        self.update(target_workflow, is_debug_passed=True)
-                        print(">>> 调试状态同步成功")
+                    self.update(
+                        workflow_result,
+                        status=WorkflowResultStatus.SUCCEEDED,
+                        state=node_results,
+                        latency=duration
+                    )
                 else:
-                    self.update(workflow_result, status=WorkflowResultStatus.FAILED, state=node_results,
-                                latency=duration)
+                    self.update(
+                        workflow_result,
+                        status=WorkflowResultStatus.FAILED,
+                        state=node_results,
+                        latency=duration
+                    )
+
+                # 2. 重新获取对象并更新，确保 Session 活跃
+                # 这样写最稳妥，能避开所有对象状态过期的坑
+                target_workflow = self.db.session.query(Workflow).filter_by(id=wid).first()
+                if target_workflow:
+                    self.update(target_workflow, is_debug_passed=is_fully_completed)
+                    print(">>> 调试状态同步成功")
 
         return handle_stream()
 

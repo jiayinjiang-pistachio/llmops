@@ -197,6 +197,8 @@ export const useGetDraftAppConfig = (app_id: string) => {
       const data = resp.data
 
       Object.assign(draftAppConfigForm, {
+        model_config: data.model_config,
+        dialog_round: data.dialog_round,
         preset_prompt: data.preset_prompt,
         long_term_memory: data.long_term_memory,
         opening_statement: data.opening_statement,
