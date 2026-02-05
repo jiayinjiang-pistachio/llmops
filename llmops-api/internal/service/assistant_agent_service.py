@@ -19,7 +19,6 @@ from injector import inject
 from langchain_core.messages import HumanMessage
 from langchain_core.pydantic_v1 import BaseModel, Field
 from langchain_core.tools import BaseTool, tool
-from langchain_openai import ChatOpenAI
 from sqlalchemy import desc
 
 from pkg.paginator import Paginator
@@ -31,6 +30,8 @@ from ..core.agent.agents import FunctionCallAgent
 from ..core.agent.agents.agent_queue_manager import AgentQueueManager
 from ..core.agent.entities.agent_entity import AgentConfig
 from ..core.agent.entities.queue_entity import AgentThought, QueueEvent
+from ..core.language_model.entities.model_entity import ModelFeature
+from ..core.language_model.providers.openai.chat import Chat
 from ..core.memory import TokenBufferMemory
 from ..entity.conversation_entity import InvokeFrom, MessageStatus
 from ..model import Account, Message
@@ -66,11 +67,13 @@ class AssistantAgentService(BaseService):
         )
 
         # 4. 使用GPT模型作为辅助agent的LLM
-        llm = ChatOpenAI(
+        llm = Chat(
             model="gpt-4o-mini",
             api_key=os.getenv("GPTSAPI_API_KEY"),
             base_url=os.getenv("OPENAI_API_BASE"),
             temperature=0.8,
+            features=[ModelFeature.TOOL_CALL, ModelFeature.AGENT_THOUGHT],
+            metadata={}
         )
 
         # 5. 实例化TokenBufferMemory用于提取短期记忆
