@@ -208,6 +208,7 @@ export const useGetDraftAppConfig = (app_id: string) => {
         datasets: data.datasets,
         retrieval_config: data.retrieval_config,
         tools: data.tools,
+        workflows: data.workflows,
       } as DraftAppConfig)
     } finally {
       loading.value = false

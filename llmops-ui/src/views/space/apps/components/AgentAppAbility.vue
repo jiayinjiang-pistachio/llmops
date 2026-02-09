@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import LongTermMemoryAbilityItem from './abilities/LongTermMemoryAbilityItem.vue'
+import WorkflowsAbilityItem from './abilities/WorkflowsAbilityItem.vue'
 import OpeningAbilityItem from './abilities/OpeningAbilityItem.vue'
 import SuggestedAfterAnswerAbilityItem from './abilities/SuggestedAfterAnswerAbilityItem.vue'
 import ReviewConfigAbilityItem from './abilities/ReviewConfigAbilityItem.vue'
@@ -14,6 +15,7 @@ defineProps<{
 
 const defaultActivateKeys = [
   'tools',
+  'workflows',
   'datasets',
   'long_term_memory',
   'opening',
@@ -21,7 +23,7 @@ const defaultActivateKeys = [
   'review_config',
 ]
 
-const draft_app_config = defineModel<DraftAppConfig>('draft_app_config', {required: true})
+const draft_app_config = defineModel<DraftAppConfig>('draft_app_config', { required: true })
 </script>
 
 <template>
@@ -37,6 +39,8 @@ const draft_app_config = defineModel<DraftAppConfig>('draft_app_config', {requir
         </template>
         <!-- 扩展插件组件 -->
         <tools-ability-item v-model:tools="draft_app_config.tools" :app_id="app_id" />
+        <!-- 工作流组件 -->
+        <WorkflowsAbilityItem v-model:workflows="draft_app_config.workflows" :app_id="app_id" />
         <!-- 知识库组件 -->
         <datasets-ability-item
           v-model:retrieval_config="draft_app_config.retrieval_config"

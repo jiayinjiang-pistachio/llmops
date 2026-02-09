@@ -126,7 +126,14 @@ class OpenapiService(BaseService):
             )
             tools.append(dataset_retrieval)
 
-        #  14. 构建Agent智能体，根据LLM是否支持tool_call，决定使用不同的agent
+        #  14. 检测是否关联工作流，如果关联了工作流，则将工作流构建成工具添加到tools中
+        if app_config["workflows"]:
+            workflow_tools = self.app_config_service.get_langchian_tools_by_workflow_ids(
+                [workflow["id"] for workflow in app_config["workflows"]],
+            )
+            tools.extend(workflow_tools)
+
+        #  15. 构建Agent智能体，根据LLM是否支持tool_call，决定使用不同的agent
         agent_class = FunctionCallAgent if ModelFeature.TOOL_CALL in llm.features else ReACTAgent
         agent = agent_class(
             llm=llm,
@@ -140,14 +147,14 @@ class OpenapiService(BaseService):
             )
         )
 
-        # 15. 定义智能体状态基础数据
+        # 16. 定义智能体状态基础数据
         agent_state = {
             "messages": [HumanMessage(req.query.data)],
             "history": history,
             "long_term_memory": conversation.summary,
         }
 
-        # 16. 根据stream类型差异执行不同的代码
+        # 17. 根据stream类型差异执行不同的代码
         if req.stream.data is True:
             agent_thoughts_dict: dict[str, AgentThought] = {}
 
@@ -197,10 +204,10 @@ class OpenapiService(BaseService):
 
             return handle_stream()
 
-        # 17. 块内容输出
+        # 18. 块内容输出
         agent_result = agent.invoke(agent_state)
 
-        # 18. 将消息以及推理过车呢个添加到数据库
+        # 19. 将消息以及推理过车呢个添加到数据库
         thread = Thread(
             target=self.conversation_service.save_agent_thought,
             kwargs={
