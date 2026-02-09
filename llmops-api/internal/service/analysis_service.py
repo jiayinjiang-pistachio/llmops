@@ -6,12 +6,12 @@
 @File           : analysis_service.py
 @Description    : 
 """
-import json
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Any
 from uuid import UUID
 
+from flask import json
 from injector import inject
 from redis import Redis
 
@@ -45,7 +45,10 @@ class AnalysisService(BaseService):
 
         # 4. 从缓存中获取指定的结果，如果存在则直接返回
         try:
-            pass
+            if self.redis_client.exists(cache_key):
+                # 5.解析数据并将数据返回
+                app_analysis = self.redis_client.get(cache_key)
+                return json.loads(app_analysis)
         except Exception:
             # 6. 如果出错则什么都不处理，重新计算数据并缓存
             pass
