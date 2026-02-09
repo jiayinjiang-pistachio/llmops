@@ -8,6 +8,8 @@ defineProps({
   app: { type: Object, default: () => ({}), required: true },
   answer: { type: String, default: '', required: true },
   loading: { type: Boolean, default: false, required: false },
+  latency: {type: Number, default: 0, required: false},
+  total_token_count: {type: Number, default: 0, required: false},
   agent_thoughts: {
     type: Array as PropType<Record<string, any>[]>,
     default: () => [],
@@ -44,6 +46,20 @@ const emits = defineEmits(['selectSuggestedQuestion'])
           {{ answer }}
         </template>
       </div>
+      <!-- 消息展示与操作 -->
+       <div class="flex items-center justify-between">
+        <!-- 消息额外展示 -->
+         <a-space class="text-xs">
+          <template #split>
+            <a-divider direction="vertical" class="m-0" />
+          </template>
+          <div class="flex items-center gap-1 text-gray-500">
+            <icon-check />
+            {{ latency.toFixed(2) }}s
+          </div>
+          <div class="text-gray-500">{{ total_token_count }} Tokens</div>
+         </a-space>
+       </div>
       <!-- 建议问题列表 -->
       <div v-if="suggested_questions.length > 0" class="flex flex-col gap-2">
         <div

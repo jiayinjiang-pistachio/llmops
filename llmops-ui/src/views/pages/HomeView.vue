@@ -146,6 +146,9 @@ const handleSubmit = async () => {
 
         // 5.14 更新/添加answer答案
         messages.value[0]!.answer += data?.thought
+         messages.value[0]!.latency = data?.latency
+        messages.value[0]!.total_token_count = data?.total_token_count
+        
       } else {
         // 5.15 处理其他类型的事件，直接填充覆盖数据
         position += 1
@@ -233,6 +236,8 @@ onMounted(async () => {
                   :app="{ name: '辅助Agent' }"
                   :suggested_questions="item.id === message_id ? suggested_questions : []"
                   :loading="item.id === message_id && assistantAgentChatLoading"
+                  :latency="item.latency"
+                  :total_token_count="item.total_token_count"
                   message_class="bg-white"
                   @select-suggested-question="handleSubmitQuestion"
                 />
@@ -272,7 +277,8 @@ onMounted(async () => {
             开发平台
           </div>
           <div class="text-base text-gray-700 text-[14px]">
-            说出你的创意，我可以快速帮你创建专属应用，一键轻松分享给朋友，也可以一键发布到ZenSnack LLMOps 平台、微信等多个渠道。
+            说出你的创意，我可以快速帮你创建专属应用，一键轻松分享给朋友，也可以一键发布到ZenSnack
+            LLMOps 平台、微信等多个渠道。
           </div>
         </div>
         <!-- 开场AI对话消息 -->
@@ -291,8 +297,9 @@ onMounted(async () => {
             >
               <div class="font-bold">你好，欢迎来到 ZenSnack LLMOps🎉</div>
               <div class="">
-                ZenSnack LLMOps是新一代大模型 AI 应用开发平台。无论你是否有编程基础，都可以快速搭建出各种
-                AI 应用，并一键发布到各大社交平台，或者轻松部署到自己的网站。
+                ZenSnack LLMOps是新一代大模型 AI
+                应用开发平台。无论你是否有编程基础，都可以快速搭建出各种 AI
+                应用，并一键发布到各大社交平台，或者轻松部署到自己的网站。
               </div>
               <ul class="list-disc pl-6">
                 <li>

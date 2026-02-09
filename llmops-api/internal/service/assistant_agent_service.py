@@ -73,7 +73,14 @@ class AssistantAgentService(BaseService):
             base_url=os.getenv("OPENAI_API_BASE"),
             temperature=0.8,
             features=[ModelFeature.TOOL_CALL, ModelFeature.AGENT_THOUGHT],
-            metadata={}
+            metadata={
+                "pricing": {
+                    "input": 0.00109,
+                    "output": 0.00435,
+                    "unit": 0.001,
+                    "currency": "RMB",
+                }
+            }
         )
 
         # 5. 实例化TokenBufferMemory用于提取短期记忆
@@ -125,7 +132,19 @@ class AssistantAgentService(BaseService):
                         agent_thoughts[event_id] = agent_thoughts[event_id].model_copy(
                             update={
                                 "thought": agent_thoughts[event_id].thought + agent_thought.thought,
+                                # 消息相关字段
+                                "message": agent_thought.message,
+                                "message_token_count": agent_thought.message_token_count,
+                                "message_unit_price": agent_thought.message_unit_price,
+                                "message_price_unit": agent_thought.message_price_unit,
+                                # 答案相关字段
                                 "answer": agent_thoughts[event_id].answer + agent_thought.answer,
+                                "answer_token_count": agent_thought.answer_token_count,
+                                "answer_unit_price": agent_thought.answer_unit_price,
+                                "answer_price_unit": agent_thought.answer_price_unit,
+                                # agent推理相关
+                                "token_total_count": agent_thought.total_token_count,
+                                "total_price": agent_thought.total_price,
                                 "latency": agent_thought.latency,
                             }
                         )
@@ -135,7 +154,8 @@ class AssistantAgentService(BaseService):
 
             data = {
                 **agent_thought.model_dump(
-                    include={"event", "thought", "tool", "tool_input", "observation", "answer", "latency"},
+                    include={"event", "thought", "tool", "tool_input", "observation", "answer", "latency",
+                             "total_token_count"},
                 ),
                 "id": event_id,
                 "conversation_id": str(conversation.id),

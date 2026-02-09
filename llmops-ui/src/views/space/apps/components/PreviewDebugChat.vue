@@ -167,6 +167,8 @@ const handleSubmit = async () => {
         // 5.14 更新/添加answer答案
         if (messages.value[0]) {
           messages.value[0].answer += data?.thought
+          messages.value[0].latency = data?.latency
+          messages.value[0].total_token_count = data?.total_token_count
         }
       } else {
         // 5.15 处理其他类型的事件，直接填充覆盖数据
@@ -254,6 +256,8 @@ onMounted(async () => {
                 :app="app"
                 :suggested_questions="item.id === message_id ? suggested_questions : []"
                 :loading="item.id === message_id && debugChatLoading"
+                :latency="item.latency"
+                :total_token_count="item.total_token_count"
                 @select-suggested-question="handleSubmitQuestion"
               />
             </div>

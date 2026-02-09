@@ -284,6 +284,9 @@ class FunctionCallAgent(BaseAgent):
                 total_price=total_price,
                 latency=time.perf_counter() - start_at,
             ))
+
+            print("----agent_end-----")
+
             self.agent_queue_manager.publish(task_id, AgentThought(
                 id=uuid.uuid4(),
                 task_id=task_id,
@@ -358,8 +361,6 @@ class FunctionCallAgent(BaseAgent):
         messages = state["messages"]
 
         ai_message = messages[-1]
-
-        print("----ai_message-----", ai_message)
 
         if hasattr(ai_message, "tool_calls") and len(ai_message.tool_calls) > 0:
             return "tools"

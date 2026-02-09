@@ -205,8 +205,19 @@ class ConversationService(BaseService):
                     # 8. 更新消息
                     self.update(
                         message,
+                        # 消息相关字段
                         message=agent_thought.message,
+                        message_token_count=agent_thought.message_token_count,
+                        message_unit_price=agent_thought.message_unit_price,
+                        message_price_unit=agent_thought.message_price_unit,
+                        # 答案相关字段
                         answer=agent_thought.answer,
+                        answer_token_count=agent_thought.answer_token_count,
+                        answer_unit_price=agent_thought.answer_unit_price,
+                        answer_price_unit=agent_thought.answer_price_unit,
+                        # Agent推理统计相关
+                        total_token_count=agent_thought.total_token_count,
+                        total_price=agent_thought.total_price,
                         latency=latency,
                     )
                     # 9. 完成了消息的输出，如果开启了会话长期记忆，生成新的总结摘要，并更新长期记忆

@@ -17,6 +17,7 @@ from internal.handler import (
     SegmentHandler, OAuthHandler, AccountHandler, AuthHandler, AiHandler, ApiKeyHandler, OpenapiHandler,
     BuiltinAppHandler, WorkflowHandler, LanguageModelHandler, AssistantAgentHandler
 )
+from internal.handler.analysis_handler import AnalysisHandler
 from internal.handler.api_tool_handler import ApiToolHandler
 
 
@@ -41,6 +42,7 @@ class Router:
     workflow_handler: WorkflowHandler
     language_model_handler: LanguageModelHandler
     assistant_agent_handler: AssistantAgentHandler
+    analysis_handler: AnalysisHandler
 
     def register_router(self, app: Flask):
         """注册路由"""
@@ -217,6 +219,9 @@ class Router:
                         view_func=self.assistant_agent_handler.get_assistant_agent_messages_with_page)
         bp.add_url_rule("/assistant-agent/delete-conversation", methods=["POST"],
                         view_func=self.assistant_agent_handler.delete_assistant_agent_conversation)
+
+        # 数据统计模块
+        bp.add_url_rule("/analysis/<uuid:app_id>", view_func=self.analysis_handler.get_app_analysis)
 
         # 4. 在应用上去注册蓝图
         app.register_blueprint(bp)
