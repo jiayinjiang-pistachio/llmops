@@ -24,3 +24,9 @@ parameters:
     type: int
     label: 最大标记
     help: 要生成的标记的最大数量，类型为整型
+metadata:
+  pricing:
+    input: 0.02
+    output: 0.03
+    unit: 0.001
+    currency: RMB

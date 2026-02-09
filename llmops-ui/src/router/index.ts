@@ -70,13 +70,13 @@ const router = createRouter({
         // 应用广场页
         {
           path: 'store/apps',
-          name: 'stores-apps-list',
+          name: 'store-apps-list',
           component: () => import('@/views/store/apps/ListView.vue'),
         },
         // 内置插件列表页
         {
           path: 'store/tools',
-          name: 'stores-tools-list',
+          name: 'store-tools-list',
           component: () => import('@/views/store/tools/ListView.vue'),
         },
         // 开放API页

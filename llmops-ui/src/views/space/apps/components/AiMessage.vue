@@ -14,6 +14,7 @@ defineProps({
     required: true,
   },
   suggested_questions: { type: Array as PropType<string[]>, default: () => [], required: false },
+  message_class: { type: String, default: 'bg-gray-100', required: false },
 })
 const emits = defineEmits(['selectSuggestedQuestion'])
 </script>
@@ -21,7 +22,10 @@ const emits = defineEmits(['selectSuggestedQuestion'])
 <template>
   <div class="flex gap-2">
     <!-- 左侧图标 -->
-    <a-avatar :size="30" shape="circle" class="flex-shrink-0" :image-url="app.icon" />
+    <a-avatar v-if="app.icon" :size="30" shape="circle" class="flex-shrink-0" :image-url="app.icon" />
+    <a-avatar v-else :size="30" shape="circle" class="flex-shrink-0 bg-blue-700">
+      <icon-apps />
+    </a-avatar>
     <!-- 右侧名称与消息 -->
     <div class="flex flex-col items-start gap-2">
       <!-- 应用名称 -->
@@ -31,7 +35,7 @@ const emits = defineEmits(['selectSuggestedQuestion'])
       <!-- AI消息 -->
       <div
         v-if="loading || answer.trim() !== ''"
-        class="bg-gray-100 border border-gray-200 text-gray-700 px-4 py-3 rounded-2xl break-all"
+        :class="`${$props.message_class} border border-gray-200 text-gray-700 px-4 py-3 rounded-2xl break-all`"
       >
         <template v-if="loading && answer.trim() === ''">
           <dot-flashing />

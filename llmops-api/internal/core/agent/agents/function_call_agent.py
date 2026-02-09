@@ -217,7 +217,6 @@ class FunctionCallAgent(BaseAgent):
                         message=messages_to_dict(state["messages"]),
                         answer=content,
                         latency=time.perf_counter() - start_at,
-
                     ))
 
             # 【修复 2】核心防御：如果 gathered 依然为 None，说明 LLM 什么都没返回
@@ -231,18 +230,60 @@ class FunctionCallAgent(BaseAgent):
             self.agent_queue_manager.publish_error(task_id, f"LLM节点发生错误，错误信息：{str(e)}")
             raise e
 
+        # 计算LLM的输入+输出token总数
+        input_token_count = self.llm.get_num_tokens_from_messages(state["messages"])
+        output_token_count = self.llm.get_num_tokens_from_messages([gathered])
+
+        # 获取输入、输出价格、单位
+        input_price, output_price, unit = self.llm.get_pricing()
+
+        total_token_count = input_token_count + output_token_count
+        total_price = (input_token_count * input_price + output_token_count * output_price) * unit
+
         # 6. 如果类型为推理则添加智能体推理事件
         if generation_type == "thought":
             self.agent_queue_manager.publish(task_id, AgentThought(
                 id=id,  # 之所以可以这样写，是因为拿到的uuid不一样，是因为agent_thought与message是if-else的关系（每次执行到_llm_node时）
                 task_id=task_id,
                 event=QueueEvent.AGENT_THOUGHT,
-                message=messages_to_dict(state["messages"]),
-                latency=time.perf_counter() - start_at,
                 thought=json.dumps(gathered.tool_calls),
+                # 消息相关字段
+                message=messages_to_dict(state["messages"]),
+                message_token_count=input_token_count,
+                message_unit_price=input_price,
+                message_price_unit=unit,
+                # 答案相关字段
+                answer="",
+                answer_token_count=output_token_count,
+                answer_unit_price=output_price,
+                answer_price_unit=unit,
+                # agent推理统计
+                total_token_count=total_token_count,
+                total_price=total_price,
+                latency=time.perf_counter() - start_at,
             ))
         elif generation_type == "message":
-            # 如果LLM直接生成answer，则表示已经拿到最终答案，则停止监听
+            # 如果LLM直接生成answer，则表示已经拿到最终答案，则推送一条空内容用于就算总token+总成本，并停止监听
+            self.agent_queue_manager.publish(task_id, AgentThought(
+                id=id,
+                task_id=task_id,
+                event=QueueEvent.AGENT_MESSAGE,
+                thought="",
+                # 消息相关字段
+                message=messages_to_dict(state["messages"]),
+                message_token_count=input_token_count,
+                message_unit_price=input_price,
+                message_price_unit=unit,
+                # 答案相关字段
+                answer="",
+                answer_token_count=output_token_count,
+                answer_unit_price=output_price,
+                answer_price_unit=unit,
+                # agent推理统计
+                total_token_count=total_token_count,
+                total_price=total_price,
+                latency=time.perf_counter() - start_at,
+            ))
             self.agent_queue_manager.publish(task_id, AgentThought(
                 id=uuid.uuid4(),
                 task_id=task_id,

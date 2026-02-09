@@ -324,7 +324,7 @@ onMounted(async () => {
         <div
           class="h-[50px] flex items-center gap-2 px-4 flex-1 border border-gray-200 rounded-full"
         >
-          <input v-model="query" type="text" class="flex-1 outline-0" @keyup.enter="handleSubmit" />
+          <input v-model="query" type="text" class="flex-1 outline-0 focus:outline-none" @keyup.enter="handleSubmit" />
           <a-button
             :loading="debugChatLoading"
             type="text"

@@ -21,3 +21,9 @@ parameters:
   - name: max_tokens
     use_template: max_completion_tokens
     default: 4096
+metadata:
+  pricing:
+    input: 0.00109
+    output: 0.00435
+    unit: 0.001
+    currency: RMB

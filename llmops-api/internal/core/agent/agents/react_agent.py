@@ -187,6 +187,16 @@ class ReACTAgent(FunctionCallAgent):
             pattern = r"```json\s*(\{.*?\})\s*```"
             match = re.search(pattern, full_content, re.DOTALL)
 
+            # 计算LLM的输入+输出token总数
+            input_token_count = self.llm.get_num_tokens_from_messages(state["messages"])
+            output_token_count = self.llm.get_num_tokens_from_messages([gathered])
+
+            # 获取输入、输出价格、单位
+            input_price, output_price, unit = self.llm.get_pricing()
+
+            total_token_count = input_token_count + output_token_count
+            total_price = (input_token_count * input_price + output_token_count * output_price) * unit
+
             if match:
                 # --- 判定为：工具调用 (Thought) ---
                 json_str = match.group(1).strip()
@@ -205,8 +215,20 @@ class ReACTAgent(FunctionCallAgent):
                     task_id=state["task_id"],
                     event=QueueEvent.AGENT_THOUGHT,
                     thought=full_content,  # 这里传全量内容，方便前端展示 AI 的思考过程
+                    # 消息相关字段
                     message=messages_to_dict(state["messages"]),
-                    latency=(time.perf_counter() - start_at),
+                    message_token_count=input_token_count,
+                    message_unit_price=input_price,
+                    message_price_unit=unit,
+                    # 答案相关字段
+                    answer="",
+                    answer_token_count=output_token_count,
+                    answer_unit_price=output_price,
+                    answer_price_unit=unit,
+                    # agent推理统计
+                    total_token_count=total_token_count,
+                    total_price=total_price,
+                    latency=time.perf_counter() - start_at,
                 ))
 
                 return {
@@ -224,6 +246,27 @@ class ReACTAgent(FunctionCallAgent):
                     message=messages_to_dict(state["messages"]),
                     answer=full_content,
                     latency=(time.perf_counter() - start_at),
+                ))
+                # 如果LLM直接生成answer，则表示已经拿到最终答案，则推送一条空内容用于计算总token+总成本，并停止监听
+                self.agent_queue_manager.publish(task_id, AgentThought(
+                    id=id,
+                    task_id=task_id,
+                    event=QueueEvent.AGENT_MESSAGE,
+                    thought="",
+                    # 消息相关字段
+                    message=messages_to_dict(state["messages"]),
+                    message_token_count=input_token_count,
+                    message_unit_price=input_price,
+                    message_price_unit=unit,
+                    # 答案相关字段
+                    answer="",
+                    answer_token_count=output_token_count,
+                    answer_unit_price=output_price,
+                    answer_price_unit=unit,
+                    # agent推理统计
+                    total_token_count=total_token_count,
+                    total_price=total_price,
+                    latency=time.perf_counter() - start_at,
                 ))
                 self.agent_queue_manager.publish(task_id, AgentThought(
                     id=uuid.uuid4(),
