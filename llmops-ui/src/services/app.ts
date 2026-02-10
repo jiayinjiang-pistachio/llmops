@@ -6,7 +6,9 @@ import type {
   GetDebugConversationMessagesWithPageReq,
   GetDebugConversationMessagesWithPageResp,
   GetDraftAppConfigResp,
+  GetPublishedConfigResponse,
   GetPublishHistoriesWithPageResp,
+  RegenerateWebAppTokenResponse,
   UpdateAppRequest,
   UpdateDraftAppConfigReq,
 } from '@/models/app'
@@ -126,3 +128,15 @@ export const fallbackHistoryDraft = (app_id: string, app_config_version_id: stri
       app_config_version_id,
     },
   })
+
+  // 获取指定应用的发布配置信息
+export const getPublishedConfig = (app_id: string) => {
+  return get<GetPublishedConfigResponse>(`/apps/${app_id}/published-config`)
+}
+
+// 重新生成 WebApp 的凭证标识
+export const regenerateWebAppToken = (app_id: string) => {
+  return post<RegenerateWebAppTokenResponse>(
+    `/apps/${app_id}/published-config/regenerate-web-app-token`,
+  )
+}

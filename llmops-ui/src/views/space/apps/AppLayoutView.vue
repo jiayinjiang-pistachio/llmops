@@ -95,6 +95,7 @@
                   const app_id = String(route.params?.app_id)
                   await handlePublish(app_id)
                   await loadApp(app_id)
+                  setReloadWebAppFlag(true)
                 }
               "
             >
@@ -117,7 +118,10 @@
                   @click="
                     async () => {
                       const app_id = String(route.params?.app_id)
-                      await handleCancelPublish(app_id, async () => await loadApp(app_id))
+                      await handleCancelPublish(app_id, async () => {
+                        await loadApp(app_id)
+                        setReloadWebAppFlag(true)
+                      })
                     }
                   "
                 >
@@ -154,7 +158,7 @@ const { loading: publishLoading, handlePublish } = usePublish()
 const { handleCancelPublish } = useCancelPublish()
 
 const appStore = useAppStore()
-const { setGetAppFlag } = appStore
+const { setGetAppFlag, setReloadWebAppFlag } = appStore
 const { getAppFlag } = storeToRefs(appStore)
 
 watch(

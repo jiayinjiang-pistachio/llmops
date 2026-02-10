@@ -207,3 +207,15 @@ export type GetAppsWithPageResponse = BasePaginationResponse<{
   created_at: number
 }>
 
+// 获取应用发布配置响应结构
+export type GetPublishedConfigResponse = BaseResponse<{
+  web_app: {
+    token: string
+    status: string
+  }
+}>
+
+// 重新生成WebApp凭证标识响应结构
+export type RegenerateWebAppTokenResponse = BaseResponse<{
+  token: string
+}>

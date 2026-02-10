@@ -8,10 +8,15 @@ export const useAppStore = defineStore('useAppStore', () => {
   const getAppFlag = ref(false)
   const setGetAppFlag = (newValue: boolean) => getAppFlag.value = newValue
 
+  const reloadWebAppFlag = ref(false)
+  const setReloadWebAppFlag = (newValue: boolean) => reloadWebAppFlag.value = newValue
+
   return {
     getDraftAppConfigFlag,
     setGetDraftAppConfigFlag,
     getAppFlag,
     setGetAppFlag,
+    reloadWebAppFlag,
+    setReloadWebAppFlag,
   }
 })
