@@ -15,7 +15,7 @@ from injector import inject
 from internal.handler import (
     AppHandler, BuiltinToolHandler, UploadFileHandler, DatasetHandler, DocumentHandler,
     SegmentHandler, OAuthHandler, AccountHandler, AuthHandler, AiHandler, ApiKeyHandler, OpenapiHandler,
-    BuiltinAppHandler, WorkflowHandler, LanguageModelHandler, AssistantAgentHandler
+    BuiltinAppHandler, WorkflowHandler, LanguageModelHandler, AssistantAgentHandler, WebAppHandler
 )
 from internal.handler.analysis_handler import AnalysisHandler
 from internal.handler.api_tool_handler import ApiToolHandler
@@ -43,6 +43,7 @@ class Router:
     language_model_handler: LanguageModelHandler
     assistant_agent_handler: AssistantAgentHandler
     analysis_handler: AnalysisHandler
+    web_app_handler: WebAppHandler
 
     def register_router(self, app: Flask):
         """注册路由"""
@@ -225,6 +226,12 @@ class Router:
 
         # 数据统计模块
         bp.add_url_rule("/analysis/<uuid:app_id>", view_func=self.analysis_handler.get_app_analysis)
+
+        # WebApp模块
+        bp.add_url_rule("/web-apps/<string:token>", view_func=self.web_app_handler.get_web_app)
+        bp.add_url_rule("/web-apps/<string:token>/chat", methods=["POST"], view_func=self.web_app_handler.web_app_chat)
+        bp.add_url_rule("/web-apps/<string:token>/chat/<uuid:task_id>/stop", methods=["POST"],
+                        view_func=self.web_app_handler.stop_web_app_chat)
 
         # 4. 在应用上去注册蓝图
         app.register_blueprint(bp)

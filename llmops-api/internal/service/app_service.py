@@ -974,8 +974,12 @@ class AppService(BaseService):
         # 2. 调用智能体队列管理器停止特定任务
         AgentQueueManager.set_stop_flag(task_id, InvokeFrom.DEBUGGER, account.id)
 
-    def get_debug_conversation_messages_with_page(self, app_id: UUID, req: GetDebugConversationMessagesWithPageReq,
-                                                  account: Account) -> tuple[list[Message], Paginator]:
+    def get_debug_conversation_messages_with_page(
+            self,
+            app_id: UUID,
+            req: GetDebugConversationMessagesWithPageReq,
+            account: Account
+    ) -> tuple[list[Message], Paginator]:
         """根据传递的应用id+请求数据，获取调试会话消息列表分页数据"""
         # 1. 获取应用信息并校验权限
         app = self.get_app(app_id, account)
@@ -1091,5 +1095,5 @@ class AppService(BaseService):
 
         token = generate_random_string(16)
         self.update(app, token=token)
-        
+
         return token
