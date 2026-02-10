@@ -11,10 +11,11 @@ import uuid
 from sqlalchemy import (Column, UUID, String, Text, DateTime, PrimaryKeyConstraint, text, Integer)
 from sqlalchemy.dialects.postgresql import JSONB
 
-from internal.entity.app_entity import AppConfigType, DEFAULT_APP_CONFIG
+from internal.entity.app_entity import AppConfigType, DEFAULT_APP_CONFIG, AppStatus
 from internal.extension.database_extension import db
 from .conversation import Conversation
 from ..entity.conversation_entity import InvokeFrom
+from ..lib.helper import generate_random_string
 
 
 class App(db.Model):
@@ -34,6 +35,7 @@ class App(db.Model):
     icon = Column(String(255), nullable=False, server_default=text("''::character varying"))
     description = Column(Text, nullable=False, server_default=text("''::text"))
     status = Column(String(255), nullable=False, server_default=text("''::character varying"))
+    token = Column(String(255), nullable=True, server_default=text("''::character varying"))  # 应用凭证
     updated_at = Column(
         DateTime,
         nullable=False,
@@ -100,6 +102,24 @@ class App(db.Model):
                 self.debug_conversation_id = debug_conversation.id
 
         return debug_conversation
+
+    @property
+    def token_with_default(self):
+        """获取带有默认值的token"""
+        # 1. 判断状态书否已发布
+        if self.status != AppStatus.PUBLISHED:
+            # 非发布情况下需要清空数据并提交更新
+            if self.token is not None or self.token != "":
+                self.token = None
+                db.session.commit()
+            return ""
+
+        # 已发布状态需要判断token是否存在，不存在则生成
+        if self.token is None or self.token == "":
+            self.token = generate_random_string(16)
+            db.session.commit()
+
+        return self.token
 
 
 class AppDatasetJoin(db.Model):

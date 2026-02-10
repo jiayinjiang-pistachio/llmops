@@ -58,7 +58,7 @@ from ..entity.conversation_entity import InvokeFrom, MessageStatus
 from ..entity.dataset_entity import RetrievalSource
 from ..entity.workflow_entity import WorkflowStatus
 from ..exception import NotFoundException, ForbiddenException, ValidationException, FailException
-from ..lib.helper import remove_fields, get_value_type
+from ..lib.helper import remove_fields, get_value_type, generate_random_string
 
 
 @inject
@@ -1070,3 +1070,26 @@ class AppService(BaseService):
             new_app.draft_app_config_id = new_draft_app_config.id
 
         return new_app
+
+    def get_published_config(self, app_id: UUID, account: Account):
+        """根据传递的app_id和账号信息，获取应用的发布配置"""
+        app = self.get_app(app_id, account)
+
+        return {
+            "web_app": {
+                "token": app.token_with_default,
+                "status": app.status,
+            }
+        }
+
+    def regenerate_web_app_token(self, app_id: UUID, account: Account) -> str:
+        """根据传递的app_id和账号信息，重新生成WebAPP凭证"""
+        app = self.get_app(app_id, account)
+
+        if app.status != AppStatus.PUBLISHED:
+            raise FailException("应用未发布，无法生成WebApp凭证标识")
+
+        token = generate_random_string(16)
+        self.update(app, token=token)
+        
+        return token

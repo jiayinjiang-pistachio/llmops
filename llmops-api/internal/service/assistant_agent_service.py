@@ -143,7 +143,7 @@ class AssistantAgentService(BaseService):
                                 "answer_unit_price": agent_thought.answer_unit_price,
                                 "answer_price_unit": agent_thought.answer_price_unit,
                                 # agent推理相关
-                                "token_total_count": agent_thought.total_token_count,
+                                "total_token_count": agent_thought.total_token_count,
                                 "total_price": agent_thought.total_price,
                                 "latency": agent_thought.latency,
                             }
