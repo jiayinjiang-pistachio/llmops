@@ -34,7 +34,6 @@ const query = ref('')
 const message_id = ref('')
 const task_id = ref('')
 const scroller = ref<any>(null)
-const scrollHeight = ref(0)
 const accountStore = useAccountStore()
 const { loading: getWebAppLoading, web_app, loadWebApp } = useGetWebApp()
 const {
@@ -67,10 +66,10 @@ const conversation = computed(() => {
   }
 })
 
-// 3.定义保存滚动高度函数
-const saveScrollHeight = () => {
-  scrollHeight.value = scroller.value.$el.scrollHeight
-}
+// // 3.定义保存滚动高度函数
+// const saveScrollHeight = () => {
+//   scrollHeight.value = scroller.value.$el.scrollHeight
+// }
 
 // 4.定义修改指定状态处理器
 const changeIsPinned = async (idx: number, origin_is_pinned: boolean) => {
@@ -153,18 +152,11 @@ const addConversation = () => {
   }
 }
 
-// 9.定义还原滚动高度函数
-const restoreScrollPosition = () => {
-  scroller.value.$el.scrollTop = scroller.value.$el.scrollHeight - scrollHeight.value
-}
-
 // 10.定义滚动函数
 const handleScroll = async (event: UIEvent) => {
-  const { scrollTop } = event.target as HTMLElement
-  if (scrollTop <= 0 && !webAppChatLoading.value) {
-    saveScrollHeight()
+  const { scrollTop, clientHeight, scrollHeight } = event.target as HTMLElement
+  if (scrollTop + clientHeight >= scrollHeight - 200 && !webAppChatLoading.value) {
     await loadConversationMessagesWithPage(conversation.value.id, false)
-    restoreScrollPosition()
   }
 }
 
@@ -506,7 +498,8 @@ onMounted(async () => {
         <dynamic-scroller
           ref="scroller"
           :items="messages.slice().reverse()"
-          :min-item-size="1"
+          :min-item-size="500"
+          :buffer="400"
           @scroll="handleScroll"
           class="h-full scrollbar-w-none"
         >

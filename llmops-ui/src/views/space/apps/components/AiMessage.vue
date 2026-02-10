@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { type PropType } from 'vue'
+import { computed, type PropType } from 'vue'
 import DotFlashing from '@/components/DotFlashing.vue'
 import AgentThought from './AgentThought.vue'
+import MarkdownIt from 'markdown-it'
 
 // 1.定义自定义组件所需数据
-defineProps({
+const props = defineProps({
   app: { type: Object, default: () => ({}), required: true },
   answer: { type: String, default: '', required: true },
   loading: { type: Boolean, default: false, required: false },
-  latency: {type: Number, default: 0, required: false},
-  total_token_count: {type: Number, default: 0, required: false},
+  latency: { type: Number, default: 0, required: false },
+  total_token_count: { type: Number, default: 0, required: false },
   agent_thoughts: {
     type: Array as PropType<Record<string, any>[]>,
     default: () => [],
@@ -19,12 +20,23 @@ defineProps({
   message_class: { type: String, default: 'bg-gray-100', required: false },
 })
 const emits = defineEmits(['selectSuggestedQuestion'])
+
+const md = MarkdownIt()
+const compileMarkdown = computed(() => {
+  return md.render(props.answer)
+})
 </script>
 
 <template>
   <div class="flex gap-2">
     <!-- 左侧图标 -->
-    <a-avatar v-if="app.icon" :size="30" shape="circle" class="flex-shrink-0" :image-url="app.icon" />
+    <a-avatar
+      v-if="app.icon"
+      :size="30"
+      shape="circle"
+      class="flex-shrink-0"
+      :image-url="app.icon"
+    />
     <a-avatar v-else :size="30" shape="circle" class="flex-shrink-0 bg-blue-700">
       <icon-apps />
     </a-avatar>
@@ -36,20 +48,20 @@ const emits = defineEmits(['selectSuggestedQuestion'])
       <agent-thought :agent_thoughts="agent_thoughts" :loading="loading" />
       <!-- AI消息 -->
       <div
-        v-if="loading || answer.trim() !== ''"
+        v-if="loading || answer.trim() === ''"
         :class="`${$props.message_class} border border-gray-200 text-gray-700 px-4 py-3 rounded-2xl break-all`"
       >
-        <template v-if="loading && answer.trim() === ''">
-          <dot-flashing />
-        </template>
-        <template v-else>
-          {{ answer }}
-        </template>
+        <dot-flashing />
       </div>
+      <div
+        v-else
+        :class="`${$props.message_class} markdown-body border border-gray-200 text-gray-700 px-4 py-3 rounded-2xl break-all`"
+        v-html="compileMarkdown"
+      ></div>
       <!-- 消息展示与操作 -->
-       <div class="flex items-center justify-between">
+      <div class="flex items-center justify-between">
         <!-- 消息额外展示 -->
-         <a-space class="text-xs">
+        <a-space class="text-xs">
           <template #split>
             <a-divider direction="vertical" class="m-0" />
           </template>
@@ -58,8 +70,8 @@ const emits = defineEmits(['selectSuggestedQuestion'])
             {{ latency.toFixed(2) }}s
           </div>
           <div class="text-gray-500">{{ total_token_count }} Tokens</div>
-         </a-space>
-       </div>
+        </a-space>
+      </div>
       <!-- 建议问题列表 -->
       <div v-if="suggested_questions.length > 0" class="flex flex-col gap-2">
         <div
@@ -75,4 +87,12 @@ const emits = defineEmits(['selectSuggestedQuestion'])
   </div>
 </template>
 
-<style scoped></style>
+<style>
+.markdown-body {
+  font-size: 14px;
+}
+
+.markdown-body pre {
+  @apply bg-gray-700 text-white overflow-auto p-5 rounded-2xl my-4 !important;
+}
+</style>
