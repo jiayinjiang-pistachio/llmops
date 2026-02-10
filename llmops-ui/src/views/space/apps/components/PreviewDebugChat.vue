@@ -11,8 +11,8 @@ import {
 } from '@/hooks/use-app'
 import { useGenerateSuggestedQuestions } from '@/hooks/use-ai'
 import { useAccountStore } from '@/stores/account'
-import HumanMessage from './HumanMessage.vue'
-import AiMessage from '@/views/space/apps/components/AiMessage.vue'
+import HumanMessage from '@/components/HumanMessage.vue'
+import AiMessage from '@/components/AiMessage.vue'
 import { Message } from '@arco-design/web-vue'
 import { QueueEvent } from '@/config'
 import type { AppDetail, DebugConversationMessageItem } from '@/models/app'
@@ -258,6 +258,7 @@ onMounted(async () => {
                 :loading="item.id === message_id && debugChatLoading"
                 :latency="item.latency"
                 :total_token_count="item.total_token_count"
+                message_class="max-w-[400px]"
                 @select-suggested-question="handleSubmitQuestion"
               />
             </div>

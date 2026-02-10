@@ -2,7 +2,8 @@
 import { computed, type PropType } from 'vue'
 import DotFlashing from '@/components/DotFlashing.vue'
 import AgentThought from './AgentThought.vue'
-import MarkdownIt from 'markdown-it'
+import markdownit from 'markdown-it'
+import hljs from 'highlight.js'
 
 // 1.定义自定义组件所需数据
 const props = defineProps({
@@ -21,7 +22,28 @@ const props = defineProps({
 })
 const emits = defineEmits(['selectSuggestedQuestion'])
 
-const md = MarkdownIt()
+// 1. 先初始化 md，此时 TS 知道它是一个 MarkdownIt 实例
+const md = markdownit({
+  html: true,
+})
+
+// 2. 覆盖 highlight 配置
+md.options.highlight = (str: string, lang: string): string => {
+  if (lang && hljs.getLanguage(lang)) {
+    try {
+      return (
+        '<pre><code class="hljs">' +
+        hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
+        '</code></pre>'
+      )
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  // 关键：直接调用 md 之前，它已经被声明过了
+  return '<pre><code class="hljs">' + md.utils.escapeHtml(str) + '</code></pre>'
+}
 const compileMarkdown = computed(() => {
   return md.render(props.answer)
 })
@@ -88,11 +110,7 @@ const compileMarkdown = computed(() => {
 </template>
 
 <style>
-.markdown-body {
-  font-size: 14px;
-}
-
 .markdown-body pre {
-  @apply bg-gray-700 text-white overflow-auto p-5 rounded-2xl my-4 !important;
+  @apply overflow-auto rounded-2xl min-w-0 !important;
 }
 </style>

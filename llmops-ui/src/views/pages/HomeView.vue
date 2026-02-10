@@ -13,8 +13,8 @@ import { useAccountStore } from '@/stores/account'
 import AssistantAgentBackground from '@/assets/images/assistant-agent-background.png'
 import { Message } from '@arco-design/web-vue'
 import { QueueEvent } from '@/config'
-import HumanMessage from '@/views/space/apps/components/HumanMessage.vue'
-import AiMessage from '@/views/space/apps/components/AiMessage.vue'
+import HumanMessage from '@/components/HumanMessage.vue'
+import AiMessage from '@/components/AiMessage.vue'
 import type { AssistantAgentMessageItem } from '@/models/assistant-agent'
 
 // 1.定义页面所需数据
@@ -148,7 +148,7 @@ const handleSubmit = async () => {
         messages.value[0]!.answer += data?.thought
          messages.value[0]!.latency = data?.latency
         messages.value[0]!.total_token_count = data?.total_token_count
-        
+
       } else {
         // 5.15 处理其他类型的事件，直接填充覆盖数据
         position += 1
@@ -238,7 +238,7 @@ onMounted(async () => {
                   :loading="item.id === message_id && assistantAgentChatLoading"
                   :latency="item.latency"
                   :total_token_count="item.total_token_count"
-                  message_class="bg-white"
+                  message_class="bg-white max-w-[513px] border-none"
                   @select-suggested-question="handleSubmitQuestion"
                 />
               </div>
