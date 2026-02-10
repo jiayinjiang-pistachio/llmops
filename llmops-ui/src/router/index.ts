@@ -142,7 +142,17 @@ const router = createRouter({
           path: 'web-apps/:token',
           name: 'web-apps-index',
           component: () => import('@/views/web-apps/IndexView.vue')
-        }
+        },
+        {
+          path: '/errors/404',
+          name: 'errors-not-found',
+          component: () => import('@/views/errors/NotFoundView.vue'),
+        },
+        {
+          path: '/errors/403',
+          name: 'errors-forbidden',
+          component: () => import('@/views/errors/ForbiddenView.vue'),
+        },
       ],
     },
   ],

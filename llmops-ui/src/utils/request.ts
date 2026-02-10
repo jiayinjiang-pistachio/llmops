@@ -86,6 +86,10 @@ const baseFetch = async <T>(url: string, fetchOptions: FetchOptionType): Promise
           } else if (json.code === httpCode.unauthorized) {
             clearCredential()
             await router.replace({ path: '/auth/login' })
+          } else if (json.code === httpCode.forbidden) {
+            await router.replace({name: 'errors-forbidden'})
+          } else if(json.code === httpCode.notFound) {
+            await router.replace({name: 'errors-not-found'})
           } else {
             Message.error(json.message || '请求出错，请稍后重试')
             reject(json.message || '请求出错')

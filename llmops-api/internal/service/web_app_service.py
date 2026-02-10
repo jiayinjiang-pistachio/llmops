@@ -32,7 +32,7 @@ from ..core.memory import TokenBufferMemory
 from ..entity.app_entity import AppStatus
 from ..entity.conversation_entity import InvokeFrom, MessageStatus
 from ..entity.dataset_entity import RetrievalSource
-from ..exception import NotFoundException, ForbiddenException
+from ..exception import ForbiddenException
 from ..model import App, Account, Conversation, Message
 from ..schema.web_app_schema import WebAppChatReq
 
@@ -54,7 +54,7 @@ class WebAppService(BaseService):
             App.token == token
         ).one_or_none()
         if not app or app.status != AppStatus.PUBLISHED:
-            raise NotFoundException("该WebApp不存在或者未发布，请核实后重试")
+            raise ForbiddenException("该WebApp不存在或者未发布，请核实后重试")
 
         # 2. 返回查询的应用
         return app
