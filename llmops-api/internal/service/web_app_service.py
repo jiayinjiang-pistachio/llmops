@@ -15,6 +15,7 @@ from uuid import UUID
 from flask import current_app
 from injector import inject
 from langchain_core.messages import HumanMessage
+from sqlalchemy import desc
 
 from pkg.sqlalchemy import SQLAlchemy
 from .app_config_service import AppConfigService
@@ -225,3 +226,19 @@ class WebAppService(BaseService):
 
         # 2. 调用智能体队列管理器停止特定任务
         AgentQueueManager.set_stop_flag(task_id, InvokeFrom.WEB_APP, account.id)
+
+    def get_conversations(self, token: str, is_pinned: bool, account: Account) -> list[Conversation]:
+        """根据传递的token+is_pinned+account获取指定账号在该WebApp下的会话列表数据"""
+        # 1. 获取WebApp应用并校验应用是否发布
+        app = self.get_web_app(token)
+
+        # 2. 筛选过滤并查询数据
+        conversations = self.db.session.query(Conversation).filter(
+            Conversation.app_id == app.id,
+            Conversation.created_by == account.id,
+            Conversation.invoke_from == InvokeFrom.WEB_APP,
+            Conversation.is_pinned == is_pinned,
+            ~Conversation.is_delete
+        ).order_by(desc("created_at")).all()
+
+        return conversations
