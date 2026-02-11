@@ -79,7 +79,7 @@
       </div>
     </div>
     <!-- 中间内容 -->
-    <router-view :create-type="createType" @update-create-type="updateCreateType" />
+    <router-view v-model:create-type="createType" />
   </div>
 </template>
 
@@ -109,7 +109,7 @@ watch(
 )
 
 const createType = ref('')
-const updateCreateType = (type: string) => {
-  createType.value = type
-}
+// const updateCreateType = (type: string) => {
+//   createType.value = type
+// }
 </script>

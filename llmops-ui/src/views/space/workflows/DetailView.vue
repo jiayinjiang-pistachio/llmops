@@ -696,6 +696,7 @@ const onRunResult = () => {
 
 const handleClickDebug = () => {
   nodeInofVisible.value = false
+  selectedNode.value = null
   isDebug.value = true
 }
 

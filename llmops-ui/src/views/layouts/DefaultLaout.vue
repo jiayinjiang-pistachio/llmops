@@ -13,12 +13,14 @@
             ZenSnack
           </router-link>
           <!-- 创建AI应用按钮 -->
-          <a-button type="primary" long class="rounded-lg mb-4">
-            <template #icon>
-              <icon-plus />
-            </template>
-            创建 AI 应用
-          </a-button>
+          <router-link :to="{name: 'space-apps-list', query: {'create_type': 'app'}}">
+            <a-button type="primary" long class="rounded-lg mb-4">
+              <template #icon>
+                <icon-plus />
+              </template>
+              创建 AI 应用
+            </a-button>
+          </router-link>
           <!-- 侧边栏布局 -->
           <left-siderbar />
         </div>

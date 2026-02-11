@@ -227,7 +227,7 @@ class FunctionCallAgent(BaseAgent):
 
         except Exception as e:
             logging.exception(f"LLM节点发生错误，错误信息：{str(e)}")
-            self.agent_queue_manager.publish_error(task_id, f"LLM节点发生错误，错误信息：{str(e)}")
+            self.agent_queue_manager.publish_error(task_id, "抱歉，我暂时无法处理您的请求，请稍后重试或切换模型重试。")
             raise e
 
         # 计算LLM的输入+输出token总数

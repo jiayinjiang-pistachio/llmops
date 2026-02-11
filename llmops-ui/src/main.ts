@@ -9,9 +9,8 @@ import router from './router'
 import '@arco-design/web-vue/dist/arco.css'
 import '@/assets/styles/tailwindcss.css'
 import '@/assets/styles/markdown.css'
-import 'highlight.js/styles/github-dark.min.css';
+import 'highlight.js/styles/github-dark.min.css'
 import '@/assets/styles/global.css'
-
 
 const app = createApp(App)
 

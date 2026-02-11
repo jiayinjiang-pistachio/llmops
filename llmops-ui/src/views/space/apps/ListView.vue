@@ -4,19 +4,18 @@ import { useCopyApp, useDeleteApp, useGetAppsWithPage } from '@/hooks/use-app'
 import { onMounted, ref, watch } from 'vue'
 import { useAccountStore } from '@/stores/account'
 import CreateOrUpdateAppModal from './components/CreateOrUpdateAppModal.vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 // 1.定义页面所需数据
 const route = useRoute()
-const props = defineProps({
-  createType: { type: String, default: '', required: true },
-})
 const createOrUpdateAppModalVisible = ref(false)
 const updateAppId = ref('')
 const accountStore = useAccountStore()
 const { handleCopyApp } = useCopyApp()
 const { loading: getAppsWithPageLoading, apps, paginator, loadApps } = useGetAppsWithPage()
 const { handleDeleteApp } = useDeleteApp()
+
+const createType = defineModel('create-type', { required: true })
 
 // 2.定义滚动数据分页处理器
 const handleScroll = async (event: UIEvent) => {
@@ -37,11 +36,12 @@ onMounted(async () => {
 })
 
 watch(
-  () => props.createType,
+  () => createType.value,
   (newValue) => {
     if (newValue === 'app') {
       updateAppId.value = ''
       createOrUpdateAppModalVisible.value = true
+      createType.value = ''
     }
   },
 )
@@ -49,6 +49,24 @@ watch(
 watch(
   () => route.query?.search,
   async () => await loadApps(true),
+)
+
+const router = useRouter()
+watch(
+  () => route.query.create_type,
+  (newValue) => {
+    if (newValue === 'app') {
+      updateAppId.value = ''
+      createOrUpdateAppModalVisible.value = true
+
+      const query = { ...route.query }
+      delete query.create_type // 直接操作副本
+      router.replace({ query })
+    }
+  },
+  {
+    immediate: true,
+  },
 )
 </script>
 

@@ -3,6 +3,7 @@ import { computed, type PropType } from 'vue'
 import DotFlashing from '@/components/DotFlashing.vue'
 import AgentThought from './AgentThought.vue'
 import markdownit from 'markdown-it'
+import mk from 'markdown-it-katex'
 import hljs from 'highlight.js'
 
 // 1.定义自定义组件所需数据
@@ -25,6 +26,8 @@ const emits = defineEmits(['selectSuggestedQuestion'])
 // 1. 先初始化 md，此时 TS 知道它是一个 MarkdownIt 实例
 const md = markdownit({
   html: true,
+  linkify: true,
+  typographer: true,
 })
 
 // 2. 覆盖 highlight 配置
@@ -44,8 +47,13 @@ md.options.highlight = (str: string, lang: string): string => {
   // 关键：直接调用 md 之前，它已经被声明过了
   return '<pre><code class="hljs">' + md.utils.escapeHtml(str) + '</code></pre>'
 }
+
+md.use(mk)
+
 const compileMarkdown = computed(() => {
-  return md.render(props.answer)
+  const content = props.answer || ''
+
+  return md.render(content)
 })
 </script>
 
@@ -70,16 +78,22 @@ const compileMarkdown = computed(() => {
       <agent-thought :agent_thoughts="agent_thoughts" :loading="loading" />
       <!-- AI消息 -->
       <div
-        v-if="loading || answer.trim() === ''"
+        v-if="loading"
         :class="`${$props.message_class} border border-gray-200 text-gray-700 px-4 py-3 rounded-2xl break-all`"
       >
         <dot-flashing />
       </div>
       <div
-        v-else
+        v-else-if="answer.trim() !== ''"
         :class="`${$props.message_class} markdown-body border border-gray-200 text-gray-700 px-4 py-3 rounded-2xl break-all`"
         v-html="compileMarkdown"
       ></div>
+      <div
+        v-else
+        :class="`${$props.message_class} border border-gray-200 text-gray-700 px-4 py-3 rounded-2xl break-all`"
+      >
+        无LLM生成内容，请重试。
+      </div>
       <!-- 消息展示与操作 -->
       <div class="flex items-center justify-between">
         <!-- 消息额外展示 -->

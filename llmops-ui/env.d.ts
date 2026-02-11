@@ -7,3 +7,5 @@ declare module 'vue-virtual-scroller' {
   export const DynamicScrollerItem: ComponentOptions
   export default VueVirtualScroller
 }
+declare module 'markdown-it-katex'
+declare module 'markdown-it-texmath';

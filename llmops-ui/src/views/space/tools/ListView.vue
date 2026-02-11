@@ -88,7 +88,7 @@
         <a-button
           class="rounded-lg mb-2"
           long
-          :loading="showUpdateModalMoading"
+          :loading="showUpdateModalLoading"
           @click="handleUpdate"
         >
           <template #icon>
@@ -313,7 +313,11 @@
 
 <script setup lang="ts">
 import { typeMap } from '@/config'
-import type { ApiToolProviderItem, CreateApiToolProviderRequest, UpdateApiToolProviderRequest } from '@/models/api-tool'
+import type {
+  ApiToolProviderItem,
+  CreateApiToolProviderRequest,
+  UpdateApiToolProviderRequest,
+} from '@/models/api-tool'
 import {
   createApiProvider,
   deleteApiToolProvider,
@@ -324,35 +328,31 @@ import {
 } from '@/services/api-tool'
 import moment from 'moment'
 import { onMounted, reactive, ref, computed, watch, useTemplateRef } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { Message, Modal, type FormInstance } from '@arco-design/web-vue'
 import type { ValidatedError } from '@arco-design/web-vue/es/form/interface'
 import { uploadImage } from '@/services/upload-file'
 
-const props = defineProps<{
-  createType: string
-}>()
-const emit = defineEmits<{
-  (e: 'update-create-type', value: string): void
-}>()
+const createType = defineModel('create-type', { required: true })
+
 const showUpdateModal = ref(false)
-const showUpdateModalMoading = ref(false)
+const showUpdateModalLoading = ref(false)
 const submitLoading = ref(false)
 const providerId = computed(() => providers[showIdx.value]?.id)
-const modalTitle = computed(() => (props.createType === 'tool' ? '新建插件' : '编辑插件'))
+const modalTitle = computed(() => (createType.value === 'tool' ? '新建插件' : '编辑插件'))
 
 const handleCancel = () => {
   // 1. 重置整个表单的数据
   formRef.value?.resetFields()
 
   // 隐藏表单模态窗
-  emit('update-create-type', '')
+  createType.value = ''
   showUpdateModal.value = false
 }
 
 const handleUpdate = async () => {
   try {
-    showUpdateModalMoading.value = true
+    showUpdateModalLoading.value = true
     // 根据拿到的provider_id去获取对应的提供商信息
     if (providerId.value == undefined) {
       return
@@ -363,7 +363,7 @@ const handleUpdate = async () => {
 
     // 更新form表单数据
     formRef.value?.resetFields?.()
-    form.fileList = [{uid: '1', name: '知识库图标', url: data.icon}]
+    form.fileList = [{ uid: '1', name: '知识库图标', url: data.icon }]
     form.icon = data.icon
     form.name = data.name
     form.openapi_schema = data.openapi_schema
@@ -371,7 +371,7 @@ const handleUpdate = async () => {
   } catch (error) {
     console.log(error)
   } finally {
-    showUpdateModalMoading.value = false
+    showUpdateModalLoading.value = false
     showUpdateModal.value = true
   }
 }
@@ -385,6 +385,7 @@ const paginator = reactive({
 })
 const loading = ref(false)
 const route = useRoute()
+const router = useRouter()
 
 const initData = async () => {
   // 重置分页器
@@ -394,6 +395,22 @@ const initData = async () => {
   // 加载数据
   await loadMoreData(true)
 }
+
+watch(
+  () => route.query.create_type,
+  async (newValue) => {
+    if (newValue === 'tool') {
+      createType.value = 'tool'
+
+      const query = { ...route.query }
+      delete query.create_type // 直接操作副本
+      await router.replace({ query })
+    }
+  },
+  {
+    immediate: true,
+  },
+)
 
 watch(
   () => route.query.search,
@@ -517,7 +534,7 @@ const handleSubmit = async ({
 
   try {
     submitLoading.value = true
-    if (props.createType === 'tool') {
+    if (createType.value === 'tool') {
       const resp = await createApiProvider(values as CreateApiToolProviderRequest)
       Message.success(resp.message)
     } else if (showUpdateModal.value) {
@@ -525,7 +542,10 @@ const handleSubmit = async ({
         Message.error('api工具提供商id不存在')
         return
       }
-      const resp = await updateAPiToolProvider(providerId.value, values as UpdateApiToolProviderRequest)
+      const resp = await updateAPiToolProvider(
+        providerId.value,
+        values as UpdateApiToolProviderRequest,
+      )
       Message.success(resp.message)
     }
 

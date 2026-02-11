@@ -3,7 +3,7 @@ import { type PropType, ref } from 'vue'
 import { QueueEvent } from '@/config'
 
 // 1.定义自定义组件所需数据
-const props = defineProps({
+defineProps({
   loading: { type: Boolean, default: false, required: true },
   agent_thoughts: {
     type: Array as PropType<Record<string, any>[]>,
@@ -28,7 +28,7 @@ const visible = ref(false)
       </div>
       <!-- 右侧图标 -->
       <div class="">
-        <template v-if="props.loading">
+        <template v-if="loading">
           <icon-loading />
         </template>
         <template v-else>
@@ -40,7 +40,7 @@ const visible = ref(false)
     <!-- 底部内容 -->
     <a-collapse class="agent-thought" v-if="visible" destroy-on-hide :bordered="false">
       <a-collapse-item
-        v-for="agent_thought in props.agent_thoughts.filter((item: any) =>
+        v-for="agent_thought in agent_thoughts.filter((item: any) =>
           [
             QueueEvent.longTermMemoryRecall,
             QueueEvent.agentThought,

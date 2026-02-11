@@ -6,12 +6,10 @@ import { useAccountStore } from '@/stores/account'
 import { useRoute } from 'vue-router'
 import CreateOrUpdateWorkflowModal from '@/views/space/workflows/components/CreateOrUpdateWorkflowModal.vue'
 
+const createType = defineModel('create-type', {required: true})
+
 // 1.定义页面所需数据
 const route = useRoute()
-const props = defineProps({
-  createType: { type: String, default: '', required: true },
-})
-const emits = defineEmits(['update-create-type'])
 const createOrUpdateWorkflowModalVisible = ref(false)
 const updateWorkflowId = ref('')
 const accountStore = useAccountStore()
@@ -42,12 +40,12 @@ onMounted(async () => {
 })
 
 watch(
-  () => props.createType,
+  () => createType.value,
   (newValue) => {
     if (newValue === 'workflow') {
       updateWorkflowId.value = ''
       createOrUpdateWorkflowModalVisible.value = true
-      emits('update-create-type', '')
+      createType.value = ''
     }
   },
 )

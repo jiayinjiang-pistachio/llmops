@@ -172,14 +172,9 @@ import type { ValidatedError } from '@arco-design/web-vue/es/form/interface'
 import moment from 'moment'
 import { computed } from 'vue'
 
-const props = defineProps<{
-  createType: string
-}>()
-const emit = defineEmits<{
-  (e: 'update-create-type', value: string): void
-}>()
+const createType = defineModel('create-type', {required: true})
 
-const modalTitle = computed(() => (props.createType === 'dataset' ? '新建知识库' : '更新知识库'))
+const modalTitle = computed(() => (createType.value === 'dataset' ? '新建知识库' : '更新知识库'))
 
 const { loading, datasets, loadMoreData, initData, paginator } = useGetDatasetsWithPage()
 const { handleDelete } = useDeleteDataset()
@@ -241,7 +236,7 @@ const handleCancel = () => {
     formRef.value?.resetFields()
 
     // 隐藏表单模态窗
-    emit('update-create-type', '')
+    createType.value = ''
   })
 }
 
