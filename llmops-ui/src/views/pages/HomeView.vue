@@ -146,9 +146,14 @@ const handleSubmit = async () => {
 
         // 5.14 更新/添加answer答案
         messages.value[0]!.answer += data?.thought
-         messages.value[0]!.latency = data?.latency
+        messages.value[0]!.latency = data?.latency
         messages.value[0]!.total_token_count = data?.total_token_count
-
+      } else if (event === QueueEvent.error) {
+        // 错误提示
+        messages.value[0]!.answer = data?.observation
+      } else if (event === QueueEvent.timeout) {
+        // 超时提示
+        messages.value[0]!.answer = '当前Agent执行已超时，无法得到答案，请重试'
       } else {
         // 5.15 处理其他类型的事件，直接填充覆盖数据
         position += 1
@@ -172,9 +177,11 @@ const handleSubmit = async () => {
     }
   })
 
-  // 5.7 发起API请求获取建议问题列表
-  await handleGenerateSuggestedQuestions(message_id.value)
-  setTimeout(() => scroller.value && scroller.value.scrollToBottom(), 100)
+  if (message_id.value) {
+    // 5.7 发起API请求获取建议问题列表
+    await handleGenerateSuggestedQuestions(message_id.value)
+    setTimeout(() => scroller.value && scroller.value.scrollToBottom(), 100)
+  }
 }
 
 // 6.定义停止调试会话函数

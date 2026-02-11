@@ -90,9 +90,9 @@ const handleSubmit = async () => {
   }
 
   // 发送时，强制回归底部并开启锁定模式
-  isAtBottom.value = true;
-  await nextTick(); // 等待 DOM 更新，确保人类消息已经插入
-  scroller.value?.scrollToBottom();
+  isAtBottom.value = true
+  await nextTick() // 等待 DOM 更新，确保人类消息已经插入
+  scroller.value?.scrollToBottom()
 
   // 5.3 满足条件，处理正式提问的前置工作，涵盖：清空建议问题、删除消息id、任务id
   suggested_questions.value = []
@@ -170,6 +170,12 @@ const handleSubmit = async () => {
           messages.value[0].latency = data?.latency
           messages.value[0].total_token_count = data?.total_token_count
         }
+      } else if (event === QueueEvent.error) {
+        // 错误提示
+        messages.value[0]!.answer = data?.observation
+      } else if (event === QueueEvent.timeout) {
+        // 超时提示
+        messages.value[0]!.answer = '当前Agent执行已超时，无法得到答案，请重试'
       } else {
         // 5.15 处理其他类型的事件，直接填充覆盖数据
         position += 1
@@ -329,7 +335,12 @@ onMounted(async () => {
         <div
           class="h-[50px] flex items-center gap-2 px-4 flex-1 border border-gray-200 rounded-full"
         >
-          <input v-model="query" type="text" class="flex-1 outline-0 focus:outline-none" @keyup.enter="handleSubmit" />
+          <input
+            v-model="query"
+            type="text"
+            class="flex-1 outline-0 focus:outline-none"
+            @keyup.enter="handleSubmit"
+          />
           <a-button
             :loading="debugChatLoading"
             type="text"

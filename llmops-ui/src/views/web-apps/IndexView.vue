@@ -218,15 +218,49 @@ const handleSubmit = async () => {
       messages.value[0]!.conversation_id = data?.conversation_id
     }
 
-    // 11.9 循环处理得到的事件，记录除ping之外的事件
-    if (event !== QueueEvent.ping) {
-      // 11.10 除了agent_message数据为叠加，其他均为覆盖
-      if (event === QueueEvent.agentMessage) {
-        // 5.11 获取数据索引并检测是否存在
-        const agent_thought_idx = agent_thoughts.findIndex((item) => item?.id === event_id)
+    try {
+      // 11.9 循环处理得到的事件，记录除ping之外的事件
+      if (event !== QueueEvent.ping) {
+        // 11.10 除了agent_message数据为叠加，其他均为覆盖
+        if (event === QueueEvent.agentMessage) {
+          // 5.11 获取数据索引并检测是否存在
+          const agent_thought_idx = agent_thoughts.findIndex((item) => item?.id === event_id)
 
-        // 5.12 数据不存在则添加
-        if (agent_thought_idx === -1) {
+          // 5.12 数据不存在则添加
+          if (agent_thought_idx === -1) {
+            position += 1
+            agent_thoughts.push({
+              id: event_id,
+              position: position,
+              event: data?.event,
+              thought: data?.thought,
+              observation: data?.observation,
+              tool: data?.tool,
+              tool_input: data?.tool_input,
+              latency: data?.latency,
+              created_at: 0,
+            })
+          } else {
+            // 5.13 存在数据则叠加
+            agent_thoughts[agent_thought_idx] = {
+              ...agent_thoughts[agent_thought_idx],
+              thought: agent_thoughts[agent_thought_idx]?.thought + data?.thought,
+              latency: data?.latency,
+            } as AgentThoughtItem
+          }
+
+          // 5.14 更新/添加answer答案
+          messages.value[0]!.answer += data?.thought
+          messages.value[0]!.latency = data?.latency
+          messages.value[0]!.total_token_count = data?.total_token_count
+        } else if (event === QueueEvent.error) {
+          // 错误提示
+          messages.value[0]!.answer = data?.observation
+        } else if (event === QueueEvent.timeout) {
+          // 超时提示
+          messages.value[0]!.answer = '当前Agent执行已超时，无法得到答案，请重试'
+        } else {
+          // 11.11 处理其他类型的事件，直接填充覆盖数据
           position += 1
           agent_thoughts.push({
             id: event_id,
@@ -239,39 +273,16 @@ const handleSubmit = async () => {
             latency: data?.latency,
             created_at: 0,
           })
-        } else {
-          // 5.13 存在数据则叠加
-          agent_thoughts[agent_thought_idx] = {
-            ...agent_thoughts[agent_thought_idx],
-            thought: agent_thoughts[agent_thought_idx]?.thought + data?.thought,
-            latency: data?.latency,
-          } as AgentThoughtItem
         }
 
-        // 5.14 更新/添加answer答案
-        messages.value[0]!.answer += data?.thought
-        messages.value[0]!.latency = data?.latency
-        messages.value[0]!.total_token_count = data?.total_token_count
-      } else {
-        // 11.11 处理其他类型的事件，直接填充覆盖数据
-        position += 1
-        agent_thoughts.push({
-          id: event_id,
-          position: position,
-          event: data?.event,
-          thought: data?.thought,
-          observation: data?.observation,
-          tool: data?.tool,
-          tool_input: data?.tool_input,
-          latency: data?.latency,
-          created_at: 0,
-        })
+        // 11.12 更新agent_thoughts
+        messages.value[0]!.agent_thoughts = agent_thoughts
+
+        scroller.value.scrollToBottom()
       }
-
-      // 11.12 更新agent_thoughts
-      messages.value[0]!.agent_thoughts = agent_thoughts
-
-      scroller.value.scrollToBottom()
+    } catch (e) {
+      messages.value[0]!.answer = '发生未知错误，尝试切换模型重试'
+      console.log(e)
     }
   })
 
@@ -292,7 +303,7 @@ const handleSubmit = async () => {
       }
     }
     // 11.16 判断是否开启建议问题生成，如果开启了则发起api请求获取数据
-    if (web_app.value?.app_config?.suggested_after_answer.enable) {
+    if (web_app.value?.app_config?.suggested_after_answer.enable && message_id.value) {
       await handleGenerateSuggestedQuestions(message_id.value)
       setTimeout(() => scroller.value && scroller.value.scrollToBottom(), 100)
     }

@@ -952,6 +952,8 @@ class AppService(BaseService):
             yield f"event: {agent_thought.event.value}\ndata: {json.dumps(data)}\n\n"
 
         # 22. 循环将消息以及推理过程添加到数据库
+        # todo: 将数据库存储、更新改为同步，生成会话名称、摘要依然在线程里实现
+        # todo：考虑将错误信息、超时信息一并存储到answer中
         thread = Thread(
             target=self.conversation_service.save_agent_thought,
             kwargs={
