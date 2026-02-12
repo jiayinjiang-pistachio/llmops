@@ -174,20 +174,17 @@ class FunctionCallAgent(BaseAgent):
         review_config = self.agent_config.review_config
         review_config_outputs_open = review_config["enable"] and review_config["outputs_config"]["enable"]
 
-        # 【修复 1】确保发送的消息序列是合法的，过滤 RemoveMessage 和空消息
-        cleaned_messages = []
+        # 【必须】清洗消息序列
+        messages = []
         for m in state["messages"]:
-            if isinstance(m, (BaseMessage, AIMessage, HumanMessage, SystemMessage, ToolMessage)):
-                # 只有内容不为空，或者是带 tool_calls 的 AIMessage 才放行
-                if hasattr(m, "content") and (m.content or (isinstance(m, AIMessage) and m.tool_calls)):
-                    cleaned_messages.append(m)
-
-        # 如果清洗后最后一条是空的，补一个提示，防止 API 报错
-        if not cleaned_messages or cleaned_messages[-1].content == "":
-            cleaned_messages.append(HumanMessage(content="Please continue."))
+            # 排除 LangGraph 内部控制消息和内容为空的消息
+            if (isinstance(m, (BaseMessage, AIMessage, HumanMessage, SystemMessage, ToolMessage))
+                    and not isinstance(m, RemoveMessage)
+            ):
+                messages.append(m)
 
         try:
-            for chunk in llm.stream(state["messages"]):
+            for chunk in llm.stream(messages):
                 # 聚合处理：LangChain 的 AIMessageChunk 支持通过 + 号自动合并 tool_calls
                 if gathered is None:
                     gathered = chunk
@@ -293,14 +290,14 @@ class FunctionCallAgent(BaseAgent):
                 event=QueueEvent.AGENT_END
             ))
 
-        # 在函数的最后
-        # 确保 gathered 是完整的 AIMessage 而不是 AIMessageChunk
-        final_message = AIMessage(
-            content=gathered.content if hasattr(gathered, 'content') else "",
-            tool_calls=getattr(gathered, 'tool_calls', [])
-        )
+        # 函数最后返回前
+        final_content = gathered.content if hasattr(gathered, 'content') else ""
+        final_tool_calls = getattr(gathered, 'tool_calls', [])
 
-        return {"messages": [final_message], "iteration_count": current_iteration_count + 1}
+        return {
+            "messages": [AIMessage(content=final_content, tool_calls=final_tool_calls)],
+            "iteration_count": current_iteration_count + 1
+        }
 
     def _tools(self, state: AgentState) -> AgentState:
         """工具调用节点"""

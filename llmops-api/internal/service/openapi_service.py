@@ -8,7 +8,6 @@
 """
 import json
 from dataclasses import dataclass
-from threading import Thread
 from typing import Generator
 
 from flask import current_app
@@ -139,7 +138,7 @@ class OpenapiService(BaseService):
             llm=llm,
             agent_config=AgentConfig(
                 user_id=account.id,
-                invoke_from=InvokeFrom.DEBUGGER,
+                invoke_from=InvokeFrom.SERVICE_API,
                 enable_long_term_memory=app_config["long_term_memory"]["enable"],
                 tools=tools,
                 review_config=app_config["review_config"],
@@ -154,6 +153,13 @@ class OpenapiService(BaseService):
             "long_term_memory": conversation.summary,
         }
 
+        # --- 关键：在循环和 yield 之前，把所有 ID 拿出来 ---
+        # 这样它们就变成了普通的字符串，不再依赖 SQLAlchemy Session
+        current_account_id = account.id
+        current_app_id = app.id
+        current_conversation_id = conversation.id
+        current_message_id = message.id
+
         # 17. 根据stream类型差异执行不同的代码
         if req.stream.data is True:
             agent_thoughts_dict: dict[str, AgentThought] = {}
@@ -165,6 +171,7 @@ class OpenapiService(BaseService):
 
             def handle_stream() -> Generator:
                 """流式事件处理器，在python中只要在函数内部使用了yield关键字，那么这个函数的返回值类型肯定是生成器"""
+
                 for agent_thought in agent.stream(agent_state):
                     # 提取thought以及answer
                     event_id = str(agent_thought.id)
@@ -202,25 +209,30 @@ class OpenapiService(BaseService):
                     }
                     yield f"event: {agent_thought.event.value}\ndata: {json.dumps(data)}\n\n"
 
+                # 22.将消息以及推理过程添加到数据库
+                self.conversation_service.save_agent_thought(
+                    account_id=current_account_id,  # 使用局部变量
+                    app_id=current_app_id,  # 使用局部变量
+                    app_config=app_config,
+                    conversation_id=current_conversation_id,
+                    message_id=current_message_id,
+                    agent_thoughts=[agent_thought for agent_thought in agent_thoughts_dict.values()],
+                )
+
             return handle_stream()
 
         # 18. 块内容输出
         agent_result = agent.invoke(agent_state)
 
-        # 19. 将消息以及推理过车呢个添加到数据库
-        thread = Thread(
-            target=self.conversation_service.save_agent_thought,
-            kwargs={
-                "flask_app": current_app._get_current_object(),
-                "account_id": account.id,
-                "app_id": app.id,
-                "app_config": app_config,
-                "conversation_id": conversation.id,
-                "message_id": message.id,
-                "agent_thoughts": agent_result.agent_thoughts,
-            }
+        # 19. 将消息以及推理过程添加到数据库
+        self.conversation_service.save_agent_thought(
+            account_id=current_account_id,
+            app_id=current_app_id,
+            app_config=app_config,
+            conversation_id=current_conversation_id,
+            message_id=current_message_id,
+            agent_thoughts=agent_result.agent_thoughts,
         )
-        thread.start()
 
         return Response(data={
             "id": str(message.id),
