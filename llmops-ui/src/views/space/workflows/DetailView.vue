@@ -423,6 +423,7 @@ import { cloneDeep } from 'lodash'
 import { Message } from '@arco-design/web-vue'
 import { generateRandomString } from '@/utils/helper'
 import { NODE_DATA_MAP } from '@/config'
+import { v4 } from 'uuid'
 
 const zoomOptions = [
   { label: '200%', value: 2 },
@@ -553,7 +554,7 @@ onConnect((connection) => {
   // 将数据添加到edges中
   edges.value.push({
     ...connection,
-    id: crypto.randomUUID(),
+    id: v4(),
     source_type: source_node?.type,
     target_type: target_node?.type,
     animated: true,
@@ -640,7 +641,7 @@ const addNode = (node_type: string) => {
 
   // 提取节点数据的默认值
   nodes.value.push({
-    id: crypto.randomUUID(),
+    id: v4(),
     type: node_type,
     position: { x: xAverage, y: yAverage },
     data: {
