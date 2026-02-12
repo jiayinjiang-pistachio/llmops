@@ -6,6 +6,8 @@
 @File           : dataset.py
 @Description    : 
 """
+from datetime import datetime
+
 from sqlalchemy import PrimaryKeyConstraint, Column, UUID, text, String, Text, DateTime, func, Integer, Boolean, Index
 from sqlalchemy.dialects.postgresql import JSONB
 
@@ -31,7 +33,7 @@ class Dataset(db.Model):
         DateTime,
         nullable=False,
         server_default=text('CURRENT_TIMESTAMP(0)'),
-        server_onupdate=text('CURRENT_TIMESTAMP(0)'),
+        onupdate=datetime.now,
     )
     created_at = Column(DateTime, nullable=False, server_default=text('CURRENT_TIMESTAMP(0)'))
 
@@ -102,7 +104,7 @@ class Document(db.Model):
         DateTime,
         nullable=False,
         server_default=text('CURRENT_TIMESTAMP(0)'),
-        server_onupdate=text("CURRENT_TIMESTAMP(0)")
+        onupdate=datetime.now,
     )
     created_at = Column(DateTime, nullable=False, server_default=text('CURRENT_TIMESTAMP(0)'))
 
@@ -164,7 +166,7 @@ class Segment(db.Model):
     updated_at = Column(
         DateTime,
         server_default=text('CURRENT_TIMESTAMP(0)'),
-        server_onupdate=text("CURRENT_TIMESTAMP(0)")
+        onupdate=datetime.now,
     )
     created_at = Column(DateTime, nullable=False, server_default=text('CURRENT_TIMESTAMP(0)'))
 
@@ -187,7 +189,7 @@ class KeywordTable(db.Model):
     updated_at = Column(
         DateTime,
         server_default=text('CURRENT_TIMESTAMP(0)'),
-        server_onupdate=text("CURRENT_TIMESTAMP(0)")
+        onupdate=datetime.now,
     )
     created_at = Column(DateTime, nullable=False, server_default=text('CURRENT_TIMESTAMP(0)'))
 
@@ -211,7 +213,7 @@ class DatasetQuery(db.Model):
     updated_at = Column(
         DateTime,
         server_default=text('CURRENT_TIMESTAMP(0)'),
-        server_onupdate=text("CURRENT_TIMESTAMP(0)")
+        onupdate=datetime.now,
     )
     created_at = Column(DateTime, nullable=False, server_default=text('CURRENT_TIMESTAMP(0)'))
 
@@ -233,6 +235,6 @@ class ProcessRule(db.Model):
     updated_at = Column(
         DateTime,
         server_default=text('CURRENT_TIMESTAMP(0)'),
-        server_onupdate=text("CURRENT_TIMESTAMP(0)")
+        onupdate=datetime.now,
     )
     created_at = Column(DateTime, nullable=False, server_default=text('CURRENT_TIMESTAMP(0)'))

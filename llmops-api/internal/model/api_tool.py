@@ -6,6 +6,8 @@
 @File           : api_tool.py
 @Description    : 
 """
+from datetime import datetime
+
 from sqlalchemy import PrimaryKeyConstraint, Column, UUID, text, String, Text, DateTime, Index
 from sqlalchemy.dialects.postgresql import JSONB
 
@@ -33,7 +35,7 @@ class ApiTool(db.Model):
         DateTime,
         nullable=False,
         server_default=text('CURRENT_TIMESTAMP(0)'),
-        server_onupdate=text('CURRENT_TIMESTAMP(0)'),
+        onupdate=datetime.now,
     )
     created_at = Column(DateTime, nullable=False, server_default=text('CURRENT_TIMESTAMP(0)'))
 
@@ -63,7 +65,7 @@ class ApiToolProvider(db.Model):
         DateTime,
         nullable=False,
         server_default=text('CURRENT_TIMESTAMP(0)'),
-        server_onupdate=text('CURRENT_TIMESTAMP(0)'),
+        onupdate=datetime.now,
     )
     created_at = Column(DateTime, nullable=False, server_default=text('CURRENT_TIMESTAMP(0)'))
 

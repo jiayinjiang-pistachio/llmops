@@ -6,6 +6,8 @@
 @File           : workflow.py
 @Description    : 
 """
+from datetime import datetime
+
 from sqlalchemy import (
     PrimaryKeyConstraint, Column, UUID, text, String, Text, Boolean, DateTime, Float, Index
 )
@@ -38,7 +40,7 @@ class Workflow(db.Model):
         DateTime,
         nullable=False,
         server_default=text("CURRENT_TIMESTAMP(0)"),
-        server_onupdate=text("CURRENT_TIMESTAMP(0)"),
+        onupdate=datetime.now,
     )
     created_at = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP(0)"))
 
@@ -65,6 +67,6 @@ class WorkflowResult(db.Model):
         DateTime,
         nullable=False,
         server_default=text("CURRENT_TIMESTAMP(0)"),
-        server_onupdate=text("CURRENT_TIMESTAMP(0)"),
+        onupdate=datetime.now,
     )
     created_at = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP(0)"))

@@ -6,6 +6,8 @@
 @File           : conversation.py
 @Description    : 
 """
+from datetime import datetime
+
 from sqlalchemy import PrimaryKeyConstraint, Column, UUID, text, String, Text, Boolean, DateTime, Integer, Numeric, \
     Float, func, Index
 from sqlalchemy.dialects.postgresql import JSONB
@@ -38,7 +40,7 @@ class Conversation(db.Model):
         DateTime,
         nullable=False,
         server_default=text('CURRENT_TIMESTAMP(0)'),
-        server_onupdate=text('CURRENT_TIMESTAMP(0)'),
+        onupdate=datetime.now,
     )
     created_at = Column(DateTime, nullable=False, server_default=text('CURRENT_TIMESTAMP(0)'))
 
@@ -95,7 +97,7 @@ class Message(db.Model):
         DateTime,
         nullable=False,
         server_default=text('CURRENT_TIMESTAMP(0)'),
-        server_onupdate=text('CURRENT_TIMESTAMP(0)'),
+        onupdate=datetime.now,
     )
     created_at = Column(DateTime, nullable=False, server_default=text('CURRENT_TIMESTAMP(0)'))
 
@@ -172,6 +174,10 @@ class MessageAgentThought(db.Model):
     latency = Column(Float, nullable=False, server_default=text("0.0"))
 
     # 时间相关信息
-    updated_at = Column(DateTime, nullable=False, server_default=text('CURRENT_TIMESTAMP(0)'),
-                        server_onupdate=text('CURRENT_TIMESTAMP(0)'))
+    updated_at = Column(
+        DateTime,
+        nullable=False,
+        server_default=text('CURRENT_TIMESTAMP(0)'),
+        onupdate=datetime.now,
+    )
     created_at = Column(DateTime, nullable=False, server_default=text('CURRENT_TIMESTAMP(0)'))

@@ -7,6 +7,7 @@
 @Description    : 
 """
 import uuid
+from datetime import datetime
 
 from sqlalchemy import (Column, UUID, String, Text, DateTime, PrimaryKeyConstraint, text, Integer, Index)
 from sqlalchemy.dialects.postgresql import JSONB
@@ -42,7 +43,7 @@ class App(db.Model):
         DateTime,
         nullable=False,
         server_default=text("current_timestamp(0)"),
-        server_onupdate=text("current_timestamp(0)")
+        onupdate=datetime.now,
     )
     created_at = Column(DateTime, nullable=False, server_default=text("current_timestamp(0)"))
 
@@ -139,7 +140,7 @@ class AppDatasetJoin(db.Model):
         DateTime,
         nullable=False,
         server_default=text("CURRENT_TIMESTAMP(0)"),
-        server_onupdate=text("CURRENT_TIMESTAMP(0)")
+        onupdate=datetime.now,
     )
     created_at = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP(0)"))
 
@@ -171,7 +172,7 @@ class AppConfig(db.Model):
         DateTime,
         nullable=False,
         server_default=text("CURRENT_TIMESTAMP(0)"),
-        server_onupdate=text("CURRENT_TIMESTAMP(0)"),
+        onupdate=datetime.now,
     )
     created_at = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP(0)"))
 
@@ -215,6 +216,6 @@ class AppConfigVersion(db.Model):
         DateTime,
         nullable=False,
         server_default=text("CURRENT_TIMESTAMP(0)"),
-        server_onupdate=text("CURRENT_TIMESTAMP(0)"),
+        onupdate=datetime.now,
     )
     created_at = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP(0)"))

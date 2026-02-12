@@ -6,6 +6,8 @@
 @File           : api_key.py
 @Description    : 
 """
+from datetime import datetime
+
 from sqlalchemy import PrimaryKeyConstraint, Column, UUID, text, String, Boolean, DateTime, Index
 
 from internal.extension.database_extension import db
@@ -30,7 +32,7 @@ class ApiKey(db.Model):
         DateTime,
         nullable=False,
         server_default=text('CURRENT_TIMESTAMP(0)'),
-        server_onupdate=text('CURRENT_TIMESTAMP(0)')
+        onupdate=datetime.now,
     )
     created_at = Column(DateTime, nullable=False, server_default=text('CURRENT_TIMESTAMP(0)'))
 

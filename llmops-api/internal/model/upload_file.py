@@ -6,6 +6,8 @@
 @File           : upload_file.py
 @Description    : 
 """
+from datetime import datetime
+
 from sqlalchemy import PrimaryKeyConstraint, Column, UUID, text, String, Integer, DateTime, Index
 
 from internal.extension.database_extension import db
@@ -30,6 +32,6 @@ class UploadFile(db.Model):
     updated_at = Column(
         DateTime,
         server_default=text('CURRENT_TIMESTAMP(0)'),
-        server_onupdate=text('CURRENT_TIMESTAMP(0)'),
+        onupdate=datetime.now,
     )
     created_at = Column(DateTime, nullable=False, server_default=text('CURRENT_TIMESTAMP(0)'))
