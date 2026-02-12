@@ -7,7 +7,7 @@
 @Description    : 
 """
 from sqlalchemy import (
-    PrimaryKeyConstraint, Column, UUID, text, String, Text, Boolean, DateTime, Float
+    PrimaryKeyConstraint, Column, UUID, text, String, Text, Boolean, DateTime, Float, Index
 )
 from sqlalchemy.dialects.postgresql import JSONB
 
@@ -19,6 +19,8 @@ class Workflow(db.Model):
     __tablename__ = "workflow"
     __table_args__ = (
         PrimaryKeyConstraint("id", name="pk_workflow_id"),
+        Index("workflow_account_id_idx", "account_id"),
+        Index("workflow_tool_call_name_idx", "tool_call_name"),
     )
 
     id = Column(UUID, nullable=False, server_default=text("uuid_generate_v4()"))
@@ -46,6 +48,9 @@ class WorkflowResult(db.Model):
     __tablename__ = "workflow_result"
     __table_args__ = (
         PrimaryKeyConstraint("id", name="pk_workflow_result_id"),
+        Index("workflow_result_app_id_idx", "app_id"),
+        Index("workflow_result_account_id_idx", "account_id"),
+        Index("workflow_result_workflow_id_idx", "workflow_id"),
     )
 
     id = Column(UUID, nullable=False, server_default=text("uuid_generate_v4()"))

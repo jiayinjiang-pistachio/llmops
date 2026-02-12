@@ -6,7 +6,7 @@
 @File           : end_user.py
 @Description    : 
 """
-from sqlalchemy import PrimaryKeyConstraint, Column, UUID, text, DateTime
+from sqlalchemy import PrimaryKeyConstraint, Column, UUID, text, DateTime, Index
 
 from internal.extension.database_extension import db
 
@@ -15,7 +15,10 @@ class EndUser(db.Model):
     """总端用户表模型"""
     __tablename__ = "end_user"
     __table_args__ = (
-        PrimaryKeyConstraint("id", name="pk_end_user_id"),)
+        PrimaryKeyConstraint("id", name="pk_end_user_id"),
+        Index("end_user_tenant_id_idx", "tenant_id"),
+        Index("end_user_app_id_idx", "app_id"),
+    )
 
     id = Column(UUID, nullable=False, server_default=text("uuid_generate_v4()"))
     tenant_id = Column(UUID, nullable=False)  # 归属的账号/空间id
