@@ -11,7 +11,6 @@ import json
 import os
 from dataclasses import dataclass
 from datetime import datetime
-from threading import Thread
 from typing import Any, Generator
 from uuid import UUID
 
@@ -953,21 +952,14 @@ class AppService(BaseService):
             yield f"event: {agent_thought.event.value}\ndata: {json.dumps(data)}\n\n"
 
         # 22. 循环将消息以及推理过程添加到数据库
-        # todo: 将数据库存储、更新改为同步，生成会话名称、摘要依然在线程里实现
-        # todo：考虑将错误信息、超时信息一并存储到answer中
-        thread = Thread(
-            target=self.conversation_service.save_agent_thought,
-            kwargs={
-                "flask_app": current_app._get_current_object(),
-                "account_id": account.id,
-                "app_id": app_id,
-                "app_config": draft_app_config,
-                "conversation_id": debug_conversation.id,
-                "message_id": message.id,
-                "agent_thoughts": [agent_thought for agent_thought in agent_thoughts.values()],
-            }
+        self.conversation_service.save_agent_thought(
+            account_id=account.id,
+            app_id=app.id,
+            app_config=draft_app_config,
+            conversation_id=debug_conversation.id,
+            message_id=message.id,
+            agent_thoughts=[agent_thought for agent_thought in agent_thoughts.values()],
         )
-        thread.start()
 
     def stop_debug_chat(self, app_id: UUID, task_id: UUID, account: Account) -> None:
         """根据传递的应用id+任务id+账号，停止某个应用的调试会话，中断流式事件"""
