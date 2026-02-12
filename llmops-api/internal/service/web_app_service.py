@@ -8,6 +8,7 @@
 """
 import json
 from dataclasses import dataclass
+from threading import Thread
 from typing import Generator
 from uuid import UUID
 
@@ -204,14 +205,19 @@ class WebAppService(BaseService):
             yield f"event: {agent_thought.event.value}\ndata: {json.dumps(data)}\n\n"
 
         # 22. 循环将消息以及推理过程添加到数据库
-        self.conversation_service.save_agent_thought(
-            account_id=account.id,
-            app_id=app.id,
-            app_config=app_config,
-            conversation_id=conversation.id,
-            message_id=message.id,
-            agent_thoughts=[agent_thought for agent_thought in agent_thoughts.values()],
+        thread = Thread(
+            target=self.conversation_service.save_agent_thought,
+            kwargs={
+                "flask_app": current_app._get_current_object(),
+                "account_id": account.id,
+                "app_id": app.id,
+                "app_config": app_config,
+                "conversation_id": conversation.id,
+                "message_id": message.id,
+                "agent_thoughts": [agent_thought for agent_thought in agent_thoughts.values()],
+            }
         )
+        thread.start()
 
     def stop_web_app_chat(self, token: str, task_id: UUID, account: Account):
         """根据传递的token+task_id停止与指定WebApp对话"""
