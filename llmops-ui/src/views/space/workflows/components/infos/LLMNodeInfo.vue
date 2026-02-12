@@ -42,6 +42,8 @@ const onSubmit = async ({ errors }: { errors: Record<string, ValidatedError> | u
   const cloneInputs = cloneDeep(form.value.inputs)
   const cloneModelConfig = cloneDeep(form.value.model_config)
 
+  debugger
+
   // 4.3 数据校验通过，通过事件触发数据更新
   emits('updateNode', {
     id: props.node.id,
