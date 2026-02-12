@@ -20,6 +20,7 @@ from langchain_core.messages import HumanMessage
 from langchain_core.pydantic_v1 import BaseModel, Field
 from langchain_core.tools import BaseTool, tool
 from sqlalchemy import desc
+from sqlalchemy.orm import selectinload
 
 from pkg.paginator import Paginator
 from pkg.sqlalchemy import SQLAlchemy
@@ -206,12 +207,15 @@ class AssistantAgentService(BaseService):
 
         # 4. 执行分页并查询数据
         messages = paginator.paginate(
-            self.db.session.query(Message).filter(
+            self.db.session.query(Message)
+            .filter(
                 Message.conversation_id == conversation.id,
                 Message.status.in_([MessageStatus.STOP, MessageStatus.NORMAL]),
                 Message.answer != "",
                 *filters,
-            ).order_by(desc("created_at"))
+            )
+            .options(selectinload(Message.agent_thoughts))  # 使用 selectinload
+            .order_by(desc("created_at"))
         )
 
         return messages, paginator

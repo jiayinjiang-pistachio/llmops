@@ -7,8 +7,9 @@
 @Description    : 
 """
 from sqlalchemy import PrimaryKeyConstraint, Column, UUID, text, String, Text, Boolean, DateTime, Integer, Numeric, \
-    Float, func, asc, Index
+    Float, func, Index
 from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy.orm import relationship
 
 from internal.extension.database_extension import db
 
@@ -98,12 +99,24 @@ class Message(db.Model):
     )
     created_at = Column(DateTime, nullable=False, server_default=text('CURRENT_TIMESTAMP(0)'))
 
-    @property
-    def agent_thoughts(self) -> list["MessageAgentThought"]:
-        """只读属性，返回消息智能体推理过程列表"""
-        return db.session.query(MessageAgentThought).filter(
-            MessageAgentThought.message_id == self.id,
-        ).order_by(asc("position")).all()
+    # @property
+    # def agent_thoughts(self) -> list["MessageAgentThought"]:
+    #     """只读属性，返回消息智能体推理过程列表"""
+    #     return db.session.query(MessageAgentThought).filter(
+    #         MessageAgentThought.message_id == self.id,
+    #     ).order_by(asc("position")).all()
+
+    # 智能体推理列表，创建表关联
+    agent_thoughts = relationship(
+        "MessageAgentThought",  # 关联的模型名字
+        backref="msg",  # 反向引用
+        # lazy="selectin",  # 加载方式
+        lazy="select",  # 默认不加载，查询时按需指定
+        passive_deletes="all",
+        uselist=True,  # 表示得到的是列表数据
+        foreign_keys=[id],
+        primaryjoin="MessageAgentThought.message_id == Message.id"
+    )
 
 
 class MessageAgentThought(db.Model):
