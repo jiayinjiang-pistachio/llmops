@@ -26,6 +26,7 @@ from langchain_core.runnables import RunnableParallel
 from langchain_openai import ChatOpenAI
 from redis import Redis
 from sqlalchemy import func, desc
+from sqlalchemy.orm import selectinload
 from werkzeug.datastructures import FileStorage
 
 from internal.entity.app_entity import AppStatus, AppConfigType, DEFAULT_APP_CONFIG, GENERATE_ICON_PROMPT_TEMPLATE
@@ -999,12 +1000,15 @@ class AppService(BaseService):
 
         # 5. 执行分页并查询数据
         messages = paginator.paginate(
-            self.db.session.query(Message).filter(
+            self.db.session.query(Message)
+            .filter(
                 Message.conversation_id == debug_conversation.id,
                 Message.status.in_([MessageStatus.STOP, MessageStatus.NORMAL]),
                 Message.answer != "",
                 *filters,
-            ).order_by(desc("created_at"))
+            )
+            .options(selectinload(Message.agent_thoughts))  # 使用 selectinload
+            .order_by(desc("created_at"))
         )
 
         return messages, paginator

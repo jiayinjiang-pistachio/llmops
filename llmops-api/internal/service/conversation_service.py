@@ -19,6 +19,7 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from sqlalchemy import desc
+from sqlalchemy.orm import selectinload
 
 from internal.core.agent.entities.queue_entity import AgentThought, QueueEvent
 from internal.entity.conversation_entity import SUMMARIZER_TEMPLATE, CONVERSATION_NAME_TEMPLATE, ConversationInfo, \
@@ -277,13 +278,16 @@ class ConversationService(BaseService):
 
         # 4. 执行分页并查询数据
         messages = paginator.paginate(
-            self.db.session.query(Message).filter(
+            self.db.session.query(Message)
+            .filter(
                 Message.conversation_id == conversation.id,
                 Message.status.in_([MessageStatus.STOP, MessageStatus.NORMAL]),
                 Message.answer != "",
                 ~Message.is_deleted,
                 *filters,
-            ).order_by(desc("created_at"))
+            )
+            .options(selectinload(Message.agent_thoughts))  # 使用 selectinload
+            .order_by(desc("created_at"))
         )
 
         return messages, paginator

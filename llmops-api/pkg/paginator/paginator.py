@@ -44,16 +44,25 @@ class Paginator:
         self.db = db
 
     def paginate(self, select) -> list[Any]:
-        """对穿入的查询进行分页"""
-        # 1. 调用db.paginate进行数据分页
-        p = self.db.paginate(select, page=self.current_page, per_page=self.page_size, error_out=False)
+        """对传入的查询进行分页"""
+        # # 1. 调用db.paginate进行数据分页
+        # p = self.db.paginate(select, page=self.current_page, per_page=self.page_size, error_out=False)
+        #
+        # # 2. 计算总页数+总条数
+        # self.total_record = p.total
+        # self.total_page = math.ceil(p.total / self.page_size)
+        #
+        # # 3. 返回分页后的数据
+        # return p.items
 
-        # 2. 计算总页数+总条数
-        self.total_record = p.total
-        self.total_page = math.ceil(p.total / self.page_size)
+        # 1. 获取总数 (count 并不需要 selectinload，这样性能更好)
+        self.total_record = select.count()
+        self.total_page = math.ceil(self.total_record / self.page_size)
 
-        # 3. 返回分页后的数据
-        return p.items
+        # 2. 手动分页并执行 (此时 options 绝对会生效)
+        items = select.limit(self.page_size).offset((self.current_page - 1) * self.page_size).all()
+
+        return items
 
 
 @dataclass
