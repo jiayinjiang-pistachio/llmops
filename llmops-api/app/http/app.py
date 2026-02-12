@@ -6,6 +6,8 @@
 @File           : app.py
 @Description    : 
 """
+import os
+
 import dotenv
 from flask_login import LoginManager
 from flask_migrate import Migrate
@@ -18,6 +20,16 @@ from internal.server.http import Http
 from pkg.sqlalchemy import SQLAlchemy
 from .module import injector
 
+# 为生产环境添加猴子补丁
+if os.environ.get("FLASK_DEBUG") == "0" or os.environ.get("FLASK_ENV") == "production":
+    from gevent import monkey
+
+    monkey.patch_all()
+
+    import grpc.experimental.gevent
+
+    grpc.experimental.gevent.init_gevent()
+    
 # 将 env 加载到环境变量中
 dotenv.load_dotenv()
 
