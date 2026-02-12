@@ -18,12 +18,6 @@ DEFAULT_CONFIG = {
     "SQLALCHEMY_POOL_RECYCLE": 3600,
     "SQLALCHEMY_ECHO": "True",
 
-    # weaviate默认配置
-    "WEAVIATE_HTTP_HOST": "localhost",
-    "WEAVIATE_HTTP_PORT": 8080,
-    "WEAVIATE_GRPC_HOST": "localhost",
-    "WEAVIATE_GRPC_PORT": 50051,
-
     "REDIS_HOST": "localhost",
     "REDIS_PORT": 6379,
     "REDIS_USERNAME": "",
