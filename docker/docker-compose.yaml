@@ -28,12 +28,12 @@ services:
   
   # postgres 服务
   db:
-    image: postgres:16-alpine  # 使用 16 版本的轻量镜像
+    image: postgres:15-alpine  # 使用 16 版本的轻量镜像
     container_name: zensnack-db
     restart: always
     environment:
       # 配置默认的账户名、账户密码、默认数据库、数据存储位置
-      PGUSER: postgres
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: llmops
       PGDATA: /var/lib/postgresql/data/pgdata
@@ -44,7 +44,7 @@ services:
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       # 每隔1s发起一个健康测试，最多重试30次
-      test: ["CMD", "ps_isready"]
+      test: ["CMD", "pg_isready"]
       interval: 1s
       timeout: 3s
       retries: 30
@@ -56,3 +56,4 @@ services:
 # 定义持久化卷
 volumes:
   redis_data:
+  postgres_data:
