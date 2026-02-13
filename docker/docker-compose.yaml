@@ -39,7 +39,7 @@ services:
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       # 将postgres数据挂载到本地 ./volumes/db/data 上
-      - ./volumes/db_data:/var/lib/postgresql/data/pgdata
+      - ./volumes/postgres_data:/var/lib/postgresql/data/pgdata
       # 初始化脚本只有在空数据挂载的情况下才会触发执行（.sql/.sh等），如果已经存在数据则不会执行
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
@@ -51,9 +51,30 @@ services:
     ports:
       - "5432:5432"
 
-
+  # weaviate 服务
+  llmops-weaviate:
+    image: semitechnologies/weaviate:1.28.4
+    container_name: zensnack-weaviate
+    restart: always
+    environment:
+      QUERY_DEFAULTS_LIMIT: 25  # 查询默认返回的数据条数
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'false'  # 需要授权才能和weaviate进行交互
+      PERSISTENCE_DATA_PATH: /var/lib/weaviate  # weaviate数据存储路径
+      DEFAULT_VECTORIZER_MODULE: 'none'  # 向量化模块设置为none
+      CLUSTER_HOSTNAME: 'node1'  # 节点的主机名字
+      AUTHENTICATION_APIKEY_ENABLED: 'true'  # 启动基于API秘钥的身份校验
+      AUTHENTICATION_APIKEY_ALLOWED_KEYS: 'ftBC8hKkjfdsci0wW1T6kEtMh5BZFpGa1AD8'  # 允许的API秘钥列表
+      AUTHENTICATION_APIKEY_USERS: 'yin_991@163.com'  # 基于秘钥的API身份列表
+      AUTHORIZATION_ADMINLIST_ENABLED: 'true'  # 启动AdminList授权方案
+      AUTHORIZATION_ADMINLIST_USERS: 'yin_991@163.com'  # 使用AdminList方案时具有管理权限的用户
+    volumes:
+      - ./volumes/weaviate_data:/var/lib/weaviate
+    ports:
+      - "8080:8080"
+      - "50051:50051"
 
 # 定义持久化卷
 volumes:
   redis_data:
   postgres_data:
+  weaviate_data:
