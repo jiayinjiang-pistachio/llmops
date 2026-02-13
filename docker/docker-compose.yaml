@@ -25,6 +25,33 @@ services:
     volumes:
       - ./volumes/redis_data:/data # 数据持久化，防止容器重启后数据丢失
     command: redis-server --requirepass yourpassword123 # 设置 Redis 密码
+  
+  # postgres 服务
+  db:
+    image: postgres:16-alpine  # 使用 16 版本的轻量镜像
+    container_name: zensnack-db
+    restart: always
+    environment:
+      # 配置默认的账户名、账户密码、默认数据库、数据存储位置
+      PGUSER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: llmops
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      # 将postgres数据挂载到本地 ./volumes/db/data 上
+      - ./volumes/db_data:/var/lib/postgresql/data/pgdata
+      # 初始化脚本只有在空数据挂载的情况下才会触发执行（.sql/.sh等），如果已经存在数据则不会执行
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      # 每隔1s发起一个健康测试，最多重试30次
+      test: ["CMD", "ps_isready"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
+    ports:
+      - "5432:5432"
+
+
 
 # 定义持久化卷
 volumes:
