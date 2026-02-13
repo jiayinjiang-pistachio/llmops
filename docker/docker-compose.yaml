@@ -23,7 +23,7 @@ services:
     ports:
       - "6379:6379" # 将 Redis 默认端口映射出来
     volumes:
-      - redis_data:/data # 数据持久化，防止容器重启后数据丢失
+      - ./volumes/redis_data:/data # 数据持久化，防止容器重启后数据丢失
     command: redis-server --requirepass yourpassword123 # 设置 Redis 密码
 
 # 定义持久化卷
