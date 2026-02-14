@@ -5,10 +5,8 @@ WORKDIR /build
 
 COPY requirements.txt .
 
-# 使用缓存挂载安装依赖到指定目录
-RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install --prefix=/pkg -r requirements.txt
-
+# 关键修正：使用 --prefix 将所有包安装到 /pkg 目录下
+RUN pip install --no-cache-dir --prefix=/pkg -r requirements.txt
 
 # 第二阶段：生产环境 (Production)
 FROM python:3.11-slim AS production
@@ -31,6 +29,7 @@ ENV FLASK_APP=app/http/app.py \
 
 # 从构建阶段拷贝依赖
 COPY --from=builder /pkg /usr/local
+
 # 拷贝源码
 COPY . /api
 
