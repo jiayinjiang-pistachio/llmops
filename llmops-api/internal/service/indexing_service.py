@@ -9,12 +9,10 @@
 import logging
 import re
 import uuid
-from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from datetime import datetime
 from uuid import UUID
 
-from flask import Flask, current_app
 from injector import inject
 from langchain_core.documents import Document as LCDocument
 from redis import Redis
@@ -341,81 +339,35 @@ class IndexingService(BaseService):
             lc_segment.metadata["document_enabled"] = True
             lc_segment.metadata["segment_enabled"] = True
 
-        def thread_func(flask_app: Flask, chunks: list[LCDocument], ids: list[UUID]) -> None:
-            """线程函数，执行向量数据库与postgres数据库的存储"""
-
-            # 创建flask上下文环境
-            with flask_app.app_context():
-                try:
-                    # 调用向量数据库存储对应的数据
-                    # ids 唯一标识向量存储中的文档
-                    # 为什么需要手动传 ids？
-                    # 原因1：更新已有数据，# 使用相同的 node_id 可以覆盖原有数据
-                    # 原因2：避免重复插入，# 如果没有ids，每次插入都会生成新向量，导致重复；
-                    #       固定ID，重复插入会覆盖而不是新增
-                    # 原因3：业务关联
-                    #       数据库中的 segment 与向量数据库中的向量一一对应
-                    #       数据库记录：
-                    #       Segment(id=100, node_id="weaviate-uuid-1", ...)
-                    #       向量数据库：
-                    #       向量ID: "weaviate-uuid-1"
-                    #       这样可以通过 node_id 直接定位到向量
-                    # 向量数据库中的一条记录：
-                    # {
-                    #     "id": "node_id-123",           # ✅ 向量ID（ids参数）
-                    #     "vector": [0.1, 0.2, ...],     # ✅ 向量化后的内容
-                    #     "properties": {                # ✅ metadata 的内容
-                    #         "text": "原始文本内容",      # page_content
-                    #         "account_id": "user-123",
-                    #         "dataset_id": "dataset-456",
-                    #         "document_id": "doc-789",
-                    #         "segment_id": "seg-101",
-                    #         "node_id": "node_id-123",   # 与id一致
-                    #         "document_enabled": True,
-                    #         "segment_enabled": True,
-                    #     }
-                    # }
-                    self.vector_database_service.vector_store.add_documents(chunks, ids=ids)
-
-                    # 在这个上下文进行自动提交
-                    with self.db.auto_commit():
-                        # 更新关联片段的状态及完成时间
-                        self.db.session.query(Segment).filter(
-                            Segment.node_id.in_(ids),
-                        ).update({
-                            "status": SegmentStatus.COMPLETED,
-                            "completed_at": datetime.now(),
-                            "enabled": True,
-                        })
-                except Exception as e:
-                    logging.exception(f"构建文档片段索引发生异常，错误信息：{str(e)}")
-                    with self.db.auto_commit():
-                        # 更新关联片段的状态及完成时间
-                        self.db.session.query(Segment).filter(
-                            Segment.node_id.in_(ids),
-                        ).update({
-                            "status": SegmentStatus.ERROR,
-                            "completed_at": None,
-                            "stopped_at": datetime.now(),
-                            "enabled": False,
-                        })
-
-        # 创建线程池
-        with ThreadPoolExecutor(max_workers=5) as executor:
-            futures = []
-
-            # 2. 调用向量数据库，每次存储10条数据，避免一次传递过多数据
+        # 2. 调用向量数据库，每次存储10条数据，避免一次传递过多数据
+        try:
             for i in range(0, len(lc_segments), 10):
-                # 3. 提取需要存储的数据和ids
                 chunks = lc_segments[i:i + 10]
                 ids = [chunk.metadata["node_id"] for chunk in chunks]
-                # current_app._get_current_object 拷贝的flask上下文，不会影响到外部的上下文
-                futures.append(
-                    executor.submit(thread_func, current_app._get_current_object(), chunks, ids)
-                )
-
-            for future in futures:
-                future.result()
+                self.vector_database_service.vector_store.add_documents(chunks, ids=ids)
+                with self.db.auto_commit():
+                    self.db.session.query(Segment).filter(
+                        Segment.node_id.in_(ids),
+                    ).update({
+                        "status": SegmentStatus.COMPLETED,
+                        "completed_at": datetime.now(),
+                        "enabled": True,
+                    })
+        except Exception as e:
+            logging.exception(
+                "构建文档片段索引发生异常，错误信息：%(error)s",
+                {"error": e},
+            )
+            with self.db.auto_commit():
+                self.db.session.query(Segment).filter(
+                    Segment.node_id.in_(ids),
+                ).update({
+                    "status": SegmentStatus.ERROR,
+                    "completed_at": None,
+                    "stopped_at": datetime.now(),
+                    "enabled": False,
+                    "error": str(e),
+                })
 
         # 6. 更新文档的状态数据
         self.update(
@@ -424,3 +376,87 @@ class IndexingService(BaseService):
             completed_at=datetime.now(),
             enabled=True,
         )
+
+        # def thread_func(flask_app: Flask, chunks: list[LCDocument], ids: list[UUID]) -> None:
+        #     """线程函数，执行向量数据库与postgres数据库的存储"""
+        #
+        #     # 创建flask上下文环境
+        #     with flask_app.app_context():
+        #         try:
+        #             # 调用向量数据库存储对应的数据
+        #             # ids 唯一标识向量存储中的文档
+        #             # 为什么需要手动传 ids？
+        #             # 原因1：更新已有数据，# 使用相同的 node_id 可以覆盖原有数据
+        #             # 原因2：避免重复插入，# 如果没有ids，每次插入都会生成新向量，导致重复；
+        #             #       固定ID，重复插入会覆盖而不是新增
+        #             # 原因3：业务关联
+        #             #       数据库中的 segment 与向量数据库中的向量一一对应
+        #             #       数据库记录：
+        #             #       Segment(id=100, node_id="weaviate-uuid-1", ...)
+        #             #       向量数据库：
+        #             #       向量ID: "weaviate-uuid-1"
+        #             #       这样可以通过 node_id 直接定位到向量
+        #             # 向量数据库中的一条记录：
+        #             # {
+        #             #     "id": "node_id-123",           # ✅ 向量ID（ids参数）
+        #             #     "vector": [0.1, 0.2, ...],     # ✅ 向量化后的内容
+        #             #     "properties": {                # ✅ metadata 的内容
+        #             #         "text": "原始文本内容",      # page_content
+        #             #         "account_id": "user-123",
+        #             #         "dataset_id": "dataset-456",
+        #             #         "document_id": "doc-789",
+        #             #         "segment_id": "seg-101",
+        #             #         "node_id": "node_id-123",   # 与id一致
+        #             #         "document_enabled": True,
+        #             #         "segment_enabled": True,
+        #             #     }
+        #             # }
+        #             self.vector_database_service.vector_store.add_documents(chunks, ids=ids)
+        #
+        #             # 在这个上下文进行自动提交
+        #             with self.db.auto_commit():
+        #                 # 更新关联片段的状态及完成时间
+        #                 self.db.session.query(Segment).filter(
+        #                     Segment.node_id.in_(ids),
+        #                 ).update({
+        #                     "status": SegmentStatus.COMPLETED,
+        #                     "completed_at": datetime.now(),
+        #                     "enabled": True,
+        #                 })
+        #         except Exception as e:
+        #             logging.exception(f"构建文档片段索引发生异常，错误信息：{str(e)}")
+        #             with self.db.auto_commit():
+        #                 # 更新关联片段的状态及完成时间
+        #                 self.db.session.query(Segment).filter(
+        #                     Segment.node_id.in_(ids),
+        #                 ).update({
+        #                     "status": SegmentStatus.ERROR,
+        #                     "completed_at": None,
+        #                     "stopped_at": datetime.now(),
+        #                     "enabled": False,
+        #                 })
+        #
+        # # 创建线程池
+        # with ThreadPoolExecutor(max_workers=5) as executor:
+        #     futures = []
+        #
+        #     # 2. 调用向量数据库，每次存储10条数据，避免一次传递过多数据
+        #     for i in range(0, len(lc_segments), 10):
+        #         # 3. 提取需要存储的数据和ids
+        #         chunks = lc_segments[i:i + 10]
+        #         ids = [chunk.metadata["node_id"] for chunk in chunks]
+        #         # current_app._get_current_object 拷贝的flask上下文，不会影响到外部的上下文
+        #         futures.append(
+        #             executor.submit(thread_func, current_app._get_current_object(), chunks, ids)
+        #         )
+        #
+        #     for future in futures:
+        #         future.result()
+        #
+        # # 6. 更新文档的状态数据
+        # self.update(
+        #     document,
+        #     status=DocumentStatus.COMPLETED,
+        #     completed_at=datetime.now(),
+        #     enabled=True,
+        # )
