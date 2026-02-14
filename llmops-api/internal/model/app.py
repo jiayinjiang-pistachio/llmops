@@ -30,7 +30,7 @@ class App(db.Model):
 
     # 在 Column 里写 primary_key=True，负责让 ORM 逻辑绝对不出错
     id = Column(UUID, nullable=False, primary_key=True, default=uuid.uuid4, server_default=text("uuid_generate_v4()"))
-    account_id = Column(UUID, nullable=False, server_default=text("''::character varying"))
+    account_id = Column(UUID, nullable=False)
     app_config_id = Column(UUID, nullable=True)
     draft_app_config_id = Column(UUID, nullable=True)
     debug_conversation_id = Column(UUID, nullable=True)
