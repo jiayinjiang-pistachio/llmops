@@ -1,4 +1,4 @@
-FROM python:3.10-slim-bookworm AS base
+FROM python:3.11-13 AS base
 
 #将requirements.txt拷贝到根目录下
 COPY requirements.txt .
