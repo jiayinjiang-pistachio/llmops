@@ -22,7 +22,8 @@ else
   # 3. API 启动逻辑
   if [[ "${FLASK_ENV}" == "development" ]]; then
     echo ">>> Starting Flask Development Server..."
-    exec flask run --host=${LLMOPS_BIND_ADDRESS:-0.0.0.0} --port=${LLMOPS_PORT:-5001} --debug
+    # 明确告诉 flask 入口文件在哪里
+    exec flask --app app.http.app run --host=${LLMOPS_BIND_ADDRESS:-0.0.0.0} --port=${LLMOPS_PORT:-5001} --debug
   else
     echo ">>> Starting Gunicorn Production Server..."
     # 修正了 SERVER_WORKER_AMOUNT 的拼写

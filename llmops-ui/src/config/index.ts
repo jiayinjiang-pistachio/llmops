@@ -1,5 +1,7 @@
 // api接口前缀
-export const apiPrefix = import.meta.env.VITE_API_PREFIX
+// 开发环境（DEV）：利用 Vite Proxy 转发，前缀为 '/api'
+// 生产环境（PROD）：不加 IP 头，直接用相对路径 '/api'，由 Nginx 转发
+export const apiPrefix = import.meta.env.VITE_API_PREFIX + '/api'
 
 // 业务状态码
 export const httpCode = {
