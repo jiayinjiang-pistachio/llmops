@@ -27,14 +27,14 @@ export default defineConfig({
             // }
 
             // 3. 将 Markdown 相关的生态合并（包括 highlight.js 和 katex）
-            if (
-              id.includes('markdown-it') ||
-              id.includes('highlight.js') ||
-              id.includes('katex') ||
-              id.includes('github-markdown-css')
-            ) {
-              return 'markdown-vendor'
-            }
+            // if (
+            //   id.includes('markdown-it') ||
+            //   id.includes('highlight.js') ||
+            //   id.includes('katex') ||
+            //   id.includes('github-markdown-css')
+            // ) {
+            //   return 'markdown-vendor'
+            // }
 
             // 4. 超大型独立库继续保留独立
             if (id.includes('echarts')) {
