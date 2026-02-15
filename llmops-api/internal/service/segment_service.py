@@ -54,7 +54,7 @@ class SegmentService(BaseService):
         """根据传递的知识库id+文档id获取文档片段分页列表数据"""
 
         document: Document = self.get(Document, document_id)
-        if document is None or document.dataset_id != dataset_id or str(document.account_id) != account.id:
+        if document is None or document.dataset_id != dataset_id or document.account_id != account.id:
             raise NotFoundException("该知识库文档不存在，或无权限查看，请核实后重试")
 
         # 构建分页器
