@@ -14,7 +14,7 @@ RUN pnpm install --frozen-lockfile
 
 # 拷贝源码并打包
 COPY . .
-RUN pnpm run build
+RUN pnpm run build-only
 
 # 第二阶段：运行阶段
 FROM nginx:stable-alpine AS production-stage
