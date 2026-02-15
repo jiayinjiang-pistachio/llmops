@@ -25,7 +25,7 @@ onMounted(async () => {
       path: '/home',
     })
   } catch {
-    await router.replace({ path: '/auth/login-banner' })
+    await router.replace({ path: '/auth/login' })
   }
 })
 </script>
