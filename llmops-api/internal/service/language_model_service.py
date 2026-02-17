@@ -14,7 +14,6 @@ from typing import Any
 
 from flask import current_app
 from injector import inject
-from langchain_openai import ChatOpenAI
 
 from pkg.sqlalchemy import SQLAlchemy
 from .base_service import BaseService
@@ -178,13 +177,28 @@ class LanguageModelService(BaseService):
             logging.exception(f"加载大语言模型出错：{str(e)}")
             return self.load_default_language_model()
 
-    @classmethod
-    def load_default_language_model(cls):
+    def load_default_language_model(self):
         """加载默认的大语言模型，在模型管理器中获取不到模型或出错时，使用默认模型兜底"""
-        return ChatOpenAI(
-            model="gpt-4o-mini",
+        # return ChatOpenAI(
+        #     model="gpt-4o-mini",
+        #     api_key=os.getenv("GPTSAPI_API_KEY"),
+        #     base_url=os.getenv("OPENAI_API_BASE"),
+        #     temperature=1,
+        #     max_tokens=8192,
+        # )
+        # 1. 获取openai服务提供者与模型类
+        provider = self.language_model_manager.get_provider("openai")
+        model_entity = provider.get_model_entity("gpt-4o-mini")
+        modal_class = provider.get_model_class(model_entity.model_type)
+
+        # 2. 实例化模型返回
+        return modal_class(
+            **model_entity.attributes,
+            temperature=0.5,
+            top_p=0.5,
+            max_tokens=8192,
             api_key=os.getenv("GPTSAPI_API_KEY"),
             base_url=os.getenv("OPENAI_API_BASE"),
-            temperature=1,
-            max_tokens=8192,
+            features=model_entity.features,
+            metadata=model_entity.metadata,
         )

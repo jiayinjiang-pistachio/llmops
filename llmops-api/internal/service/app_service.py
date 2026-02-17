@@ -18,7 +18,6 @@ import requests
 from flask import current_app
 from injector import inject
 from langchain_community.utilities.dalle_image_generator import DallEAPIWrapper
-from langchain_core.messages import HumanMessage
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnableParallel
@@ -34,7 +33,8 @@ from internal.model import (
     Message, Workflow
 )
 from internal.schema import (
-    CreateAppReq, GetPublishHistoriesWithPageReq, GetDebugConversationMessagesWithPageReq, GetAppsWithPageReq
+    CreateAppReq, GetPublishHistoriesWithPageReq, GetDebugConversationMessagesWithPageReq, GetAppsWithPageReq,
+    DebugChatReq
 )
 from pkg.paginator import Paginator
 from pkg.sqlalchemy import SQLAlchemy
@@ -826,7 +826,7 @@ class AppService(BaseService):
 
         return app
 
-    def debug_chat(self, app_id: UUID, query: str, account: Account) -> Generator:
+    def debug_chat(self, app_id: UUID, req: DebugChatReq, account: Account) -> Generator:
         """根据传递的应用id+提问query向特定的应用发起会话调试"""
         # 1. 获取应用信息并校验权限
         app = self.get_app(app_id, account)
@@ -842,7 +842,8 @@ class AppService(BaseService):
             Message,
             app_id=app_id,
             conversation_id=debug_conversation.id,
-            query=query,
+            query=req.query.data,
+            image_urls=req.image_urls.data,
             status=MessageStatus.NORMAL,
             created_by=account.id,
             invoke_from=InvokeFrom.DEBUGGER,
@@ -899,7 +900,8 @@ class AppService(BaseService):
 
         agent_thoughts: dict[str, AgentThought] = {}
         for agent_thought in agent.stream({
-            "messages": [HumanMessage(query)],
+            # "messages": [HumanMessage(query)],
+            "messages": [llm.convert_to_human_message(req.query.data, req.image_urls.data)],
             "history": history,
             "long_term_memory": debug_conversation.summary,
         }):

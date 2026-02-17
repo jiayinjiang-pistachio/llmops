@@ -15,7 +15,6 @@ from uuid import UUID
 
 from flask import current_app
 from injector import inject
-from langchain_core.messages import HumanMessage
 from langchain_core.pydantic_v1 import BaseModel, Field
 from langchain_core.tools import BaseTool, tool
 from sqlalchemy import desc
@@ -36,6 +35,7 @@ from ..core.memory import TokenBufferMemory
 from ..entity.conversation_entity import InvokeFrom, MessageStatus
 from ..model import Account, Message
 from ..schema import GetDebugConversationMessagesWithPageReq
+from ..schema.assistant_agent_schema import AssistantAgentChat
 from ..task.app_task import auto_create_app
 
 
@@ -47,7 +47,7 @@ class AssistantAgentService(BaseService):
     conversation_service: ConversationService
     faiss_service: FaissService
 
-    def chat(self, query: str, account: Account) -> Generator:
+    def chat(self, req: AssistantAgentChat, account: Account) -> Generator:
         """传递query与账号ID，实现与辅助agent进行对话"""
         # 1. 获取辅助agentid
         assistant_agent_id = current_app.config.get("ASSISTANT_AGENT_ID")
@@ -60,7 +60,8 @@ class AssistantAgentService(BaseService):
             Message,
             app_id=assistant_agent_id,
             conversation_id=conversation.id,
-            query=query,
+            query=req.query.data,
+            image_urls=req.image_urls.data,
             status=MessageStatus.NORMAL,
             created_by=account.id,
             invoke_from=InvokeFrom.ASSISTANT_AGENT,
@@ -112,7 +113,7 @@ class AssistantAgentService(BaseService):
 
         agent_thoughts: dict[str, AgentThought] = {}
         for agent_thought in agent.stream({
-            "messages": [HumanMessage(query)],
+            "messages": [llm.convert_to_human_message(req.query.data, req.image_urls.data)],
             "history": history,
             "long_term_memory": conversation.summary,
         }):
@@ -181,7 +182,7 @@ class AssistantAgentService(BaseService):
         """根据传递的task_id和账号信息，停止会话"""
         AgentQueueManager.set_stop_flag(task_id, invoke_from=InvokeFrom.ASSISTANT_AGENT, user_id=account.id)
 
-    def get_conversation_messages_with_page(
+    def get_assistant_agent_messages_with_page(
             self,
             req: GetDebugConversationMessagesWithPageReq,
             account: Account

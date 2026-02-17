@@ -13,7 +13,6 @@ from uuid import UUID
 
 from flask import current_app
 from injector import inject
-from langchain_core.messages import HumanMessage
 from sqlalchemy import desc
 
 from pkg.sqlalchemy import SQLAlchemy
@@ -96,6 +95,7 @@ class WebAppService(BaseService):
             invoke_from=InvokeFrom.WEB_APP,
             created_by=account.id,
             query=req.query.data,
+            image_urls=req.image_urls,
             status=MessageStatus.NORMAL,
         )
 
@@ -151,7 +151,7 @@ class WebAppService(BaseService):
         # 13. 定义字典存储推理过程，并调用智能体获取消息
         agent_thoughts: dict[str, AgentThought] = {}
         for agent_thought in agent.stream({
-            "messages": [HumanMessage(req.query.data)],
+            "messages": [llm.convert_to_human_message(req.query.data, req.image_urls.data)],
             "history": history,
             "long_term_memory": conversation.summary,
         }):
@@ -236,3 +236,26 @@ class WebAppService(BaseService):
         ).order_by(desc("created_at")).all()
 
         return conversations
+
+    def get_web_app_info(self, token: str):
+        """根据传递的token获取WebApp信息"""
+        # 1.获取App基础信息
+        app = self.get_web_app(token)
+
+        # 2. 根据App基础信息构建llm
+        app_config = self.app_config_service.get_app_config(app)
+        llm = self.language_model_service.load_language_model(app_config.get("model_config", {}))
+
+        # 3. 提取信息并返回
+        return {
+            "id": str(app.id),
+            "icon": app.icon,
+            "name": app.name,
+            "description": app.description,
+            "app_config": {
+                "opening_statement": app_config.get("opening_statement"),
+                "opening_questions": app_config.get("opening_questions"),
+                "suggested_after_answer": app_config.get("suggested_after_answer"),
+                "features": llm.features,
+            }
+        }

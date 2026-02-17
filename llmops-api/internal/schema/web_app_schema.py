@@ -6,13 +6,17 @@
 @File           : web_app_schema.py
 @Description    : 
 """
+from urllib.parse import urlparse
+
 from flask_wtf import FlaskForm
 from marshmallow import Schema, fields, pre_dump
 from wtforms import StringField, BooleanField
 from wtforms.validators import Optional, UUID, DataRequired
 
+from internal.exception import ValidationException
 from internal.lib.helper import datetime_to_timestamp
 from internal.model import App, Conversation
+from .schema import ListField
 
 
 class GetWebAppResp(Schema):
@@ -48,6 +52,22 @@ class WebAppChatReq(FlaskForm):
     query = StringField("query", default="", validators=[
         DataRequired(message="用户提问query不能为空"),
     ])
+    image_urls = ListField("image_urls", default=[])
+
+    def validate_image_urls(self, field: ListField) -> None:
+        """校验传递的图片URL链接列表"""
+        if not isinstance(field.data, list):
+            return []
+
+        # 校验数据的长度，最多不能超过5条记录
+        if len(field.data) > 5:
+            raise ValidationException("上传的图片数量不能超过5，请核实后重试")
+
+        # 循环校验image_url是否为URL
+        for image_url in field.data:
+            result = urlparse(image_url)
+            if not all([result.scheme, result.netloc]):
+                raise ValidationException("上传的图片URL地址格式错误，请核实后重试")
 
 
 class GetConversationsReq(FlaskForm):

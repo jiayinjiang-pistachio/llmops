@@ -3,7 +3,7 @@ label: DeepSeek-V3.2（非思考模式）
 model_type: chat
 features:
   - tool_call
-  - image_input
+#  - image_input
 context_window: 128000
 max_output_tokens: 8000
 attributes:

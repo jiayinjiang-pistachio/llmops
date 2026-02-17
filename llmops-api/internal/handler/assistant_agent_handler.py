@@ -33,7 +33,7 @@ class AssistantAgentHandler:
         if not req.validate():
             return validate_error_json(req.errors)
 
-        resp = self.assistant_agent_service.chat(req.query.data, current_user)
+        resp = self.assistant_agent_service.chat(req, current_user)
 
         return compact_generate_response(resp)
 
@@ -50,7 +50,7 @@ class AssistantAgentHandler:
         if not req.validate():
             return validate_error_json(req.errors)
 
-        messages, paginator = self.assistant_agent_service.get_conversation_messages_with_page(req, current_user)
+        messages, paginator = self.assistant_agent_service.get_assistant_agent_messages_with_page(req, current_user)
 
         resp = GetAssistantAgentMessagesWithPageResp(many=True)
 

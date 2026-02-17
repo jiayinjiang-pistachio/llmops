@@ -12,7 +12,6 @@ from typing import Generator
 
 from flask import current_app
 from injector import inject
-from langchain_core.messages import HumanMessage
 
 from pkg.response import Response
 from pkg.sqlalchemy import SQLAlchemy
@@ -93,6 +92,7 @@ class OpenapiService(BaseService):
             "invoke_from": InvokeFrom.SERVICE_API,
             "created_by": end_user.id,
             "query": req.query.data,
+            "image_urls": req.image_urls.data,
             "status": MessageStatus.NORMAL,
         })
 
@@ -148,7 +148,7 @@ class OpenapiService(BaseService):
 
         # 16. 定义智能体状态基础数据
         agent_state = {
-            "messages": [HumanMessage(req.query.data)],
+            "messages": [llm.convert_to_human_message(req.query.data, req.image_urls.data)],
             "history": history,
             "long_term_memory": conversation.summary,
         }
@@ -239,6 +239,7 @@ class OpenapiService(BaseService):
             "end_user_id": str(end_user.id),
             "conversation_id": str(conversation.id),
             "query": req.query.data,
+            "image_urls": req.image_urls.data,
             "answer": agent_result.answer,
             "total_token_count": 0,
             "latency": agent_result.latency,
