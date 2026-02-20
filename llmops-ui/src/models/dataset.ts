@@ -140,7 +140,7 @@ export interface CreateDocumentsReq {
       enabled: boolean
     }[]
     segment: {
-      seperators: string[]
+      separators: string[]
       chunk_size: number
       chunk_overlap: number
     }

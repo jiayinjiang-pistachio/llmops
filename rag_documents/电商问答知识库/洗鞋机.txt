@@ -1,0 +1,26 @@
+{
+  "商品标题": "美的官方旗舰店洗鞋机家用小型迷你半自动刷鞋机懒人专用刷鞋神器",
+  "商品头图": "https://gw.alicdn.com/imgextra/O1CN019Ww5Ui2HOAzIQLimM_!!201749140.png_.webp",
+  "商品链接": "https://detail.tmall.com/item.htm?id=666001482653",
+  "发货地": "浙江绍兴",
+  "商品skus": {
+    "5328277357667": {
+      "sku标题": "冰川白【MXX45VWE】4.5kg洗鞋机",
+      "价格": "369元"
+    },
+    "6112704182671": {
+      "sku标题": "曜石蓝【MXX50VWE】5kg洗鞋机",
+      "价格": "679元"
+    }
+  },
+  "商品参数": {
+    "品牌": "美的",
+    "保修期": "12个月",
+    "产地": "安徽合肥",
+    "生产企业": "美的"
+  },
+  "商品详情图片链接列表": [
+    "https://img.alicdn.com/imgextra/i3/201749140/O1CN0152hbtR2HOAz43mAkn_!!201749140.jpg",
+    "https://img.alicdn.com/imgextra/i3/201749140/O1CN01dIjgUT2HOB9oHjUiM_!!201749140.jpg"
+  ]
+}

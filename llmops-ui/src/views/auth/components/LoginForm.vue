@@ -1,8 +1,8 @@
 <template>
   <div class="">
     <!-- 顶部标题 -->
-    <div class="text-gray-900 font-bold text-2xl leading-8">ZenSnack LLMOps AppBuilder</div>
-    <p class="text-base leading-6 text-gray-600">高效开发你的AI原生应用</p>
+    <div class="text-gray-900 font-bold text-2xl leading-8">ZenSnack</div>
+    <p class="text-base leading-6 text-gray-600">像“吃零食”一样轻松、快捷地构建你的Agent应用</p>
     <!-- 错误提示占位符 -->
     <div class="h-8 text-red-700 leading-8 line-clamp-1">{{ errorMessage }}</div>
     <!-- 登录表单 -->

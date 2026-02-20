@@ -65,13 +65,13 @@
             <!-- 表单选项 -->
             <a-form :model="createDocumentsForm.rule" ref="customRuleFormRef" layout="vertical">
               <a-form-item
-                field="seperators"
+                field="separators"
                 label="分段标识符"
                 asterisk-position="end"
                 :rules="[{ required: '分段标识符不能为空' }]"
               >
                 <a-input-tag
-                  v-model="createDocumentsForm.rule.seperators"
+                  v-model="createDocumentsForm.rule.separators"
                   placeholder="请输入分段标识符，按下Enter结束"
                 />
               </a-form-item>
@@ -218,7 +218,7 @@ const createDocumentsForm = reactive({
   file_list: [], // 上传文件列表
   process_type: 'automatic', // 处理类型
   rule: {
-    seperators: ['\\n'],
+    separators: ['\\n'],
     chunk_size: 500,
     chunk_overlap: 50,
     pre_process_rules: [] as ('remove_extra_space' | 'remove_url_and_email')[],
@@ -296,7 +296,7 @@ const nextStep = async () => {
             },
           ],
           segment: {
-            seperators: createDocumentsForm.rule.seperators.map((seperator) => {
+            separators: createDocumentsForm.rule.separators.map((seperator) => {
               return unescapeString(seperator)
             }),
             chunk_size: createDocumentsForm.rule.chunk_size,

@@ -3,7 +3,9 @@
   <div class="flex h-screen bg-white">
     <!-- 顶部站点Logo -->
     <div class="fixed top-6 left-[22px] inline-flex items-center">
-      <div class="bg-gray-100 h-8 leading-8 px-2 z-50">ZenSnack</div>
+      <div class="h-8 z-50">
+        <img :src="Logo" alt="" class="h-10">
+      </div>
     </div>
     <!-- 左侧banner -->
     <LoginBanner />
@@ -27,4 +29,5 @@
 import {} from 'vue'
 import LoginBanner from './components/LoginBanner.vue'
 import LoginForm from './components/LoginForm.vue'
+import Logo from '@/assets/images/logo2.png'
 </script>
