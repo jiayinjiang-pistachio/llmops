@@ -31,7 +31,7 @@ from ..core.agent.agents.agent_queue_manager import AgentQueueManager
 from ..core.agent.entities.agent_entity import AgentConfig
 from ..core.agent.entities.queue_entity import AgentThought, QueueEvent
 from ..core.language_model.entities.model_entity import ModelFeature
-from ..core.language_model.providers.openai.chat import Chat
+from ..core.language_model.providers.deepseek.chat import Chat
 from ..core.memory import TokenBufferMemory
 from ..entity.conversation_entity import InvokeFrom, MessageStatus
 from ..model import Account, Message
@@ -68,15 +68,16 @@ class AssistantAgentService(BaseService):
 
         # 4. 使用GPT模型作为辅助agent的LLM
         llm = Chat(
-            model="gpt-4o-mini",
-            api_key=os.getenv("GPTSAPI_API_KEY"),
-            base_url=os.getenv("OPENAI_API_BASE"),
+            model="deepseek-chat",
+            api_key=os.getenv("DEEPSEEK_API_KEY"),
+            base_url=os.getenv("DEEPSEEK_BASE_URL"),
             temperature=0.8,
-            features=[ModelFeature.TOOL_CALL, ModelFeature.AGENT_THOUGHT],
+            top_p=0.5,
+            features=[ModelFeature.AGENT_THOUGHT],
             metadata={
                 "pricing": {
-                    "input": 0.00109,
-                    "output": 0.00435,
+                    "input": 0.02,
+                    "output": 0.03,
                     "unit": 0.001,
                     "currency": "RMB",
                 }

@@ -2,8 +2,7 @@ model: deepseek-reasoner
 label: DeepSeek-V3.2（思考模式）
 model_type: chat
 features:
-  - tool_call
-  - image_input
+  - agent_thought
 context_window: 128000
 max_output_tokens: 64000
 attributes:
