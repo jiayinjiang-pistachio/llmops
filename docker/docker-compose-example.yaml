@@ -1,0 +1,181 @@
+version: '3.8'
+
+services:
+  # 前端服务配置
+  frontend:
+    container_name: zensnack-llmops-app
+    build:
+      # context 是相对于 docker-compose.yaml 文件的路径
+      # 因为我们在 docker 目录下，所以需要跳到上级目录再进入 llmops-ui
+      context: ../llmops-ui
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    restart: always
+    # 也可以给镜像起个固定的名字，方便识别
+    image: zensnack-llmops-ui:latest
+  
+  # 后端服务
+  backend:
+    image: zensnack-llmops-api:latest
+    build: 
+      context: ../llmops-api
+      dockerfile: Dockerfile
+    container_name: zensnack-backend
+    restart: always
+    volumes:
+      - ./volumes/backend_storage:/app/api/storage
+    environment:
+      # 模式为API，代表启用API服务
+      MODE: api
+      SERVER_WORKER_AMOUNT: 4
+      SERVER_THREAD_AMOUNT: 4
+      # openai模型中转设置
+      GPTSAPI_API_KEY: 
+      OPENAI_API_BASE: 
+      OPENAI_API_BASE_V3: 
+      OPENAI_API_KEY: 
+      # 数据库迁移配置
+      MIGRATION_ENABLED: 'true'
+      # JWT 加密密钥
+      JWT_SECRET_KEY:
+      # wtf的csrf保护
+      WTF_CSRF_ENABLED: 'false'
+      # SQLALchemy 数据库配置
+      SQLALCHEMY_DATABASE_URI: 
+      SQLALCHEMY_POOL_SIZE: 30
+      SQLALCHEMY_POOL_RECYCLE: 3600
+      SQLALCHEMY_ECHO: 'true'
+      # Redis缓存数据库配置
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_USERNAME: ''
+      REDIS_PASSWORD: zensnack_123456
+      REDIS_DB: 0
+      REDIS_USE_SSL: 'false'
+      # Weaviate向量数据库配置
+      WEAVIATE_HTTP_HOST: weaviate
+      WEAVIATE_HTTP_PORT: 8080
+      WEAVIATE_GRPC_HOST: weaviate
+      WEAVIATE_GRPC_PORT: 50051
+      WEAVIATE_API_KEY: ftBC8hKkjfdsci0wW1T6kEtMh5BZFpGa1AD8
+      # 腾讯云COS对象存储
+      COS_SECRET_ID: AKIDLjwwiHdmjT2OXSAev1uc7OSK2Yrxwxte
+      COS_SECRET_KEY: qeL6mQ6gw89xY1LVXO4Xo6NcliV7Xmt1
+      COS_REGION: ap-guangzhou
+      COS_SCHEME: https
+      COS_BUCKET: ebc-llmops-1258297648
+      COS_DOMAIN: ''
+
+      GAODE_API_KEY: f81850ad7e0d9fe4e01d677678817368
+
+      SERPER_API_KEY: f99fcbf859b3d08044b875ffd01c3912980d4bf2
+      # Celery异步队列任务配置
+      CELERY_BROKER_DB: 1
+      CELERY_RESULT_BACKEND_DB: 1
+      CELERY_TASK_IGNORE_RESULT: 'true'
+      CELERY_RESULT_EXPIRES: 3600
+      CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP: 'true'
+      # langSmith
+      LANGSMITH_TRACING: 'true'
+      LANGSMITH_ENDPOINT: https://api.smith.langchain.com
+      LANGSMITH_API_KEY: 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
+      LANGSMITH_PROJECT: pr-cold-canvas-70
+
+      HUGGINGFACEHUB_API_TOKEN: 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
+
+      PINECONE_API_KEY: pcsk_HuPPV_4173BEG6iN2Kaepj3k7H5AjFnjHPScFptPfK2wz4CpDEJkhBDHKsc3uEYK96Qgm
+
+      TC_VECTOR_DB_URL: http://gz-vdb-oxujknr6.sql.tencentcdb.com:8100
+      TC_VECTOR_DB_USERNAME: root
+      TC_VECTOR_DB_KEY: lDPh1YmcZAwyzNcvquFLpls36Rs5cY7sZEbqM0Hq
+      TC_VECTOR_DB_DATABASE: llmops-test
+      TC_VECTOR_DB_TIMEOUT: 30
+
+      # Github OAuth 密钥
+      GITHUB_CLIENT_ID: Ov23lirBGcZ4QDxErr5s
+      GITHUB_CLIENT_SECRET: 138cc74b2b8ec4add93211c0159314387bbe05b4
+      GITHUB_REDIRECT_URI: http://localhost:5173/auth/authorize/github
+
+      # 智谱密钥
+      ZHIPUAI_API_KEY: 1e73144b55ef4cb38a379f42e6e37142.WVKqsOu3gUdasU9Q
+      ZHIPUAI_BASE_URL: https://open.bigmodel.cn/api/paas/v4/
+
+      # deepseek 密钥
+      DEEPSEEK_API_KEY: sk-2a76d3eecf724dc7a015a8825b500191
+      DEEPSEEK_BASE_URL: https://api.deepseek.com/v1
+
+      # 辅助agent智能体应用id标识
+      ASSISTANT_AGENT_ID: 6463d298-8f66-4447-96cf-cb6d51b6abb8
+
+    ports:
+    - "5001:5001"
+    depends_on:
+      - db
+      - redis
+      - weaviate
+
+  # Redis 服务
+  redis:
+    image: redis:7-alpine # 使用轻量级的 alpine 版本
+    container_name: zensnack-redis
+    restart: always
+    ports:
+      - "6379:6379" # 将 Redis 默认端口映射出来
+    volumes:
+      - ./volumes/redis_data:/data # 数据持久化，防止容器重启后数据丢失
+    command: redis-server --requirepass zensnack_123456 # 设置 Redis 密码
+  
+  # postgres 服务
+  db:
+    image: postgres:16-alpine  # 使用 16 版本的轻量镜像
+    container_name: zensnack-db
+    restart: always
+    environment:
+      # 配置默认的账户名、账户密码、默认数据库、数据存储位置
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: zensnack_123456
+      POSTGRES_DB: llmops
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      # 将postgres数据挂载到本地 ./volumes/db/data 上
+      - ./volumes/postgres_data:/var/lib/postgresql/data/pgdata
+      # 初始化脚本只有在空数据挂载的情况下才会触发执行（.sql/.sh等），如果已经存在数据则不会执行
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      # 每隔1s发起一个健康测试，最多重试30次
+      test: ["CMD", "pg_isready"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
+    ports:
+      - "5432:5432"
+
+  # weaviate 服务
+  weaviate:
+    image: semitechnologies/weaviate:1.28.4
+    container_name: zensnack-weaviate
+    restart: always
+    environment:
+      QUERY_DEFAULTS_LIMIT: 25  # 查询默认返回的数据条数
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'false'  # 需要授权才能和weaviate进行交互
+      PERSISTENCE_DATA_PATH: /var/lib/weaviate  # weaviate数据存储路径
+      DEFAULT_VECTORIZER_MODULE: 'none'  # 向量化模块设置为none
+      CLUSTER_HOSTNAME: 'node1'  # 节点的主机名字
+      AUTHENTICATION_APIKEY_ENABLED: 'true'  # 启动基于API秘钥的身份校验
+      AUTHENTICATION_APIKEY_ALLOWED_KEYS: 'ftBC8hKkjfdsci0wW1T6kEtMh5BZFpGa1AD8'  # 允许的API秘钥列表
+      AUTHENTICATION_APIKEY_USERS: 'yin_991@163.com'  # 基于秘钥的API身份列表
+      AUTHORIZATION_ADMINLIST_ENABLED: 'true'  # 启动AdminList授权方案
+      AUTHORIZATION_ADMINLIST_USERS: 'yin_991@163.com'  # 使用AdminList方案时具有管理权限的用户
+    volumes:
+      - ./volumes/weaviate_data:/var/lib/weaviate
+    ports:
+      - "8080:8080"
+      - "50051:50051"
+
+# 定义持久化卷
+volumes:
+  redis_data:
+  postgres_data:
+  weaviate_data:
+  backend_storage:

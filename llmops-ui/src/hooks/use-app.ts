@@ -211,6 +211,8 @@ export const useGetDraftAppConfig = (app_id: string) => {
         retrieval_config: data.retrieval_config,
         tools: data.tools,
         workflows: data.workflows,
+        speech_to_text: data.speech_to_text,
+        text_to_speech: data.text_to_speech,
       } as DraftAppConfig)
     } finally {
       loading.value = false

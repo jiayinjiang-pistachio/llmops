@@ -23,6 +23,9 @@ import HumanMessage from '@/components/HumanMessage.vue'
 import { useGenerateSuggestedQuestions } from '@/hooks/use-ai'
 import { QueueEvent } from '@/config'
 import type { AgentThoughtItem } from '@/models/conversation'
+import { useAudioPlayer, useAudioToText } from '@/hooks/use-audio'
+import AudioRecorder from 'js-audio-recorder'
+import { onUnmounted } from 'vue'
 
 // 1.定义页面所需数据
 const route = useRoute()
@@ -48,6 +51,7 @@ const { handleUpdateConversationIsPinned } = useUpdateConversationIsPinned()
 const { loading: webAppChatLoading, handleWebAppChat } = useWebAppChat()
 const { loading: stopWebAppChatLoading, handleStopWebAppChat } = useStopWebAppChat()
 const { suggested_questions, handleGenerateSuggestedQuestions } = useGenerateSuggestedQuestions()
+const { startAudioStream, stopAudioStream } = useAudioPlayer()
 
 // 2.定义会话计算属性，动态展示当前选中会话
 const conversation = computed(() => {
@@ -178,6 +182,8 @@ const handleSubmit = async () => {
   suggested_questions.value = []
   message_id.value = ''
   task_id.value = ''
+  stopAudioStream()
+
   const selectedConversationTmp = cloneDeep(selectedConversation.value)
 
   // 11.4 往消息列表中添加基础人类消息
@@ -307,6 +313,14 @@ const handleSubmit = async () => {
       await handleGenerateSuggestedQuestions(message_id.value)
       setTimeout(() => scroller.value && scroller.value.scrollToBottom(), 100)
     }
+
+    if (
+      web_app.value?.app_config?.text_to_speech.enable &&
+      web_app.value?.app_config?.text_to_speech.auto_play &&
+      message_id.value
+    ) {
+      startAudioStream(message_id.value)
+    }
   }
 }
 
@@ -349,6 +363,9 @@ watch(
       // 15.3 选择了已有会话，获取对应会话的消息列表
       await loadConversationMessagesWithPage(newValue, true)
     }
+
+    // 15.5 切换会话时停止播放音频
+    stopAudioStream()
   },
   { immediate: true },
 )
@@ -364,6 +381,58 @@ onMounted(async () => {
   // 16.3 默认新增空白会话
   addConversation()
 })
+
+onUnmounted(() => {
+  stopAudioStream()
+})
+
+const canSpeechToText = computed(() => {
+  if (web_app.value) {
+    return web_app.value.app_config?.speech_to_text?.enable
+  }
+  return false
+})
+
+// 是否在录音
+const isRecording = ref(false)
+
+// 录音后音频的blob
+const audioBlob = ref<Blob | null>(null)
+
+let recorder: any = null
+
+const { text, loading: audioToTextLoading, handleAudioToText } = useAudioToText()
+
+// 开始录制
+const handleStartRecord = async () => {
+  // 创建 AudioRecorder实例
+  recorder = new AudioRecorder()
+
+  // 开始录音并记录录音状态
+  try {
+    isRecording.value = true
+    await recorder.start()
+    Message.success('开始录音')
+  } catch (error) {
+    Message.error(`录音失败：${error}`)
+    isRecording.value = false
+  }
+}
+// 停止录音处理器
+const handleStopRecord = async () => {
+  if (recorder) {
+    try {
+      await recorder.stop()
+      audioBlob.value = recorder.getWAVBlob() as Blob
+      await handleAudioToText(audioBlob.value)
+      query.value = text.value
+    } catch (error) {
+      Message.error(`录音失败：${error}`)
+    } finally {
+      isRecording.value = false // 标记为停止录音
+    }
+  }
+}
 </script>
 
 <template>
@@ -519,6 +588,8 @@ onMounted(async () => {
               <div class="flex flex-col gap-6 py-6">
                 <human-message :query="item.query" :account="accountStore.account" />
                 <ai-message
+                  :message_id="item.id"
+                  :enable_text_to_speech="web_app?.app_config?.text_to_speech?.enable"
                   :agent_thoughts="item.agent_thoughts"
                   :answer="item.answer"
                   :app="{ name: web_app.name, icon: web_app.icon }"
@@ -589,6 +660,37 @@ onMounted(async () => {
               @keyup.enter="handleSubmit"
               :placeholder="`给 &quot;${web_app?.name ?? '&quot;聊天机器人&quot;'}&quot; 发送消息`"
             />
+            <template v-if="canSpeechToText">
+              <!-- 语音转文本加载按钮 -->
+              <template v-if="audioToTextLoading">
+                <a-button size="mini" type="text" shape="circle">
+                  <template #icon>
+                    <icon-loading />
+                  </template>
+                </a-button>
+              </template>
+              <template v-else>
+                <!-- 开始音频录制按钮 -->
+                <a-button
+                  v-if="!isRecording"
+                  size="mini"
+                  type="text"
+                  shape="circle"
+                  class="!text-gray-700"
+                  @click="handleStartRecord"
+                >
+                  <template #icon>
+                    <icon-voice />
+                  </template>
+                </a-button>
+                <!-- 结束音频录制按钮 -->
+                <a-button v-else size="mini" type="text" shape="circle" @click="handleStopRecord">
+                  <template #icon>
+                    <icon-pause />
+                  </template>
+                </a-button>
+              </template>
+            </template>
             <a-button
               :loading="webAppChatLoading"
               type="text"

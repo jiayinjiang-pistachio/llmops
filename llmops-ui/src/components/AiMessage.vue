@@ -5,6 +5,7 @@ import AgentThought from './AgentThought.vue'
 import markdownit from 'markdown-it'
 import mk from 'markdown-it-katex'
 import hljs from 'highlight.js'
+import { useAudioPlayer } from '@/hooks/use-audio'
 
 // 1.定义自定义组件所需数据
 const props = defineProps({
@@ -20,8 +21,12 @@ const props = defineProps({
   },
   suggested_questions: { type: Array as PropType<string[]>, default: () => [], required: false },
   message_class: { type: String, default: 'bg-gray-100', required: false },
+  message_id: { type: String, default: '', required: false },
+  enable_text_to_speech: { type: Boolean, default: false, required: false },
 })
 const emits = defineEmits(['selectSuggestedQuestion'])
+
+const { textToAudioLoading, isPlaying, startAudioStream, stopAudioStream } = useAudioPlayer()
 
 // 1. 先初始化 md，此时 TS 知道它是一个 MarkdownIt 实例
 const md = markdownit({
@@ -107,6 +112,24 @@ const compileMarkdown = computed(() => {
           </div>
           <div class="text-gray-500">{{ total_token_count }} Tokens</div>
         </a-space>
+        <!-- 播放音频&暂停播放 -->
+        <div v-if="enable_text_to_speech" class="flex items-center gap-2 ml-1">
+          <template v-if="textToAudioLoading">
+            <icon-loading class="group-hover:block text-gray-500" />
+          </template>
+          <template v-else>
+            <icon-pause
+              v-if="isPlaying"
+              class="group-hover:block text-blue-700 cursor-pointer hover:text-blue-700"
+              @click="() => stopAudioStream()"
+            />
+            <icon-play-circle
+              v-else
+              class="group-hover:block text-gray-400 cursor-pointer hover:text-gray-700"
+              @click="() => startAudioStream(message_id)"
+            />
+          </template>
+        </div>
       </div>
       <!-- 建议问题列表 -->
       <div v-if="suggested_questions.length > 0" class="flex flex-col gap-2">

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller'
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
-import { nextTick, onMounted, type PropType, ref } from 'vue'
+import { nextTick, onMounted, onUnmounted, type PropType, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import {
   useDebugChat,
@@ -16,6 +16,8 @@ import AiMessage from '@/components/AiMessage.vue'
 import { Message } from '@arco-design/web-vue'
 import { QueueEvent } from '@/config'
 import type { AppDetail, DebugConversationMessageItem } from '@/models/app'
+import { useAudioPlayer, useAudioToText } from '@/hooks/use-audio'
+import AudioRecorder from 'js-audio-recorder'
 
 // 1.定义自定义组件所需数据
 const route = useRoute()
@@ -28,6 +30,22 @@ const props = defineProps({
   },
   opening_statement: { type: String, default: '', required: true },
   opening_questions: { type: Array as PropType<string[]>, default: () => [], required: true },
+  text_to_speech: {
+    type: Object,
+    default: () => ({
+      enable: false,
+      auto_play: false,
+      voice: 'echo',
+    }),
+    required: true,
+  },
+  speech_to_text: {
+    type: Object,
+    default: () => ({
+      enable: false,
+    }),
+    required: true,
+  },
 })
 const query = ref('')
 const message_id = ref('')
@@ -45,6 +63,46 @@ const {
 const { loading: debugChatLoading, handleDebugChat } = useDebugChat()
 const { loading: stopDebugChatLoading, handleStopDebugChat } = useStopDebugChat()
 const { suggested_questions, handleGenerateSuggestedQuestions } = useGenerateSuggestedQuestions()
+const { loading: audioToTextLoading, text, handleAudioToText } = useAudioToText()
+const { startAudioStream, stopAudioStream } = useAudioPlayer()
+let recorder: any = null
+const isRecording = ref(false)
+const audioBlob = ref<Blob | null>(null)
+
+// 10.开始录音处理器
+const handleStartRecord = async () => {
+  // 10.1 创建AudioRecorder
+  recorder = new AudioRecorder()
+
+  // 10.2 开始录音并记录录音状态
+  try {
+    isRecording.value = true
+    await recorder.start()
+    Message.success('开始录音')
+  } catch (error: any) {
+    Message.error(`录音失败: ${error}`)
+    isRecording.value = false
+  }
+}
+
+// 11.停止录音处理器
+const handleStopRecord = async () => {
+  if (recorder) {
+    try {
+      // 11.1 等待录音停止并获取录音数据
+      await recorder.stop()
+      audioBlob.value = recorder.getWAVBlob() as Blob
+
+      // 11.2 调用语音转文本处理器并将文本填充到query中
+      await handleAudioToText(audioBlob.value)
+      query.value = text.value
+    } catch (error: any) {
+      Message.error(`录音失败: ${error}`)
+    } finally {
+      isRecording.value = false // 标记为停止录音
+    }
+  }
+}
 
 // 2.定义保存滚动高度函数
 const saveScrollHeight = () => {
@@ -98,6 +156,7 @@ const handleSubmit = async () => {
   suggested_questions.value = []
   message_id.value = ''
   task_id.value = ''
+  stopAudioStream()
 
   // 5.4 往消息列表中添加基础人类消息
   messages.value.unshift({
@@ -209,6 +268,10 @@ const handleSubmit = async () => {
     await handleGenerateSuggestedQuestions(message_id.value)
     setTimeout(() => scroller.value && scroller.value.scrollToBottom(), 100)
   }
+
+  if (props.text_to_speech.enable && props.text_to_speech.auto_play && message_id.value) {
+    startAudioStream(message_id.value)
+  }
 }
 
 // 6.定义停止调试会话函数
@@ -239,6 +302,11 @@ onMounted(async () => {
     }
   })
 })
+
+// 11.页面卸载后停止播放
+onUnmounted(() => {
+  stopAudioStream()
+})
 </script>
 
 <template>
@@ -257,6 +325,8 @@ onMounted(async () => {
             <div class="flex flex-col gap-6 py-6">
               <human-message :query="item.query" :account="accountStore.account" />
               <ai-message
+                :message_id="item.id"
+                :enable_text_to_speech="text_to_speech.enable"
                 :agent_thoughts="item.agent_thoughts"
                 :answer="item.answer"
                 :app="app"
@@ -341,6 +411,37 @@ onMounted(async () => {
             class="flex-1 outline-0 focus:outline-none"
             @keyup.enter="handleSubmit"
           />
+          <template v-if="speech_to_text.enable">
+            <!-- 语音转文本加载按钮 -->
+            <template v-if="audioToTextLoading">
+              <a-button size="mini" type="text" shape="circle">
+                <template #icon>
+                  <icon-loading />
+                </template>
+              </a-button>
+            </template>
+            <template v-else>
+              <!-- 开始音频录制按钮 -->
+              <a-button
+                v-if="!isRecording"
+                size="mini"
+                type="text"
+                shape="circle"
+                class="!text-gray-700"
+                @click="handleStartRecord"
+              >
+                <template #icon>
+                  <icon-voice />
+                </template>
+              </a-button>
+              <!-- 结束音频录制按钮 -->
+              <a-button v-else size="mini" type="text" shape="circle" @click="handleStopRecord">
+                <template #icon>
+                  <icon-pause />
+                </template>
+              </a-button>
+            </template>
+          </template>
           <a-button
             :loading="debugChatLoading"
             type="text"

@@ -12,6 +12,14 @@ export type GetWebAppResponse = BaseResponse<{
     suggested_after_answer: {
       enable: boolean
     }
+    speech_to_text?: {
+      enable: boolean
+    }
+    text_to_speech: {
+      enable: boolean
+      auto_play: boolean
+      voice: string
+    }
   }
 }>
 

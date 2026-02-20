@@ -54,6 +54,7 @@ from ..core.memory import TokenBufferMemory
 from ..core.tools.api_tools.providers import ApiProviderManager
 from ..core.tools.builtin_tools.providers import BuiltinProviderManager
 from ..entity.ai_entity import OPTIMIZE_PROMPT_TEMPLATE
+from ..entity.audio_entity import ALLOWED_AUDIO_VOICES
 from ..entity.conversation_entity import InvokeFrom, MessageStatus
 from ..entity.dataset_entity import RetrievalSource
 from ..entity.workflow_entity import WorkflowStatus
@@ -558,7 +559,7 @@ class AppService(BaseService):
                     set(text_to_speech.keys()) != {"enable", "voice", "auto_play"}
                     or not isinstance(text_to_speech["enable"], bool)
                     # todo: 等待多模态Agent实现时添加音色
-                    or text_to_speech["voice"] not in ["echo"]
+                    or text_to_speech["voice"] not in ALLOWED_AUDIO_VOICES
                     or not isinstance(text_to_speech["auto_play"], bool)
             ):
                 raise ValidationException("文本转语音设置格式错误")

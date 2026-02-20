@@ -16,6 +16,8 @@ import { QueueEvent } from '@/config'
 import HumanMessage from '@/components/HumanMessage.vue'
 import AiMessage from '@/components/AiMessage.vue'
 import type { AssistantAgentMessageItem } from '@/models/assistant-agent'
+import AudioRecorder from 'js-audio-recorder'
+import { useAudioToText } from '@/hooks/use-audio'
 
 // 1.定义页面所需数据
 const query = ref('')
@@ -212,6 +214,47 @@ onMounted(async () => {
     }
   })
 })
+
+// 是否在录音
+const isRecording = ref(false)
+
+// 录音后音频的blob
+const audioBlob = ref<Blob | null>(null)
+
+let recorder: any = null
+
+const { text, loading: audioToTextLoading,  handleAudioToText } = useAudioToText()
+
+// 开始录制
+const handleStartRecord = async () => {
+  // 创建 AudioRecorder实例
+  recorder = new AudioRecorder()
+
+  // 开始录音并记录录音状态
+  try {
+    isRecording.value = true
+    await recorder.start()
+    Message.success('开始录音')
+  } catch (error) {
+    Message.error(`录音失败：${error}`)
+    isRecording.value = false
+  }
+}
+// 停止录音处理器
+const handleStopRecord = async () => {
+  if (recorder) {
+    try {
+      await recorder.stop()
+      audioBlob.value = recorder.getWAVBlob() as Blob
+      await handleAudioToText(audioBlob.value)
+      query.value = text.value
+    } catch (error) {
+      Message.error(`录音失败：${error}`)
+    } finally {
+      isRecording.value = false // 标记为停止录音
+    }
+  }
+}
 </script>
 
 <template>
@@ -373,6 +416,35 @@ onMounted(async () => {
               placeholder="发送消息或创建AI应用..."
               @keyup.enter="handleSubmit"
             />
+            <!-- 语音转文本加载按钮 -->
+            <template v-if="audioToTextLoading">
+              <a-button size="mini" type="text" shape="circle">
+                <template #icon>
+                  <icon-loading />
+                </template>
+              </a-button>
+            </template>
+            <template v-else>
+              <!-- 开始音频录制按钮 -->
+              <a-button
+                v-if="!isRecording"
+                size="mini"
+                type="text"
+                shape="circle"
+                class="!text-gray-700"
+                @click="handleStartRecord"
+              >
+                <template #icon>
+                  <icon-voice />
+                </template>
+              </a-button>
+              <!-- 结束音频录制按钮 -->
+              <a-button v-else size="mini" type="text" shape="circle" @click="handleStopRecord">
+                <template #icon>
+                  <icon-pause />
+                </template>
+              </a-button>
+            </template>
             <a-button
               :loading="assistantAgentChatLoading"
               type="text"

@@ -1,11 +1,11 @@
-import { ref } from 'vue'
+import { ref, type Ref } from 'vue'
 import { getWebApp, getWebAppConversations, stopWebAppChat, webAppChat } from '@/services/web-app'
-import type { WebAppChatRequest } from '@/models/web-app'
+import type { GetWebAppResponse, WebAppChatRequest } from '@/models/web-app'
 
 export const useGetWebApp = () => {
   // 1.定义自定义hooks所需数据
   const loading = ref(false)
-  const web_app = ref<Record<string, any>>({})
+  const web_app = ref({}) as Ref<GetWebAppResponse['data']>
 
   // 2.定义加载数据处理器
   const loadWebApp = async (token: string) => {

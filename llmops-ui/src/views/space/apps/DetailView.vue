@@ -41,6 +41,8 @@
           :opening_statement="draftAppConfigForm.opening_statement"
           :app="app"
           :app_id="appId"
+          :text_to_speech="draftAppConfigForm.text_to_speech"
+          :speech_to_text="draftAppConfigForm.speech_to_text"
          />
       </div>
     </div>

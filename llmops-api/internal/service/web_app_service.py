@@ -236,3 +236,28 @@ class WebAppService(BaseService):
         ).order_by(desc("created_at")).all()
 
         return conversations
+
+    def get_web_app_info(self, token: str):
+        """根据传递的token获取WebApp信息"""
+        # 1. 获取App基础信息
+        app = self.get_web_app(token)
+
+        # 2. 根据App信息构建LLM
+        app_config = self.app_config_service.get_app_config(app)
+        llm = self.language_model_service.load_language_model(app_config.get("model_config", {}))
+
+        # 3. 提取信息并返回
+        return {
+            "id": str(app.id),
+            "icon": app.icon,
+            "name": app.name,
+            "description": app.description,
+            "app_config": {
+                "opening_statement": app_config.get("opening_statement"),
+                "opening_questions": app_config.get("opening_questions"),
+                "suggested_questions": app_config.get("suggested_questions"),
+                "features": llm.features,
+                "text_to_speech": app_config.get("text_to_speech"),
+                "speech_to_text": app_config.get("speech_to_text"),
+            }
+        }

@@ -15,7 +15,7 @@ from injector import inject
 from internal.handler import (
     AppHandler, BuiltinToolHandler, UploadFileHandler, DatasetHandler, DocumentHandler,
     SegmentHandler, OAuthHandler, AccountHandler, AuthHandler, AiHandler, ApiKeyHandler, OpenapiHandler,
-    BuiltinAppHandler, WorkflowHandler, LanguageModelHandler, AssistantAgentHandler, WebAppHandler
+    BuiltinAppHandler, WorkflowHandler, LanguageModelHandler, AssistantAgentHandler, WebAppHandler, AudioHandler
 )
 from internal.handler.analysis_handler import AnalysisHandler
 from internal.handler.api_tool_handler import ApiToolHandler
@@ -46,6 +46,7 @@ class Router:
     analysis_handler: AnalysisHandler
     web_app_handler: WebAppHandler
     conversation_handler: ConversationHandler
+    audio_handler: AudioHandler
 
     def register_router(self, app: Flask):
         """注册路由"""
@@ -265,6 +266,10 @@ class Router:
             methods=["POST"],
             view_func=self.conversation_handler.update_conversation_is_pinned
         )
+
+        # 语音转文本模块
+        bp.add_url_rule("/audio/audio-to-text", methods=["POST"], view_func=self.audio_handler.audio_to_text)
+        bp.add_url_rule("/audio/message-to-audio", methods=["POST"], view_func=self.audio_handler.message_to_audio)
 
         # 4. 在应用上去注册蓝图
         app.register_blueprint(bp)

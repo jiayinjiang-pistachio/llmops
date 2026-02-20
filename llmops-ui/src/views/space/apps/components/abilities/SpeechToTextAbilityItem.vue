@@ -1,0 +1,54 @@
+<script setup lang="ts">
+import { useUpdateDraftAppConfig } from '@/hooks/use-app'
+import type { DraftAppConfig } from '@/models/app'
+
+// 1.定义自定义组件所需数据
+const props = defineProps({
+  app_id: { type: String, default: '', required: true },
+})
+
+const { handleUpdateDraftAppConfig } = useUpdateDraftAppConfig()
+
+const speech_to_text = defineModel<DraftAppConfig['speech_to_text']>('speech_to_text', {
+  required: true,
+})
+</script>
+
+<template>
+  <div class="">
+    <a-collapse-item key="speech_to_text" class="app-ability-item">
+      <template #header>
+        <div class="text-gray-700 font-bold">语音输入</div>
+      </template>
+      <template #extra>
+        <a-dropdown
+          @select="
+            async (value: any) => {
+              if (Boolean(value) !== speech_to_text.enable) {
+                speech_to_text.enable = Boolean(value)
+                speech_to_text.enable
+                await handleUpdateDraftAppConfig(props.app_id, {
+                  speech_to_text: { enable: Boolean(value) },
+                })
+              }
+            }
+          "
+        >
+          <a-button size="mini" class="rounded-lg flex items-center gap-1 px-1" @click.stop>
+            {{ speech_to_text?.enable ? '开启' : '关闭' }}
+            <icon-down />
+          </a-button>
+          <template #content>
+            <a-doption :value="1" class="text-xs py-1.5 text-gray-700">开启</a-doption>
+            <a-doption :value="0" class="text-xs py-1.5 text-red-700">关闭</a-doption>
+          </template>
+        </a-dropdown>
+      </template>
+      <div class="text-xs text-gray-500 leading-[22px]">
+        启用后，您可以使用语音输入。
+      </div>
+    </a-collapse-item>
+  </div>
+</template>
+
+<style scoped></style>

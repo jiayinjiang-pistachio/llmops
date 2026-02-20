@@ -6,6 +6,8 @@ import SuggestedAfterAnswerAbilityItem from './abilities/SuggestedAfterAnswerAbi
 import ReviewConfigAbilityItem from './abilities/ReviewConfigAbilityItem.vue'
 import DatasetsAbilityItem from './abilities/DatasetsAbilityItem.vue'
 import ToolsAbilityItem from './abilities/ToolsAbilityItem.vue'
+import SpeechToTextAbilityItem from './abilities/SpeechToTextAbilityItem.vue'
+import TextToSpeechAbilitiItem from './abilities/TextToSpeechAbilitiItem.vue'
 import type { DraftAppConfig } from '@/models/app'
 
 // 1.定义自定义组件所需数据
@@ -61,6 +63,16 @@ const draft_app_config = defineModel<DraftAppConfig>('draft_app_config', { requi
         <!-- 回答后生成建议问题 -->
         <suggested-after-answer-ability-item
           v-model:suggested_after_answer="draft_app_config.suggested_after_answer"
+          :app_id="app_id"
+        />
+        <!-- 语音输入 -->
+        <speech-to-text-ability-item
+          v-model:speech_to_text="draft_app_config.speech_to_text"
+          :app_id="app_id"
+        />
+        <!-- 语音输出 -->
+        <text-to-speech-abiliti-item
+          :text_to_speech="draft_app_config.text_to_speech"
           :app_id="app_id"
         />
         <!-- 内容审核 -->
