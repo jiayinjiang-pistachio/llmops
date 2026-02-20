@@ -20,6 +20,7 @@ from internal.handler import (
 from internal.handler.analysis_handler import AnalysisHandler
 from internal.handler.api_tool_handler import ApiToolHandler
 from internal.handler.conversation_handler import ConversationHandler
+from internal.handler.platform_handler import PlatformHandler
 
 
 @inject
@@ -46,6 +47,7 @@ class Router:
     analysis_handler: AnalysisHandler
     web_app_handler: WebAppHandler
     conversation_handler: ConversationHandler
+    platform_handler: PlatformHandler
 
     def register_router(self, app: Flask):
         """注册路由"""
@@ -265,6 +267,13 @@ class Router:
             methods=["POST"],
             view_func=self.conversation_handler.update_conversation_is_pinned
         )
+
+        # 第三方平台配置模块
+        bp.add_url_rule("/platform/<uuid:app_id>/wechat-config", view_func=self.platform_handler.get_wechat_config)
+        bp.add_url_rule("/platform/<uuid:app_id>/wechat-config", methods=["POST"],
+                        view_func=self.platform_handler.update_wechat_config)
+
+        # bp.add_url_rule("/platform/<uuid:app_id>", methods=["GET", "POST"], view_func=self.wechat_handler.wechat)
 
         # 4. 在应用上去注册蓝图
         app.register_blueprint(bp)

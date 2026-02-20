@@ -2,8 +2,8 @@ model: deepseek-reasoner
 label: DeepSeek-V3.2（思考模式）
 model_type: chat
 features:
-  - tool_call
-  - image_input
+  #  - tool_call
+  - agent_thought
 context_window: 128000
 max_output_tokens: 64000
 attributes:
@@ -13,6 +13,8 @@ parameters:
     use_template: temperature
   - name: top_p
     use_template: top_p
+    min: 0.1
+    default: 0.1
   - name: presence_penalty
     use_template: presence_penalty
   - name: frequency_penalty

@@ -13,6 +13,7 @@ from .app import App, AppDatasetJoin, AppConfig, AppConfigVersion
 from .conversation import Conversation, Message, MessageAgentThought
 from .dataset import Dataset, Document, Segment, DatasetQuery, KeywordTable, ProcessRule
 from .end_user import EndUser
+from .platform import WechatConfig, WechatMessage, WechatEndUser
 from .upload_file import UploadFile
 from .workflow import Workflow, WorkflowResult
 
@@ -37,4 +38,7 @@ __all__ = [
     "AppConfigVersion",
     "Workflow",
     "WorkflowResult",
+    "WechatMessage",
+    "WechatConfig",
+    "WechatEndUser",
 ]
