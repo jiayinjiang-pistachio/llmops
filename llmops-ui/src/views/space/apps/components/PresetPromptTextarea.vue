@@ -103,7 +103,7 @@ const handleSubmit = async () => {
                   <input
                     v-model="origin_prompt"
                     type="text"
-                    class="flex-1 outline-0"
+                    class="flex-1 outline-0 focus:outline-none"
                     placeholder="你希望如何编写或优化提示词"
                   />
                   <a-button :loading="loading" type="text" shape="circle" @click="handleSubmit">

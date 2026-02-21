@@ -10,7 +10,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="flex flex-col flex-1 gap-3 bg-white border border-gray-200 rounded-lg px-6 py-5">
+  <div class="flex flex-col flex-1 gap-3 bg-white border border-gray-200 rounded-lg px-2 py-5">
     <!-- 指标卡标题 -->
     <div class="flex items-center gap-2 text-gray-700">
       <a-avatar shape="circle" :size="32" class="bg-blue-200">
@@ -26,10 +26,10 @@ const props = defineProps({
     <div class="flex items-baseline gap-4">
       <!-- 数据 -->
       <div class="flex items-baseline gap-1 text-gray-700 font-semibold">
-        <div class="text-2xl">
+        <div class="text-xl">
           {{ props.data % 1 !== 0 ? props.data.toFixed(2) : props.data.toString() }}
         </div>
-        <div class="">{{ props.unit }}</div>
+        <div class="text-xs">{{ props.unit }}</div>
       </div>
       <!-- 环比 -->
       <div class="flex items-center gap-1 text-gray-500 text-xs">

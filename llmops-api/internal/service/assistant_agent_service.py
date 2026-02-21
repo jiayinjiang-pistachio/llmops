@@ -66,7 +66,7 @@ class AssistantAgentService(BaseService):
             invoke_from=InvokeFrom.ASSISTANT_AGENT,
         )
 
-        # 4. 使用GPT模型作为辅助agent的LLM
+        # 4. 使用deepseek模型作为辅助agent的LLM
         llm = Chat(
             model="deepseek-chat",
             api_key=os.getenv("DEEPSEEK_API_KEY"),
@@ -76,7 +76,7 @@ class AssistantAgentService(BaseService):
             features=[ModelFeature.AGENT_THOUGHT],
             metadata={
                 "pricing": {
-                    "input": 0.02,
+                    "input": 0.002,
                     "output": 0.03,
                     "unit": 0.001,
                     "currency": "RMB",

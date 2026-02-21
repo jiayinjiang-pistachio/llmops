@@ -25,7 +25,7 @@ parameters:
     help: 要生成的标记的最大数量，类型为整型
 metadata:
   pricing:
-    input: 0.02
+    input: 0.002
     output: 0.03
     unit: 0.001
     currency: RMB

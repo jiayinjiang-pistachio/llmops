@@ -15,11 +15,12 @@ from uuid import UUID
 from injector import inject
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_openai import ChatOpenAI
 
 from pkg.sqlalchemy import SQLAlchemy
 from .base_service import BaseService
 from .conversation_service import ConversationService
+from ..core.language_model.entities.model_entity import ModelFeature
+from ..core.language_model.providers.deepseek.chat import Chat
 from ..entity.ai_entity import OPTIMIZE_PROMPT_TEMPLATE
 from ..exception import ForbiddenException
 from ..model import Account, Message
@@ -52,12 +53,22 @@ class AiService(BaseService):
             ("human", "{prompt}")
         ])
 
-        # 2. 构建LLM
-        llm = ChatOpenAI(
-            model="gpt-4o-mini",
-            api_key=os.getenv("GPTSAPI_API_KEY"),
-            base_url=os.getenv("OPENAI_API_BASE"),
-            temperature=0.5
+        # # 2. 构建LLM
+        llm = Chat(
+            model="deepseek-chat",
+            api_key=os.getenv("DEEPSEEK_API_KEY"),
+            base_url=os.getenv("DEEPSEEK_BASE_URL"),
+            temperature=0.5,
+            top_p=0.5,
+            features=[ModelFeature.AGENT_THOUGHT],
+            metadata={
+                "pricing": {
+                    "input": 0.002,
+                    "output": 0.03,
+                    "unit": 0.001,
+                    "currency": "RMB",
+                }
+            }
         )
 
         # 3. 组装优化链
