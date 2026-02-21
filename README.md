@@ -116,7 +116,7 @@ OpenAPI Schema
 # 创建Agent应用示例
 ## 集成快递查询工作流Agent
 1. 可以通过首页的辅助Agent，让AI自动创建应用
-![iShot_2026-02-20_16.26.44.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8fa820f1ddfd4fba8ec062a77b90d35f~tplv-k3u1fbpfcp-watermark.image?)
+![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/74b85e7bb94c417fa735b678d32c2ff6~tplv-k3u1fbpfcp-watermark.image?)
 
 2. 等几分钟后，在个人空间-AI应用中看到了自动生成的Agent应用
 ![iShot_2026-02-20_16.27.04.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4acc4686accc4c42bc7574c2aee42b2e~tplv-k3u1fbpfcp-watermark.image?)
