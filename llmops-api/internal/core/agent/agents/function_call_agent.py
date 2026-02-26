@@ -282,8 +282,6 @@ class FunctionCallAgent(BaseAgent):
                 latency=time.perf_counter() - start_at,
             ))
 
-            print("----agent_end-----")
-
             self.agent_queue_manager.publish(task_id, AgentThought(
                 id=uuid.uuid4(),
                 task_id=task_id,
@@ -301,7 +299,6 @@ class FunctionCallAgent(BaseAgent):
 
     def _tools(self, state: AgentState) -> AgentState:
         """工具调用节点"""
-        print("----进行tools调用----", state["iteration_count"])
         # 1. 将工具列表转换成字典，便于调用指定工具
         tools_to_dict = {
             tool.name: tool

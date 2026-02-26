@@ -89,7 +89,6 @@ class ReACTAgent(FunctionCallAgent):
 
     def _llm_node(self, state: AgentState) -> AgentState:
         """重写llm_node节点"""
-        print(f"DEBUG: Messages sent to LLM: {state['messages']}")
         # 1. 检测是否支持工具调用
         if ModelFeature.TOOL_CALL in self.llm.features:
             return super()._llm_node(state)
@@ -131,9 +130,6 @@ class ReACTAgent(FunctionCallAgent):
             logging.warning("Detected empty last message content, providing default prompt.")
             # 可以补齐一个空内容或者抛出异常
 
-        # 【修复点】打印当前发送给模型的消息，用于排查
-        logging.debug(f"Input Messages: {state['messages']}")
-
         # 【关键修复】过滤掉 RemoveMessage 标记，并确保消息列表中没有空的 HumanMessage
         # 【增强修复】适配智谱及严格角色校验的模型
         raw_cleaned = []
@@ -169,9 +165,6 @@ class ReACTAgent(FunctionCallAgent):
         # 如果最后一条是空的（可能由前面的节点产生错误导致），补一个提示
         if not cleaned_messages or cleaned_messages[-1].content == "":
             cleaned_messages.append(HumanMessage(content="Please continue."))
-
-        for i, m in enumerate(cleaned_messages):
-            print(f"MSG {i} [{m.__class__.__name__}]: {str(m.content)[:50]}...")
 
         # 5.流式输出调用LLM，并判断输出内容是否以"```json"为开头，用于区分工具调用和文本生成
         try:
