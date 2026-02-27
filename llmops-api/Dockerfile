@@ -16,8 +16,6 @@ ENV FLASK_APP=app/http/app.py \
 # 3. 安装系统依赖 (合并命令减少 Layer，安装完成后立即清理缓存)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bash \
-    libgl1-mesa-glx \
-    libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
 # 4. 关键：利用缓存安装 Python 依赖
