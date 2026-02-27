@@ -117,7 +117,7 @@ class BaseAgent(Serializable, Runnable):
 
         # 3. 创建子线程并执行
         thread = Thread(
-            target=self._agent.invoke,
+            target=self._agent.invoke, # 这里是langgraph的invoke方法，执行图结构
             args=(input,),
         )
         thread.start()
