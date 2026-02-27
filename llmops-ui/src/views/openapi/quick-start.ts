@@ -1,10 +1,8 @@
-export const blockApiShell = `curl --location --request POST 'https://localhost:5000/openapi/chat \\
---header 'Authorization: Bearer pat_OYDacMzM3WyOWV3Dtj2bHRMymzxP****' \\
+export const blockApiShell = `curl --location --request POST 'http://8.138.175.92/api/openapi/chat' \\
+--header 'Authorization: Bearer zensnack-v1/qIJF38a9tFJlI5BlpxzbTp5_kXtrGJPJgYoOV0Z8ePAryINAr079CHGDDnjM4jsb' \\
 --header 'Content-Type: application/json' \\
 --data-raw '{
-    "app_id": "734829333445931****",
-    "end_user_id": "123456789",
-    "conversation_id": "123456789",
+    "app_id": "25939407-5621-4e5a-839f-b2f059da88de",
     "stream": false,
     "query": "广州今天的天气怎样"
 }'`
@@ -77,13 +75,11 @@ export const blockApiOutput = `{
     "message": ""
 }`
 
-export const streamApiShell = `curl --location --request POST 'https://localhost:5000/openapi/chat \\
---header 'Authorization: Bearer pat_OYDacMzM3WyOWV3Dtj2bHRMymzxP****' \\
+export const streamApiShell = `curl --location --request POST 'http://8.138.175.92/api/openapi/chat' \\
+--header 'Authorization: Bearer zensnack-v1/qIJF38a9tFJlI5BlpxzbTp5_kXtrGJPJgYoOV0Z8ePAryINAr079CHGDDnjM4jsb' \\
 --header 'Content-Type: application/json' \\
 --data-raw '{
-    "app_id": "734829333445931****",
-    "end_user_id": "123456789",
-    "conversation_id": "123456789",
+    "app_id": "25939407-5621-4e5a-839f-b2f059da88de",
     "stream": true,
     "query": "广州今天的天气怎样"
 }'`
